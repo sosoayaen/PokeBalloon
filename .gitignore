@@ -1,0 +1,14 @@
+# 排除临时文件
+*.swp
+
+# 排除OS X的文件夹显示属性目录
+.DS_Store
+
+# 排除xcode3、4的用户自定义设置文件
+*.model
+*.model1v3
+*.model2v3
+*.perspective
+*.perspectivev3
+*.pbxuser
+xcuserdata
