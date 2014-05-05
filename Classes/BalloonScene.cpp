@@ -273,11 +273,19 @@ void BalloonScene::update(float dt)
 
 void BalloonScene::showResultDialog()
 {
-    CCMenuItemFont* pMenuItem = CCMenuItemFont::create("Try again", this,
-                                                       menu_selector(BalloonScene::onPressMenuRestartGame));
-    pMenuItem->setColor(ccBLACK);
+    // CCMenuItemFont* pMenuItem = CCMenuItemFont::create("Try again", this,
+    //                                                   menu_selector(BalloonScene::onPressMenuRestartGame));
+    // pMenuItem->setColor(ccBLACK);
+    CCMenuItemImage* pMenuItemRestart = CCMenuItemImage::create("balloon/menu_item_restart.png", "balloon/menu_item_restart.png", this, menu_selector(BalloonScene::onPressMenuRestartGame));
     
-    CCMenu* pMenu = CCMenu::create(pMenuItem, NULL);
+    pMenuItemRestart->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(rand()%6+1), CCRotateTo::create(3.0f, 10.0f), CCDelayTime::create(rand()%6+1), CCRotateTo::create(3.0f, -10.0f), NULL)));
+    
+    CCMenuItemImage* pMenuItemReturnMainMenu = CCMenuItemImage::create("balloon/menu_item_return_menu.png", "balloon/menu_item_return_menu.png", this, menu_selector(BalloonScene::onPressMenuReturnMainMenu));
+    
+    pMenuItemReturnMainMenu->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(rand()%6+1), CCRotateTo::create(3.0f, 10.0f), CCDelayTime::create(rand()%6+1), CCRotateTo::create(3.0f, -10.0f), NULL)));
+    
+    CCMenu* pMenu = CCMenu::create(pMenuItemRestart, pMenuItemReturnMainMenu, NULL);
+    pMenu->alignItemsVerticallyWithPadding(pMenuItemRestart->getContentSize().height);
     
     CCPoint posStart = ccp(getContentSize().width*0.5f, getContentSize().height);
     CCPoint posEnd = ccpMult(ccpFromSize(getContentSize()), 0.5f);
@@ -297,6 +305,11 @@ void BalloonScene::onPressMenuRestartGame(cocos2d::CCObject *pSender)
     pNode->getParent()->removeFromParent();
     
     startGame();
+}
+
+void BalloonScene::onPressMenuReturnMainMenu(cocos2d::CCObject *pSender)
+{
+    CCDirector::sharedDirector()->popScene();
 }
 
 void BalloonScene::startGame()

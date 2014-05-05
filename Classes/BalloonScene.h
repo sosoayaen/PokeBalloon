@@ -108,6 +108,7 @@ private:
     void showResultDialog();
     
     void onPressMenuRestartGame(cocos2d::CCObject* pSender);
+    void onPressMenuReturnMainMenu(cocos2d::CCObject* pSender);
     
     void timeCount(float dt);
     

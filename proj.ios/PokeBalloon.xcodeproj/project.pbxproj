@@ -14,6 +14,9 @@
 		0458E80A19167BAB00FA1321 /* Icon-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 0458E80619167BAB00FA1321 /* Icon-80.png */; };
 		0458E80B19167BAB00FA1321 /* Icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 0458E80719167BAB00FA1321 /* Icon-120.png */; };
 		0469117F19175937009A0734 /* particles in Resources */ = {isa = PBXBuildFile; fileRef = 0469117E19175937009A0734 /* particles */; };
+		0473CB801917D795006C428E /* BalloonFirstPage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0473CB7E1917D795006C428E /* BalloonFirstPage.cpp */; };
+		0473CB841917D7C9006C428E /* BalloonFirstPage.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 0473CB831917D7C9006C428E /* BalloonFirstPage.ccbi */; };
+		0473CB861917D7E1006C428E /* mainboard in Resources */ = {isa = PBXBuildFile; fileRef = 0473CB851917D7E1006C428E /* mainboard */; };
 		04AAEA9C191362F8006147E3 /* AutoTextureManagerLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04AAEA97191362F8006147E3 /* AutoTextureManagerLayer.cpp */; };
 		04AAEA9D191362F8006147E3 /* TextureManagerProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04AAEA99191362F8006147E3 /* TextureManagerProtocol.cpp */; };
 		04AAEAC2191383F9006147E3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04AAEABB191383F9006147E3 /* Default-568h@2x.png */; };
@@ -271,6 +274,10 @@
 		0458E80619167BAB00FA1321 /* Icon-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-80.png"; sourceTree = SOURCE_ROOT; };
 		0458E80719167BAB00FA1321 /* Icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-120.png"; sourceTree = SOURCE_ROOT; };
 		0469117E19175937009A0734 /* particles */ = {isa = PBXFileReference; lastKnownFileType = folder; path = particles; sourceTree = "<group>"; };
+		0473CB7E1917D795006C428E /* BalloonFirstPage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BalloonFirstPage.cpp; path = ../Classes/BalloonFirstPage.cpp; sourceTree = "<group>"; };
+		0473CB7F1917D795006C428E /* BalloonFirstPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BalloonFirstPage.h; path = ../Classes/BalloonFirstPage.h; sourceTree = "<group>"; };
+		0473CB831917D7C9006C428E /* BalloonFirstPage.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonFirstPage.ccbi; sourceTree = "<group>"; };
+		0473CB851917D7E1006C428E /* mainboard */ = {isa = PBXFileReference; lastKnownFileType = folder; path = mainboard; sourceTree = "<group>"; };
 		04AAEA97191362F8006147E3 /* AutoTextureManagerLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = AutoTextureManagerLayer.cpp; sourceTree = "<group>"; };
 		04AAEA98191362F8006147E3 /* AutoTextureManagerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AutoTextureManagerLayer.h; sourceTree = "<group>"; };
 		04AAEA99191362F8006147E3 /* TextureManagerProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureManagerProtocol.cpp; sourceTree = "<group>"; };
@@ -754,10 +761,12 @@
 				04AAEABF191383F9006147E3 /* Icon-72.png */,
 				04AAEAC0191383F9006147E3 /* Icon-114.png */,
 				04AAEAC1191383F9006147E3 /* Icon-144.png */,
+				0473CB851917D7E1006C428E /* mainboard */,
 				044BAB881905048A00D8CCB3 /* balloon */,
 				04AAEACC1913C9FE006147E3 /* music */,
 				0469117E19175937009A0734 /* particles */,
 				044BAB761905045600D8CCB3 /* BalloonScene.ccbi */,
+				0473CB831917D7C9006C428E /* BalloonFirstPage.ccbi */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -1285,8 +1294,10 @@
 			isa = PBXGroup;
 			children = (
 				04AAEA95191362F8006147E3 /* comm */,
-				04AAEAC91913C9F0006147E3 /* BalloonSoundManager.cpp */,
+				0473CB7E1917D795006C428E /* BalloonFirstPage.cpp */,
+				0473CB7F1917D795006C428E /* BalloonFirstPage.h */,
 				04AAEACA1913C9F0006147E3 /* BalloonSoundManager.h */,
+				04AAEAC91913C9F0006147E3 /* BalloonSoundManager.cpp */,
 				04C2A2A919041F2B004256B2 /* Balloon_macro.h */,
 				04C2A2AA19041F2B004256B2 /* BalloonManager.cpp */,
 				04C2A2AB19041F2B004256B2 /* BalloonManager.h */,
@@ -1683,6 +1694,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0473CB841917D7C9006C428E /* BalloonFirstPage.ccbi in Resources */,
 				0469117F19175937009A0734 /* particles in Resources */,
 				04AAEAC7191383F9006147E3 /* Icon-114.png in Resources */,
 				044BAB831905045600D8CCB3 /* BalloonScene.ccbi in Resources */,
@@ -1698,6 +1710,7 @@
 				0458E80B19167BAB00FA1321 /* Icon-120.png in Resources */,
 				04AAEACD1913C9FE006147E3 /* music in Resources */,
 				04AAEAC6191383F9006147E3 /* Icon-72.png in Resources */,
+				0473CB861917D7E1006C428E /* mainboard in Resources */,
 				04AAEAC4191383F9006147E3 /* Default@2x.png in Resources */,
 				0458E80919167BAB00FA1321 /* Icon-58.png in Resources */,
 				04AAEAC8191383F9006147E3 /* Icon-144.png in Resources */,
@@ -1796,6 +1809,7 @@
 				15A3DA361682F826002FB0C5 /* CCBSequenceProperty.cpp in Sources */,
 				15A3DA371682F826002FB0C5 /* CCBValue.cpp in Sources */,
 				15A3DA381682F826002FB0C5 /* CCControlButtonLoader.cpp in Sources */,
+				0473CB801917D795006C428E /* BalloonFirstPage.cpp in Sources */,
 				15A3DA391682F826002FB0C5 /* CCControlLoader.cpp in Sources */,
 				15A3DA3A1682F826002FB0C5 /* CCData.cpp in Sources */,
 				04AAEA9C191362F8006147E3 /* AutoTextureManagerLayer.cpp in Sources */,
