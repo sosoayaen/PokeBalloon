@@ -4,6 +4,9 @@
 # 排除OS X的文件夹显示属性目录
 .DS_Store
 
+# 排除cocosbuilder生成的文件描述
+fileLookup.plist
+
 # 排除xcode3、4的用户自定义设置文件
 *.model
 *.model1v3
