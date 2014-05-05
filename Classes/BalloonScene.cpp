@@ -4,7 +4,7 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-#define BALLOON_SHOW_RATE 10     // ÆøÇò³öÏÖµÄ¸ÅÂÊ£¬10±íÊ¾1%£¬50¾ÍÊÇ5%
+#define BALLOON_SHOW_RATE 18     // æ°”çƒå‡ºç°çš„æ¦‚ç‡ï¼Œ10è¡¨ç¤º1%ï¼Œ50å°±æ˜¯5%
 
 BalloonScene::~BalloonScene()
 {
@@ -25,21 +25,21 @@ bool BalloonScene::init()
 	do
 	{
 		CC_BREAK_IF(!CCLayer::init());
-		// ¼ÓÔØccbi
+		// åŠ è½½ccbi
 		CCNodeLoaderLibrary* pLoaderLib = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
 
 		CCBReader* pCCBReader = new CCBReader(pLoaderLib);
 
-		// ¶ÔÓ¦ccbiÎÄ¼ş
+		// å¯¹åº”ccbiæ–‡ä»¶
 		std::string strCCBFileName = "BalloonScene.ccbi";
 
-		// µÃµ½µÚÒ»¸öËÑË÷Â·¾¶
+		// å¾—åˆ°ç¬¬ä¸€ä¸ªæœç´¢è·¯å¾„
 		const std::vector<std::string> vSearchOrder = CCFileUtils::sharedFileUtils()->getSearchResolutionsOrder();
 
-		// ±¾³ÌĞòÖĞÊÇ¶ÔÓ¦µÄµÚÒ»¸öÔªËØ¼´Îª¶ÔÓ¦µÄ×ÊÔ´Â·¾¶
+		// æœ¬ç¨‹åºä¸­æ˜¯å¯¹åº”çš„ç¬¬ä¸€ä¸ªå…ƒç´ å³ä¸ºå¯¹åº”çš„èµ„æºè·¯å¾„
 		std::string strCCBRootPath = vSearchOrder[0];
 
-		// ÉèÖÃCCBµÄ×ÊÔ´Â·¾¶
+		// è®¾ç½®CCBçš„èµ„æºè·¯å¾„
 		pCCBReader->setCCBRootPath(strCCBRootPath.c_str());
 
 		CCNode* pNode = pCCBReader->readNodeGraphFromFile(strCCBFileName.c_str(), this);
@@ -53,6 +53,8 @@ bool BalloonScene::init()
         
         resetData();
         
+        CCMenuItemFont::setFontSize(getContentSize().width*0.1f);
+        
         m_pSpriteBackground->setScaleX(getContentSize().width/m_pSpriteBackground->getContentSize().width);
         m_pSpriteBackground->setScaleY(getContentSize().height/m_pSpriteBackground->getContentSize().height);
 		
@@ -62,6 +64,8 @@ bool BalloonScene::init()
             m_BalloonManger.init(this, m_pLayerBalloon);
         
         m_pSpriteBalloonModel->setVisible(false);
+        
+        BalloonSoundManager::sharedBalloonSoundManager();
 		
 		bRet = true;
 		
@@ -75,7 +79,7 @@ void BalloonScene::resetData()
     m_ulFrame = 0;
     m_lTotalScore = 0;
     
-    m_ulTimeLeft = 120;
+    m_ulTimeLeft = 60;
     
     updateScore();
     updateTimeLeft();
@@ -83,20 +87,20 @@ void BalloonScene::resetData()
 
 void BalloonScene::updateScore()
 {
-    m_pLabelTTFScore->setString(CCString::createWithFormat("%ld", m_lTotalScore)->getCString());
+    m_pLabelTTFScore->setString(CCString::createWithFormat("å¾—åˆ†ï¼š%ld", m_lTotalScore)->getCString());
 }
 
 void BalloonScene::updateTimeLeft()
 {
-    m_pLabelTTFTime->setString(CCString::createWithFormat("%lu", m_ulTimeLeft)->getCString());
+    m_pLabelTTFTime->setString(CCString::createWithFormat("å‰©ä½™æ—¶é—´ï¼š%lu", m_ulTimeLeft)->getCString());
 }
 
 void BalloonScene::onEnter()
 {
 	CCLayer::onEnter();
-	// TODO: ÕâÀï¿ÉÒÔ¶¨Òå½øÈë³¡¾°µÄ³õÊ¼»¯£¬±ÈÈç¿Ø¼şµÄ³õÊ¼Î»ÖÃ£¬³õÊ¼×´Ì¬µÈ
+	// TODO: è¿™é‡Œå¯ä»¥å®šä¹‰è¿›å…¥åœºæ™¯çš„åˆå§‹åŒ–ï¼Œæ¯”å¦‚æ§ä»¶çš„åˆå§‹ä½ç½®ï¼Œåˆå§‹çŠ¶æ€ç­‰
     
-    // Æô¶¯µ¥µã´¥Ãş»Øµ÷×¢²á
+    // å¯åŠ¨å•ç‚¹è§¦æ‘¸å›è°ƒæ³¨å†Œ
     CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, this->getTouchPriority(), false);
     
     startGame();
@@ -106,12 +110,12 @@ void BalloonScene::onEnter()
 void BalloonScene::onExit()
 {
 	CCLayer::onExit();
-	// TODO: ÍË³ö³¡¾°£¬È¡ÏûCCNotificationCenter¿ÉÒÔ·ÅÔÚÕâÀï×ö£¬µ«ÊÇ¶ÔÓ¦ÔÚonEnterµÄÊ±ºòÒªÖØĞÂ×¢²á
+	// TODO: é€€å‡ºåœºæ™¯ï¼Œå–æ¶ˆCCNotificationCenterå¯ä»¥æ”¾åœ¨è¿™é‡Œåšï¼Œä½†æ˜¯å¯¹åº”åœ¨onEnterçš„æ—¶å€™è¦é‡æ–°æ³¨å†Œ
     
-    // Í£Ö¹³¡¾°»Øµ÷
+    // åœæ­¢åœºæ™¯å›è°ƒ
     unscheduleUpdate();
     
-    // ×¢Ïúµ¥µã´¥Ãş»Øµ÷×¢²á
+    // æ³¨é”€å•ç‚¹è§¦æ‘¸å›è°ƒæ³¨å†Œ
     CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
 }
 
@@ -146,7 +150,7 @@ SEL_CCControlHandler BalloonScene::onResolveCCBCCControlSelector( CCObject * pTa
 
 bool BalloonScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
-//    m_BalloonManger.touchTest(pTouch->getLocation());
+    m_BalloonManger.touchTest(pTouch->getLocation());
     return true;
 }
 
@@ -172,29 +176,36 @@ void BalloonScene::balloonHitTestSuccess(Balloon* pBalloon, cocos2d::CCSprite* p
 
 void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite* pSprite)
 {
+    // å¢åŠ ç²’å­ç‰¹æ•ˆ
+    CCParticleSystemQuad* pParticleExplosive = CCParticleSystemQuad::create("particles/explosive.plist");
+    pParticleExplosive->setAutoRemoveOnFinish(true);
+    pParticleExplosive->setPosition(pBalloon->getPosition());
+    pParticleExplosive->setEndColor(pBalloon->getBalloonColor4F());
+    addChild(pParticleExplosive);
+    
     switch (pBalloon->getBalloonType())
     {
         case kBalloonTypeNormal:
-            // ¸ù¾İ¶ÔÓ¦µÄÆøÇò·ÖÊıÔö¼Óµ½×Ü·ÖÉÏ
+            // æ ¹æ®å¯¹åº”çš„æ°”çƒåˆ†æ•°å¢åŠ åˆ°æ€»åˆ†ä¸Š
             m_lTotalScore += pBalloon->getBalloonScore();
             if (m_lTotalScore < 0)
             {
                 m_lTotalScore = 0;
             }
-            m_pLabelTTFScore->setString(CCString::createWithFormat("%ld", m_lTotalScore)->getCString());
+            updateScore();
             break;
         case kBalloonTypeMulti:
-            // ³Ë·ÖÆøÇò£¬µ±Ç°³¡¾°ÏÂµÄËùÓĞÆÕÍ¨ÆøÇò·ÖÊı³Ë
+            // ä¹˜åˆ†æ°”çƒï¼Œå½“å‰åœºæ™¯ä¸‹çš„æ‰€æœ‰æ™®é€šæ°”çƒåˆ†æ•°ä¹˜
             m_BalloonManger.multipleBalloonScore(pBalloon->getBalloonScore());
             break;
         case kBalloonTypeDiv:
-            // ³ı·ÖÆøÇò
+            // é™¤åˆ†æ°”çƒ
             m_lTotalScore /= pBalloon->getBalloonScore();
             if (m_lTotalScore < 0)
             {
                 m_lTotalScore = 0;
             }
-            m_pLabelTTFScore->setString(CCString::createWithFormat("%ld", m_lTotalScore)->getCString());
+            updateScore();
             break;
             
         default:
@@ -228,20 +239,20 @@ void BalloonScene::update(float dt)
                 updateTimeLeft();
             }
             
-            // ÅĞ¶ÏÓÎÏ·ÊÇ·ñ½áÊø
+            // åˆ¤æ–­æ¸¸æˆæ˜¯å¦ç»“æŸ
             if (m_ulTimeLeft == 0)
             {
                 m_eGameStatus = GAME_STATUS_STOP;
             }
             
-            // Ëæ»ú³öÏÖÆøÇòÏòÉÏÆ®
+            // éšæœºå‡ºç°æ°”çƒå‘ä¸Šé£˜
             if (rand()%1000 < BALLOON_SHOW_RATE)
             {
-                // Éú³ÉÒ»¸öÆøÇò
+                // ç”Ÿæˆä¸€ä¸ªæ°”çƒ
                 m_BalloonManger.addRandomBalloon();
             }
             
-            // ¸üĞÂÆøÇòÎ»ÖÃ
+            // æ›´æ–°æ°”çƒä½ç½®
             m_BalloonManger.updatePosition();
             
             break;
@@ -250,7 +261,7 @@ void BalloonScene::update(float dt)
             
             m_pLayerBalloon->removeAllChildren();
             
-            // µ¯³ö½áËã¿ò
+            // å¼¹å‡ºç»“ç®—æ¡†
             showResultDialog();
             
             break;
@@ -264,9 +275,16 @@ void BalloonScene::showResultDialog()
 {
     CCMenuItemFont* pMenuItem = CCMenuItemFont::create("Try again", this,
                                                        menu_selector(BalloonScene::onPressMenuRestartGame));
+    pMenuItem->setColor(ccBLACK);
+    
     CCMenu* pMenu = CCMenu::create(pMenuItem, NULL);
     
-    pMenu->setPosition(ccpMult(ccpFromSize(getContentSize()), 0.5f));
+    CCPoint posStart = ccp(getContentSize().width*0.5f, getContentSize().height);
+    CCPoint posEnd = ccpMult(ccpFromSize(getContentSize()), 0.5f);
+    pMenu->setPosition(posStart);
+    
+    pMenu->runAction(CCEaseBounceOut::create(CCMoveTo::create(1.0f, posEnd)));
+    
     addChild(pMenu);
 }
 
@@ -275,7 +293,7 @@ void BalloonScene::onPressMenuRestartGame(cocos2d::CCObject *pSender)
     CCNode* pNode = dynamic_cast<CCNode*>(pSender);
     if (!pNode) return;
     
-    // ÒÆ³ı°´Å¥²ã
+    // ç§»é™¤æŒ‰é’®å±‚
     pNode->getParent()->removeFromParent();
     
     startGame();

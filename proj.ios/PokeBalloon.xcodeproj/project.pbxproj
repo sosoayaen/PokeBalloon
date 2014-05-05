@@ -13,6 +13,7 @@
 		0458E80919167BAB00FA1321 /* Icon-58.png in Resources */ = {isa = PBXBuildFile; fileRef = 0458E80519167BAB00FA1321 /* Icon-58.png */; };
 		0458E80A19167BAB00FA1321 /* Icon-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 0458E80619167BAB00FA1321 /* Icon-80.png */; };
 		0458E80B19167BAB00FA1321 /* Icon-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 0458E80719167BAB00FA1321 /* Icon-120.png */; };
+		0469117F19175937009A0734 /* particles in Resources */ = {isa = PBXBuildFile; fileRef = 0469117E19175937009A0734 /* particles */; };
 		04AAEA9C191362F8006147E3 /* AutoTextureManagerLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04AAEA97191362F8006147E3 /* AutoTextureManagerLayer.cpp */; };
 		04AAEA9D191362F8006147E3 /* TextureManagerProtocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04AAEA99191362F8006147E3 /* TextureManagerProtocol.cpp */; };
 		04AAEAC2191383F9006147E3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04AAEABB191383F9006147E3 /* Default-568h@2x.png */; };
@@ -269,6 +270,7 @@
 		0458E80519167BAB00FA1321 /* Icon-58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-58.png"; sourceTree = SOURCE_ROOT; };
 		0458E80619167BAB00FA1321 /* Icon-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-80.png"; sourceTree = SOURCE_ROOT; };
 		0458E80719167BAB00FA1321 /* Icon-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-120.png"; sourceTree = SOURCE_ROOT; };
+		0469117E19175937009A0734 /* particles */ = {isa = PBXFileReference; lastKnownFileType = folder; path = particles; sourceTree = "<group>"; };
 		04AAEA97191362F8006147E3 /* AutoTextureManagerLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = AutoTextureManagerLayer.cpp; sourceTree = "<group>"; };
 		04AAEA98191362F8006147E3 /* AutoTextureManagerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = AutoTextureManagerLayer.h; sourceTree = "<group>"; };
 		04AAEA99191362F8006147E3 /* TextureManagerProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureManagerProtocol.cpp; sourceTree = "<group>"; };
@@ -283,7 +285,7 @@
 		04AAEAC91913C9F0006147E3 /* BalloonSoundManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = BalloonSoundManager.cpp; path = ../Classes/BalloonSoundManager.cpp; sourceTree = "<group>"; };
 		04AAEACA1913C9F0006147E3 /* BalloonSoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = BalloonSoundManager.h; path = ../Classes/BalloonSoundManager.h; sourceTree = "<group>"; };
 		04AAEACC1913C9FE006147E3 /* music */ = {isa = PBXFileReference; lastKnownFileType = folder; path = music; sourceTree = "<group>"; };
-		04C2A2A319028D7E004256B2 /* BalloonScene.cpp */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.cpp.cpp; name = BalloonScene.cpp; path = ../Classes/BalloonScene.cpp; sourceTree = "<group>"; };
+		04C2A2A319028D7E004256B2 /* BalloonScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BalloonScene.cpp; path = ../Classes/BalloonScene.cpp; sourceTree = "<group>"; };
 		04C2A2A419028D7E004256B2 /* BalloonScene.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; name = BalloonScene.h; path = ../Classes/BalloonScene.h; sourceTree = "<group>"; };
 		04C2A2A61902B898004256B2 /* Balloon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Balloon.cpp; path = ../Classes/Balloon.cpp; sourceTree = "<group>"; };
 		04C2A2A71902B898004256B2 /* Balloon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Balloon.h; path = ../Classes/Balloon.h; sourceTree = "<group>"; };
@@ -754,6 +756,7 @@
 				04AAEAC1191383F9006147E3 /* Icon-144.png */,
 				044BAB881905048A00D8CCB3 /* balloon */,
 				04AAEACC1913C9FE006147E3 /* music */,
+				0469117E19175937009A0734 /* particles */,
 				044BAB761905045600D8CCB3 /* BalloonScene.ccbi */,
 			);
 			name = Resources;
@@ -1680,6 +1683,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0469117F19175937009A0734 /* particles in Resources */,
 				04AAEAC7191383F9006147E3 /* Icon-114.png in Resources */,
 				044BAB831905045600D8CCB3 /* BalloonScene.ccbi in Resources */,
 				0458E80A19167BAB00FA1321 /* Icon-80.png in Resources */,

@@ -51,7 +51,7 @@ class BalloonManager
     
     // 管理对象是否初始化的标志
     CC_PROPERTY_READONLY(bool, m_bInited, InitFlag);
-
+    
 public:
 	BalloonManager();
 	~BalloonManager();

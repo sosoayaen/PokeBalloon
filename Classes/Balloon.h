@@ -35,6 +35,8 @@ class Balloon : public cocos2d::CCSprite
 	CC_SYNTHESIZE_BOOL(m_bAlive, Alive);
 	// 气球的分数
 	CC_SYNTHESIZE(long, m_lScore, BalloonScore);
+    // 设定气球的颜色，供后期使用，比如粒子效果
+    CC_SYNTHESIZE(cocos2d::ccColor4F, m_pBalloonColor4F, BalloonColor4F);
 
 public:
     Balloon();
@@ -58,7 +60,7 @@ public:
     void updatePosition();
 
 	// 气球爆炸效果
-	void explorsive();
+	void explosive();
 
 	/**
 	 * @brief 碰撞检测

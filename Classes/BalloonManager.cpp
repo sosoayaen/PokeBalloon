@@ -63,7 +63,7 @@ void BalloonManager::updatePosition()
 		pBalloon->updatePosition();
 
 		// 判断如果气球移出屏幕择直接消失
-		if (pBalloon->getPositionY() > m_sizeScreen.height) 
+		if (pBalloon->getPositionY() > m_sizeScreen.height + pBalloon->getContentSize().height)
 		{
 			// 从层中移除对象
 			if (pBalloon->getParent())
@@ -126,7 +126,7 @@ bool BalloonManager::touchTest(const cocos2d::CCPoint point, cocos2d::CCSprite* 
 				m_pBalloonDelegate->balloonTouchTestSuccess(pBalloon, pSprite);
 
 			// 气球爆炸回调
-			pBalloon->explorsive();
+			pBalloon->explosive();
 
 			bRet = true;
 			break;
@@ -141,42 +141,82 @@ void BalloonManager::addRandomBalloon()
 	if (m_pLayerBalloonContainer)
 	{
 		// 随机生成一个气球
-        int nBalloonIndex = rand()%7+1;
+        int nBalloonIndex = rand()%8 + 1;
+        ccColor4F color = ccc4f(1.0f, 1.0f, 1.0f, 1.0f);
+        switch (nBalloonIndex)
+        {
+            case 1:
+                color = ccc4f(0, 0.69f, 0.203f, 1.0f);
+                break;
+            case 2:
+                color = ccc4f(0.376f, 0.376f, 0.376f, 1.0f);
+                break;
+            case 3:
+                color = ccc4f(0.933f, 0.608f, 0, 1.0f);
+                break;
+            case 4:
+                color = ccc4f(0.765f, 0.051f, 0.137f, 1.0f);
+                break;
+            case 5:
+                color = ccc4f(0.157f, 0.655f, 0.882f, 1.0f);
+                break;
+            case 6:
+                color = ccc4f(1.0f, 0.945f, 0, 1.0f);
+                break;
+            case 7:
+                color = ccc4f(0.659f, 0.498f, 0.29f, 1.0f);
+                break;
+            case 8:
+                color = ccc4f(0.949f, 0.624f, 0.686f, 1.0f);
+                break;
+            default:
+                break;
+        }
 		CCString* pStrBalloonName = CCString::createWithFormat("balloon/balloon_1_%d.png", nBalloonIndex);
         int nValue = rand()%3 + 1;
         BalloonType nType = kBalloonTypeNormal;
+        int nBalloonStyle = rand()%3 + 2;
 
         int nRate = rand()%100;
         if (nRate > 90)
         {
-            pStrBalloonName = CCString::createWithFormat("balloon/balloon_4_%d.png", nBalloonIndex);
+            pStrBalloonName = CCString::createWithFormat("balloon/balloon_%d_%d.png", nBalloonStyle, nBalloonIndex);
             nValue = 2;
             nType = kBalloonTypeMulti;
         }
         else if (nRate > 80)
         {
-            pStrBalloonName = CCString::createWithFormat("balloon/balloon_3_%d.png", nBalloonIndex);
+            pStrBalloonName = CCString::createWithFormat("balloon/balloon_%d_%d.png", nBalloonStyle, nBalloonIndex);
             nValue = 2;
             nType = kBalloonTypeDiv;
         }
         else if (nRate > 70)
         {
-            pStrBalloonName = CCString::createWithFormat("balloon/balloon_2_%d.png", nBalloonIndex);
+            pStrBalloonName = CCString::createWithFormat("balloon/balloon_%d_%d.png", nBalloonStyle, nBalloonIndex);
             nValue *= -1;
         }
         
 		// 设定随机缩放
-		float fScale = 1.5f;
-
-		// 随机生成X坐标，起始值为0加气球的半个宽度，终止值为屏幕宽减去半个气球宽度
-		float fStartPosX = fmod(rand(), CCDirector::sharedDirector()->getWinSize().width);
-		float fStartPosY = 0;
+		float fScale = (rand()%5 + 6)*0.1f;
 
 		// 增加一个气球到屏幕
 		Balloon* pBalloon = Balloon::create(pStrBalloonName->getCString(), nValue, nType);
         if (!pBalloon) return;
-		pBalloon->setPosition(ccp(fStartPosX, fStartPosY));
-		pBalloon->setSpeedY(rand()%50/5.0f + 0.5f);
+        
+        CCSize balloonSize = pBalloon->getContentSize();
+        
+		// 随机生成X坐标，起始值为0加气球的半个宽度，终止值为屏幕宽减去半个气球宽度
+		float fStartPosX = fmod(rand(), CCDirector::sharedDirector()->getWinSize().width - balloonSize.width);
+		float fStartPosY = - balloonSize.height;
+		pBalloon->setPosition(ccp(fStartPosX + balloonSize.width/2, fStartPosY));
+		pBalloon->setSpeedY(rand()%50/5.0f + 1.0f);
+        pBalloon->setBalloonColor4F(color);
+        
+        pBalloon->setScale(fScale);
+        
+        
+        // 给气球一个随机角度
+        pBalloon->setRotation(rand()%60 - 30);
 
 		// m_BalloonObjectList.push_back(pBalloon);
 

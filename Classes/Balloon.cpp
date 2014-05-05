@@ -108,7 +108,7 @@ void Balloon::updatePosition()
     
 }
 
-void Balloon::explorsive()
+void Balloon::explosive()
 {
 	// 播放气球爆炸音效
 	BalloonSoundManager::sharedBalloonSoundManager()->playEffectExplosive();
@@ -152,10 +152,10 @@ void Balloon::updateDisplayDesc()
             pStrDesc = CCString::createWithFormat("%+ld", getBalloonScore());
             break;
         case kBalloonTypeMulti:
-            pStrDesc = CCString::createWithFormat("x%ld", getBalloonScore());
+            pStrDesc = CCString::createWithFormat("×%ld", getBalloonScore());
             break;
         case kBalloonTypeDiv:
-            pStrDesc = CCString::createWithFormat("%%%ld", getBalloonScore());
+            pStrDesc = CCString::createWithFormat("÷%ld", getBalloonScore());
             break;
         default:
             break;
@@ -165,7 +165,7 @@ void Balloon::updateDisplayDesc()
     m_strDisplayDesc = pStrDesc->getCString();
     if (!m_pLabelDesc)
     {
-        m_pLabelDesc = CCLabelTTF::create("", "", 30);
+        m_pLabelDesc = CCLabelTTF::create("", "", 80);
         m_pLabelDesc->setPosition(ccpMult(ccpFromSize(getContentSize()), 0.5f));
         addChild(m_pLabelDesc);
     }
