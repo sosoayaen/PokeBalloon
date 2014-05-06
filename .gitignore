@@ -15,3 +15,16 @@ fileLookup.plist
 *.perspectivev3
 *.pbxuser
 xcuserdata
+
+# 排除动态库和临时编译出来的文件
+*.a
+*.d
+*.dll
+*.dylib
+*.exe
+*.o
+*.obj
+*.so
+*/.git/*
+*.deployables
+*.git
