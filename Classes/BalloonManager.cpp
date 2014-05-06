@@ -214,9 +214,20 @@ void BalloonManager::addRandomBalloon()
         
         pBalloon->setScale(fScale);
         
+        // 每个气球加一个随机的晃动效果
+        float fRandomMoveDuration = (rand()%20+1)/10.0f;
+        float fRandomMoveDistance = rand()%int(pBalloon->boundingBox().size.width) * (rand()%2 ? 1 : -1);
+        CCSequence* pActionShake = CCSequence::create(CCMoveBy::create(fRandomMoveDuration, ccp(fRandomMoveDistance, 0)), CCDelayTime::create(rand()%10/10.0f), CCMoveBy::create(fRandomMoveDuration, ccp(-fRandomMoveDistance, 0)), NULL);
+        
+        // 自动摇摆
+        float fRandomRotateDuration = (rand()%15+1)/10.0f;
+        float fRandomRotateAngle = (rand()%30+1) * (rand()%2 ? 1 : -1);
+        CCSequence* pActionRotate = CCSequence::create(CCRotateBy::create(fRandomRotateDuration, fRandomRotateAngle), CCDelayTime::create(fRandomRotateDuration), CCRotateBy::create(fRandomRotateDuration, -fRandomRotateAngle),NULL);
+
+        pBalloon->runAction(CCSpawn::create(pActionShake, pActionRotate, NULL));
         
         // 给气球一个随机角度
-        pBalloon->setRotation(rand()%60 - 30);
+        pBalloon->setRotation(rand()%30 - 15);
 
 		// m_BalloonObjectList.push_back(pBalloon);
 
