@@ -89,7 +89,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>balloon/background.png</string>
+							<string>mainboard/main_background.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -185,8 +185,6 @@
 						<true/>
 					</dict>
 				</array>
-				<key>selected</key>
-				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>

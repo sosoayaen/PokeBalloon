@@ -43,8 +43,27 @@ void BalloonSoundManager::purgeBalloonSoundManager()
 	}
 }
 
+bool BalloonSoundManager::isBackgroundMusicPlaying()
+{
+    return SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying();
+}
+
 void BalloonSoundManager::playEffectExplosive()
 {
 	SimpleAudioEngine::sharedEngine()->playEffect(SOUND_EFFECT_EXPLOSIVE);
 }
 
+
+void BalloonSoundManager::playBackgroundMusic(int soundId)
+{
+    const char* pszBackgroundSoundName = NULL;
+    switch (soundId) {
+        case SOUND_BACKGROUND_AFTER_SCHOOL:
+            pszBackgroundSoundName = SOUND_BACKGROUND_AFTER_SCHOOL_FILE;
+            break;
+            
+        default:
+            return;
+    }
+    SimpleAudioEngine::sharedEngine()->playBackgroundMusic(pszBackgroundSoundName, true);
+}

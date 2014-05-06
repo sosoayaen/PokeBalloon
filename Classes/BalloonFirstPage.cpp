@@ -1,5 +1,6 @@
 #include "BalloonFirstPage.h"
 #include "BalloonScene.h"
+#include "BalloonSoundManager.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -67,12 +68,20 @@ void BalloonFirstPage::onEnter()
 {
 	CCLayer::onEnter();
 	// TODO: 这里可以定义进入场景的初始化，比如控件的初始位置，初始状态等
+    
+    if (!BalloonSoundManager::sharedBalloonSoundManager()->isBackgroundMusicPlaying())
+    {
+        BalloonSoundManager::sharedBalloonSoundManager()->playBackgroundMusic(SOUND_BACKGROUND_AFTER_SCHOOL);
+    }
+    
+    m_pMenuMain->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.8f, ccpMult(ccpFromSize(getContentSize()), 0.5f))));
 }
 
 void BalloonFirstPage::onExit()
 {
 	CCLayer::onExit();
 	// TODO: 退出场景，取消CCNotificationCenter可以放在这里做，但是对应在onEnter的时候要重新注册
+    m_pMenuMain->setPosition(ccp(getContentSize().width*0.5f, getContentSize().height*1.5f));
 }
 
 SEL_CallFuncN BalloonFirstPage::onResolveCCBCCCallFuncSelector( CCObject * pTarget, const char* pSelectorName )
@@ -118,6 +127,8 @@ void BalloonFirstPage::initMenu()
     m_pMenuMain->addChild(pMenuItemOptions);
     
     m_pMenuMain->alignItemsVerticallyWithPadding(pMenuItemOptions->getContentSize().height);
+    
+    m_pMenuMain->setPosition(ccp(getContentSize().width*0.5f, getContentSize().height*1.5f));
 }
 
 void BalloonFirstPage::onPressMenuStartGame(cocos2d::CCObject *pSender)

@@ -5,6 +5,7 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 
 #define BALLOON_SHOW_RATE 18     // 气球出现的概率，10表示1%，50就是5%
+#define DEFAULT_TIME         30
 
 BalloonScene::~BalloonScene()
 {
@@ -79,7 +80,7 @@ void BalloonScene::resetData()
     m_ulFrame = 0;
     m_lTotalScore = 0;
     
-    m_ulTimeLeft = 60;
+    m_ulTimeLeft = DEFAULT_TIME;
     
     updateScore();
     updateTimeLeft();
