@@ -4,6 +4,17 @@
 #import "AppDelegate.h"
 #import "RootViewController.h"
 
+//*
+#import "WXApi.h"      //微信
+#import "WeiboApi.h"      //腾讯微博
+#import <TencentOpenAPI/QQApiInterface.h>     //QQ互联
+#import <TencentOpenAPI/TencentOAuth.h>      //QQ互联
+#import <RennSDK/RennSDK.h>     //人人网
+#import <Pinterest/Pinterest.h>     //Pinterest
+#import <GoogleOpenSource/GoogleOpenSource.h>    //Google+
+#import <GooglePlus/GooglePlus.h>     //Google+
+//*/
+ 
 @implementation AppController
 
 #pragma mark -
@@ -16,6 +27,26 @@ static AppDelegate s_sharedApplication;
     
     // Override point for customization after application launch.
 
+    //*
+    //导入微信类型
+    [ShareSDK importWeChatClass:[WXApi class]];
+    
+    //导入腾讯微博类型
+    [ShareSDK importTencentWeiboClass:[WeiboApi class]];
+    
+    //导入QQ类型
+    [ShareSDK importQQClass:[QQApiInterface class] tencentOAuthCls:[TencentOAuth class]];
+    
+    //导入人人网类型
+    [ShareSDK importRenRenClass:[RennClient class]];
+    
+    //导入Pinterest类型
+    [ShareSDK importPinterestClass:[Pinterest class]];
+    
+    //导入Google+类型
+    [ShareSDK importGooglePlusClass:[GPPSignIn class] shareClass:[GPPShare class]];
+    //*/
+    
     // Add the view controller's view to the window and display.
     window = [[UIWindow alloc] initWithFrame: [[UIScreen mainScreen] bounds]];
     
@@ -46,6 +77,7 @@ static AppDelegate s_sharedApplication;
     }
     
     [window makeKeyAndVisible];
+    
     
     [[UIApplication sharedApplication] setStatusBarHidden:true];
     
@@ -108,5 +140,14 @@ static AppDelegate s_sharedApplication;
     [super dealloc];
 }
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return [ShareSDK handleOpenURL:url sourceApplication:nil annotation:nil wxDelegate:nil];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    return [ShareSDK handleOpenURL:url sourceApplication:sourceApplication annotation:annotation wxDelegate:nil];
+}
 
 @end
