@@ -157,8 +157,16 @@ void Balloon::updateDisplayDesc()
         case kBalloonTypeDiv:
             pStrDesc = CCString::createWithFormat("÷%ld", getBalloonScore());
             break;
+        case kBalloonTypeAddTime:
+        {
+            CCSprite* pSpriteClock = CCSprite::create("balloon/balloon_time.png");
+            pSpriteClock->setPosition(ccpMult(ccpFromSize(getContentSize()), 0.5f));
+            addChild(pSpriteClock);
+        }
+            return;
         default:
-            break;
+            // 默认是不显示文字
+            return;
     }
     
     // 更新显示文字

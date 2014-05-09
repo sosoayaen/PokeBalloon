@@ -99,21 +99,23 @@ void AppDelegate::initPlatformConfig()
     sinaConfigDict -> setObject(CCString::create("http://www.sharesdk.cn"), "redirect_uri");
     C2DXShareSDK::setPlatformConfig(C2DXPlatTypeSinaWeibo, sinaConfigDict);
     
-    //ÌÚÑ¶Î¢²©
+    /*/ÌÚÑ¶Î¢²©
     CCDictionary *tcConfigDict = CCDictionary::create();
     tcConfigDict -> setObject(CCString::create("801307650"), "app_key");
     tcConfigDict -> setObject(CCString::create("ae36f4ee3946e1cbb98d6965b0b2ff5c"), "app_secret");
     tcConfigDict -> setObject(CCString::create("http://www.sharesdk.cn"), "redirect_uri");
     C2DXShareSDK::setPlatformConfig(C2DXPlatTypeTencentWeibo, tcConfigDict);
+    //*/
     
     //¶ÌÐÅ
-    C2DXShareSDK::setPlatformConfig(C2DXPlatTypeSMS, NULL);
+    // C2DXShareSDK::setPlatformConfig(C2DXPlatTypeSMS, NULL);
     
-    //QQ¿Õ¼ä
+    /*/QQ¿Õ¼ä
     CCDictionary *qzConfigDict = CCDictionary::create();
     qzConfigDict -> setObject(CCString::create("100371282"), "app_id");
     qzConfigDict -> setObject(CCString::create("aed9b0303e3ed1e27bae87c33761161d"), "app_key");
     C2DXShareSDK::setPlatformConfig(C2DXPlatTypeQZone, qzConfigDict);
+    //*/
     
     //Î¢ÐÅ
     CCDictionary *wcConfigDict = CCDictionary::create();
@@ -122,7 +124,7 @@ void AppDelegate::initPlatformConfig()
     C2DXShareSDK::setPlatformConfig(C2DXPlatTypeWeixiTimeline, wcConfigDict);
     C2DXShareSDK::setPlatformConfig(C2DXPlatTypeWeixiFav, wcConfigDict);
     
-    //QQ
+    /*/QQ
     CCDictionary *qqConfigDict = CCDictionary::create();
     qqConfigDict -> setObject(CCString::create("100371282"), "app_id");
     C2DXShareSDK::setPlatformConfig(C2DXPlatTypeQQ, qqConfigDict);
@@ -268,5 +270,6 @@ void AppDelegate::initPlatformConfig()
     vkConfigDict -> setObject(CCString::create("3921561"), "application_id");
     vkConfigDict -> setObject(CCString::create("6Qf883ukLDyz4OBepYF1"), "secret_key");
     C2DXShareSDK::setPlatformConfig(C2DXPlatTypeVKontakte, vkConfigDict);
+    //*/
 
 }

@@ -4,7 +4,8 @@
 USING_NS_CC;
 USING_NS_CC_EXT;
 
-#define BALLOON_SHOW_RATE 18     // 气球出现的概率，10表示1%，50就是5%
+#define BALLOON_SHOW_RATE    18     // 气球出现的概率，10表示1%，50就是5%
+#define CLOUD_SHOW_RATE      5
 #define DEFAULT_TIME         30
 
 BalloonScene::~BalloonScene()
@@ -64,6 +65,9 @@ bool BalloonScene::init()
         if (!m_BalloonManger.getInitFlag())
             m_BalloonManger.init(this, m_pLayerBalloon);
         
+        if (!m_CloudManager.getInitFlag())
+            m_CloudManager.init(m_pLayerBalloon);
+        
         m_pSpriteBalloonModel->setVisible(false);
         
         BalloonSoundManager::sharedBalloonSoundManager();
@@ -88,12 +92,12 @@ void BalloonScene::resetData()
 
 void BalloonScene::updateScore()
 {
-    m_pLabelTTFScore->setString(CCString::createWithFormat("得分：%ld", m_lTotalScore)->getCString());
+    m_pLabelTTFScore->setString(CCString::createWithFormat("Score: %ld", m_lTotalScore)->getCString());
 }
 
 void BalloonScene::updateTimeLeft()
 {
-    m_pLabelTTFTime->setString(CCString::createWithFormat("剩余时间：%lu", m_ulTimeLeft)->getCString());
+    m_pLabelTTFTime->setString(CCString::createWithFormat("%lus", m_ulTimeLeft)->getCString());
 }
 
 void BalloonScene::onEnter()
@@ -208,6 +212,11 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             }
             updateScore();
             break;
+        case kBalloonTypeAddTime:
+            // 时间增加
+            m_ulTimeLeft += pBalloon->getBalloonScore();
+            updateTimeLeft();
+            break;
             
         default:
             break;
@@ -255,6 +264,14 @@ void BalloonScene::update(float dt)
             
             // 更新气球位置
             m_BalloonManger.updatePosition();
+            
+            // 随机生成云朵，随机速度
+            if (rand()%1000 < CLOUD_SHOW_RATE)
+            {
+                m_CloudManager.addRandomCloud();
+            }
+            
+            m_CloudManager.updatePosition();
             
             break;
         case GAME_STATUS_STOP:

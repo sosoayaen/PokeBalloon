@@ -132,8 +132,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>11.71875</real>
-									<real>8.5416669845581055</real>
+									<real>50.15625</real>
+									<real>28.958332061767578</real>
 									<integer>4</integer>
 								</array>
 							</dict>
@@ -281,8 +281,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>97.5</real>
-							<real>97.1875</real>
+							<real>95.78125</real>
+							<real>5.625</real>
 							<integer>4</integer>
 						</array>
 					</dict>
@@ -409,8 +409,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>2.8125</real>
-							<real>97.1875</real>
+							<real>29.53125</real>
+							<real>5.625</real>
 							<integer>4</integer>
 						</array>
 					</dict>
@@ -512,6 +512,80 @@
 						<string>Text</string>
 						<key>value</key>
 						<string>0</string>
+					</dict>
+				</array>
+				<key>selected</key>
+				<true/>
+			</dict>
+			<dict>
+				<key>baseClass</key>
+				<string>CCSprite</string>
+				<key>children</key>
+				<array/>
+				<key>customClass</key>
+				<string></string>
+				<key>displayName</key>
+				<string>CCSprite</string>
+				<key>memberVarAssignmentName</key>
+				<string>m_pSpriteClock</string>
+				<key>memberVarAssignmentType</key>
+				<integer>2</integer>
+				<key>properties</key>
+				<array>
+					<dict>
+						<key>name</key>
+						<string>position</string>
+						<key>type</key>
+						<string>Position</string>
+						<key>value</key>
+						<array>
+							<real>20</real>
+							<real>5.5208334922790527</real>
+							<integer>4</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>anchorPoint</string>
+						<key>type</key>
+						<string>Point</string>
+						<key>value</key>
+						<array>
+							<real>0.5</real>
+							<real>0.5</real>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>scale</string>
+						<key>type</key>
+						<string>ScaleLock</string>
+						<key>value</key>
+						<array>
+							<real>1</real>
+							<real>1</real>
+							<false/>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>ignoreAnchorPointForPosition</string>
+						<key>type</key>
+						<string>Check</string>
+						<key>value</key>
+						<false/>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>displayFrame</string>
+						<key>type</key>
+						<string>SpriteFrame</string>
+						<key>value</key>
+						<array>
+							<string></string>
+							<string>balloon/clock.png</string>
+						</array>
 					</dict>
 				</array>
 			</dict>

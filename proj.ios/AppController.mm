@@ -6,13 +6,13 @@
 
 //*
 #import "WXApi.h"      //微信
-#import "WeiboApi.h"      //腾讯微博
-#import <TencentOpenAPI/QQApiInterface.h>     //QQ互联
-#import <TencentOpenAPI/TencentOAuth.h>      //QQ互联
-#import <RennSDK/RennSDK.h>     //人人网
-#import <Pinterest/Pinterest.h>     //Pinterest
-#import <GoogleOpenSource/GoogleOpenSource.h>    //Google+
-#import <GooglePlus/GooglePlus.h>     //Google+
+// #import "WeiboApi.h"      //腾讯微博
+// #import <TencentOpenAPI/QQApiInterface.h>     //QQ互联
+// #import <TencentOpenAPI/TencentOAuth.h>      //QQ互联
+// #import <RennSDK/RennSDK.h>     //人人网
+// #import <Pinterest/Pinterest.h>     //Pinterest
+// #import <GoogleOpenSource/GoogleOpenSource.h>    //Google+
+// #import <GooglePlus/GooglePlus.h>     //Google+
 //*/
  
 @implementation AppController
@@ -32,19 +32,19 @@ static AppDelegate s_sharedApplication;
     [ShareSDK importWeChatClass:[WXApi class]];
     
     //导入腾讯微博类型
-    [ShareSDK importTencentWeiboClass:[WeiboApi class]];
+    // [ShareSDK importTencentWeiboClass:[WeiboApi class]];
     
     //导入QQ类型
-    [ShareSDK importQQClass:[QQApiInterface class] tencentOAuthCls:[TencentOAuth class]];
+    // [ShareSDK importQQClass:[QQApiInterface class] tencentOAuthCls:[TencentOAuth class]];
     
     //导入人人网类型
-    [ShareSDK importRenRenClass:[RennClient class]];
+    // [ShareSDK importRenRenClass:[RennClient class]];
     
     //导入Pinterest类型
-    [ShareSDK importPinterestClass:[Pinterest class]];
+    // [ShareSDK importPinterestClass:[Pinterest class]];
     
     //导入Google+类型
-    [ShareSDK importGooglePlusClass:[GPPSignIn class] shareClass:[GPPShare class]];
+    // [ShareSDK importGooglePlusClass:[GPPSignIn class] shareClass:[GPPShare class]];
     //*/
     
     // Add the view controller's view to the window and display.
@@ -77,6 +77,21 @@ static AppDelegate s_sharedApplication;
     }
     
     [window makeKeyAndVisible];
+    
+    // GADBanner
+    bannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
+    bannerView_.delegate = self;
+    // Specify the ad's "unit identifier." This is your AdMob Publisher ID.
+    bannerView_.adUnitID = @"ca-app-pub-9727130637201516/8034810581";
+    
+    // Let the runtime know which UIViewController to restore after taking
+    // the user wherever the ad goes and add it to the view hierarchy.
+    bannerView_.rootViewController = viewController;
+    [viewController.view addSubview:bannerView_];
+    
+    // Initiate a generic request to load it with an ad.
+    GADRequest* adRequest = [GADRequest request];
+    [bannerView_ loadRequest:adRequest];
     
     
     [[UIApplication sharedApplication] setStatusBarHidden:true];

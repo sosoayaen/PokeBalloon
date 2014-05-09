@@ -11,6 +11,7 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 #include "BalloonManager.h"
+#include "CloudManager.h"
 
 enum BalloonGameStatus
 {
@@ -75,6 +76,8 @@ private:
 	cocos2d::CCSprite* m_pSpriteBalloonModel;
 	cocos2d::CCLabelTTF* m_pLabelTTFScore;
 	cocos2d::CCLabelTTF* m_pLabelTTFTime;
+    
+    cocos2d::CCSprite* m_pSpriteClock;
     // 气球层
     cocos2d::CCLayer* m_pLayerBalloon;
     // 背景
@@ -87,6 +90,9 @@ private:
     
     // 气球管理类
     BalloonManager m_BalloonManger;
+    
+    // 云朵管理对象
+    CloudManager m_CloudManager;
     
     // 当前用户分数
     long m_lTotalScore;

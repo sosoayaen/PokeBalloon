@@ -16,7 +16,8 @@ enum BalloonType
 {
 	kBalloonTypeNormal = 0,		// 普通气球
     kBalloonTypeMulti,          // 乘分气球
-    kBalloonTypeDiv            // 除分气球
+    kBalloonTypeDiv,            // 除分气球
+    kBalloonTypeAddTime         // 增加时间的球
 };
 
 class Balloon : public cocos2d::CCSprite

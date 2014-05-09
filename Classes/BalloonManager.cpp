@@ -172,32 +172,38 @@ void BalloonManager::addRandomBalloon()
             default:
                 break;
         }
-		CCString* pStrBalloonName = CCString::createWithFormat("balloon/balloon_1_%d.png", nBalloonIndex);
         int nValue = rand()%3 + 1;
         BalloonType nType = kBalloonTypeNormal;
-        int nBalloonStyle = rand()%3 + 2;
+        int nBalloonStyle = rand()%4 + 1;
 
+        CCString* pStrBalloonName = CCString::createWithFormat("balloon/balloon_%d_%d.png", nBalloonStyle, nBalloonIndex);
+        
         int nRate = rand()%100;
-        if (nRate > 90)
+        if (nRate > 95)
         {
-            pStrBalloonName = CCString::createWithFormat("balloon/balloon_%d_%d.png", nBalloonStyle, nBalloonIndex);
+            // 两倍出现的概率为5%
             nValue = 2;
             nType = kBalloonTypeMulti;
         }
-        else if (nRate > 80)
+        else if (nRate > 85)
         {
-            pStrBalloonName = CCString::createWithFormat("balloon/balloon_%d_%d.png", nBalloonStyle, nBalloonIndex);
+            // 除二出现的概率为10%
             nValue = 2;
             nType = kBalloonTypeDiv;
         }
-        else if (nRate > 70)
+        else if (nRate > 80)
         {
-            pStrBalloonName = CCString::createWithFormat("balloon/balloon_%d_%d.png", nBalloonStyle, nBalloonIndex);
+            // 时钟出现的概率为5%
+            nValue = 5; // 5秒
+            nType = kBalloonTypeAddTime;
+        }
+        else if (nRate > 50)
+        {
             nValue *= -1;
         }
         
 		// 设定随机缩放
-		float fScale = (rand()%5 + 6)*0.1f;
+		float fScale = (rand()%4 + 5)*0.1f;
 
 		// 增加一个气球到屏幕
 		Balloon* pBalloon = Balloon::create(pStrBalloonName->getCString(), nValue, nType);
