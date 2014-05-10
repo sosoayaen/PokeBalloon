@@ -2,7 +2,7 @@
 #define  _APP_DELEGATE_H_
 
 #include "cocos2d.h"
-#include "C2DXShareSDK.h"
+// #include "C2DXShareSDK.h"
 
 /**
 @brief    The cocos2d Application.
@@ -38,7 +38,7 @@ private:
     /**
      * @brief 初始化社交平台
      */
-    void initPlatformConfig();
+    // void initPlatformConfig();
 };
 
 #endif // _APP_DELEGATE_H_

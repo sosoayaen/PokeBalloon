@@ -5,7 +5,7 @@
 #import "RootViewController.h"
 
 //*
-#import "WXApi.h"      //微信
+// #import "WXApi.h"      //微信
 // #import "WeiboApi.h"      //腾讯微博
 // #import <TencentOpenAPI/QQApiInterface.h>     //QQ互联
 // #import <TencentOpenAPI/TencentOAuth.h>      //QQ互联
@@ -27,7 +27,7 @@ static AppDelegate s_sharedApplication;
     
     // Override point for customization after application launch.
 
-    //*
+    /*
     //导入微信类型
     [ShareSDK importWeChatClass:[WXApi class]];
     
@@ -155,6 +155,7 @@ static AppDelegate s_sharedApplication;
     [super dealloc];
 }
 
+/*
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
     return [ShareSDK handleOpenURL:url sourceApplication:nil annotation:nil wxDelegate:nil];
@@ -164,5 +165,6 @@ static AppDelegate s_sharedApplication;
 {
     return [ShareSDK handleOpenURL:url sourceApplication:sourceApplication annotation:annotation wxDelegate:nil];
 }
+*/
 
 @end

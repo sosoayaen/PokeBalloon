@@ -5,7 +5,7 @@
 USING_NS_CC;
 
 using namespace CocosDenshion;
-using namespace cn::sharesdk;
+// using namespace cn::sharesdk;
 
 AppDelegate::AppDelegate()
 {
@@ -22,7 +22,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS) || (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     // 初始化shareSDK
-    initPlatformConfig();
+   //  initPlatformConfig();
 #endif
 
     pDirector->setOpenGLView(pEGLView);
@@ -81,6 +81,7 @@ void AppDelegate::applicationWillEnterForeground() {
     SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
 }
 
+/*
 void AppDelegate::initPlatformConfig()
 {
     const char* pszShareSDKAppKey = NULL;
@@ -99,24 +100,22 @@ void AppDelegate::initPlatformConfig()
     sinaConfigDict -> setObject(CCString::create("http://www.sharesdk.cn"), "redirect_uri");
     C2DXShareSDK::setPlatformConfig(C2DXPlatTypeSinaWeibo, sinaConfigDict);
     
-    /*/腾讯微博
+    //腾讯微博
     CCDictionary *tcConfigDict = CCDictionary::create();
     tcConfigDict -> setObject(CCString::create("801307650"), "app_key");
     tcConfigDict -> setObject(CCString::create("ae36f4ee3946e1cbb98d6965b0b2ff5c"), "app_secret");
     tcConfigDict -> setObject(CCString::create("http://www.sharesdk.cn"), "redirect_uri");
     C2DXShareSDK::setPlatformConfig(C2DXPlatTypeTencentWeibo, tcConfigDict);
-    //*/
-    
+ 
     //短信
     // C2DXShareSDK::setPlatformConfig(C2DXPlatTypeSMS, NULL);
     
-    /*/QQ空间
+    //QQ空间
     CCDictionary *qzConfigDict = CCDictionary::create();
     qzConfigDict -> setObject(CCString::create("100371282"), "app_id");
     qzConfigDict -> setObject(CCString::create("aed9b0303e3ed1e27bae87c33761161d"), "app_key");
     C2DXShareSDK::setPlatformConfig(C2DXPlatTypeQZone, qzConfigDict);
-    //*/
-    
+ 
     //微信
     CCDictionary *wcConfigDict = CCDictionary::create();
     wcConfigDict -> setObject(CCString::create("wx4868b35061f87885"), "app_id");
@@ -124,7 +123,7 @@ void AppDelegate::initPlatformConfig()
     C2DXShareSDK::setPlatformConfig(C2DXPlatTypeWeixiTimeline, wcConfigDict);
     C2DXShareSDK::setPlatformConfig(C2DXPlatTypeWeixiFav, wcConfigDict);
     
-    /*/QQ
+    //QQ
     CCDictionary *qqConfigDict = CCDictionary::create();
     qqConfigDict -> setObject(CCString::create("100371282"), "app_id");
     C2DXShareSDK::setPlatformConfig(C2DXPlatTypeQQ, qqConfigDict);
@@ -270,6 +269,7 @@ void AppDelegate::initPlatformConfig()
     vkConfigDict -> setObject(CCString::create("3921561"), "application_id");
     vkConfigDict -> setObject(CCString::create("6Qf883ukLDyz4OBepYF1"), "secret_key");
     C2DXShareSDK::setPlatformConfig(C2DXPlatTypeVKontakte, vkConfigDict);
-    //*/
 
 }
+
+//*/
