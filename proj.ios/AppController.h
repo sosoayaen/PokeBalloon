@@ -1,6 +1,4 @@
 #import <UIKit/UIKit.h>
-
-// #import "ShareSDK/ShareSDK.h"
 #import "GADBannerView.h"
 
 @class RootViewController;

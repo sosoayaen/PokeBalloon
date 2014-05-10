@@ -55,21 +55,6 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     
-    /*
-    // 在屏幕顶部创建标准尺寸的视图
-    bannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
-    
-    // 指定广告单元ID
-    bannerView_.adUnitID = @"ca-app-pub-9727130630637201516/8034810581";
-    
-    // 告知运行时文件，在将用户转至广告的展示位置之后恢复哪个UIViewController
-    // 并将其添加至视图层级结构
-    bannerView_.rootViewController = self;
-    [self.view addSubview:bannerView_];
-    
-    // 启动一般性请求并在其中加载广告。
-    [bannerView_ loadRequest:[GADRequest request]];
-    //*/
 }
 
 

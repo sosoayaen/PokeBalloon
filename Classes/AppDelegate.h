@@ -2,7 +2,8 @@
 #define  _APP_DELEGATE_H_
 
 #include "cocos2d.h"
-// #include "C2DXShareSDK.h"
+// 添加友盟统计分析
+#include "MobClickCpp.h"
 
 /**
 @brief    The cocos2d Application.
@@ -35,10 +36,7 @@ public:
     virtual void applicationWillEnterForeground();
     
 private:
-    /**
-     * @brief 初始化社交平台
-     */
-    // void initPlatformConfig();
+    
 };
 
 #endif // _APP_DELEGATE_H_

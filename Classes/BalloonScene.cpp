@@ -1,5 +1,6 @@
 #include "BalloonScene.h"
 #include "BalloonSoundManager.h"
+#include "MobClickCpp.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -332,6 +333,7 @@ void BalloonScene::onPressMenuReturnMainMenu(cocos2d::CCObject *pSender)
 
 void BalloonScene::startGame()
 {
+    MobClickCpp::event("StartGameCount");
     
     resetData();
     
