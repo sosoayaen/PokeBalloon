@@ -1,6 +1,7 @@
 #include "BalloonFirstPage.h"
 #include "BalloonScene.h"
 #include "BalloonSoundManager.h"
+#include "UMSocial2DX.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -144,5 +145,7 @@ void BalloonFirstPage::onPressMenuShop(cocos2d::CCObject *pSender)
 
 void BalloonFirstPage::onPressMenuOptions(cocos2d::CCObject *pSender)
 {
-    
+    CCDictionary* pDictData = CCDictionary::create();
+    pDictData->setObject(ccs("一起来【气球大作战】吧～伸出你的指头，释放你的压力"), "shareText");
+    UMSocial2DX::shareSNS(pDictData);
 }

@@ -1,6 +1,7 @@
 #include "AppDelegate.h"
 #include "SimpleAudioEngine.h"
 #include "BalloonFirstPage.h"
+#include "UMSocial2DX.h"
 
 USING_NS_CC;
 
@@ -24,6 +25,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 #   if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     MobClickCpp::startWithAppkey("5352425256240b09f407dee2");
+    UMSocial2DX::setAppKey("5352425256240b09f407dee2");
 #elif (CC_TARGet_PLATFORM == CC_PLATFORM_ANDROID)
     MobClickCpp::startWithAppkey("535242b756240b0a0506ca56");
 #   endif
