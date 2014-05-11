@@ -20,29 +20,41 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-****************************************************************************/
+ ****************************************************************************/
 package com.wardrums.pokeballoon;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
+import android.content.Context;
 import android.os.Bundle;
 
-public class PokeBalloon extends Cocos2dxActivity{
-	
-    protected void onCreate(Bundle savedInstanceState){
-		super.onCreate(savedInstanceState);	
+public class PokeBalloon extends Cocos2dxActivity {
+
+	public static Context STATIC_REF = null;
+
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		STATIC_REF = this;
 	}
 
-    public Cocos2dxGLSurfaceView onCreateView() {
-    	Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
-    	// PokeBalloon should create stencil buffer
-    	glSurfaceView.setEGLConfigChooser(5, 6, 5, 0, 16, 8);
-    	
-    	return glSurfaceView;
-    }
+	public Cocos2dxGLSurfaceView onCreateView() {
+		Cocos2dxGLSurfaceView glSurfaceView = new Cocos2dxGLSurfaceView(this);
+		// PokeBalloon should create stencil buffer
+		glSurfaceView.setEGLConfigChooser(5, 6, 5, 0, 16, 8);
 
-    static {
-        System.loadLibrary("cocos2dcpp");
-    }     
+		return glSurfaceView;
+	}
+
+	static {
+		System.loadLibrary("cocos2dcpp");
+	}
+
+	/**
+	 * @return
+	 */
+	public static Context getContext() {
+		return STATIC_REF;
+	}
 }

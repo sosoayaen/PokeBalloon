@@ -14,6 +14,8 @@ LOCAL_MODULE_FILENAME := libcocos2dcpp
                    
 #LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../UMCocos2dxAnalytics/include
+
 # 配置自己的源文件目录和源文件后缀名
 MY_FILES_PATH  :=  $(LOCAL_PATH) \
 				$(LOCAL_PATH)/../../Classes
@@ -43,6 +45,9 @@ MY_ALL_DIRS := $(dir $(foreach src_path,$(MY_FILES_PATH), $(call rwildcard,$(src
 # 赋值给NDK编译系统
 LOCAL_SRC_FILES  := $(MY_SRC_LIST)
 LOCAL_C_INCLUDES += $(MY_ALL_DIRS)
+
+# 加载友盟统计库
+LOCAL_LDLIBS += libs/cocos2dx2_libMobClickCpp.a
 
 LOCAL_WHOLE_STATIC_LIBRARIES += cocos2dx_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static

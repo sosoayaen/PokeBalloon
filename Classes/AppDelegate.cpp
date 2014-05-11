@@ -24,12 +24,20 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 // 初始化友盟数据
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
+
 #   if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     MobClickCpp::startWithAppkey("5352425256240b09f407dee2");
     UMSocial2DX::setAppKey("5352425256240b09f407dee2");
-#elif (CC_TARGet_PLATFORM == CC_PLATFORM_ANDROID)
+
+#	elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     MobClickCpp::startWithAppkey("535242b756240b0a0506ca56");
-#   endif
+	
+#	endif
+
+#	if COCOS2D_DEBUG > 0
+	MobClickCpp::setLogEnabled(true);
+#	endif
+
     MobClickCpp::checkUpdate();
     
     GAdMob2DX* pGADInstance = GAdMob2DX::sharedGAdMob2DX();
