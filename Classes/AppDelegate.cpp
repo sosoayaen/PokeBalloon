@@ -2,6 +2,7 @@
 #include "SimpleAudioEngine.h"
 #include "BalloonFirstPage.h"
 #include "UMSocial2DX.h"
+#include "GAdMob2DX.h"
 
 USING_NS_CC;
 
@@ -30,6 +31,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     MobClickCpp::startWithAppkey("535242b756240b0a0506ca56");
 #   endif
     MobClickCpp::checkUpdate();
+    
+    GAdMob2DX* pGADInstance = GAdMob2DX::sharedGAdMob2DX();
+    
+    pGADInstance->init("ca-app-pub-9727130637201516/8034810581");
 #endif
 
     pDirector->setOpenGLView(pEGLView);

@@ -1,6 +1,7 @@
 #include "BalloonScene.h"
 #include "BalloonSoundManager.h"
 #include "MobClickCpp.h"
+#include "GAdMob2DX.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -283,6 +284,9 @@ void BalloonScene::update(float dt)
             // 弹出结算框
             showResultDialog();
             
+            // 显示广告条
+            GAdMob2DX::sharedGAdMob2DX()->setVisible(true);
+            
             break;
         default:
             break;
@@ -334,6 +338,9 @@ void BalloonScene::onPressMenuReturnMainMenu(cocos2d::CCObject *pSender)
 void BalloonScene::startGame()
 {
     MobClickCpp::event("StartGameCount");
+    
+    // 开始游戏隐藏广告条
+    GAdMob2DX::sharedGAdMob2DX()->setVisible(false);
     
     resetData();
     

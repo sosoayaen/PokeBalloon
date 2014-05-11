@@ -47,20 +47,6 @@ static AppDelegate s_sharedApplication;
     
     [window makeKeyAndVisible];
     
-    // GADBanner
-    bannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
-    bannerView_.delegate = self;
-    // Specify the ad's "unit identifier." This is your AdMob Publisher ID.
-    bannerView_.adUnitID = @"ca-app-pub-9727130637201516/8034810581";
-    
-    // Let the runtime know which UIViewController to restore after taking
-    // the user wherever the ad goes and add it to the view hierarchy.
-    bannerView_.rootViewController = viewController;
-    [viewController.view addSubview:bannerView_];
-    
-    // Initiate a generic request to load it with an ad.
-    GADRequest* adRequest = [GADRequest request];
-    [bannerView_ loadRequest:adRequest];
     
     
     [[UIApplication sharedApplication] setStatusBarHidden:true];
