@@ -42,7 +42,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     GAdMob2DX* pGADInstance = GAdMob2DX::sharedGAdMob2DX();
     
-    pGADInstance->init("ca-app-pub-9727130637201516/8034810581");
+	// 设置广告ID以及Android对应的包名
+    pGADInstance->init("ca-app-pub-9727130637201516/8034810581", "com/wardrums/pokeballoon/PokeBalloon");
 #endif
 
     pDirector->setOpenGLView(pEGLView);
