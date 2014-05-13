@@ -178,8 +178,8 @@ public class PokeBalloon extends Cocos2dxActivity {
 
 						// 测试机器的UDID
 						AdRequest adRequest = new AdRequest.Builder()
-								.addTestDevice(
-										"F5471F6D983030F23BA3A3AD14941865")
+//								.addTestDevice(
+//										"F5471F6D983030F23BA3A3AD14941865")
 								.build();
 
 						// load AD

@@ -28,14 +28,22 @@ bool AppDelegate::applicationDidFinishLaunching()
 // 初始化友盟数据
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 
+	// 创建广告控制实例
+    GAdMob2DX* pGADInstance = GAdMob2DX::sharedGAdMob2DX();
+
 #   if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     MobClickCpp::startWithAppkey("5352425256240b09f407dee2");
     UMSocial2DX::setAppKey("5352425256240b09f407dee2");
+
+	// 设置iOS广告ID
+    pGADInstance->init("ca-app-pub-9727130637201516/8034810581");
 
 #	elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     MobClickCpp::startWithAppkey("535242b756240b0a0506ca56");
     UMSocial2DX::setAppKey("535242b756240b0a0506ca56", JNI_CLASS);
 	
+	// 设置Android广告ID以及Android对应的包名
+    pGADInstance->init("ca-app-pub-9727130637201516/7662720589", JNI_CLASS);
 #	endif
 
 #	if COCOS2D_DEBUG > 0
@@ -44,10 +52,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     MobClickCpp::checkUpdate();
     
-    GAdMob2DX* pGADInstance = GAdMob2DX::sharedGAdMob2DX();
     
-	// 设置广告ID以及Android对应的包名
-    pGADInstance->init("ca-app-pub-9727130637201516/8034810581", JNI_CLASS);
 #endif
 
     pDirector->setOpenGLView(pEGLView);
