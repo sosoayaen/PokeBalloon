@@ -31,7 +31,6 @@ bool GAdMob2DX::init(const char* pszUnitID, const char* pszPackageName /* = NULL
 	// 调用JNI中的初始化函数
 	JniMethodInfo methodInfo;
 
-	CCLOG("before getAcitvity");
 	bool isHave = JniHelper::getStaticMethodInfo(methodInfo,
 			m_strPackageName.c_str(),
 			"getContext",
@@ -40,7 +39,6 @@ bool GAdMob2DX::init(const char* pszUnitID, const char* pszPackageName /* = NULL
 	jobject activityObj;
 	if (isHave)
 	{
-		CCLOG("have getAcitvity");
 		activityObj = methodInfo.env->CallStaticObjectMethod(methodInfo.classID, methodInfo.methodID);
 	}
 
@@ -75,7 +73,7 @@ void GAdMob2DX::setVisible(bool bShow)
 		activityObj = methodInfo.env->CallStaticObjectMethod(methodInfo.classID, methodInfo.methodID);
 	}
 
-	isHave = JniHelper::getMethodInfo(methodInfo, m_strPackageName.c_str(), "setVisibleAdView", "(Z)V");
+	isHave = JniHelper::getMethodInfo(methodInfo, m_strPackageName.c_str(), "setAdViewVisible", "(Z)V");
 
 	if (isHave)
 	{

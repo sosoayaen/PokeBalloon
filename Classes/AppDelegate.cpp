@@ -7,6 +7,8 @@
 
 USING_NS_CC;
 
+#define JNI_CLASS "com/wardrums/pokeballoon/PokeBalloon"
+
 using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()
@@ -32,6 +34,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 
 #	elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
     MobClickCpp::startWithAppkey("535242b756240b0a0506ca56");
+    UMSocial2DX::setAppKey("535242b756240b0a0506ca56", JNI_CLASS);
 	
 #	endif
 
@@ -44,7 +47,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     GAdMob2DX* pGADInstance = GAdMob2DX::sharedGAdMob2DX();
     
 	// 设置广告ID以及Android对应的包名
-    pGADInstance->init("ca-app-pub-9727130637201516/8034810581", "com/wardrums/pokeballoon/PokeBalloon");
+    pGADInstance->init("ca-app-pub-9727130637201516/8034810581", JNI_CLASS);
 #endif
 
     pDirector->setOpenGLView(pEGLView);
@@ -53,14 +56,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCSize resSize = CCSizeMake(960, 640);
     
     float fScaleFactor = 1.0f;
-    if (screenSize.width/screenSize.height > resSize.width/resSize.height)
+    if (screenSize.height/screenSize.width > resSize.height/resSize.width)
     {
         // 屏幕的宽高比大于设定的宽高比，标识需要按照高度的标准拉伸
-        fScaleFactor = screenSize.height / resSize.height;
+        fScaleFactor = screenSize.width / resSize.width;
     }
     else
     {
-        fScaleFactor = screenSize.width / resSize.width;
+        fScaleFactor = screenSize.height / resSize.height;
     }
     
     pDirector->setContentScaleFactor(fScaleFactor);

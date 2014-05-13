@@ -17,13 +17,18 @@ public:
     /**
      * @brief init the UMSocial
      */
-    static void setAppKey(const char* pszAppKey);
+    static void setAppKey(const char* pszAppKey, const char* pszPackageName = NULL);
     
     /**
      * @brief 分享内容
      * @param pDictData 分享的信息
      */
     static void shareSNS(cocos2d::CCDictionary* pDictData);
+
+private:
+
+	// 仅仅给Android使用
+	static std::string m_strPackageName;
 };
 
 #endif

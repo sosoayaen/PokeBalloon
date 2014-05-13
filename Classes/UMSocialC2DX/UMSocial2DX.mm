@@ -4,7 +4,7 @@ USING_NS_CC;
 
 #import "UMSocial.h"
 
-void UMSocial2DX::setAppKey(const char *pszAppKey)
+void UMSocial2DX::setAppKey(const char *pszAppKey, const char *pszPackageName /* = NULL */)
 {
     NSString *strNSString = [[NSString alloc] initWithUTF8String:pszAppKey];
     [UMSocialData setAppKey:strNSString];
