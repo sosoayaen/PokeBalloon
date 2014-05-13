@@ -14,7 +14,7 @@ GAdMob2DX* GAdMob2DX::sharedGAdMob2DX()
     return g_pGAdMobInstance;
 }
 
-bool GAdMob2DX::init(const char* pszUnitID)
+bool GAdMob2DX::init(const char* pszUnitID, const char* pszPackageName /* = NULL */)
 {
     bool bRet = false;
     
@@ -49,4 +49,9 @@ void GAdMob2DX::setVisible(bool bShow)
     {
         bannerView_.hidden = !bShow;
     }
+}
+
+void GAdMob2DX::setPackageName4Android(const char* pszPackageName)
+{
+	return;
 }

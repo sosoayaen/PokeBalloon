@@ -19,6 +19,9 @@
 #ifndef __GADMob2DX_H__
 #define __GADMob2DX_H__
 
+#include <string>
+#include "cocos2d.h"
+
 class GAdMob2DX
 {
 public:
@@ -30,13 +33,18 @@ public:
     /**
      * @brief 初始化广告条
      * @param pszUnitID 广告条ID
+	 * @param pszPackageName 安卓程序类名，仅针对Android有效
      */
-    bool init(const char* pszUnitID);
+    bool init(const char* pszUnitID, const char* pszPackageName = NULL);
     
     /**
      * @brief 显示隐藏广告条
      */
     void setVisible(bool bShow);
+
+private:
+	// Android用于调用JNI的包名
+	std::string m_strPackageName;
     
 };
 
