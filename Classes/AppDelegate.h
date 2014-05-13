@@ -2,8 +2,6 @@
 #define  _APP_DELEGATE_H_
 
 #include "cocos2d.h"
-// 添加友盟统计分析
-#include "MobClickCpp.h"
 
 /**
 @brief    The cocos2d Application.

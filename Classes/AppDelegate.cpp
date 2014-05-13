@@ -3,6 +3,7 @@
 #include "BalloonFirstPage.h"
 #include "UMSocial2DX.h"
 #include "GAdMob2DX.h"
+#include "MobClickCpp.h"
 
 USING_NS_CC;
 
