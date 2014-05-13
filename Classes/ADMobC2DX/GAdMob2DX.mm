@@ -50,8 +50,3 @@ void GAdMob2DX::setVisible(bool bShow)
         bannerView_.hidden = !bShow;
     }
 }
-
-void GAdMob2DX::setPackageName4Android(const char* pszPackageName)
-{
-	return;
-}
