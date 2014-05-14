@@ -121,15 +121,14 @@ SEL_CCControlHandler BalloonOptionsDialog::onResolveCCBCCControlSelector( CCObje
 	return NULL;
 }
 
-void BalloonOptionsDialog::setScore(unsigned long ulScore)
+void BalloonOptionsDialog::setScore(long lScore)
 {
-    
-    m_pLabelBMFontCurrentScore->setCString(CCString::createWithFormat("%lu", ulScore)->getCString());
+    m_pLabelBMFontCurrentScore->setCString(CCString::createWithFormat("%ld", lScore)->getCString());
 }
 
-void BalloonOptionsDialog::setHighScore(unsigned long ulScore)
+void BalloonOptionsDialog::setHighScore(long lScore)
 {
-    m_pLabelBMFontHighestScore->setCString(CCString::createWithFormat("%lu", ulScore)->getCString());
+    m_pLabelBMFontHighestScore->setCString(CCString::createWithFormat("%ld", lScore)->getCString());
 }
 
 void BalloonOptionsDialog::setNewFlagVisible(bool bShow)

@@ -35,7 +35,7 @@ bailin::util::DataManagerUtil::DataManagerUtil()
     m_pDictionaryUmengParams = NULL;
     m_pSystemMsgArray = NULL;
 
-	m_pDictionaryStringData = getLocaleStringData();
+	// m_pDictionaryStringData = getLocaleStringData();
 	m_pDictionaryGlobalData = getGlobalData();
 }
 

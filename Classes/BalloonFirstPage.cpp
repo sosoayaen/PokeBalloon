@@ -56,6 +56,13 @@ bool BalloonFirstPage::init()
         
         // 初始化按钮
         initMenu();
+        
+        // 背景拉满屏幕
+        if (m_pSpriteBackground)
+        {
+            m_pSpriteBackground->setScaleX(this->getContentSize().width/m_pSpriteBackground->getContentSize().width);
+            m_pSpriteBackground->setScaleY(this->getContentSize().height/m_pSpriteBackground->getContentSize().height);
+        }
 		
 		
 		bRet = true;

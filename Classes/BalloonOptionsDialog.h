@@ -75,10 +75,10 @@ public:
 	// Funcitons
     
     // 设置结果分数
-    void setScore(unsigned long ulScore);
+    void setScore(long lScore);
     
     // 设置最高分
-    void setHighScore(unsigned long ulScore);
+    void setHighScore(long lScore);
     
     // 设置是否显示新的记录标志
     void setNewFlagVisible(bool bShow);

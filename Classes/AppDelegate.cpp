@@ -1,6 +1,6 @@
 #include "AppDelegate.h"
 #include "SimpleAudioEngine.h"
-#include "BalloonFirstPage.h"
+#include "CompanyPage.h"
 #include "UMSocial2DX.h"
 #include "GAdMob2DX.h"
 #include "MobClickCpp.h"
@@ -88,7 +88,11 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+	CCScene *pScene = CompanyPage::scene();
+#else
     CCScene *pScene = BalloonFirstPage::scene();
+#endif
 
     // run
     pDirector->runWithScene(pScene);
