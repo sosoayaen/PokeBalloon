@@ -166,37 +166,6 @@ public:
 	* @param pData 返回的JSON数据
 	*/
 	bool IsHttpSuccess(cocos2d::CCDictionary* pData);
-
-	/**
-	* @brief 得到HTTP请求的返回码
-	* @param pData 返回的JSON数据
-	*/
-	int GetHttpReturnCode(cocos2d::CCDictionary* pData);
-
-	/**
-	* @brief 判断当前是否有用户登录
-	*/
-	bool IsUserLogin();
-    
-    /**
-     * @brief 保存用户连续签到天数及签到日期
-     */
-    void SaveUserDayCheck(const char* strUserDayChecks);
-    
-    /**
-     * @brief 获取用户连续签到天数及签到日期，并判断昨天是否有登陆
-     */
-    bool GetUserDayCheck(std::string& strUserDayChecks);
-    
-    /**
-     * 友盟事件
-     **/
-    void onUMEvent(const char *pEvent);
-    /**
-     *
-     **/
-    bool isReviewVersion();
-
 protected:
 	// 全局唯一的字符串数据
 	cocos2d::CCDictionary* m_pDictionaryStringData;

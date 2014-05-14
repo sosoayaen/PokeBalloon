@@ -3,8 +3,11 @@
 #include "MobClickCpp.h"
 #include "GAdMob2DX.h"
 
+#include "bailinUtil.h"
+
 USING_NS_CC;
 USING_NS_CC_EXT;
+USING_NS_BAILIN_UTIL;
 
 #define BALLOON_SHOW_RATE    18     // 气球出现的概率，10表示1%，50就是5%
 #define CLOUD_SHOW_RATE      5
@@ -325,7 +328,25 @@ void BalloonScene::showResultDialog()
     addChild(pMenu);
     */
    
-//    BalloonOptionsDialog* pResultDialog = BalloonOptionsDialog::create();
+    
+    // 设定面板分数
+    m_pResultDialog->setScore(m_lTotalScore);
+    CCString* pHighestScore = ccs(DataManagerUtil::sharedDataManagerUtil()->ReadDataFromLocal("HighestScore").c_str());
+    long lHighestScore = pHighestScore->intValue();
+    
+    bool bNewScore = lHighestScore < m_lTotalScore;
+    
+    m_pResultDialog->setNewFlagVisible(bNewScore);
+    
+    if (bNewScore)
+    {
+        lHighestScore = m_lTotalScore;
+        const std::string strHighestScore = CCString::createWithFormat("%ld", lHighestScore)->m_sString;
+        DataManagerUtil::sharedDataManagerUtil()->WriteDataToLocal("HighestScore", strHighestScore);
+    }
+        
+    m_pResultDialog->setHighScore(lHighestScore);
+    
     addChild(m_pResultDialog);
     
 }
