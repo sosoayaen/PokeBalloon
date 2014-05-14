@@ -57,18 +57,19 @@ bool AppDelegate::applicationDidFinishLaunching()
 
     pDirector->setOpenGLView(pEGLView);
     
-    CCSize screenSize = pDirector->getWinSize();
-    CCSize resSize = CCSizeMake(960, 640);
+    CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
+
+    CCSize resSize = CCSizeMake(640, 960);
     
     float fScaleFactor = 1.0f;
     if (screenSize.height/screenSize.width > resSize.height/resSize.width)
     {
         // 屏幕的宽高比大于设定的宽高比，标识需要按照高度的标准拉伸
-        fScaleFactor = screenSize.width / resSize.width;
+        fScaleFactor = resSize.width / screenSize.width;
     }
     else
     {
-        fScaleFactor = screenSize.height / resSize.height;
+        fScaleFactor = resSize.height / screenSize.height;
     }
     
     pDirector->setContentScaleFactor(fScaleFactor);
