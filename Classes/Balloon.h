@@ -83,7 +83,8 @@ protected:
     // 气球的帧数，和场景帧数无关，初始化为0，之后每调用更新函数自动递增
     unsigned long m_ulFrame;
     
-    cocos2d::CCLabelTTF* m_pLabelDesc;
+    // cocos2d::CCLabelTTF* m_pLabelDesc;
+    cocos2d::CCLabelBMFont* m_pLabelBMFontDesc;
     
     std::string m_strDisplayDesc;
     

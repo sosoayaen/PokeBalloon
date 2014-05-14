@@ -18,7 +18,8 @@ Balloon::Balloon():
     m_fAcceleratedSpeedX(0),
     m_fAcceleratedSpeedY(0)
 {
-    m_pLabelDesc = NULL;
+    // m_pLabelDesc = NULL;
+    m_pLabelBMFontDesc = NULL;
 }
 
 Balloon::~Balloon()
@@ -171,6 +172,7 @@ void Balloon::updateDisplayDesc()
     
     // 更新显示文字
     m_strDisplayDesc = pStrDesc->getCString();
+    /*
     if (!m_pLabelDesc)
     {
         m_pLabelDesc = CCLabelTTF::create("", "", 80);
@@ -178,4 +180,13 @@ void Balloon::updateDisplayDesc()
         addChild(m_pLabelDesc);
     }
     m_pLabelDesc->setString(m_strDisplayDesc.c_str());
+    */
+    if (!m_pLabelBMFontDesc)
+    {
+        m_pLabelBMFontDesc = CCLabelBMFont::create(m_strDisplayDesc.c_str(), "fonts/font.fnt");
+        m_pLabelBMFontDesc->setPosition(ccpMult(ccpFromSize(getContentSize()), 0.5f));
+        m_pLabelBMFontDesc->setScale(2.0f);
+        addChild(m_pLabelBMFontDesc);
+    }
+    m_pLabelBMFontDesc->setCString(m_strDisplayDesc.c_str());
 }

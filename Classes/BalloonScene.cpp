@@ -94,18 +94,21 @@ void BalloonScene::resetData()
 
 void BalloonScene::updateScore()
 {
-    m_pLabelTTFScore->setString(CCString::createWithFormat("Score: %ld", m_lTotalScore)->getCString());
+    // m_pLabelTTFScore->setString(CCString::createWithFormat("Score: %ld", m_lTotalScore)->getCString());
+    m_pLabelBMFontScore->setCString(CCString::createWithFormat("%ld", m_lTotalScore)->getCString());
 }
 
 void BalloonScene::updateTimeLeft()
 {
-    m_pLabelTTFTime->setString(CCString::createWithFormat("%lus", m_ulTimeLeft)->getCString());
+    // m_pLabelTTFTime->setString(CCString::createWithFormat("%lus", m_ulTimeLeft)->getCString());
+    m_pLabelBMFontTimeLeft->setCString(CCString::createWithFormat("%lu", m_ulTimeLeft)->getCString());
 }
 
 void BalloonScene::onEnter()
 {
 	CCLayer::onEnter();
 	// TODO: 这里可以定义进入场景的初始化，比如控件的初始位置，初始状态等
+    createResultDialog();
     
     // 启动单点触摸回调注册
     CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, this->getTouchPriority(), false);
@@ -118,6 +121,9 @@ void BalloonScene::onExit()
 {
 	CCLayer::onExit();
 	// TODO: 退出场景，取消CCNotificationCenter可以放在这里做，但是对应在onEnter的时候要重新注册
+    
+    // 释放结算对话框
+    CC_SAFE_RELEASE_NULL(m_pResultDialog);
     
     // 停止场景回调
     unscheduleUpdate();
@@ -141,8 +147,10 @@ SEL_MenuHandler BalloonScene::onResolveCCBCCMenuItemSelector( CCObject * pTarget
 bool BalloonScene::onAssignCCBMemberVariable( CCObject* pTarget, const char* pMemberVariableName, CCNode* pNode )
 {
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteBalloonModel", CCSprite*, this->m_pSpriteBalloonModel);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLabelTTFScore", CCLabelTTF*, this->m_pLabelTTFScore);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLabelTTFTime", CCLabelTTF*, this->m_pLabelTTFTime);
+	// CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLabelTTFScore", CCLabelTTF*, this->m_pLabelTTFScore);
+	// CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLabelTTFTime", CCLabelTTF*, this->m_pLabelTTFTime);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLabelBMFontTimeLeft", CCLabelBMFont*, this->m_pLabelBMFontTimeLeft);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLabelBMFontScore", CCLabelBMFont*, this->m_pLabelBMFontScore);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLayerBalloon", CCLayer*, this->m_pLayerBalloon);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteBackground", CCSprite*, this->m_pSpriteBackground);
 
@@ -296,9 +304,7 @@ void BalloonScene::update(float dt)
 
 void BalloonScene::showResultDialog()
 {
-    // CCMenuItemFont* pMenuItem = CCMenuItemFont::create("Try again", this,
-    //                                                   menu_selector(BalloonScene::onPressMenuRestartGame));
-    // pMenuItem->setColor(ccBLACK);
+    /*
     CCMenuItemImage* pMenuItemRestart = CCMenuItemImage::create("balloon/menu_item_restart.png", "balloon/menu_item_restart.png", this, menu_selector(BalloonScene::onPressMenuRestartGame));
     
     pMenuItemRestart->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(rand()%6+1), CCRotateTo::create(3.0f, 10.0f), CCDelayTime::create(rand()%6+1), CCRotateTo::create(3.0f, -10.0f), NULL)));
@@ -317,22 +323,38 @@ void BalloonScene::showResultDialog()
     pMenu->runAction(CCEaseBounceOut::create(CCMoveTo::create(1.0f, posEnd)));
     
     addChild(pMenu);
+    */
+   
+//    BalloonOptionsDialog* pResultDialog = BalloonOptionsDialog::create();
+    addChild(m_pResultDialog);
+    
 }
 
 void BalloonScene::onPressMenuRestartGame(cocos2d::CCObject *pSender)
 {
+    /*
     CCNode* pNode = dynamic_cast<CCNode*>(pSender);
     if (!pNode) return;
     
     // 移除按钮层
     pNode->getParent()->removeFromParent();
+    */
+    
+    m_pResultDialog->endDialog();
     
     startGame();
 }
 
 void BalloonScene::onPressMenuReturnMainMenu(cocos2d::CCObject *pSender)
 {
+    m_pResultDialog->endDialog();
+    
     CCDirector::sharedDirector()->popScene();
+}
+
+void BalloonScene::onResultDialogEndCall(CCNode* pNode)
+{
+    
 }
 
 void BalloonScene::startGame()
@@ -347,4 +369,21 @@ void BalloonScene::startGame()
     m_eGameStatus = GAME_STATUS_RUNNING;
     
     scheduleUpdate();
+}
+
+void BalloonScene::createResultDialog()
+{
+    if (!m_pResultDialog)
+    {
+        // 生成结算对话框
+        m_pResultDialog = BalloonOptionsDialog::create();
+        
+        // 设定按钮回调
+        m_pResultDialog->m_pMenuItemReturn->setTarget(this, menu_selector(BalloonScene::onPressMenuReturnMainMenu));
+        m_pResultDialog->m_pMenuItemPlayAgain->setTarget(this, menu_selector(BalloonScene::onPressMenuRestartGame));
+        m_pResultDialog->setEndCallbackFuncN(CCCallFuncN::create(this, callfuncN_selector(BalloonScene::onResultDialogEndCall)));
+        
+        // 保存对话框
+        CC_SAFE_RETAIN(m_pResultDialog);
+    }
 }
