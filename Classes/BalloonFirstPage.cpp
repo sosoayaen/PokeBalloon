@@ -2,9 +2,11 @@
 #include "BalloonScene.h"
 #include "BalloonSoundManager.h"
 #include "UMSocial2DX.h"
+#include "bailinUtil.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
+USING_NS_BAILIN_UTIL;
 
 BalloonFirstPage::~BalloonFirstPage()
 {
@@ -134,6 +136,8 @@ void BalloonFirstPage::initMenu()
     m_pMenuMain->addChild(pMenuItemShop);
     m_pMenuMain->addChild(pMenuItemOptions);
     
+    ControlUtil::sharedControlUtil()->SetMenuItemSelectedImageWithNormalImage(m_pMenuMain);
+    
     m_pMenuMain->alignItemsVerticallyWithPadding(pMenuItemOptions->getContentSize().height);
     
     m_pMenuMain->setPosition(ccp(getContentSize().width*0.5f, getContentSize().height*1.5f));
@@ -152,7 +156,4 @@ void BalloonFirstPage::onPressMenuShop(cocos2d::CCObject *pSender)
 
 void BalloonFirstPage::onPressMenuOptions(cocos2d::CCObject *pSender)
 {
-    CCDictionary* pDictData = CCDictionary::create();
-    pDictData->setObject(ccs("一起来【气球大作战】吧～伸出你的指头，释放你的压力"), "shareText");
-    UMSocial2DX::shareSNS(pDictData);
 }

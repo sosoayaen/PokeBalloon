@@ -2,6 +2,7 @@
 #include "BalloonSoundManager.h"
 #include "MobClickCpp.h"
 #include "GAdMob2DX.h"
+#include "UMSocial2DX.h"
 
 #include "bailinUtil.h"
 
@@ -347,6 +348,7 @@ void BalloonScene::showResultDialog()
         
     m_pResultDialog->setHighScore(lHighestScore);
     
+    
     addChild(m_pResultDialog);
     
 }
@@ -371,6 +373,13 @@ void BalloonScene::onPressMenuReturnMainMenu(cocos2d::CCObject *pSender)
     m_pResultDialog->endDialog();
     
     CCDirector::sharedDirector()->popScene();
+}
+
+void BalloonScene::onPressMenuShare(cocos2d::CCObject *pSender)
+{
+    CCDictionary* pDictData = CCDictionary::create();
+    pDictData->setObject(ccs("一起来【气球大作战】吧～伸出你的指头，释放你的压力"), "shareText");
+    UMSocial2DX::shareSNS(pDictData);
 }
 
 void BalloonScene::onResultDialogEndCall(CCNode* pNode)
@@ -402,6 +411,7 @@ void BalloonScene::createResultDialog()
         // 设定按钮回调
         m_pResultDialog->m_pMenuItemReturn->setTarget(this, menu_selector(BalloonScene::onPressMenuReturnMainMenu));
         m_pResultDialog->m_pMenuItemPlayAgain->setTarget(this, menu_selector(BalloonScene::onPressMenuRestartGame));
+        m_pResultDialog->m_pMenuItemShare->setTarget(this, menu_selector(BalloonScene::onPressMenuShare));
         m_pResultDialog->setEndCallbackFuncN(CCCallFuncN::create(this, callfuncN_selector(BalloonScene::onResultDialogEndCall)));
         
         // 保存对话框
