@@ -66,6 +66,9 @@ bool BalloonOptionsDialog::init()
                                 CCEaseExponentialIn::create(CCMoveTo::create(0.5f, posUp)));
         SetVisibleBoard(NULL);
         
+        // 更新分享按钮数据
+        m_posShareItemOri = m_pMenuItemShare->getPosition();
+        m_fShareItemAngleOri = m_pMenuItemShare->getRotation();
         // 默认隐藏新记录标志
         setNewFlagVisible(false);
         
@@ -80,6 +83,27 @@ void BalloonOptionsDialog::onEnter()
 {
 	DialogLayer::onEnter();
 	// TODO: 这里可以定义进入场景的初始化，比如控件的初始位置，初始状态等
+    
+    /*/ 分享界面不停摇动
+    CCMoveBy* pMoveUp = CCMoveBy::create(2.0f, ccp(0, m_pMenuItemReturn->getContentSize().height));
+    
+    CCMoveBy* pMoveRight = CCMoveBy::create(2.0f, ccp(m_pMenuItemReturn->getContentSize().height*0.3f, 0));
+    
+    m_pMenuShare->runAction(CCSpawn::create(
+        CCRepeatForever::create(CCSequence::create(
+            pMoveUp, pMoveUp->reverse(),
+            NULL)),
+        CCRepeatForever::create(CCSequence::create(
+            pMoveRight, pMoveRight->reverse(),
+            NULL)),
+            NULL));
+    //*/
+    m_pMenuItemShare->stopAllActions();
+    m_pMenuItemShare->setPosition(m_posShareItemOri);
+    m_pMenuItemShare->setRotation(m_fShareItemAngleOri);
+    
+    m_pMenuItemShare->runAction(CCRepeatForever::create(CCSequence::create(CCRotateBy::create(1.5f, 30.0f), CCRotateBy::create(1.5f, -30.0f), NULL)));
+    m_pMenuItemShare->runAction(CCRepeatForever::create(CCSequence::create(CCMoveBy::create(2.7f, ccp(0, m_pMenuItemShare->getContentSize().height*0.3f)), CCMoveBy::create(2.5f, ccp(0, -m_pMenuItemShare->getContentSize().height*0.3f)), NULL)));
 }
 
 void BalloonOptionsDialog::onExit()
@@ -107,6 +131,7 @@ bool BalloonOptionsDialog::onAssignCCBMemberVariable( CCObject* pTarget, const c
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuShare", CCMenu*, this->m_pMenuShare);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuItemPlayAgain", CCMenuItem*, this->m_pMenuItemPlayAgain);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuItemReturn", CCMenuItem*, this->m_pMenuItemReturn);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuItemShare", CCMenuItem*, this->m_pMenuItemShare);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuItemGotoShop", CCMenuItem*, this->m_pMenuItemGotoShop);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuResult", CCMenu*, this->m_pMenuResult);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteNewFlag", CCSprite*, this->m_pSpriteNewFlag);

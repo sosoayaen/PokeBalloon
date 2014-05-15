@@ -27,6 +27,7 @@ public:
 		m_pMenuItemPlayAgain = NULL;
 		m_pMenuItemReturn = NULL;
 		m_pMenuItemGotoShop = NULL;
+        m_pMenuItemShare = NULL;
 		m_pMenuResult = NULL;
 		m_pSpriteNewFlag = NULL;
 		m_pSpriteResultBoard = NULL;
@@ -49,10 +50,17 @@ public:
 	cocos2d::CCMenuItem* m_pMenuItemPlayAgain;
 	cocos2d::CCMenuItem* m_pMenuItemReturn;
 	cocos2d::CCMenuItem* m_pMenuItemGotoShop;
+    cocos2d::CCMenuItem* m_pMenuItemShare;
     
 private:
     // 控件原始位置
     cocos2d::CCPoint m_posOri;
+    
+    // 分享按钮初始位置
+    cocos2d::CCPoint m_posShareItemOri;
+    
+    // 分享按钮初始角度
+    float m_fShareItemAngleOri;
     
 private:
 	// Attributes for CCB

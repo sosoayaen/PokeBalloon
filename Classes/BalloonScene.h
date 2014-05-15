@@ -125,6 +125,7 @@ private:
     // 按钮回调
     void onPressMenuRestartGame(cocos2d::CCObject* pSender);
     void onPressMenuReturnMainMenu(cocos2d::CCObject* pSender);
+    void onPressMenuShare(cocos2d::CCObject* pSender);
     // 对话框结束回调
     void onResultDialogEndCall(cocos2d::CCNode* pNode);
     
