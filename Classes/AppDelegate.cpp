@@ -1,6 +1,7 @@
 #include "AppDelegate.h"
 #include "SimpleAudioEngine.h"
 #include "CompanyPage.h"
+#include "BalloonFirstPage.h"
 #include "UMSocial2DX.h"
 #include "GAdMob2DX.h"
 #include "MobClickCpp.h"
