@@ -5,21 +5,21 @@
 * Date: 2014-05-14 23:42:32
 */
 
-#ifndef __BALLOONOPTIONSDIALOG__H__
-#define __BALLOONOPTIONSDIALOG__H__
+#ifndef __BALLOON_RESULT_DIALOG_H__
+#define __BALLOON_RESULT_DIALOG_H__
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
 #include "DialogLayer.h"
 
-class BalloonOptionsDialog:
+class BalloonResultDialog:
 	public DialogLayer,
 	public cocos2d::extension::CCBSelectorResolver,
 	public cocos2d::extension::CCBMemberVariableAssigner
 {
 public:
 	// Constructor
-	BalloonOptionsDialog()
+	BalloonResultDialog()
 	{
 		m_pLabelBMFontCurrentScore = NULL;
 		m_pLabelBMFontHighestScore = NULL;
@@ -33,9 +33,9 @@ public:
 		m_pSpriteResultBoard = NULL;
 
 	}
-	~BalloonOptionsDialog();
+	~BalloonResultDialog();
 
-	CREATE_FUNC(BalloonOptionsDialog);
+	CREATE_FUNC(BalloonResultDialog);
 
 	virtual cocos2d::SEL_CallFuncN onResolveCCBCCCallFuncSelector( cocos2d::CCObject * pTarget, const char* pSelectorName );
 
@@ -93,4 +93,4 @@ public:
 
 };
 
-#endif // __BALLOONOPTIONSDIALOG__H__
+#endif // __BALLOON_RESULT_DIALOG_H__

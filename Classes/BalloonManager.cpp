@@ -203,7 +203,7 @@ void BalloonManager::addRandomBalloon()
         }
         
 		// 设定随机缩放
-		float fScale = (rand()%4 + 5)*0.1f;
+		float fScale = (rand()%4 + 8)*0.1f;
 
 		// 增加一个气球到屏幕
 		Balloon* pBalloon = Balloon::create(pStrBalloonName->getCString(), nValue, nType);
@@ -251,11 +251,24 @@ void BalloonManager::multipleBalloonScore(long nValue)
         Balloon* pBalloon = dynamic_cast<Balloon*>(pObj);
 		if (pBalloon && pBalloon->isAlive() && pBalloon->getBalloonType() == kBalloonTypeNormal)
 		{
-			// if (m_pBalloonDelegate)
-			//	m_pBalloonDelegate->balloonTouchTestSuccess(pBalloon, pSprite);
             pBalloon->setBalloonScore(pBalloon->getBalloonScore()*nValue);
             // 更新显示文字
             pBalloon->updateDisplayDesc();
 		}
 	}
+}
+
+bool BalloonManager::isBalloonInScreen()
+{
+    CCObject* pObj = NULL;
+    
+	CCARRAY_FOREACH_REVERSE(m_pLayerBalloonContainer->getChildren(), pObj)
+	{
+        Balloon* pBalloon = dynamic_cast<Balloon*>(pObj);
+		if (pBalloon && pBalloon->isAlive())
+		{
+            return true;
+		}
+	}
+    return false;
 }

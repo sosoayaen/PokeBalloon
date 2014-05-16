@@ -99,6 +99,12 @@ public:
      * @param lValue 对应的乘数
      */
     void multipleBalloonScore(long nValue);
+    
+    /**
+     * @brief 判断当前是否还有气球在屏幕上
+     * @return bool
+     */
+    bool isBalloonInScreen();
 
 protected:
 	// protected functions

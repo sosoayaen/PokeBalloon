@@ -13,13 +13,15 @@
 #include "BalloonManager.h"
 #include "CloudManager.h"
 
-#include "BalloonOptionsDialog.h"
+#include "BalloonResultDialog.h"
 
 enum BalloonGameStatus
 {
-    GAME_STATUS_READY = 0,
-    GAME_STATUS_RUNNING = 1,
-    GAME_STATUS_STOP = 2
+    GAME_STATUS_READY = 0,  // 开始前的准备状态
+    GAME_STATUS_RUNNING,    // 游戏进行状态
+    GAME_STATUS_TIMES_UP,   // 准备结束状态，时间结束
+    GAME_STATUS_STOP        // 游戏结束
+    
 };
 
 class BalloonScene:
@@ -91,7 +93,7 @@ private:
     // 背景
     cocos2d::CCSprite* m_pSpriteBackground;
 
-    BalloonOptionsDialog* m_pResultDialog;
+    BalloonResultDialog* m_pResultDialog;
 
 private:
     // 当前播放的帧

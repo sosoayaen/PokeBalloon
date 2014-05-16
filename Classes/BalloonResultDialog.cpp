@@ -1,16 +1,16 @@
-#include "BalloonOptionsDialog.h"
+#include "BalloonResultDialog.h"
 #include "bailinUtil.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
 USING_NS_BAILIN_UTIL;
 
-BalloonOptionsDialog::~BalloonOptionsDialog()
+BalloonResultDialog::~BalloonResultDialog()
 {
     CC_SAFE_RELEASE_NULL(m_pSpriteResultBoard);
 }
 
-bool BalloonOptionsDialog::init()
+bool BalloonResultDialog::init()
 {
 	// TODO:
 	bool bRet = false;
@@ -23,7 +23,7 @@ bool BalloonOptionsDialog::init()
 		CCBReader* pCCBReader = new CCBReader(pLoaderLib);
 
 		// 对应ccbi文件
-		std::string strCCBFileName = "BalloonOptionsDialog.ccbi";
+		std::string strCCBFileName = "BalloonResultDialog.ccbi";
 
 		// 得到第一个搜索路径
 		const std::vector<std::string> vSearchOrder = CCFileUtils::sharedFileUtils()->getSearchResolutionsOrder();
@@ -79,7 +79,7 @@ bool BalloonOptionsDialog::init()
 	return bRet;
 }
 
-void BalloonOptionsDialog::onEnter()
+void BalloonResultDialog::onEnter()
 {
 	DialogLayer::onEnter();
 	// TODO: 这里可以定义进入场景的初始化，比如控件的初始位置，初始状态等
@@ -106,25 +106,25 @@ void BalloonOptionsDialog::onEnter()
     m_pMenuItemShare->runAction(CCRepeatForever::create(CCSequence::create(CCMoveBy::create(2.7f, ccp(0, m_pMenuItemShare->getContentSize().height*0.3f)), CCMoveBy::create(2.5f, ccp(0, -m_pMenuItemShare->getContentSize().height*0.3f)), NULL)));
 }
 
-void BalloonOptionsDialog::onExit()
+void BalloonResultDialog::onExit()
 {
 	DialogLayer::onExit();
 	// TODO: 退出场景，取消CCNotificationCenter可以放在这里做，但是对应在onEnter的时候要重新注册
 }
 
-SEL_CallFuncN BalloonOptionsDialog::onResolveCCBCCCallFuncSelector( CCObject * pTarget, const char* pSelectorName )
+SEL_CallFuncN BalloonResultDialog::onResolveCCBCCCallFuncSelector( CCObject * pTarget, const char* pSelectorName )
 {
 
 	return NULL;
 }
 
-SEL_MenuHandler BalloonOptionsDialog::onResolveCCBCCMenuItemSelector( CCObject * pTarget, const char* pSelectorName )
+SEL_MenuHandler BalloonResultDialog::onResolveCCBCCMenuItemSelector( CCObject * pTarget, const char* pSelectorName )
 {
 
 	return NULL;
 }
 
-bool BalloonOptionsDialog::onAssignCCBMemberVariable( CCObject* pTarget, const char* pMemberVariableName, CCNode* pNode )
+bool BalloonResultDialog::onAssignCCBMemberVariable( CCObject* pTarget, const char* pMemberVariableName, CCNode* pNode )
 {
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLabelBMFontCurrentScore", CCLabelBMFont*, this->m_pLabelBMFontCurrentScore);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLabelBMFontHighestScore", CCLabelBMFont*, this->m_pLabelBMFontHighestScore);
@@ -140,23 +140,23 @@ bool BalloonOptionsDialog::onAssignCCBMemberVariable( CCObject* pTarget, const c
 	return true;
 }
 
-SEL_CCControlHandler BalloonOptionsDialog::onResolveCCBCCControlSelector( CCObject * pTarget, const char* pSelectorName )
+SEL_CCControlHandler BalloonResultDialog::onResolveCCBCCControlSelector( CCObject * pTarget, const char* pSelectorName )
 {
 
 	return NULL;
 }
 
-void BalloonOptionsDialog::setScore(long lScore)
+void BalloonResultDialog::setScore(long lScore)
 {
     m_pLabelBMFontCurrentScore->setCString(CCString::createWithFormat("%ld", lScore)->getCString());
 }
 
-void BalloonOptionsDialog::setHighScore(long lScore)
+void BalloonResultDialog::setHighScore(long lScore)
 {
     m_pLabelBMFontHighestScore->setCString(CCString::createWithFormat("%ld", lScore)->getCString());
 }
 
-void BalloonOptionsDialog::setNewFlagVisible(bool bShow)
+void BalloonResultDialog::setNewFlagVisible(bool bShow)
 {
     m_pSpriteNewFlag->setVisible(bShow);
 }

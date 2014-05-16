@@ -266,7 +266,7 @@ void BalloonScene::update(float dt)
             // 判断游戏是否结束
             if (m_ulTimeLeft == 0)
             {
-                m_eGameStatus = GAME_STATUS_STOP;
+                m_eGameStatus = GAME_STATUS_TIMES_UP;
             }
             
             // 随机出现气球向上飘
@@ -286,6 +286,21 @@ void BalloonScene::update(float dt)
             }
             
             m_CloudManager.updatePosition();
+            
+            break;
+        case GAME_STATUS_TIMES_UP:
+            // 更新气球位置
+            m_BalloonManger.updatePosition();
+            
+            m_CloudManager.updatePosition();
+            
+            // 有可能这时候点中了加时间的气球，转换到进行模式
+            if (m_ulTimeLeft > 0)
+                m_eGameStatus = GAME_STATUS_RUNNING;
+            
+            // 判断是否还有气球在屏幕，如果没有了就
+            if (!m_BalloonManger.isBalloonInScreen())
+                m_eGameStatus = GAME_STATUS_STOP;
             
             break;
         case GAME_STATUS_STOP:
@@ -406,7 +421,7 @@ void BalloonScene::createResultDialog()
     if (!m_pResultDialog)
     {
         // 生成结算对话框
-        m_pResultDialog = BalloonOptionsDialog::create();
+        m_pResultDialog = BalloonResultDialog::create();
         
         // 设定按钮回调
         m_pResultDialog->m_pMenuItemReturn->setTarget(this, menu_selector(BalloonScene::onPressMenuReturnMainMenu));
