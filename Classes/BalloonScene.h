@@ -14,6 +14,7 @@
 #include "CloudManager.h"
 
 #include "BalloonResultDialog.h"
+#include "BalloonPauseDialog.h"
 
 enum BalloonGameStatus
 {
@@ -42,6 +43,8 @@ public:
         m_pLayerBalloon = NULL;
         m_pSpriteBackground = NULL;
         m_pResultDialog = NULL;
+        m_pPauseDialog = NULL;
+        m_pMenuPause = NULL;
         
         // 注册监听对象
         m_BalloonManger.setBalloonDelegate(this);
@@ -82,8 +85,6 @@ public:
 private:
 	// Attributes for CCB
 	cocos2d::CCSprite* m_pSpriteBalloonModel;
-	// cocos2d::CCLabelTTF* m_pLabelTTFScore;
-	// cocos2d::CCLabelTTF* m_pLabelTTFTime;
     cocos2d::CCLabelBMFont* m_pLabelBMFontTimeLeft;
     cocos2d::CCLabelBMFont* m_pLabelBMFontScore;
     
@@ -92,8 +93,12 @@ private:
     cocos2d::CCLayer* m_pLayerBalloon;
     // 背景
     cocos2d::CCSprite* m_pSpriteBackground;
+    
+    cocos2d::CCMenu* m_pMenuPause;
 
     BalloonResultDialog* m_pResultDialog;
+    
+    BalloonPauseDialog* m_pPauseDialog;
 
 private:
     // 当前播放的帧
@@ -124,10 +129,14 @@ private:
     
     void showResultDialog();
     
+    void showPauseDialog();
+    
     // 按钮回调
     void onPressMenuRestartGame(cocos2d::CCObject* pSender);
     void onPressMenuReturnMainMenu(cocos2d::CCObject* pSender);
     void onPressMenuShare(cocos2d::CCObject* pSender);
+    void onPressMenuResume(cocos2d::CCObject* pSender);
+    void onPressMenuPause(cocos2d::CCObject* pSender);
     // 对话框结束回调
     void onResultDialogEndCall(cocos2d::CCNode* pNode);
     

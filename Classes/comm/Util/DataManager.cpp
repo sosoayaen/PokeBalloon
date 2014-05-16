@@ -53,8 +53,8 @@ bailin::util:: DataManagerUtil* bailin::util::DataManagerUtil::sharedDataManager
 	if (!g_sharedDataManager)
 	{
 		g_sharedDataManager = new DataManagerUtil();
-		std::string strAppString = "";
 #if 0
+		std::string strAppString = "";
 		// 底层获得对应的应用信息
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 		do

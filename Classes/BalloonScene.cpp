@@ -3,6 +3,7 @@
 #include "MobClickCpp.h"
 #include "GAdMob2DX.h"
 #include "UMSocial2DX.h"
+#include "BalloonPauseDialog.h"
 
 #include "bailinUtil.h"
 
@@ -16,6 +17,8 @@ USING_NS_BAILIN_UTIL;
 
 BalloonScene::~BalloonScene()
 {
+    CC_SAFE_RELEASE_NULL(m_pPauseDialog);
+    CC_SAFE_RELEASE_NULL(m_pResultDialog);
 }
 
 CCScene* BalloonScene::scene()
@@ -58,6 +61,9 @@ bool BalloonScene::init()
 		}
 
 		pCCBReader->release();
+        
+        // 暂停按钮按下效果
+        ControlUtil::sharedControlUtil()->SetMenuItemSelectedImageWithNormalImage(m_pMenuPause);
         
         resetData();
         
@@ -144,19 +150,18 @@ SEL_CallFuncN BalloonScene::onResolveCCBCCCallFuncSelector( CCObject * pTarget, 
 
 SEL_MenuHandler BalloonScene::onResolveCCBCCMenuItemSelector( CCObject * pTarget, const char* pSelectorName )
 {
-
+    CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onPressMenuPause", BalloonScene::onPressMenuPause);
 	return NULL;
 }
 
 bool BalloonScene::onAssignCCBMemberVariable( CCObject* pTarget, const char* pMemberVariableName, CCNode* pNode )
 {
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteBalloonModel", CCSprite*, this->m_pSpriteBalloonModel);
-	// CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLabelTTFScore", CCLabelTTF*, this->m_pLabelTTFScore);
-	// CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLabelTTFTime", CCLabelTTF*, this->m_pLabelTTFTime);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLabelBMFontTimeLeft", CCLabelBMFont*, this->m_pLabelBMFontTimeLeft);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLabelBMFontScore", CCLabelBMFont*, this->m_pLabelBMFontScore);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLayerBalloon", CCLayer*, this->m_pLayerBalloon);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteBackground", CCSprite*, this->m_pSpriteBackground);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuPause", CCMenu*, this->m_pMenuPause);
 
 	return true;
 }
@@ -397,6 +402,24 @@ void BalloonScene::onPressMenuShare(cocos2d::CCObject *pSender)
     UMSocial2DX::shareSNS(pDictData);
 }
 
+void BalloonScene::onPressMenuPause(cocos2d::CCObject *pSender)
+{
+    // 暂停游戏
+    unscheduleUpdate();
+    
+    showPauseDialog();
+}
+
+void BalloonScene::onPressMenuResume(cocos2d::CCObject *pSender)
+{
+    // 移除对话框
+    if (m_pPauseDialog)
+        m_pPauseDialog->endDialog();
+    
+    // 继续游戏
+    scheduleUpdate();
+}
+
 void BalloonScene::onResultDialogEndCall(CCNode* pNode)
 {
     
@@ -432,4 +455,21 @@ void BalloonScene::createResultDialog()
         // 保存对话框
         CC_SAFE_RETAIN(m_pResultDialog);
     }
+}
+
+void BalloonScene::showPauseDialog()
+{
+    if (!m_pPauseDialog)
+    {
+        m_pPauseDialog = BalloonPauseDialog::create();
+        
+        // 绑定按钮效果
+        m_pPauseDialog->m_pMenuItemAgain->setTarget(this, menu_selector(BalloonScene::onPressMenuRestartGame));
+        m_pPauseDialog->m_pMenuItemReturn->setTarget(this, menu_selector(BalloonScene::onPressMenuReturnMainMenu));
+        m_pPauseDialog->m_pMenuItemResume->setTarget(this, menu_selector(BalloonScene::onPressMenuResume));
+        
+        CC_SAFE_RETAIN(m_pPauseDialog);
+    }
+    
+    addChild(m_pPauseDialog);
 }
