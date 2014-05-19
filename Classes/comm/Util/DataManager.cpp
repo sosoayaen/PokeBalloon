@@ -19,6 +19,10 @@
 // #import "KeychainItemWrapper.h"
 #endif
 
+#ifdef ENABLE_UMENG_DATA
+// 加载友盟操作的头文件
+#   include "MobClickCpp.h"
+#endif
 
 USING_NS_CC;
 
@@ -30,12 +34,9 @@ const char ACCOUNT_KEY[] = "20140501";
 
 bailin::util::DataManagerUtil::DataManagerUtil()
 {
-	m_pDictionaryStringData = NULL;
 	m_pDictionaryGlobalData = NULL;
-    m_pDictionaryUmengParams = NULL;
-    m_pSystemMsgArray = NULL;
 
-	// m_pDictionaryStringData = getLocaleStringData();
+	m_pDictionaryStringData = getLocaleStringData();
 	m_pDictionaryGlobalData = getGlobalData();
 }
 
@@ -43,8 +44,6 @@ bailin::util::DataManagerUtil::~DataManagerUtil()
 {
 	CC_SAFE_RELEASE_NULL(m_pDictionaryStringData);
 	CC_SAFE_RELEASE_NULL(m_pDictionaryGlobalData);
-    CC_SAFE_DELETE(m_pSystemMsgArray);
-    CC_SAFE_DELETE(m_pDictionaryUmengParams);
 }
 
 static bailin::util::DataManagerUtil* g_sharedDataManager = NULL;
@@ -232,7 +231,10 @@ cocos2d::CCDictionary* bailin::util::DataManagerUtil::getLocaleStringData()
 {
 	CCDictionary* pDictData = NULL;
 	std::string localString = getLocalizableFileName();
-	pDictData = CCDictionary::createWithContentsOfFile(localString.c_str());
+    std::string strFullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(localString.c_str());
+    if (!CCFileUtils::sharedFileUtils()->isFileExist(strFullPath.c_str()))
+        CCLOG("%s is not Exist!!!", strFullPath.c_str());
+	pDictData = CCDictionary::createWithContentsOfFile(strFullPath.c_str());
 	if (pDictData)
 	{
 		pDictData->retain();
@@ -240,33 +242,16 @@ cocos2d::CCDictionary* bailin::util::DataManagerUtil::getLocaleStringData()
 	return pDictData;
 }
 
-
-const char* bailin::util::DataManagerUtil::GetUmengOnlineConfig(const char*pkey)
+std::string bailin::util::DataManagerUtil::GetUmengOnlineConfig(const char*pkey)
 {
-    if(m_pDictionaryUmengParams == NULL)
-    {
-        return NULL;
-    }
+    std::string strValue = "";
+#ifdef ENABLE_UMENG_DATA
+    // 判断下是否有友盟数据
+    strValue = MobClickCpp::getConfigParams(pkey);
+#endif
     
-    CCString* pValue = dynamic_cast<CCString*>(m_pDictionaryUmengParams->objectForKey(pkey));
-    
-    if(pValue)
-    {
-        return pValue->getCString();
-    }
-    
-    return NULL;
+    return strValue;
 }
-
-void bailin::util::DataManagerUtil::SetUmengParams(cocos2d::CCDictionary* pDicitionary)
-{
-    this->m_pDictionaryUmengParams = pDicitionary;
-    if(this->m_pDictionaryUmengParams)
-    {
-        this->m_pDictionaryUmengParams->retain();
-    }
-}
-
 
 const char* bailin::util::DataManagerUtil::GetUTF8StringInDictionary( const char* pszSection, const char* pszKey )
 {
@@ -442,20 +427,6 @@ void bailin::util::DataManagerUtil::SetGlobalDataLong( const char* pszKey, long 
 	}
 }
 
-CCArray* bailin::util::DataManagerUtil::GetGlobalSystemMessage()
-{
-    return m_pSystemMsgArray;
-}
-void bailin::util::DataManagerUtil::SetGlobalSystemMessage(cocos2d::CCArray *pArray)
-{
-    if(pArray != NULL)
-    {
-        CC_SAFE_DELETE(m_pSystemMsgArray);
-        m_pSystemMsgArray = pArray;
-        m_pSystemMsgArray->retain();
-    }
-}
-
 const char* bailin::util::DataManagerUtil::GetGlobalDataString( const char* pszKey )
 {
 	CCDictionary* pDict = getGlobalData();
@@ -561,7 +532,8 @@ float bailin::util::DataManagerUtil::GetFloatValueWithObject( cocos2d::CCObject*
 double bailin::util::DataManagerUtil::GetDoubleValueWithObject( cocos2d::CCObject* pObj )
 {
 	double dRet =0;
-	if (pObj) {
+	if (pObj)
+    {
 		//   CCLOG("%s %s",typeid(*pObj) ,typeid(CCString) );
 		if (typeid(*pObj)  == typeid(CCString) )
 		{
@@ -583,7 +555,8 @@ double bailin::util::DataManagerUtil::GetDoubleValueWithObject( cocos2d::CCObjec
 long long bailin::util::DataManagerUtil::GetLongLongValueWithObject(CCObject* pObj)
 {
 	long long nRet =0;
-	if (pObj) {
+	if (pObj)
+    {
 		if (typeid(*pObj)  == typeid(CCNumber) )
 		{
 			CCNumber* pStr = (CCNumber*) pObj;

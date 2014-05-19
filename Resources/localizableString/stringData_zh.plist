@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>share_section</key>
+	<dict>
+		<key>high_score_share</key>
+		<string>我在【气球大作战】中获得%lu的高分！你们敢来挑战么？一起来释放心中聚积的压力吧～</string>
+	</dict>
+</dict>
+</plist>

@@ -4,11 +4,19 @@
 #include "BalloonFirstPage.h"
 #include "UMSocial2DX.h"
 #include "GAdMob2DX.h"
-#include "MobClickCpp.h"
+#include "bailinUtil.h"
+
+#ifdef ENABLE_UMENG_DATA
+#   include "MobClickCpp.h"
+#endif
 
 USING_NS_CC;
+USING_NS_BAILIN_UTIL;
 
 #define JNI_CLASS "com/wardrums/pokeballoon/PokeBalloon"
+
+#define OPT_MUSIC_OFF           "opt_MusicOFF"
+#define OPT_SOUND_EFFECT_OFF    "opt_SoundEffectOFF"
 
 using namespace CocosDenshion;
 
@@ -33,28 +41,42 @@ bool AppDelegate::applicationDidFinishLaunching()
     GAdMob2DX* pGADInstance = GAdMob2DX::sharedGAdMob2DX();
 
 #   if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#       ifdef ENABLE_UMENG_DATA
     MobClickCpp::startWithAppkey("5352425256240b09f407dee2");
+#       endif
     UMSocial2DX::setAppKey("5352425256240b09f407dee2");
 
 	// 设置iOS广告ID
     pGADInstance->init("ca-app-pub-9727130637201516/8034810581");
 
 #	elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#       ifdef ENABLE_UMENG_DATA
     MobClickCpp::startWithAppkey("535242b756240b0a0506ca56");
+#       endif
     UMSocial2DX::setAppKey("535242b756240b0a0506ca56", JNI_CLASS);
 	
 	// 设置Android广告ID以及Android对应的包名
     pGADInstance->init("ca-app-pub-9727130637201516/7662720589", JNI_CLASS);
 #	endif
 
-#	if COCOS2D_DEBUG > 0
+#   ifdef ENABLE_UMENG_DATA
+#       if COCOS2D_DEBUG > 0
 	MobClickCpp::setLogEnabled(true);
-#	endif
+#       endif
 
+    // 检查版本更新
     MobClickCpp::checkUpdate();
+    
+    // 更新在线配置数据
+    MobClickCpp::updateOnlineConfig();
+    
+#   endif
     
     
 #endif
+    
+    // 读取本地配置数据
+    setLocalConfigData();
 
     pDirector->setOpenGLView(pEGLView);
     
@@ -116,9 +138,29 @@ void AppDelegate::applicationDidEnterBackground() {
 void AppDelegate::applicationWillEnterForeground() {
     CCDirector::sharedDirector()->startAnimation();
 
-    // if you use SimpleAudioEngine, it must resume here
-    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+    // 预读音乐选项
+    if (!DataManagerUtil::sharedDataManagerUtil()->GetGlobalDataLong("opt_MusicOFF"))
+    {
+        // if you use SimpleAudioEngine, it must resume here
+        SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+    }
     
     // 多盟统计分析回到前台
     MobClickCpp::applicationWillEnterForeground();
+}
+
+void AppDelegate::setLocalConfigData()
+{
+    DataManagerUtil* pDMU = DataManagerUtil::sharedDataManagerUtil();
+    
+    CCAssert(pDMU, "DataManagerUtil instance create failed!");
+    
+    if (pDMU)
+    {
+        // 读取音效和音乐配置
+        int nValue = CCUserDefault::sharedUserDefault()->getIntegerForKey(OPT_MUSIC_OFF, 0);
+        pDMU->SetGlobalDataLong(OPT_MUSIC_OFF, nValue);
+        nValue = CCUserDefault::sharedUserDefault()->getIntegerForKey(OPT_SOUND_EFFECT_OFF, 0);
+        pDMU->SetGlobalDataLong(OPT_SOUND_EFFECT_OFF, nValue);
+    }
 }

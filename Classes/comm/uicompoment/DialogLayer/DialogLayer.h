@@ -21,13 +21,7 @@ public:
     virtual ~DialogLayer();
 
 public:
-    /**
-	所有的菜单按钮压入到容器中
-	当前函数必须在 onInitDialog 中调用
-	*/
-	void pushMenuItem(cocos2d::CCMenuItem* pMenuItem);
-
-	/** 
+	/**
 	设置多个可响应的按钮，一般用在ccbi载入后获取对应的菜单，使其可响应界面消息
 	当前函数可以在任意时刻调用
 	*/
@@ -170,7 +164,6 @@ protected:            // 模态对话框菜单
 	// 优先判断是否在点击的区域中，这里需要提供屏幕坐标下的rect
 	cocos2d::CCRect m_rectClickValide;
 
-    cocos2d::CCArray *mMenuItemArray;   // 所有菜单
 //    bool mTouchedMenu;                  // 记录菜单点击
 
 	/** 当前被选中的按钮 CCMenu */

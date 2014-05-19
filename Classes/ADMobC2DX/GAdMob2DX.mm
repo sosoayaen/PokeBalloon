@@ -24,7 +24,6 @@ bool GAdMob2DX::init(const char* pszUnitID, const char* pszPackageName /* = NULL
         bannerView_ = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
         // bannerView_.delegate = self;
         // Specify the ad's "unit identifier." This is your AdMob Publisher ID.
-        // @"ca-app-pub-9727130637201516/8034810581";
         bannerView_.adUnitID = [[NSString alloc] initWithUTF8String:pszUnitID];
         
         // Let the runtime know which UIViewController to restore after taking

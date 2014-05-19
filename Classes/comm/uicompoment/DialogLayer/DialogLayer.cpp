@@ -13,7 +13,6 @@ DialogLayer::DialogLayer():
 	m_pCurrentTouchEditBox(NULL),
 	m_pCurrentTouchScrollView(NULL),
 	m_pVisibleNode(NULL),
-    mMenuItemArray(NULL),
 	m_pOtherTouchCtl(NULL),
 	m_nTouchCount(0),
 	m_pBoardOnEnterAction(NULL),
@@ -246,15 +245,6 @@ void DialogLayer::ccTouchCancelled(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *p
 		m_pCurrentTouchScrollView->ccTouchCancelled(pTouch, pEvent);
 	}
 	m_pCurrentTouchScrollView = NULL;
-}
-
-void DialogLayer::pushMenuItem( cocos2d::CCMenuItem* pMenuItem )
-{
-	if (!mMenuItemArray) {
-		mMenuItemArray = CCArray::create();
-	}
-
-	mMenuItemArray->addObject(pMenuItem);
 }
 
 void DialogLayer::pushMenu( cocos2d::CCMenu* pMenu )

@@ -34,7 +34,10 @@ public:
     virtual void applicationWillEnterForeground();
     
 private:
-    
+    /**
+     * @brief 读取本地配置数据
+     */
+    void setLocalConfigData();
 };
 
 #endif // _APP_DELEGATE_H_

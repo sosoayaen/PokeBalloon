@@ -301,7 +301,10 @@ void BalloonScene::update(float dt)
             
             // 有可能这时候点中了加时间的气球，转换到进行模式
             if (m_ulTimeLeft > 0)
+            {
                 m_eGameStatus = GAME_STATUS_RUNNING;
+                break;
+            }
             
             // 判断是否还有气球在屏幕，如果没有了就
             if (!m_BalloonManger.isBalloonInScreen())
@@ -398,7 +401,10 @@ void BalloonScene::onPressMenuReturnMainMenu(cocos2d::CCObject *pSender)
 void BalloonScene::onPressMenuShare(cocos2d::CCObject *pSender)
 {
     CCDictionary* pDictData = CCDictionary::create();
-    pDictData->setObject(ccs("一起来【气球大作战】吧～伸出你的指头，释放你的压力"), "shareText");
+    
+    // 截取得分图片
+    // pDictData->setObject(ccs("一起来【气球大作战】吧～伸出你的指头，释放你的压力"), "shareText");
+    pDictData->setObject(CCString::createWithFormat(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("share_section", "high_score_share"), m_lTotalScore), "shareText");
     UMSocial2DX::shareSNS(pDictData);
 }
 
@@ -406,7 +412,7 @@ void BalloonScene::onPressMenuPause(cocos2d::CCObject *pSender)
 {
     // 暂停游戏
     unscheduleUpdate();
-    
+    // 显示暂停界面
     showPauseDialog();
 }
 

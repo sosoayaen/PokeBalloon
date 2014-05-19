@@ -19,8 +19,8 @@
 #ifndef __GADMob2DX_H__
 #define __GADMob2DX_H__
 
-#include <string>
 #include "cocos2d.h"
+#include <string>
 
 class GAdMob2DX
 {

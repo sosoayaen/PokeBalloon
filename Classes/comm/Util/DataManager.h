@@ -12,6 +12,7 @@
 #include "bailinMacro.h"
 
 NS_BAILIN_UTIL_BEGIN
+
 class DataManagerUtil
 {
 public:
@@ -65,33 +66,11 @@ public:
 	*/
 	void SetGlobalDataLong(const char* pszKey, long lValue);
 
-    
     /**
      * @brief 得到全局的整形数据
      * @param pszKey 对应的键
      */
-	cocos2d::CCArray* GetGlobalSystemMessage();
-    
-	/**
-     * @brief 设置全局的系统消息数据
-     * @param pszKey 对应的键
-     * @param lValue 需要设置的long值
-     */
-	void SetGlobalSystemMessage(cocos2d::CCArray* pArray);
-    
-    /**
-     * @brief 得到全局的整形数据
-     * @param pszKey 对应的键
-     */
-	const char* GetUmengOnlineConfig(const char*pkey);
-    
-	/**
-     * @brief 设置全局的系统消息数据
-     * @param pszKey 对应的键
-     * @param lValue 需要设置的long值
-     */
-	void SetUmengParams(cocos2d::CCDictionary* pDicitionary);
-    
+    std::string GetUmengOnlineConfig(const char*pkey);
     
 	/**
 	* @brief 得到全局的字符串数据
@@ -107,14 +86,15 @@ public:
 	void SetGlobalDataString(const char* pszKey, const char* pszValue);
 
 	/**
-	* @brief 得到MD5后的字符串
+	* @brief 得到异或后的字符串
+    * @param str 输入字符串，仅能对字符串数据做加密
 	*/
 	std::string GetEncryptString(const std::string& str);
 
 	// 设置本地文件的读写，以key value模式存放
 	std::string ReadDataFromLocal(const std::string& key);
 	bool WriteDataToLocal(const std::string& key, const std::string& value);
-
+    
 	/**
 	* @brief 从CCObject中获得long数据
 	*/
@@ -139,33 +119,11 @@ public:
 	* @brief 给底层NDK发送消息调用对应的函数
 	*/
 	void SendNDKMessages(const char* pszNativeFuncName, cocos2d::CCDictionary* pData);
+    
+    /**
+     * @brief 
+     */
 
-	/**
-	* @brief 字符串MD5编码
-	* @param pszSrc 待编码的字符串
-	* @return string 返回字符串
-	*/
-//	std::string MD5(const char* pszSrc);
-
-	/**
-	* @brief 保存用户的帐号和密码到本地
-	* @param strAccount 用户的账户
-	* @param strPassword 用户的密码
-	*/
-	void SaveUserIDAndPassword(const char* pszUserID, const char* pszPassword);
-
-	/**
-	* @brief 获取本地文件中的用户名和密码
-	* @param strAccount 用户的账户
-	* @param strPassword 用户的密码
-	*/
-	void GetUserIDAndPassword(std::string& strUserID, std::string& strPassword);
-
-	/**
-	* @brief 判断当前返回的http请求是否成功
-	* @param pData 返回的JSON数据
-	*/
-	bool IsHttpSuccess(cocos2d::CCDictionary* pData);
 protected:
 	// 全局唯一的字符串数据
 	cocos2d::CCDictionary* m_pDictionaryStringData;
@@ -173,10 +131,6 @@ protected:
 	// 内存中的全局数据
 	cocos2d::CCDictionary* m_pDictionaryGlobalData;
     
-    cocos2d::CCDictionary* m_pDictionaryUmengParams;
-    
-    cocos2d::CCArray* m_pSystemMsgArray;
-
 private:
 
 	// 加载字符串配置
@@ -184,11 +138,10 @@ private:
 
 	// 得到全局数据对象
 	cocos2d::CCDictionary* getGlobalData();
+    
     //获取keychain 数据（udid,uid,passward）
-    cocos2d::CCDictionary*getKeyChainData();
+    cocos2d::CCDictionary* getKeyChainData();
 
-	// 帐号密码加解密
-	// std::string getXORString(const char* key, const std::string& strValue);
 };
 
 NS_BAILIN_UTIL_END
