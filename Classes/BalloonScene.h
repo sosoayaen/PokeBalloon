@@ -51,7 +51,7 @@ public:
         
         m_ulFrame = 0;
         m_lTotalScore = 0;
-        m_ulTimeLeft = 0;
+        m_lTimeLeft = 0;
         
 	}
 	~BalloonScene();
@@ -114,7 +114,7 @@ private:
     long m_lTotalScore;
     
     // 当前剩余时间
-    unsigned long m_ulTimeLeft;
+    long m_lTimeLeft;
     
     // 游戏状态
     BalloonGameStatus m_eGameStatus;

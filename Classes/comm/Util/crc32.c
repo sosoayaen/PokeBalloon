@@ -13,7 +13,7 @@
  *     - file errors
  \*----------------------------------------------------------------------------*/
 
-static int Crc32_ComputeFile( FILE *file, unsigned long *outCrc32 )
+int Crc32_ComputeFile( FILE *file, unsigned long *outCrc32 )
 {
 #   define CRC_BUFFER_SIZE  8192
     unsigned char buf[CRC_BUFFER_SIZE];
@@ -57,7 +57,7 @@ ERR_EXIT:
  *     (no errors are possible)
  \*----------------------------------------------------------------------------*/
 
-static unsigned long Crc32_ComputeBuf( unsigned long inCrc32, const void *buf,
+unsigned long Crc32_ComputeBuf( unsigned long inCrc32, const void *buf,
                                       size_t bufLen )
 {
     static const unsigned long crcTable[256] = {

@@ -96,7 +96,7 @@ void BalloonScene::resetData()
     m_ulFrame = 0;
     m_lTotalScore = 0;
     
-    m_ulTimeLeft = DEFAULT_TIME;
+    m_lTimeLeft = DEFAULT_TIME;
     
     updateScore();
     updateTimeLeft();
@@ -110,8 +110,8 @@ void BalloonScene::updateScore()
 
 void BalloonScene::updateTimeLeft()
 {
-    // m_pLabelTTFTime->setString(CCString::createWithFormat("%lus", m_ulTimeLeft)->getCString());
-    m_pLabelBMFontTimeLeft->setCString(CCString::createWithFormat("%lu", m_ulTimeLeft)->getCString());
+    // m_pLabelTTFTime->setString(CCString::createWithFormat("%lus", m_lTimeLeft)->getCString());
+    m_pLabelBMFontTimeLeft->setCString(CCString::createWithFormat("%lu", m_lTimeLeft)->getCString());
 }
 
 void BalloonScene::onEnter()
@@ -233,7 +233,10 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             break;
         case kBalloonTypeAddTime:
             // 时间增加
-            m_ulTimeLeft += pBalloon->getBalloonScore();
+            // m_lTimeLeft += pBalloon->getBalloonScore();
+            
+            // 校验时间数据确保未被修改
+            DataManagerUtil::sharedDataManagerUtil()->SetSecurityData("s_TimeLeft", &m_lTimeLeft, pBalloon->getBalloonScore());
             updateTimeLeft();
             break;
             
@@ -262,14 +265,14 @@ void BalloonScene::update(float dt)
         case GAME_STATUS_READY:
             break;
         case GAME_STATUS_RUNNING:
-            if (m_ulTimeLeft > 0 && m_ulFrame % int(1/CCDirector::sharedDirector()->getAnimationInterval()) == 0)
+            if (m_lTimeLeft > 0 && m_ulFrame % int(1/CCDirector::sharedDirector()->getAnimationInterval()) == 0)
             {
-                m_ulTimeLeft--;
+                m_lTimeLeft--;
                 updateTimeLeft();
             }
             
             // 判断游戏是否结束
-            if (m_ulTimeLeft == 0)
+            if (m_lTimeLeft == 0)
             {
                 m_eGameStatus = GAME_STATUS_TIMES_UP;
             }
@@ -300,7 +303,7 @@ void BalloonScene::update(float dt)
             m_CloudManager.updatePosition();
             
             // 有可能这时候点中了加时间的气球，转换到进行模式
-            if (m_ulTimeLeft > 0)
+            if (m_lTimeLeft > 0)
             {
                 m_eGameStatus = GAME_STATUS_RUNNING;
                 break;

@@ -29,9 +29,9 @@ public:
      * @brief 返回某个小于8192字节缓存数据的CRC32核
      * @param buf 缓存指针
      * @param bufLen 缓存大小
-     * @return int 校验码
+     * @return unsigned long 校验码
      */
-    static int Crc32(const void *buf, size_t bufLen );
+    static unsigned long Crc32(const void *buf, size_t bufLen );
 };
 
 NS_BAILIN_UTIL_END

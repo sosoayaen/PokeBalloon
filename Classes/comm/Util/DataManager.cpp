@@ -30,12 +30,14 @@ USING_NS_CC;
 const char SECRECT_KEY[] = "20140419";
 
 // 帐号和密码的异或key （密码存的是MD5的值，所以不暂时不用）
-const char ACCOUNT_KEY[] = "20140501";
+// const char ACCOUNT_KEY[] = "20140501";
 
 bailin::util::DataManagerUtil::DataManagerUtil()
 {
 	m_pDictionaryGlobalData = NULL;
 
+    m_pDictionaryGlobalData = CCDictionary::create();
+    CC_SAFE_RETAIN(m_pDictionaryGlobalData);
 	m_pDictionaryStringData = getLocaleStringData();
 	m_pDictionaryGlobalData = getGlobalData();
 }
@@ -44,6 +46,7 @@ bailin::util::DataManagerUtil::~DataManagerUtil()
 {
 	CC_SAFE_RELEASE_NULL(m_pDictionaryStringData);
 	CC_SAFE_RELEASE_NULL(m_pDictionaryGlobalData);
+	CC_SAFE_RELEASE_NULL(m_pDictionarySecurityData);
 }
 
 static bailin::util::DataManagerUtil* g_sharedDataManager = NULL;
@@ -584,4 +587,36 @@ void bailin::util::DataManagerUtil::SendNDKMessages( const char* pszNativeFuncNa
 #if (CC_PLATFORM_WIN32 != CC_TARGET_PLATFORM)
 	SendMessageWithParams(pszNativeFuncName, pData);
 #endif
+}
+
+bool bailin::util::DataManagerUtil::CheckSecurityData(const char *pszKey, long lData)
+{
+    CCString* pCheckCode = dynamic_cast<CCString*>(m_pDictionarySecurityData->objectForKey(pszKey));
+    
+    unsigned long nCrc32Check = 0;
+    if (pCheckCode)
+    {
+        nCrc32Check = (unsigned long)pCheckCode->uintValue();
+    }
+    
+    unsigned long nCrc32 = bailin::util::crypto::Crc32(&lData, sizeof(lData));
+    
+    return nCrc32 == nCrc32Check;
+}
+
+bool bailin::util::DataManagerUtil::SetSecurityData(const char *pszKey, long *plData, long lAddData)
+{
+    bool bRet = CheckSecurityData(pszKey, *plData);
+    
+    if (bRet)
+    {
+        // 附加值
+        *plData += lAddData;
+        
+        // 回填校验值
+        unsigned long nCheckCode = bailin::util::crypto::Crc32(plData, sizeof(long));
+        m_pDictionarySecurityData->setObject(CCString::createWithFormat("%lu", nCheckCode), pszKey);
+    }
+    
+    return bRet;
 }

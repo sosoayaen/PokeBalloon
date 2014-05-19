@@ -121,8 +121,20 @@ public:
 	void SendNDKMessages(const char* pszNativeFuncName, cocos2d::CCDictionary* pData);
     
     /**
-     * @brief 
+     * @brief 对数据进行保护，设置数据是用于回填
+     * @param pszKey 对应存储数据的key
+     * @param plData 需要修改的数据指针
+     * @param lAddData 用作修改数据的附加值
+     * @return bool 表明保护的时候是否被篡改，如果返回false表示被篡改了
      */
+    bool SetSecurityData(const char* pszKey, long* plData, long lAddData);
+    
+    /**
+     * @brief 检查对应数据是否正常，获取数据时校验
+     */
+    bool CheckSecurityData(const char* pszKey, long lData);
+    
+private:
 
 protected:
 	// 全局唯一的字符串数据
@@ -130,6 +142,9 @@ protected:
 
 	// 内存中的全局数据
 	cocos2d::CCDictionary* m_pDictionaryGlobalData;
+    
+    // 用于保存安全数据校验码的字典
+    cocos2d::CCDictionary* m_pDictionarySecurityData;
     
 private:
 
