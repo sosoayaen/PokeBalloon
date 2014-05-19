@@ -27,4 +27,7 @@
 	public: virtual void set##varFunc##Enable(bool parameter) { varMember = parameter;}\
 	public: virtual bool is##varFunc(void) const { return varMember;}
 
+#define OPT_MUSIC_OFF           "opt_MusicOFF"
+#define OPT_SOUND_EFFECT_OFF    "opt_SoundEffectOFF"
+
 #endif // __BALLOON_MACRO_H__

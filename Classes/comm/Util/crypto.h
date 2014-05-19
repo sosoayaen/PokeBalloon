@@ -5,7 +5,7 @@
 
 #include "Encrypt.h"
 #include "Base64.h"
-#include "string"
+#include <string>
 
 NS_BAILIN_UTIL_BEGIN
 
@@ -24,6 +24,14 @@ public:
 	static std::string Base64Decode(std::string const& encoded_string);
 
 	static std::string getXORString(const char* key, const std::string& strValue);
+    
+    /**
+     * @brief 返回某个小于8192字节缓存数据的CRC32核
+     * @param buf 缓存指针
+     * @param bufLen 缓存大小
+     * @return int 校验码
+     */
+    static int Crc32(const void *buf, size_t bufLen );
 };
 
 NS_BAILIN_UTIL_END

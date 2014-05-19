@@ -23,10 +23,10 @@ public:
 	{
 		m_pMenuItemMusic = NULL;
 		m_pMenuItemEffect = NULL;
-        m_pMenuReturn = NULL;
+        // m_pMenuReturn = NULL;
         m_pMenuMusic = NULL;
         m_pMenuEffect = NULL;
-
+        m_pSpriteBoard = NULL;
 	}
 	~BalloonOptionsDialog();
 
@@ -49,16 +49,16 @@ private:
 	// Attributes for CCB
 	cocos2d::CCMenuItemImage* m_pMenuItemMusic;
 	cocos2d::CCMenuItemImage* m_pMenuItemEffect;
-    cocos2d::CCMenu* m_pMenuReturn;
+    // cocos2d::CCMenu* m_pMenuReturn;
     cocos2d::CCMenu* m_pMenuMusic;
     cocos2d::CCMenu* m_pMenuEffect;
+    cocos2d::CCSprite* m_pSpriteBoard;
 
 
 private:
     
     void saveOptionsData();
     
-	void onPressMenuReturn(cocos2d::CCObject* pSender);
     void onPressMenuMusic(cocos2d::CCObject* pSender);
     void onPressMenuEffect(cocos2d::CCObject* pSender);
     
@@ -71,6 +71,8 @@ public:
 	virtual bool init();
 	virtual void onEnter();
 	virtual void onExit();
+    
+	virtual bool endDialog(cocos2d::CCActionInterval* pAction = NULL, float fDuration = 1.0f);
 
 
 	

@@ -26,6 +26,7 @@
 		04356036192916490044D838 /* options in Resources */ = {isa = PBXBuildFile; fileRef = 04356035192916490044D838 /* options */; };
 		04356039192916550044D838 /* BalloonOptionsDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04356037192916550044D838 /* BalloonOptionsDialog.cpp */; };
 		0435603D19291DD60044D838 /* BalloonOptionsDialog.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 0435603C19291DD60044D838 /* BalloonOptionsDialog.ccbi */; };
+		04356044192A49360044D838 /* crc32.c in Sources */ = {isa = PBXBuildFile; fileRef = 04356043192A49360044D838 /* crc32.c */; };
 		044BAB831905045600D8CCB3 /* BalloonScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 044BAB761905045600D8CCB3 /* BalloonScene.ccbi */; };
 		044BAB891905048A00D8CCB3 /* balloon in Resources */ = {isa = PBXBuildFile; fileRef = 044BAB881905048A00D8CCB3 /* balloon */; };
 		0458E80819167BAB00FA1321 /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 0458E80419167BAB00FA1321 /* Icon-29.png */; };
@@ -339,8 +340,8 @@
 		041B1A2B19238B8D00942314 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
 		041B1A2C19238B8D00942314 /* ControlUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ControlUtil.cpp; sourceTree = "<group>"; };
 		041B1A2D19238B8D00942314 /* ControlUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlUtil.h; sourceTree = "<group>"; };
-		041B1A2E19238B8D00942314 /* crypto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = crypto.cpp; sourceTree = "<group>"; };
-		041B1A2F19238B8D00942314 /* crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypto.h; sourceTree = "<group>"; };
+		041B1A2E19238B8D00942314 /* crypto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = crypto.cpp; sourceTree = "<group>"; };
+		041B1A2F19238B8D00942314 /* crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = crypto.h; sourceTree = "<group>"; };
 		041B1A3019238B8D00942314 /* DataManager.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; lineEnding = 0; path = DataManager.cpp; sourceTree = "<group>"; };
 		041B1A3119238B8D00942314 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DataManager.h; sourceTree = "<group>"; };
 		041B1A3219238B8D00942314 /* Encrypt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Encrypt.cpp; sourceTree = "<group>"; };
@@ -363,6 +364,8 @@
 		04356037192916550044D838 /* BalloonOptionsDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BalloonOptionsDialog.cpp; path = ../Classes/BalloonOptionsDialog.cpp; sourceTree = "<group>"; };
 		04356038192916550044D838 /* BalloonOptionsDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BalloonOptionsDialog.h; path = ../Classes/BalloonOptionsDialog.h; sourceTree = "<group>"; };
 		0435603C19291DD60044D838 /* BalloonOptionsDialog.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonOptionsDialog.ccbi; sourceTree = "<group>"; };
+		04356043192A49360044D838 /* crc32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crc32.c; sourceTree = "<group>"; };
+		04356045192A4BBB0044D838 /* crc32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = crc32.h; sourceTree = "<group>"; };
 		044BAB761905045600D8CCB3 /* BalloonScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonScene.ccbi; sourceTree = "<group>"; };
 		044BAB881905048A00D8CCB3 /* balloon */ = {isa = PBXFileReference; lastKnownFileType = folder; path = balloon; sourceTree = "<group>"; };
 		0458E80419167BAB00FA1321 /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29.png"; sourceTree = SOURCE_ROOT; };
@@ -1016,6 +1019,8 @@
 				041B1A3419238B8D00942314 /* LoadingSprit */,
 				041B1A3719238B8D00942314 /* StringUtil.cpp */,
 				041B1A3819238B8D00942314 /* StringUtil.h */,
+				04356043192A49360044D838 /* crc32.c */,
+				04356045192A4BBB0044D838 /* crc32.h */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -1841,8 +1846,6 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				04356037192916550044D838 /* BalloonOptionsDialog.cpp */,
-				04356038192916550044D838 /* BalloonOptionsDialog.h */,
 				041B1A1D19238B8D00942314 /* comm */,
 				04CB2B62191F74EF004B2792 /* ADMobC2DX */,
 				04CB2B65191F74EF004B2792 /* UMSocialC2DX */,
@@ -1869,6 +1872,8 @@
 				046051761923C6F4005E5A8D /* BalloonResultDialog.h */,
 				0435602719265FC40044D838 /* BalloonPauseDialog.cpp */,
 				0435602819265FC40044D838 /* BalloonPauseDialog.h */,
+				04356037192916550044D838 /* BalloonOptionsDialog.cpp */,
+				04356038192916550044D838 /* BalloonOptionsDialog.h */,
 			);
 			name = Classes;
 			path = ../classes;
@@ -2424,6 +2429,7 @@
 				046051361923A344005E5A8D /* MemBuffer.cpp in Sources */,
 				15A3DA441682F826002FB0C5 /* CCNodeLoaderLibrary.cpp in Sources */,
 				15A3DA451682F826002FB0C5 /* CCParticleSystemQuadLoader.cpp in Sources */,
+				04356044192A49360044D838 /* crc32.c in Sources */,
 				15A3DA461682F826002FB0C5 /* CCScale9SpriteLoader.cpp in Sources */,
 				15A3DA471682F826002FB0C5 /* CCScrollViewLoader.cpp in Sources */,
 				041B1A3F19238B8D00942314 /* Base64.cpp in Sources */,

@@ -48,6 +48,8 @@ bool BalloonOptionsDialog::init()
 		pCCBReader->release();
         
         initMenuItem();
+        
+        SetVisibleBoard(m_pSpriteBoard);
 		
 		bRet = true;
 		
@@ -76,7 +78,6 @@ SEL_CallFuncN BalloonOptionsDialog::onResolveCCBCCCallFuncSelector( CCObject * p
 
 SEL_MenuHandler BalloonOptionsDialog::onResolveCCBCCMenuItemSelector( CCObject * pTarget, const char* pSelectorName )
 {
-	CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onPressMenuReturn", BalloonOptionsDialog::onPressMenuReturn);
 	CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onPressMenuMusic", BalloonOptionsDialog::onPressMenuMusic);
 	CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onPressMenuEffect", BalloonOptionsDialog::onPressMenuEffect);
 
@@ -87,9 +88,9 @@ bool BalloonOptionsDialog::onAssignCCBMemberVariable( CCObject* pTarget, const c
 {
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuItemMusic", CCMenuItemImage*, this->m_pMenuItemMusic);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuItemEffect", CCMenuItemImage*, this->m_pMenuItemEffect);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuReturn", CCMenu*, this->m_pMenuReturn);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuMusic", CCMenu*, this->m_pMenuMusic);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuEffect", CCMenu*, this->m_pMenuEffect);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteBoard", CCSprite*, this->m_pSpriteBoard);
 
 	return true;
 }
@@ -98,14 +99,6 @@ SEL_CCControlHandler BalloonOptionsDialog::onResolveCCBCCControlSelector( CCObje
 {
 
 	return NULL;
-}
-
-void BalloonOptionsDialog::onPressMenuReturn(CCObject* pSender)
-{
-    // 保存设置选项到配置文件
-    saveOptionsData();
-    
-    endDialog();
 }
 
 void BalloonOptionsDialog::saveOptionsData()
@@ -147,11 +140,11 @@ void BalloonOptionsDialog::onPressMenuEffect(cocos2d::CCObject *pSender)
 
 void BalloonOptionsDialog::initMenuItem()
 {
-    ControlUtil::sharedControlUtil()->SetMenuItemSelectedImageWithNormalImage(m_pMenuReturn);
+    // ControlUtil::sharedControlUtil()->SetMenuItemSelectedImageWithNormalImage(m_pMenuReturn);
     ControlUtil::sharedControlUtil()->SetMenuItemSelectedImageWithNormalImage(m_pMenuMusic);
     ControlUtil::sharedControlUtil()->SetMenuItemSelectedImageWithNormalImage(m_pMenuEffect);
     
-    pushMenu(m_pMenuReturn);
+    // pushMenu(m_pMenuReturn);
     pushMenu(m_pMenuMusic);
     pushMenu(m_pMenuEffect);
     
@@ -192,4 +185,12 @@ void BalloonOptionsDialog::setCheckBoxEnable(CCMenuItemImage* pMenuItem, bool bE
         else
             pMenuItem->setOpacity(0);
     }
+}
+
+
+bool BalloonOptionsDialog::endDialog(cocos2d::CCActionInterval* pAction /* = NULL */, float fDuration /* = 1.0f */)
+{
+    saveOptionsData();
+    
+    DialogLayer::endDialog(pAction, fDuration);
 }

@@ -1,4 +1,5 @@
 #include "crypto.h"
+#include "crc32.h"
 
 std::string bailin::util::crypto::MD5(const char* pszSrc)
 {
@@ -34,3 +35,7 @@ std::string bailin::util::crypto::getXORString( const char* key, const std::stri
 	return retStr;
 }
 
+int bailin::util::crypto::Crc32(const void *buf, size_t bufLen)
+{
+    return Crc32_ComputeBuf(0, buf, bufLen);
+}

@@ -5,6 +5,7 @@
 #include "UMSocial2DX.h"
 #include "GAdMob2DX.h"
 #include "bailinUtil.h"
+#include "Balloon_macro.h"
 
 #ifdef ENABLE_UMENG_DATA
 #   include "MobClickCpp.h"
@@ -15,8 +16,6 @@ USING_NS_BAILIN_UTIL;
 
 #define JNI_CLASS "com/wardrums/pokeballoon/PokeBalloon"
 
-#define OPT_MUSIC_OFF           "opt_MusicOFF"
-#define OPT_SOUND_EFFECT_OFF    "opt_SoundEffectOFF"
 
 using namespace CocosDenshion;
 

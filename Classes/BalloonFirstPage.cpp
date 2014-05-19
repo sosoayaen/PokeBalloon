@@ -4,9 +4,16 @@
 #include "UMSocial2DX.h"
 #include "bailinUtil.h"
 
+#include "BalloonOptionsDialog.h"
+
+#define OPT_MUSIC_OFF "opt_MusicOFF"
+
 USING_NS_CC;
 USING_NS_CC_EXT;
 USING_NS_BAILIN_UTIL;
+
+#include "SimpleAudioEngine.h"
+using namespace CocosDenshion;
 
 BalloonFirstPage::~BalloonFirstPage()
 {
@@ -84,6 +91,11 @@ void BalloonFirstPage::onEnter()
         BalloonSoundManager::sharedBalloonSoundManager()->playBackgroundMusic(SOUND_BACKGROUND_AFTER_SCHOOL);
     }
     
+    if (DataManagerUtil::sharedDataManagerUtil()->GetGlobalDataLong(OPT_MUSIC_OFF))
+    {
+        SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+    }
+    
     m_pMenuMain->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.8f, ccpMult(ccpFromSize(getContentSize()), 0.5f))));
 }
 
@@ -156,4 +168,5 @@ void BalloonFirstPage::onPressMenuShop(cocos2d::CCObject *pSender)
 
 void BalloonFirstPage::onPressMenuOptions(cocos2d::CCObject *pSender)
 {
+    addChild(BalloonOptionsDialog::create());
 }
