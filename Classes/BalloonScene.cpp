@@ -110,6 +110,8 @@ void BalloonScene::resetData()
         pDMU->SetSecurityCode(SECURITY_TIME, crypto::Crc32(&m_lTimeLeft, sizeof(m_lTimeLeft)));
     }
     
+    m_pLayerBalloon->removeAllChildren();
+    
     updateScore();
     updateTimeLeft();
 }
@@ -261,8 +263,8 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             if (m_lTotalScore < 0)
             {
                 m_lTotalScore = 0;
-                pDMU->SetSecurityCode(SECURITY_SCORE, crypto::Crc32(&m_lTotalScore, sizeof(m_lTotalScore)));
             }
+            pDMU->SetSecurityCode(SECURITY_SCORE, crypto::Crc32(&m_lTotalScore, sizeof(m_lTotalScore)));
             updateScore();
             break;
         case kBalloonTypeAddTime:
@@ -365,8 +367,6 @@ void BalloonScene::update(float dt)
             // 弹出结算框
             showResultDialog();
             
-            // 显示广告条
-            GAdMob2DX::sharedGAdMob2DX()->setVisible(true);
             
             break;
         default:
@@ -398,6 +398,8 @@ void BalloonScene::showResultDialog()
     addChild(pMenu);
     */
    
+    // 显示广告条
+    GAdMob2DX::sharedGAdMob2DX()->setVisible(true);
     
     // 设定面板分数
     m_pResultDialog->setScore(m_lTotalScore);
@@ -424,15 +426,24 @@ void BalloonScene::showResultDialog()
 
 void BalloonScene::onPressMenuRestartGame(cocos2d::CCObject *pSender)
 {
-    /*
     CCNode* pNode = dynamic_cast<CCNode*>(pSender);
     if (!pNode) return;
-    
+    /*
     // 移除按钮层
     pNode->getParent()->removeFromParent();
     */
     
-    m_pResultDialog->endDialog();
+    int nValue = int(pNode->getUserData());
+    switch (nValue) {
+        case 1000:
+            m_pResultDialog->endDialog();
+            break;
+        case 1001:
+            m_pPauseDialog->endDialog();
+            break;
+        default:
+            break;
+    }
     
     startGame();
 }
@@ -501,6 +512,7 @@ void BalloonScene::createResultDialog()
         // 设定按钮回调
         m_pResultDialog->m_pMenuItemReturn->setTarget(this, menu_selector(BalloonScene::onPressMenuReturnMainMenu));
         m_pResultDialog->m_pMenuItemPlayAgain->setTarget(this, menu_selector(BalloonScene::onPressMenuRestartGame));
+        m_pResultDialog->m_pMenuItemPlayAgain->setUserData((void*)1000);
         m_pResultDialog->m_pMenuItemShare->setTarget(this, menu_selector(BalloonScene::onPressMenuShare));
         m_pResultDialog->setEndCallbackFuncN(CCCallFuncN::create(this, callfuncN_selector(BalloonScene::onResultDialogEndCall)));
         
@@ -517,6 +529,7 @@ void BalloonScene::showPauseDialog()
         
         // 绑定按钮效果
         m_pPauseDialog->m_pMenuItemAgain->setTarget(this, menu_selector(BalloonScene::onPressMenuRestartGame));
+        m_pPauseDialog->m_pMenuItemAgain->setUserData((void*)1001);
         m_pPauseDialog->m_pMenuItemReturn->setTarget(this, menu_selector(BalloonScene::onPressMenuReturnMainMenu));
         m_pPauseDialog->m_pMenuItemResume->setTarget(this, menu_selector(BalloonScene::onPressMenuResume));
         
@@ -524,4 +537,5 @@ void BalloonScene::showPauseDialog()
     }
     
     addChild(m_pPauseDialog);
+    GAdMob2DX::sharedGAdMob2DX()->setVisible(true);
 }
