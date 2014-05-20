@@ -36,8 +36,8 @@ bailin::util::DataManagerUtil::DataManagerUtil()
 {
 	m_pDictionaryGlobalData = NULL;
 
-    m_pDictionaryGlobalData = CCDictionary::create();
-    CC_SAFE_RETAIN(m_pDictionaryGlobalData);
+    // m_pDictionarySecurityData = CCDictionary::create();
+    // CC_SAFE_RETAIN(m_pDictionaryGlobalData);
 	m_pDictionaryStringData = getLocaleStringData();
 	m_pDictionaryGlobalData = getGlobalData();
 }
@@ -46,7 +46,7 @@ bailin::util::DataManagerUtil::~DataManagerUtil()
 {
 	CC_SAFE_RELEASE_NULL(m_pDictionaryStringData);
 	CC_SAFE_RELEASE_NULL(m_pDictionaryGlobalData);
-	CC_SAFE_RELEASE_NULL(m_pDictionarySecurityData);
+	// CC_SAFE_RELEASE_NULL(m_pDictionarySecurityData);
 }
 
 static bailin::util::DataManagerUtil* g_sharedDataManager = NULL;
@@ -591,12 +591,14 @@ void bailin::util::DataManagerUtil::SendNDKMessages( const char* pszNativeFuncNa
 
 bool bailin::util::DataManagerUtil::CheckSecurityData(const char *pszKey, long lData)
 {
-    CCString* pCheckCode = dynamic_cast<CCString*>(m_pDictionarySecurityData->objectForKey(pszKey));
+    // CCString* pCheckCode = dynamic_cast<CCString*>(m_pDictionarySecurityData->objectForKey(pszKey));
     
     unsigned long nCrc32Check = 0;
-    if (pCheckCode)
+    SecurityMap::iterator iter = m_mapSecurityData.find(string(pszKey));
+    if(iter != m_mapSecurityData.end())
     {
-        nCrc32Check = (unsigned long)pCheckCode->uintValue();
+        CCLOG("key:[%s], value:[%lu]", iter->first.c_str(), iter->second);
+        nCrc32Check = iter->second;
     }
     
     unsigned long nCrc32 = bailin::util::crypto::Crc32(&lData, sizeof(lData));
@@ -615,8 +617,14 @@ bool bailin::util::DataManagerUtil::SetSecurityData(const char *pszKey, long *pl
         
         // 回填校验值
         unsigned long nCheckCode = bailin::util::crypto::Crc32(plData, sizeof(long));
-        m_pDictionarySecurityData->setObject(CCString::createWithFormat("%lu", nCheckCode), pszKey);
+        // m_pDictionarySecurityData->setObject(CCString::createWithFormat("%lu", nCheckCode), pszKey);
+        m_mapSecurityData[string(pszKey)] = nCheckCode;
     }
     
     return bRet;
+}
+
+void bailin::util::DataManagerUtil::SetSecurityCode(const char *pszKey, unsigned long nCode)
+{
+    m_mapSecurityData[string(pszKey)] = nCode;
 }

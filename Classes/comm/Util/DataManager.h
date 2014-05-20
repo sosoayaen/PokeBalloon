@@ -11,6 +11,10 @@
 #include "cocos2d.h"
 #include "bailinMacro.h"
 
+#include <map>
+
+typedef std::map<std::string, unsigned long > SecurityMap;
+
 NS_BAILIN_UTIL_BEGIN
 
 class DataManagerUtil
@@ -134,6 +138,13 @@ public:
      */
     bool CheckSecurityData(const char* pszKey, long lData);
     
+    /**
+     * @brief 设置某个key对应的校验值，一般用于初始化的设定，避免误检测
+     * @param pszKey
+     * @param nCode
+     */
+    void SetSecurityCode(const char* pszKey, unsigned long nCode);
+    
 private:
 
 protected:
@@ -144,7 +155,8 @@ protected:
 	cocos2d::CCDictionary* m_pDictionaryGlobalData;
     
     // 用于保存安全数据校验码的字典
-    cocos2d::CCDictionary* m_pDictionarySecurityData;
+    // cocos2d::CCDictionary* m_pDictionarySecurityData;
+    SecurityMap m_mapSecurityData;
     
 private:
 

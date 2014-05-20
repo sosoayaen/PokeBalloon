@@ -15,6 +15,9 @@ USING_NS_BAILIN_UTIL;
 #define CLOUD_SHOW_RATE      5
 #define DEFAULT_TIME         30
 
+#define SECURITY_TIME "S_TIME"
+#define SECURITY_SCORE "S_SCORE"
+
 BalloonScene::~BalloonScene()
 {
     CC_SAFE_RELEASE_NULL(m_pPauseDialog);
@@ -93,10 +96,19 @@ bool BalloonScene::init()
 
 void BalloonScene::resetData()
 {
+    DataManagerUtil* pDMU = DataManagerUtil::sharedDataManagerUtil();
+    
     m_ulFrame = 0;
     m_lTotalScore = 0;
     
     m_lTimeLeft = DEFAULT_TIME;
+    
+    if (pDMU)
+    {
+        // 设定初始的校验值
+        pDMU->SetSecurityCode(SECURITY_SCORE, crypto::Crc32(&m_lTotalScore, sizeof(m_lTotalScore)));
+        pDMU->SetSecurityCode(SECURITY_TIME, crypto::Crc32(&m_lTimeLeft, sizeof(m_lTimeLeft)));
+    }
     
     updateScore();
     updateTimeLeft();
@@ -111,7 +123,7 @@ void BalloonScene::updateScore()
 void BalloonScene::updateTimeLeft()
 {
     // m_pLabelTTFTime->setString(CCString::createWithFormat("%lus", m_lTimeLeft)->getCString());
-    m_pLabelBMFontTimeLeft->setCString(CCString::createWithFormat("%lu", m_lTimeLeft)->getCString());
+    m_pLabelBMFontTimeLeft->setCString(CCString::createWithFormat("%ld", m_lTimeLeft)->getCString());
 }
 
 void BalloonScene::onEnter()
@@ -200,6 +212,10 @@ void BalloonScene::balloonHitTestSuccess(Balloon* pBalloon, cocos2d::CCSprite* p
 
 void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite* pSprite)
 {
+    DataManagerUtil* pDMU = DataManagerUtil::sharedDataManagerUtil();
+    
+    if (!pDMU) return;
+    
     // 增加粒子特效
     CCParticleSystemQuad* pParticleExplosive = CCParticleSystemQuad::create("particles/explosive.plist");
     pParticleExplosive->setAutoRemoveOnFinish(true);
@@ -211,23 +227,41 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
     {
         case kBalloonTypeNormal:
             // 根据对应的气球分数增加到总分上
-            m_lTotalScore += pBalloon->getBalloonScore();
+            
+            if (!pDMU->SetSecurityData(SECURITY_SCORE, &m_lTotalScore, pBalloon->getBalloonScore()))
+            {
+                CCMessageBox("Cheat!!!", "Warnning");
+                m_lTotalScore = 0;
+                return;
+            }
+            
+            // m_lTotalScore += pBalloon->getBalloonScore();
             if (m_lTotalScore < 0)
             {
                 m_lTotalScore = 0;
+                pDMU->SetSecurityCode(SECURITY_SCORE, crypto::Crc32(&m_lTotalScore, sizeof(m_lTotalScore)));
             }
             updateScore();
             break;
         case kBalloonTypeMulti:
-            // 乘分气球，当前场景下的所有普通气球分数乘
+            // 乘分气球，当前场景下的所有普通气球分数乘以对应的分值
             m_BalloonManger.multipleBalloonScore(pBalloon->getBalloonScore());
             break;
         case kBalloonTypeDiv:
             // 除分气球
+            if (!pDMU->CheckSecurityData(SECURITY_SCORE, m_lTotalScore))
+            {
+                // 分数有问题
+                CCMessageBox("Cheat!!!", "Warnning");
+                m_lTotalScore = 0;
+                return;
+            }
+                
             m_lTotalScore /= pBalloon->getBalloonScore();
             if (m_lTotalScore < 0)
             {
                 m_lTotalScore = 0;
+                pDMU->SetSecurityCode(SECURITY_SCORE, crypto::Crc32(&m_lTotalScore, sizeof(m_lTotalScore)));
             }
             updateScore();
             break;
@@ -236,7 +270,11 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             // m_lTimeLeft += pBalloon->getBalloonScore();
             
             // 校验时间数据确保未被修改
-            DataManagerUtil::sharedDataManagerUtil()->SetSecurityData("s_TimeLeft", &m_lTimeLeft, pBalloon->getBalloonScore());
+            if (!pDMU->SetSecurityData(SECURITY_TIME, &m_lTimeLeft, pBalloon->getBalloonScore()))
+            {
+                CCMessageBox("Cheat!!!", "Warnning");
+                m_lTimeLeft = 0;
+            }
             updateTimeLeft();
             break;
             
@@ -267,7 +305,12 @@ void BalloonScene::update(float dt)
         case GAME_STATUS_RUNNING:
             if (m_lTimeLeft > 0 && m_ulFrame % int(1/CCDirector::sharedDirector()->getAnimationInterval()) == 0)
             {
-                m_lTimeLeft--;
+                if (!DataManagerUtil::sharedDataManagerUtil()->SetSecurityData(SECURITY_TIME, &m_lTimeLeft, -1))
+                {
+                    CCMessageBox("Cheat!!!", "Warnning");
+                    return;
+                }
+                // m_lTimeLeft--;
                 updateTimeLeft();
             }
             
