@@ -597,7 +597,7 @@ bool bailin::util::DataManagerUtil::CheckSecurityData(const char *pszKey, long l
     SecurityMap::iterator iter = m_mapSecurityData.find(string(pszKey));
     if(iter != m_mapSecurityData.end())
     {
-        CCLOG("key:[%s], value:[%lu]", iter->first.c_str(), iter->second);
+        // CCLOG("key:[%s], value:[%lu]", iter->first.c_str(), iter->second);
         nCrc32Check = iter->second;
     }
     
