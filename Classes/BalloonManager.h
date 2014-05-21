@@ -105,6 +105,12 @@ public:
      * @return bool
      */
     bool isBalloonInScreen();
+    
+    /**
+     * @brief 屏幕上每个普通的气球增加对应的分数
+     * @param
+     */
+    void addBalloonScoreWithValue(long nValue);
 
 protected:
 	// protected functions

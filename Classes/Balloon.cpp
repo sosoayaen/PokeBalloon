@@ -10,6 +10,7 @@ USING_NS_CC;
 
 Balloon::Balloon():
     m_eType(kBalloonTypeNormal),
+    m_lLastTime(0),
 	m_lScore(1),
 	m_bAlive(true),
     m_ulFrame(0),
@@ -119,6 +120,16 @@ void Balloon::explosive()
 	
 	// 这里用淡出模拟下
 	runAction(CCSequence::create(CCFadeOut::create(0.2f), CCRemoveSelf::create(), NULL));
+    
+    if (getParent())
+    {
+        // 增加粒子特效
+        CCParticleSystemQuad* pParticleExplosive = CCParticleSystemQuad::create("particles/explosive.plist");
+        pParticleExplosive->setAutoRemoveOnFinish(true);
+        pParticleExplosive->setPosition(getPosition());
+        pParticleExplosive->setEndColor(getBalloonColor4F());
+        getParent()->addChild(pParticleExplosive);
+    }
 }
 
 bool Balloon::hitTest(const cocos2d::CCRect& rect)
@@ -159,34 +170,32 @@ void Balloon::updateDisplayDesc()
             pStrDesc = CCString::createWithFormat("÷%ld", getBalloonScore());
             break;
         case kBalloonTypeAddTime:
-        {
-            CCSprite* pSpriteClock = CCSprite::create("balloon/balloon_time.png");
-            pSpriteClock->setPosition(ccpMult(ccpFromSize(getContentSize()), 0.5f));
-            addChild(pSpriteClock);
-        }
-            return;
+            {
+                // 添加时钟标志，不需要绘制字体描述，所以直接返回
+                CCSprite* pSpriteClock = CCSprite::create("balloon/balloon_time.png");
+                pSpriteClock->setPosition(ccpMult(ccpFromSize(getContentSize()), 0.5f));
+                addChild(pSpriteClock);
+            }
+            break;
+        case kBalloonTypeAddBalloonScore:
+            pStrDesc = ccs("?");
+            break;
         default:
             // 默认是不显示文字
             return;
     }
     
     // 更新显示文字
-    m_strDisplayDesc = pStrDesc->getCString();
-    /*
-    if (!m_pLabelDesc)
+    if (pStrDesc && !pStrDesc->m_sString.empty())
     {
-        m_pLabelDesc = CCLabelTTF::create("", "", 80);
-        m_pLabelDesc->setPosition(ccpMult(ccpFromSize(getContentSize()), 0.5f));
-        addChild(m_pLabelDesc);
+        m_strDisplayDesc = pStrDesc->getCString();
+        if (!m_pLabelBMFontDesc)
+        {
+            m_pLabelBMFontDesc = CCLabelBMFont::create(m_strDisplayDesc.c_str(), "fonts/font.fnt");
+            m_pLabelBMFontDesc->setPosition(ccpMult(ccpFromSize(getContentSize()), 0.5f));
+            m_pLabelBMFontDesc->setScale(2.0f);
+            addChild(m_pLabelBMFontDesc);
+        }
+        m_pLabelBMFontDesc->setCString(m_strDisplayDesc.c_str());
     }
-    m_pLabelDesc->setString(m_strDisplayDesc.c_str());
-    */
-    if (!m_pLabelBMFontDesc)
-    {
-        m_pLabelBMFontDesc = CCLabelBMFont::create(m_strDisplayDesc.c_str(), "fonts/font.fnt");
-        m_pLabelBMFontDesc->setPosition(ccpMult(ccpFromSize(getContentSize()), 0.5f));
-        m_pLabelBMFontDesc->setScale(2.0f);
-        addChild(m_pLabelBMFontDesc);
-    }
-    m_pLabelBMFontDesc->setCString(m_strDisplayDesc.c_str());
 }

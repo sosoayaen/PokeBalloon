@@ -125,9 +125,6 @@ bool BalloonManager::touchTest(const cocos2d::CCPoint point, cocos2d::CCSprite* 
 			if (m_pBalloonDelegate)
 				m_pBalloonDelegate->balloonTouchTestSuccess(pBalloon, pSprite);
 
-			// 气球爆炸回调
-			pBalloon->explosive();
-
 			bRet = true;
 			break;
 		}
@@ -185,20 +182,27 @@ void BalloonManager::addRandomBalloon()
             nValue = 2;
             nType = kBalloonTypeMulti;
         }
-        else if (nRate > 85)
+        else if (nRate > 90)
+        {
+            // 道具气球出现概率为5%
+            nType = kBalloonTypeAddBalloonScore;
+            nValue = rand()%5 + 1; // 每按一次加1分
+        }
+        else if (nRate > 80)
         {
             // 除二出现的概率为10%
             nValue = 2;
             nType = kBalloonTypeDiv;
         }
-        else if (nRate > 80)
+        else if (nRate > 70)
         {
             // 时钟出现的概率为5%
             nValue = 5; // 5秒
             nType = kBalloonTypeAddTime;
         }
-        else if (nRate > 50)
+        else if (nRate > 40)
         {
+            // 30%概率出现负分
             nValue *= -1;
         }
         
@@ -271,4 +275,20 @@ bool BalloonManager::isBalloonInScreen()
 		}
 	}
     return false;
+}
+
+void BalloonManager::addBalloonScoreWithValue(long nValue)
+{
+    CCObject* pObj = NULL;
+    
+    CCARRAY_FOREACH(m_pLayerBalloonContainer->getChildren(), pObj)
+    {
+        Balloon* pBalloon = dynamic_cast<Balloon*>(pObj);
+        // 只有气球，并且是普通分值的气球，再并且是活着的普通气球
+        if (pBalloon && pBalloon->getBalloonType() == kBalloonTypeNormal && pBalloon->isAlive())
+        {
+            pBalloon->setBalloonScore(pBalloon->getBalloonScore() + nValue);
+            pBalloon->updateDisplayDesc();
+        }
+    }
 }

@@ -218,18 +218,12 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
     
     if (!pDMU) return;
     
-    // 增加粒子特效
-    CCParticleSystemQuad* pParticleExplosive = CCParticleSystemQuad::create("particles/explosive.plist");
-    pParticleExplosive->setAutoRemoveOnFinish(true);
-    pParticleExplosive->setPosition(pBalloon->getPosition());
-    pParticleExplosive->setEndColor(pBalloon->getBalloonColor4F());
-    addChild(pParticleExplosive);
-    
+    // 判断气球的类型
     switch (pBalloon->getBalloonType())
     {
         case kBalloonTypeNormal:
+            pBalloon->explosive();
             // 根据对应的气球分数增加到总分上
-            
             if (!pDMU->SetSecurityData(SECURITY_SCORE, &m_lTotalScore, pBalloon->getBalloonScore()))
             {
                 CCMessageBox("Cheat!!!", "Warnning");
@@ -246,10 +240,12 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             updateScore();
             break;
         case kBalloonTypeMulti:
+            pBalloon->explosive();
             // 乘分气球，当前场景下的所有普通气球分数乘以对应的分值
             m_BalloonManger.multipleBalloonScore(pBalloon->getBalloonScore());
             break;
         case kBalloonTypeDiv:
+            pBalloon->explosive();
             // 除分气球
             if (!pDMU->CheckSecurityData(SECURITY_SCORE, m_lTotalScore))
             {
@@ -268,6 +264,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             updateScore();
             break;
         case kBalloonTypeAddTime:
+            pBalloon->explosive();
             // 时间增加
             // m_lTimeLeft += pBalloon->getBalloonScore();
             
@@ -279,7 +276,22 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             }
             updateTimeLeft();
             break;
+        case kBalloonTypeAddBalloonScore:
+            pBalloon->explosive();
+            // 屏幕出现打气筒按钮，并且设置按钮的小时时间
+            m_BalloonManger.addBalloonScoreWithValue(pBalloon->getBalloonScore());
             
+            break;
+        case kBalloonTypeAddBalloon:
+            break;
+        case kBalloonTypeFrozen:
+            break;
+		case kBalloonTypeGiant:
+			break;
+		case kBalloonTypeHurricane:
+			break;
+		case kBalloonTypeReverse:
+			break;
         default:
             break;
     }
