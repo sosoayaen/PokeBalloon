@@ -77,11 +77,17 @@ bool BalloonScene::init()
 		
 		setKeypadEnabled(true);
         
-        if (!m_BalloonManger.getInitFlag())
-            m_BalloonManger.init(this, m_pLayerBalloon);
+        // 初始化气球管理类
+        if (!m_BalloonManager.getInitFlag())
+            m_BalloonManager.init(this, m_pLayerBalloon);
         
+        // 初始化云朵管理类
         if (!m_CloudManager.getInitFlag())
             m_CloudManager.init(m_pLayerBalloon);
+        
+        // 初始化道具管理类
+        if (!m_BalloonItemManager.getInitFlag())
+            m_BalloonItemManager.init(this, m_pLayerItems);
         
         m_pSpriteBalloonModel->setVisible(false);
         
@@ -174,6 +180,7 @@ bool BalloonScene::onAssignCCBMemberVariable( CCObject* pTarget, const char* pMe
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLabelBMFontTimeLeft", CCLabelBMFont*, this->m_pLabelBMFontTimeLeft);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLabelBMFontScore", CCLabelBMFont*, this->m_pLabelBMFontScore);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLayerBalloon", CCLayer*, this->m_pLayerBalloon);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLayerItems", CCLayer*, this->m_pLayerItems);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteBackground", CCSprite*, this->m_pSpriteBackground);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuPause", CCMenu*, this->m_pMenuPause);
 
@@ -188,7 +195,7 @@ SEL_CCControlHandler BalloonScene::onResolveCCBCCControlSelector( CCObject * pTa
 
 bool BalloonScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
-    m_BalloonManger.touchTest(pTouch->getLocation());
+    m_BalloonManager.touchTest(pTouch->getLocation());
     return true;
 }
 
@@ -242,7 +249,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
         case kBalloonTypeMulti:
             pBalloon->explosive();
             // 乘分气球，当前场景下的所有普通气球分数乘以对应的分值
-            m_BalloonManger.multipleBalloonScore(pBalloon->getBalloonScore());
+            m_BalloonManager.multipleBalloonScore(pBalloon->getBalloonScore());
             break;
         case kBalloonTypeDiv:
             pBalloon->explosive();
@@ -279,7 +286,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
         case kBalloonTypeAddBalloonScore:
             pBalloon->explosive();
             // 屏幕出现打气筒按钮，并且设置按钮的小时时间
-            m_BalloonManger.addBalloonScoreWithValue(pBalloon->getBalloonScore());
+            m_BalloonItemManager.appendBalloonItemWithItemId(kBalloonItemId_Pumps, "items/item_more.png", 3);
             
             break;
         case kBalloonTypeAddBalloon:
@@ -296,6 +303,19 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             break;
     }
     
+}
+
+void BalloonScene::onBalloonItemEffectTrigger(BalloonItem* pItem)
+{
+    CCLOG("BalloonScene::onBalloonItemEffectTrigger(BalloonItem* pItem), called...");
+    
+    // 按一下后给屏幕上随机增加1到5分到所有的积分气球
+    m_BalloonManager.addBalloonScoreWithValue(rand()%5 + 1);
+}
+
+void BalloonScene::onBalloonItemDisappear(BalloonItem* pItem)
+{
+    CCLOG("BalloonScene::onBalloonItemDisappear(BalloonItem* pItem), called...");
 }
 
 void BalloonScene::keyBackClicked( void )
@@ -338,11 +358,11 @@ void BalloonScene::update(float dt)
             if (rand()%1000 < BALLOON_SHOW_RATE)
             {
                 // 生成一个气球
-                m_BalloonManger.addRandomBalloon();
+                m_BalloonManager.addRandomBalloon();
             }
             
             // 更新气球位置
-            m_BalloonManger.updatePosition();
+            m_BalloonManager.updatePosition();
             
             // 随机生成云朵，随机速度
             if (rand()%1000 < CLOUD_SHOW_RATE)
@@ -355,7 +375,7 @@ void BalloonScene::update(float dt)
             break;
         case GAME_STATUS_TIMES_UP:
             // 更新气球位置
-            m_BalloonManger.updatePosition();
+            m_BalloonManager.updatePosition();
             
             m_CloudManager.updatePosition();
             
@@ -367,7 +387,7 @@ void BalloonScene::update(float dt)
             }
             
             // 判断是否还有气球在屏幕，如果没有了就
-            if (!m_BalloonManger.isBalloonInScreen())
+            if (!m_BalloonManager.isBalloonInScreen())
                 m_eGameStatus = GAME_STATUS_STOP;
             
             break;
@@ -493,6 +513,9 @@ void BalloonScene::onPressMenuResume(cocos2d::CCObject *pSender)
     
     // 继续游戏
     scheduleUpdate();
+    
+    // 隐藏广告条
+    GAdMob2DX::sharedGAdMob2DX()->setVisible(false);
 }
 
 void BalloonScene::onResultDialogEndCall(CCNode* pNode)

@@ -12,6 +12,7 @@
 #include "cocos-ext.h"
 #include "BalloonManager.h"
 #include "CloudManager.h"
+#include "BalloonItemManager.h"
 
 #include "BalloonResultDialog.h"
 #include "BalloonPauseDialog.h"
@@ -28,6 +29,7 @@ enum BalloonGameStatus
 class BalloonScene:
 	public cocos2d::CCLayer,
     public BalloonDelegate,
+    public BalloonItemDelegate,
 	public cocos2d::extension::CCBSelectorResolver,
 	public cocos2d::extension::CCBMemberVariableAssigner
 {
@@ -41,13 +43,14 @@ public:
         m_pLabelBMFontScore = NULL;
         m_pLabelBMFontTimeLeft = NULL;
         m_pLayerBalloon = NULL;
+        m_pLayerItems = NULL;
         m_pSpriteBackground = NULL;
         m_pResultDialog = NULL;
         m_pPauseDialog = NULL;
         m_pMenuPause = NULL;
         
         // 注册监听对象
-        m_BalloonManger.setBalloonDelegate(this);
+        m_BalloonManager.setBalloonDelegate(this);
         
         m_ulFrame = 0;
         m_lTotalScore = 0;
@@ -82,6 +85,11 @@ public:
     
 	virtual void balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite* pSprite);
 	
+	// 道具起效通知，一般为按钮按下后的效果
+	virtual void onBalloonItemEffectTrigger(BalloonItem* pItem);
+    
+	// 道具消失通知
+	virtual void onBalloonItemDisappear(BalloonItem* pItem);
 private:
 	// Attributes for CCB
 	cocos2d::CCSprite* m_pSpriteBalloonModel;
@@ -91,6 +99,8 @@ private:
     cocos2d::CCSprite* m_pSpriteClock;
     // 气球层
     cocos2d::CCLayer* m_pLayerBalloon;
+    // 道具层
+    cocos2d::CCLayer* m_pLayerItems;
     // 背景
     cocos2d::CCSprite* m_pSpriteBackground;
     
@@ -105,10 +115,13 @@ private:
     unsigned long m_ulFrame;
     
     // 气球管理类
-    BalloonManager m_BalloonManger;
+    BalloonManager m_BalloonManager;
     
     // 云朵管理对象
     CloudManager m_CloudManager;
+    
+    // 道具管理类
+    BalloonItemManager m_BalloonItemManager;
     
     // 当前用户分数
     long m_lTotalScore;
