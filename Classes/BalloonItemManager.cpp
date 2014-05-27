@@ -103,21 +103,44 @@ bool BalloonItemManager::appendBalloonItemWithItemId(BalloonItemId eID, const ch
 
 void BalloonItemManager::alignItems()
 {
-	CCPoint posItem = CCPointZero;
-	posItem.y = CCDirector::sharedDirector()->getWinSize().height*0.2f;
-
+    unsigned long nLoopCnts = 0;
 	CCObject* pObj = NULL;
 	CCARRAY_FOREACH(m_pLayerItemContainer->getChildren(), pObj)
 	{
 		BalloonItem* pBalloonItem = dynamic_cast<BalloonItem*>(pObj);
 		if (pBalloonItem)
 		{
-			static float fOffsetX = pBalloonItem->getContentSize().width;
-
+            
+            CCPoint posItem = CCPointZero;
+            CCSize size = CCDirector::sharedDirector()->getWinSize();
+            posItem.y = size.height*0.2f;
+            
+            float fOffsetY = 0;
+			float fOffsetX = 0; // nLoopCnts * pBalloonItem->getContentSize().width;
+            
+            int nModeResult = nLoopCnts%3;
+            int nTail = ceil(nLoopCnts/3);
+            
+            fOffsetY = nTail*pBalloonItem->getContentSize().height*1.1f;
+            switch(nModeResult)
+            {
+                case 2:     // 右边
+                    fOffsetX = size.width*5/6;
+                    break;
+                case 0:     // 左边
+                    fOffsetX = size.width*1/6;
+                    break;
+                case 1:     // 中间
+                    fOffsetX = size.width*0.5f;
+                    break;
+            }
 			posItem.x += fOffsetX;
+            posItem.y += fOffsetY;
 
 			// 排序，从左下角开始排序
 			pBalloonItem->setPosition(posItem);
+            
+            nLoopCnts++;
 		}
 	}
 }

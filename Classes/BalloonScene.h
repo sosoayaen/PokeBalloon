@@ -89,7 +89,8 @@ public:
 	virtual void onBalloonItemEffectTrigger(BalloonItem* pItem);
     
 	// 道具消失通知
-	virtual void onBalloonItemDisappear(BalloonItem* pItem);
+	virtual void onBalloonItemBeforeDisappear(BalloonItem* pItem);
+	virtual void onBalloonItemAfterDisappear(BalloonItem* pItem);
 private:
 	// Attributes for CCB
 	cocos2d::CCSprite* m_pSpriteBalloonModel;

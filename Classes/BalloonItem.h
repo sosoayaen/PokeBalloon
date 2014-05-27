@@ -45,7 +45,8 @@ public:
 	virtual void onBalloonItemEffectTrigger(BalloonItem* pItem) = 0;
 
 	// 道具消失通知
-	virtual void onBalloonItemDisappear(BalloonItem* pItem) = 0;
+	virtual void onBalloonItemBeforeDisappear(BalloonItem* pItem) = 0;
+	virtual void onBalloonItemAfterDisappear(BalloonItem* pItem) = 0;
 };
 
 /**
@@ -142,6 +143,8 @@ public:
 	virtual void pause();
 
 	virtual void resume();
+    
+    virtual void onEnter();
 
 public:
     void initClickMenu(cocos2d::CCSprite* pSpriteIcon);
@@ -149,6 +152,9 @@ public:
 protected:
 	// 按下按钮的回调函数
 	void onPressMenuClick(cocos2d::CCObject* pSender);
+    
+    // 更新界面上的剩余次数
+    void updateLeftCntsLabel();
 
 protected:
 	// 按钮
@@ -156,6 +162,9 @@ protected:
 
     // 按钮上的图片
     cocos2d::CCSprite* m_pSpriteIcon;
+    
+    // 次数
+    cocos2d::CCLabelBMFont* m_pLabelBMFontCnts;
 	
 };
 

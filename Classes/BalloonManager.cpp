@@ -182,15 +182,15 @@ void BalloonManager::addRandomBalloon()
             nValue = 2;
             nType = kBalloonTypeMulti;
         }
-        else if (nRate > 90)
+        else if (nRate > 85)
         {
-            // 道具气球出现概率为5%
+            // 道具气球出现概率为10%
             nType = kBalloonTypeAddBalloonScore;
             nValue = rand()%5 + 1; // 每按一次加1分
         }
         else if (nRate > 80)
         {
-            // 除二出现的概率为10%
+            // 除二出现的概率为5%
             nValue = 2;
             nType = kBalloonTypeDiv;
         }

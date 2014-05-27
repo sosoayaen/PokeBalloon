@@ -116,7 +116,11 @@ void BalloonScene::resetData()
         pDMU->SetSecurityCode(SECURITY_TIME, crypto::Crc32(&m_lTimeLeft, sizeof(m_lTimeLeft)));
     }
     
+    // 移除请求和云朵
     m_pLayerBalloon->removeAllChildren();
+    
+    // 移除道具层
+    m_BalloonItemManager.clearItems();
     
     updateScore();
     updateTimeLeft();
@@ -286,7 +290,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
         case kBalloonTypeAddBalloonScore:
             pBalloon->explosive();
             // 屏幕出现打气筒按钮，并且设置按钮的小时时间
-            m_BalloonItemManager.appendBalloonItemWithItemId(kBalloonItemId_Pumps, "items/item_more.png", 3);
+            m_BalloonItemManager.appendBalloonItemWithItemId(kBalloonItemId_Pumps, "items/item_pump.png", pBalloon->getBalloonScore());
             
             break;
         case kBalloonTypeAddBalloon:
@@ -310,12 +314,19 @@ void BalloonScene::onBalloonItemEffectTrigger(BalloonItem* pItem)
     CCLOG("BalloonScene::onBalloonItemEffectTrigger(BalloonItem* pItem), called...");
     
     // 按一下后给屏幕上随机增加1到5分到所有的积分气球
-    m_BalloonManager.addBalloonScoreWithValue(rand()%5 + 1);
+    m_BalloonManager.addBalloonScoreWithValue(1);
 }
 
-void BalloonScene::onBalloonItemDisappear(BalloonItem* pItem)
+void BalloonScene::onBalloonItemBeforeDisappear(BalloonItem* pItem)
 {
-    CCLOG("BalloonScene::onBalloonItemDisappear(BalloonItem* pItem), called...");
+    CCLOG("BalloonScene::onBalloonItemBeforeDisappear(BalloonItem* pItem), called...");
+}
+
+void BalloonScene::onBalloonItemAfterDisappear(BalloonItem* pItem)
+{
+    CCLOG("BalloonScene::onBalloonItemAfterDisappear(BalloonItem* pItem), called...");
+    // 有道具移除需要重新排列
+    m_BalloonItemManager.alignItems();
 }
 
 void BalloonScene::keyBackClicked( void )
@@ -409,27 +420,6 @@ void BalloonScene::update(float dt)
 
 void BalloonScene::showResultDialog()
 {
-    /*
-    CCMenuItemImage* pMenuItemRestart = CCMenuItemImage::create("balloon/menu_item_restart.png", "balloon/menu_item_restart.png", this, menu_selector(BalloonScene::onPressMenuRestartGame));
-    
-    pMenuItemRestart->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(rand()%6+1), CCRotateTo::create(3.0f, 10.0f), CCDelayTime::create(rand()%6+1), CCRotateTo::create(3.0f, -10.0f), NULL)));
-    
-    CCMenuItemImage* pMenuItemReturnMainMenu = CCMenuItemImage::create("balloon/menu_item_return_menu.png", "balloon/menu_item_return_menu.png", this, menu_selector(BalloonScene::onPressMenuReturnMainMenu));
-    
-    pMenuItemReturnMainMenu->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(rand()%6+1), CCRotateTo::create(3.0f, 10.0f), CCDelayTime::create(rand()%6+1), CCRotateTo::create(3.0f, -10.0f), NULL)));
-    
-    CCMenu* pMenu = CCMenu::create(pMenuItemRestart, pMenuItemReturnMainMenu, NULL);
-    pMenu->alignItemsVerticallyWithPadding(pMenuItemRestart->getContentSize().height);
-    
-    CCPoint posStart = ccp(getContentSize().width*0.5f, getContentSize().height);
-    CCPoint posEnd = ccpMult(ccpFromSize(getContentSize()), 0.5f);
-    pMenu->setPosition(posStart);
-    
-    pMenu->runAction(CCEaseBounceOut::create(CCMoveTo::create(1.0f, posEnd)));
-    
-    addChild(pMenu);
-    */
-   
     // 显示广告条
     GAdMob2DX::sharedGAdMob2DX()->setVisible(true);
     

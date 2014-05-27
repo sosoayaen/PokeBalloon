@@ -53,7 +53,10 @@ void BalloonItemDurative::resume()
  * 点击型道具类实现
  */
 BalloonItemClick::BalloonItemClick():
-	m_ulClickCounts(1)
+	m_ulClickCounts(1),
+    m_pSpriteIcon(NULL),
+    m_pLabelBMFontCnts(NULL),
+    m_pMenuClick(NULL)
 {
     m_eType = kBalloonItemType_Click;
 }
@@ -70,15 +73,21 @@ void BalloonItemClick::onPressMenuClick(CCObject* pSender)
 	{
 		// 按下后，首先回调外围
 		m_pBalloonItemDelegate->onBalloonItemEffectTrigger(this);
-
+        
+        m_ulClickCounts--;
+        updateLeftCntsLabel();
+        
 		// 点击次数递减
-		if (--m_ulClickCounts == 0)
+		if (m_ulClickCounts == 0)
 		{
 			// 通知外围，道具移除
-			m_pBalloonItemDelegate->onBalloonItemDisappear(this);
+			m_pBalloonItemDelegate->onBalloonItemBeforeDisappear(this);
 			// 移除道具
 			removeFromParent();
+            // 道具移除后
+			m_pBalloonItemDelegate->onBalloonItemAfterDisappear(this);
 		}
+        
 	}
 }
 
@@ -116,8 +125,7 @@ BalloonItemClick* BalloonItemClick::create(BalloonItemDelegate* pDelegate, const
 
 void BalloonItemClick::updateItemStatus(float dt, unsigned long ulFrame)
 {
-	// 绘制剩余次数
-	return;
+    // 暂时没用
 }
 
 void BalloonItemClick::pause()
@@ -130,6 +138,14 @@ void BalloonItemClick::resume()
 
 }
 
+void BalloonItemClick::onEnter()
+{
+    BalloonItem::onEnter();
+    
+    // 显示剩余次数
+    updateLeftCntsLabel();
+}
+
 void BalloonItemClick::initClickMenu(CCSprite* pSpriteIcon)
 {
     // 创建按钮
@@ -140,6 +156,7 @@ void BalloonItemClick::initClickMenu(CCSprite* pSpriteIcon)
     
     // 顺便这里更新下控件的大小
     setContentSize(pMenuItemImage->getContentSize());
+    setAnchorPoint(ccp(0.5f, 0.5f));
     
     // 设置按下后的回调函数
     pMenuItemImage->setTarget(this, menu_selector(BalloonItemClick::onPressMenuClick));
@@ -159,4 +176,16 @@ void BalloonItemClick::initClickMenu(CCSprite* pSpriteIcon)
     m_pSpriteIcon->setPosition(ccpMult(ccpFromSize(getContentSize()), 0.5f));
     CC_SAFE_RETAIN(m_pSpriteIcon);
     addChild(m_pSpriteIcon);
+    
+}
+
+void BalloonItemClick::updateLeftCntsLabel()
+{
+    if (!m_pLabelBMFontCnts)
+    {
+        m_pLabelBMFontCnts = CCLabelBMFont::create("", "fonts/font.fnt");
+        m_pLabelBMFontCnts->setPosition(ccpFromSize(m_pSpriteIcon->getContentSize()));
+        m_pSpriteIcon->addChild(m_pLabelBMFontCnts);
+    }
+    m_pLabelBMFontCnts->setCString(CCString::createWithFormat("%lu", m_ulClickCounts)->getCString());
 }

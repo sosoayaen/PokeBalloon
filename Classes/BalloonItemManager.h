@@ -49,14 +49,24 @@ public:
 	// 一般每一帧都要调用，以确保位置的及时更新
 	void updatePosition(float dt, unsigned long ulFrame);
 
+    // 初始化标志
 	bool getInitFlag()
 	{
 		return m_bInited;
 	}
+    
+    // 清理道具层
+    void clearItems()
+    {
+        if (m_pLayerItemContainer)
+        {
+            m_pLayerItemContainer->removeAllChildren();
+        }
+    }
 
-protected:
 	// 排列内部元素
 	void alignItems();
+protected:
 
 private:
 	bool m_bInited;
