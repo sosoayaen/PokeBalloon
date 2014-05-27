@@ -135,6 +135,8 @@ void BalloonOptionsDialog::onPressMenuEffect(cocos2d::CCObject *pSender)
     {
         bool bEnable = pMenuItem->getOpacity() == 0;
         setCheckBoxEnable(pMenuItem, bEnable);
+        
+        DataManagerUtil::sharedDataManagerUtil()->SetGlobalDataLong(OPT_SOUND_EFFECT_OFF, bEnable ? 0 : 1);
     }
 }
 
@@ -192,5 +194,5 @@ bool BalloonOptionsDialog::endDialog(cocos2d::CCActionInterval* pAction /* = NUL
 {
     saveOptionsData();
     
-    DialogLayer::endDialog(pAction, fDuration);
+    return DialogLayer::endDialog(pAction, fDuration);
 }

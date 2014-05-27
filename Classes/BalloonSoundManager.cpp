@@ -1,6 +1,9 @@
 #include "BalloonSoundManager.h"
 #include "platform/CCPlatformConfig.h"
 #include "SimpleAudioEngine.h"
+#include "bailinUtil.h"
+
+USING_NS_BAILIN_UTIL;
 
 using namespace CocosDenshion;
 
@@ -50,6 +53,9 @@ bool BalloonSoundManager::isBackgroundMusicPlaying()
 
 void BalloonSoundManager::playEffectExplosive()
 {
+    if (DataManagerUtil::sharedDataManagerUtil()->GetGlobalDataLong(OPT_SOUND_EFFECT_OFF) == 1)
+        return;
+    
 	SimpleAudioEngine::sharedEngine()->playEffect(SOUND_EFFECT_EXPLOSIVE);
 }
 

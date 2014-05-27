@@ -3,7 +3,7 @@
  *
  *       Filename:  BalloonItem.h
  *
- *    Description:  气球中的道具对象的基类
+ *    Description:  气球中的道具对象类
  *
  *        Version:  1.0
  *        Created:  05/22/2014 23:13:36
@@ -24,13 +24,15 @@
 // 定义一个道具的枚举列表，所有的道具都需要通过BalloonItemManager生成
 enum BalloonItemId
 {
-	kBalloonItemId_Pumps = 1,	// 气筒，点击增加普通气球的分数
-	kBalloonItemId_AddMore,	// 点击增加气球个数
+    kBalloonItemId_Unknow = 0,
+	kBalloonItemId_Pumps,       // 气筒，点击增加普通气球的分数
+	kBalloonItemId_AddMore,     // 点击增加气球个数
 };
 
 enum BalloonItemType
 {
-	kBalloonItemType_Click = 1, // 点击型道具，有点击次数期限
+    kBalloonItemType_Unknow = 0,
+	kBalloonItemType_Click,     // 点击型道具，有点击次数期限
 	kBalloonItemType_Durative,	// 持续性道具，有时间期限
 };
 
@@ -70,7 +72,7 @@ public:
 	static BalloonItem* create(BalloonItemType eType, BalloonItemId eId, cocos2d::CCSpriteFrame* pSpriteFrame, );
 	*/
 
-    BalloonItem():m_pBalloonItemDelegate(NULL){}
+    BalloonItem();
 	/**
 	 * @brief 根据帧数更新道具状态
 	 * @param ulFrame 当前主场景帧数

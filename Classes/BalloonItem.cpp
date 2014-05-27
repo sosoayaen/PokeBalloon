@@ -22,6 +22,14 @@
 USING_NS_CC;
 USING_NS_BAILIN_UTIL;
 
+BalloonItem::BalloonItem():
+    m_pBalloonItemDelegate(NULL),
+    m_eItemId(kBalloonItemId_Unknow),
+    m_eType(kBalloonItemType_Unknow)
+{
+    // 默认居中对齐
+    setAnchorPoint(ccp(0.5f, 0.5f));
+}
 
 /**
  * 持续性道具类实现
@@ -156,7 +164,6 @@ void BalloonItemClick::initClickMenu(CCSprite* pSpriteIcon)
     
     // 顺便这里更新下控件的大小
     setContentSize(pMenuItemImage->getContentSize());
-    setAnchorPoint(ccp(0.5f, 0.5f));
     
     // 设置按下后的回调函数
     pMenuItemImage->setTarget(this, menu_selector(BalloonItemClick::onPressMenuClick));

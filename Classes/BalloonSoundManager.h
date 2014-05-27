@@ -4,6 +4,8 @@
 #define SOUND_BACKGROUND_AFTER_SCHOOL       1
 #define SOUND_BACKGROUND_AFTER_SCHOOL_FILE  "music/background/bg1.mp3"
 
+#include "Balloon_macro.h"
+
 class BalloonSoundManager
 {
 public:

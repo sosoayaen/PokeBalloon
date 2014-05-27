@@ -60,9 +60,6 @@ void BalloonItemManager::updatePosition(float dt, unsigned long ulFrame)
 			pBalloonItem->updateItemStatus(dt, ulFrame);
 		}
 	}
-
-	// 最终更新一次所有的位置
-	alignItems();
 }
 
 bool BalloonItemManager::appendBalloonItem(BalloonItem* pBalloonItem)
@@ -76,6 +73,7 @@ bool BalloonItemManager::appendBalloonItem(BalloonItem* pBalloonItem)
 	// 把道具添加到道具层
 	m_pLayerItemContainer->addChild(pBalloonItem);
 
+    // 添加道具后重新排布下位置
 	alignItems();
 
 	return true;
@@ -96,6 +94,8 @@ bool BalloonItemManager::appendBalloonItemWithItemId(BalloonItemId eID, const ch
 			break;
 		case kBalloonItemId_AddMore:
 			break;
+        default:
+            break;
 	}
 
 	return false;
@@ -115,13 +115,12 @@ void BalloonItemManager::alignItems()
             CCSize size = CCDirector::sharedDirector()->getWinSize();
             posItem.y = size.height*0.2f;
             
-            float fOffsetY = 0;
-			float fOffsetX = 0; // nLoopCnts * pBalloonItem->getContentSize().width;
-            
             int nModeResult = nLoopCnts%3;
             int nTail = ceil(nLoopCnts/3);
             
-            fOffsetY = nTail*pBalloonItem->getContentSize().height*1.1f;
+            float fOffsetX = 0;
+			float fOffsetY = nTail*pBalloonItem->getContentSize().height*1.1f;
+
             switch(nModeResult)
             {
                 case 2:     // 右边
