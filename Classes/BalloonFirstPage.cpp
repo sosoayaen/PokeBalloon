@@ -158,16 +158,19 @@ void BalloonFirstPage::initMenu()
 
 void BalloonFirstPage::onPressMenuStartGame(cocos2d::CCObject *pSender)
 {
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
     CCScene* pScene = BalloonScene::scene();
     CCDirector::sharedDirector()->pushScene(pScene);
 }
 
 void BalloonFirstPage::onPressMenuShop(cocos2d::CCObject *pSender)
 {
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
     GameKitHelper2dx::showLeaderboard();
 }
 
 void BalloonFirstPage::onPressMenuOptions(cocos2d::CCObject *pSender)
 {
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
     addChild(BalloonOptionsDialog::create());
 }

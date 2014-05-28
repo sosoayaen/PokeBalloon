@@ -19,6 +19,8 @@ using namespace CocosDenshion;
 
 #define SOUND_EFFECT_EXPLOSIVE	"music/effect/Explosive" SOUND_FILE_SUFFIX
 
+#define SOUND_EFFECT_PUSH_BALLOON   "music/effect/push_balloon" SOUND_FILE_SUFFIX
+
 static BalloonSoundManager* g_s_soundManager = NULL;
 
 BalloonSoundManager* BalloonSoundManager::sharedBalloonSoundManager()
@@ -29,6 +31,7 @@ BalloonSoundManager* BalloonSoundManager::sharedBalloonSoundManager()
 
 		// preload all effects
 		SimpleAudioEngine::sharedEngine()->preloadEffect(SOUND_EFFECT_EXPLOSIVE);
+		SimpleAudioEngine::sharedEngine()->preloadEffect(SOUND_EFFECT_PUSH_BALLOON);
 	}
 
 	return g_s_soundManager;
@@ -51,14 +54,23 @@ bool BalloonSoundManager::isBackgroundMusicPlaying()
     return SimpleAudioEngine::sharedEngine()->isBackgroundMusicPlaying();
 }
 
-void BalloonSoundManager::playEffectExplosive()
+void BalloonSoundManager::playEffectWithFileName(const char* pszEffectFile)
 {
     if (DataManagerUtil::sharedDataManagerUtil()->GetGlobalDataLong(OPT_SOUND_EFFECT_OFF) == 1)
         return;
     
-	SimpleAudioEngine::sharedEngine()->playEffect(SOUND_EFFECT_EXPLOSIVE);
+	SimpleAudioEngine::sharedEngine()->playEffect(pszEffectFile);
 }
 
+void BalloonSoundManager::playEffectExplosive()
+{
+	playEffectWithFileName(SOUND_EFFECT_EXPLOSIVE);
+}
+
+void BalloonSoundManager::playEffectPushBalloon()
+{
+    playEffectWithFileName(SOUND_EFFECT_PUSH_BALLOON);
+}
 
 void BalloonSoundManager::playBackgroundMusic(int soundId)
 {

@@ -172,7 +172,7 @@ void Balloon::updateDisplayDesc()
         case kBalloonTypeAddTime:
             {
                 // 添加时钟标志，不需要绘制字体描述，所以直接返回
-                CCSprite* pSpriteClock = CCSprite::create("balloon/balloon_time.png");
+                CCSprite* pSpriteClock = CCSprite::create("texture/balloon/balloon_time.png");
                 pSpriteClock->setPosition(ccpMult(ccpFromSize(getContentSize()), 0.5f));
                 addChild(pSpriteClock);
             }

@@ -18,6 +18,7 @@
 
 #include "BalloonItem.h"
 #include "bailinUtil.h"
+#include "BalloonSoundManager.h"
 
 USING_NS_CC;
 USING_NS_BAILIN_UTIL;
@@ -77,6 +78,7 @@ BalloonItemClick::~BalloonItemClick()
 
 void BalloonItemClick::onPressMenuClick(CCObject* pSender)
 {
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
 	if (m_pBalloonItemDelegate && m_ulClickCounts > 0)
 	{
 		// 按下后，首先回调外围

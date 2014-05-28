@@ -1,14 +1,12 @@
 #include "BalloonOptionsDialog.h"
 #include "bailinUtil.h"
 #include "SimpleAudioEngine.h"
+#include "BalloonSoundManager.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
 USING_NS_BAILIN_UTIL;
 using namespace CocosDenshion;
-
-#define OPT_MUSIC_OFF           "opt_MusicOFF"
-#define OPT_SOUND_EFFECT_OFF    "opt_SoundEffectOFF"
 
 BalloonOptionsDialog::~BalloonOptionsDialog()
 {
@@ -109,6 +107,7 @@ void BalloonOptionsDialog::saveOptionsData()
 
 void BalloonOptionsDialog::onPressMenuMusic(cocos2d::CCObject *pSender)
 {
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
     CCMenuItemImage* pMenuItem = dynamic_cast<CCMenuItemImage*>(pSender);
     if (pMenuItem)
     {
@@ -130,6 +129,7 @@ void BalloonOptionsDialog::onPressMenuMusic(cocos2d::CCObject *pSender)
 
 void BalloonOptionsDialog::onPressMenuEffect(cocos2d::CCObject *pSender)
 {
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
     CCMenuItemImage* pMenuItem = dynamic_cast<CCMenuItemImage*>(pSender);
     if (pMenuItem)
     {
@@ -175,7 +175,10 @@ void BalloonOptionsDialog::initMenuItem()
         
         setCheckBoxEnable(m_pMenuItemMusic, true);
     }
+   
+    long lSoundEffectOFF = DataManagerUtil::sharedDataManagerUtil()->GetGlobalDataLong(OPT_SOUND_EFFECT_OFF);
     
+    setCheckBoxEnable(m_pMenuItemEffect, lSoundEffectOFF == 0);
 }
 
 void BalloonOptionsDialog::setCheckBoxEnable(CCMenuItemImage* pMenuItem, bool bEnable)

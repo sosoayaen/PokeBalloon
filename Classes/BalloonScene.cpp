@@ -459,6 +459,7 @@ void BalloonScene::showResultDialog()
 
 void BalloonScene::onPressMenuRestartGame(cocos2d::CCObject *pSender)
 {
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
     CCNode* pNode = dynamic_cast<CCNode*>(pSender);
     if (!pNode) return;
     /*
@@ -483,6 +484,7 @@ void BalloonScene::onPressMenuRestartGame(cocos2d::CCObject *pSender)
 
 void BalloonScene::onPressMenuReturnMainMenu(cocos2d::CCObject *pSender)
 {
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
     m_pResultDialog->endDialog();
     
     CCDirector::sharedDirector()->popScene();
@@ -490,6 +492,7 @@ void BalloonScene::onPressMenuReturnMainMenu(cocos2d::CCObject *pSender)
 
 void BalloonScene::onPressMenuShare(cocos2d::CCObject *pSender)
 {
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
     CCDictionary* pDictData = CCDictionary::create();
     
     // 截取得分图片
@@ -500,6 +503,7 @@ void BalloonScene::onPressMenuShare(cocos2d::CCObject *pSender)
 
 void BalloonScene::onPressMenuPause(cocos2d::CCObject *pSender)
 {
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
     // 暂停游戏
     unscheduleUpdate();
     // 显示暂停界面
@@ -508,6 +512,7 @@ void BalloonScene::onPressMenuPause(cocos2d::CCObject *pSender)
 
 void BalloonScene::onPressMenuResume(cocos2d::CCObject *pSender)
 {
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
     // 移除对话框
     if (m_pPauseDialog)
         m_pPauseDialog->endDialog();
