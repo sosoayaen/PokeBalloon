@@ -23,12 +23,10 @@
 		0435602619265F0E0044D838 /* BalloonPauseDialog.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 0435602519265F0E0044D838 /* BalloonPauseDialog.ccbi */; };
 		0435602919265FC40044D838 /* BalloonPauseDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0435602719265FC40044D838 /* BalloonPauseDialog.cpp */; };
 		043560311928A7070044D838 /* localizableString in Resources */ = {isa = PBXBuildFile; fileRef = 043560301928A7070044D838 /* localizableString */; };
-		04356036192916490044D838 /* options in Resources */ = {isa = PBXBuildFile; fileRef = 04356035192916490044D838 /* options */; };
 		04356039192916550044D838 /* BalloonOptionsDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04356037192916550044D838 /* BalloonOptionsDialog.cpp */; };
 		0435603D19291DD60044D838 /* BalloonOptionsDialog.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 0435603C19291DD60044D838 /* BalloonOptionsDialog.ccbi */; };
 		04356044192A49360044D838 /* crc32.c in Sources */ = {isa = PBXBuildFile; fileRef = 04356043192A49360044D838 /* crc32.c */; };
 		044BAB831905045600D8CCB3 /* BalloonScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 044BAB761905045600D8CCB3 /* BalloonScene.ccbi */; };
-		044BAB891905048A00D8CCB3 /* balloon in Resources */ = {isa = PBXBuildFile; fileRef = 044BAB881905048A00D8CCB3 /* balloon */; };
 		0458E80819167BAB00FA1321 /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 0458E80419167BAB00FA1321 /* Icon-29.png */; };
 		0458E80919167BAB00FA1321 /* Icon-58.png in Resources */ = {isa = PBXBuildFile; fileRef = 0458E80519167BAB00FA1321 /* Icon-58.png */; };
 		0458E80A19167BAB00FA1321 /* Icon-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 0458E80619167BAB00FA1321 /* Icon-80.png */; };
@@ -52,8 +50,6 @@
 		0460516E1923A9DE005E5A8D /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 046051691923A9DE005E5A8D /* README.md */; };
 		046051731923AE64005E5A8D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 046051721923AE64005E5A8D /* Default-568h@2x.png */; };
 		046051771923C6F4005E5A8D /* BalloonResultDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 046051751923C6F4005E5A8D /* BalloonResultDialog.cpp */; };
-		0460518C1923D5EF005E5A8D /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 0460518A1923D5EF005E5A8D /* fonts */; };
-		0460518D1923D5EF005E5A8D /* resultBoard in Resources */ = {isa = PBXBuildFile; fileRef = 0460518B1923D5EF005E5A8D /* resultBoard */; };
 		04612350191F2F11001AE64F /* UMSocialLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04612327191F2F11001AE64F /* UMSocialLocalizable.strings */; };
 		04612351191F2F11001AE64F /* libUMSocial_Sdk_3.3.7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04612335191F2F11001AE64F /* libUMSocial_Sdk_3.3.7.a */; };
 		04612352191F2F11001AE64F /* UMSCommentDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04612337191F2F11001AE64F /* UMSCommentDetailController.xib */; };
@@ -72,9 +68,7 @@
 		0469117F19175937009A0734 /* particles in Resources */ = {isa = PBXBuildFile; fileRef = 0469117E19175937009A0734 /* particles */; };
 		0473CB801917D795006C428E /* BalloonFirstPage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0473CB7E1917D795006C428E /* BalloonFirstPage.cpp */; };
 		0473CB841917D7C9006C428E /* BalloonFirstPage.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 0473CB831917D7C9006C428E /* BalloonFirstPage.ccbi */; };
-		0473CB861917D7E1006C428E /* mainboard in Resources */ = {isa = PBXBuildFile; fileRef = 0473CB851917D7E1006C428E /* mainboard */; };
 		048C0E59191E95AE00D6801A /* libMobClickCpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 048C0E33191E95AE00D6801A /* libMobClickCpp.a */; };
-		04A6B790191D2B76007AF26F /* cloud in Resources */ = {isa = PBXBuildFile; fileRef = 04A6B78F191D2B76007AF26F /* cloud */; };
 		04A6B795191D3FAC007AF26F /* Cloud.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A6B791191D3FAC007AF26F /* Cloud.cpp */; };
 		04A6B796191D3FAC007AF26F /* CloudManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A6B793191D3FAC007AF26F /* CloudManager.cpp */; };
 		04AAEAC3191383F9006147E3 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 04AAEABC191383F9006147E3 /* Default.png */; };
@@ -109,7 +103,10 @@
 		04CB2B69191F74EF004B2792 /* UMSocial2DX.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04CB2B67191F74EF004B2792 /* UMSocial2DX.mm */; };
 		04CB2D4D193312D600D1111F /* BalloonItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CB2D49193312D600D1111F /* BalloonItem.cpp */; };
 		04CB2D4E193312D600D1111F /* BalloonItemManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CB2D4B193312D600D1111F /* BalloonItemManager.cpp */; };
-		04CB2D501933A3BB00D1111F /* items in Resources */ = {isa = PBXBuildFile; fileRef = 04CB2D4F1933A3BB00D1111F /* items */; };
+		04DEFB0F1935C9B60023F654 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04DEFB0E1935C9B60023F654 /* GameKit.framework */; };
+		04DEFB111935CCDD0023F654 /* texture in Resources */ = {isa = PBXBuildFile; fileRef = 04DEFB101935CCDD0023F654 /* texture */; };
+		04DEFB151935D0070023F654 /* GameKitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DEFB141935D0070023F654 /* GameKitHelper.m */; };
+		04DEFB181935F9430023F654 /* GameKitHelper2dx.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DEFB161935F9430023F654 /* GameKitHelper2dx.m */; };
 		04ECB4351925363B00DBBE89 /* CompanyPage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04ECB4331925363B00DBBE89 /* CompanyPage.cpp */; };
 		15A3D8FF1682F7D5002FB0C5 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D88B1682F7D5002FB0C5 /* b2BroadPhase.cpp */; };
 		15A3D9001682F7D5002FB0C5 /* b2CollideCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D88D1682F7D5002FB0C5 /* b2CollideCircle.cpp */; };
@@ -363,14 +360,12 @@
 		0435602719265FC40044D838 /* BalloonPauseDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BalloonPauseDialog.cpp; path = ../Classes/BalloonPauseDialog.cpp; sourceTree = "<group>"; };
 		0435602819265FC40044D838 /* BalloonPauseDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BalloonPauseDialog.h; path = ../Classes/BalloonPauseDialog.h; sourceTree = "<group>"; };
 		043560301928A7070044D838 /* localizableString */ = {isa = PBXFileReference; lastKnownFileType = folder; path = localizableString; sourceTree = "<group>"; };
-		04356035192916490044D838 /* options */ = {isa = PBXFileReference; lastKnownFileType = folder; path = options; sourceTree = "<group>"; };
 		04356037192916550044D838 /* BalloonOptionsDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BalloonOptionsDialog.cpp; path = ../Classes/BalloonOptionsDialog.cpp; sourceTree = "<group>"; };
 		04356038192916550044D838 /* BalloonOptionsDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BalloonOptionsDialog.h; path = ../Classes/BalloonOptionsDialog.h; sourceTree = "<group>"; };
 		0435603C19291DD60044D838 /* BalloonOptionsDialog.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonOptionsDialog.ccbi; sourceTree = "<group>"; };
 		04356043192A49360044D838 /* crc32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crc32.c; sourceTree = "<group>"; };
 		04356045192A4BBB0044D838 /* crc32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = crc32.h; sourceTree = "<group>"; };
 		044BAB761905045600D8CCB3 /* BalloonScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonScene.ccbi; sourceTree = "<group>"; };
-		044BAB881905048A00D8CCB3 /* balloon */ = {isa = PBXFileReference; lastKnownFileType = folder; path = balloon; sourceTree = "<group>"; };
 		0458E80419167BAB00FA1321 /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29.png"; sourceTree = SOURCE_ROOT; };
 		0458E80519167BAB00FA1321 /* Icon-58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-58.png"; sourceTree = SOURCE_ROOT; };
 		0458E80619167BAB00FA1321 /* Icon-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-80.png"; sourceTree = SOURCE_ROOT; };
@@ -409,8 +404,6 @@
 		046051721923AE64005E5A8D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../proj.ios/Default-568h@2x.png"; sourceTree = "<group>"; };
 		046051751923C6F4005E5A8D /* BalloonResultDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BalloonResultDialog.cpp; path = ../Classes/BalloonResultDialog.cpp; sourceTree = "<group>"; };
 		046051761923C6F4005E5A8D /* BalloonResultDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BalloonResultDialog.h; path = ../Classes/BalloonResultDialog.h; sourceTree = "<group>"; };
-		0460518A1923D5EF005E5A8D /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
-		0460518B1923D5EF005E5A8D /* resultBoard */ = {isa = PBXFileReference; lastKnownFileType = folder; path = resultBoard; sourceTree = "<group>"; };
 		04612328191F2F11001AE64F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/UMSocialLocalizable.strings; sourceTree = "<group>"; };
 		0461232A191F2F11001AE64F /* UMSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocial.h; sourceTree = "<group>"; };
 		0461232B191F2F11001AE64F /* UMSocialAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialAccountManager.h; sourceTree = "<group>"; };
@@ -447,10 +440,8 @@
 		0473CB7E1917D795006C428E /* BalloonFirstPage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BalloonFirstPage.cpp; path = ../Classes/BalloonFirstPage.cpp; sourceTree = "<group>"; };
 		0473CB7F1917D795006C428E /* BalloonFirstPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BalloonFirstPage.h; path = ../Classes/BalloonFirstPage.h; sourceTree = "<group>"; };
 		0473CB831917D7C9006C428E /* BalloonFirstPage.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonFirstPage.ccbi; sourceTree = "<group>"; };
-		0473CB851917D7E1006C428E /* mainboard */ = {isa = PBXFileReference; lastKnownFileType = folder; path = mainboard; sourceTree = "<group>"; };
 		048C0E03191E95AE00D6801A /* MobClickCpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickCpp.h; sourceTree = "<group>"; };
 		048C0E33191E95AE00D6801A /* libMobClickCpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickCpp.a; sourceTree = "<group>"; };
-		04A6B78F191D2B76007AF26F /* cloud */ = {isa = PBXFileReference; lastKnownFileType = folder; path = cloud; sourceTree = "<group>"; };
 		04A6B791191D3FAC007AF26F /* Cloud.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Cloud.cpp; path = ../Classes/Cloud.cpp; sourceTree = "<group>"; };
 		04A6B792191D3FAC007AF26F /* Cloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cloud.h; path = ../Classes/Cloud.h; sourceTree = "<group>"; };
 		04A6B793191D3FAC007AF26F /* CloudManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CloudManager.cpp; path = ../Classes/CloudManager.cpp; sourceTree = "<group>"; };
@@ -507,7 +498,12 @@
 		04CB2D4A193312D600D1111F /* BalloonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BalloonItem.h; path = ../Classes/BalloonItem.h; sourceTree = "<group>"; };
 		04CB2D4B193312D600D1111F /* BalloonItemManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BalloonItemManager.cpp; path = ../Classes/BalloonItemManager.cpp; sourceTree = "<group>"; };
 		04CB2D4C193312D600D1111F /* BalloonItemManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BalloonItemManager.h; path = ../Classes/BalloonItemManager.h; sourceTree = "<group>"; };
-		04CB2D4F1933A3BB00D1111F /* items */ = {isa = PBXFileReference; lastKnownFileType = folder; path = items; sourceTree = "<group>"; };
+		04DEFB0E1935C9B60023F654 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		04DEFB101935CCDD0023F654 /* texture */ = {isa = PBXFileReference; lastKnownFileType = folder; path = texture; sourceTree = "<group>"; };
+		04DEFB131935D0070023F654 /* GameKitHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameKitHelper.h; sourceTree = "<group>"; };
+		04DEFB141935D0070023F654 /* GameKitHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameKitHelper.m; sourceTree = "<group>"; };
+		04DEFB161935F9430023F654 /* GameKitHelper2dx.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GameKitHelper2dx.m; sourceTree = "<group>"; };
+		04DEFB171935F9430023F654 /* GameKitHelper2dx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameKitHelper2dx.h; sourceTree = "<group>"; };
 		04ECB4331925363B00DBBE89 /* CompanyPage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompanyPage.cpp; path = ../Classes/CompanyPage.cpp; sourceTree = "<group>"; };
 		04ECB4341925363B00DBBE89 /* CompanyPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompanyPage.h; path = ../Classes/CompanyPage.h; sourceTree = "<group>"; };
 		15A3D87E1682F7B3002FB0C5 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
@@ -923,6 +919,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04DEFB0F1935C9B60023F654 /* GameKit.framework in Frameworks */,
 				04CB2A6D191F3EB8004B2792 /* libiconv.dylib in Frameworks */,
 				04C401F8191BD1AC0087EC75 /* CoreLocation.framework in Frameworks */,
 				0461235B191F2F11001AE64F /* libSocialFacebook.a in Frameworks */,
@@ -1065,8 +1062,7 @@
 		044BAB6C1905045600D8CCB3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				04CB2D4F1933A3BB00D1111F /* items */,
-				04356035192916490044D838 /* options */,
+				04DEFB101935CCDD0023F654 /* texture */,
 				043560301928A7070044D838 /* localizableString */,
 				046051721923AE64005E5A8D /* Default-568h@2x.png */,
 				0458E80419167BAB00FA1321 /* Icon-29.png */,
@@ -1077,11 +1073,6 @@
 				04AAEABD191383F9006147E3 /* Default@2x.png */,
 				04AAEABE191383F9006147E3 /* Icon-57.png */,
 				04AAEAC0191383F9006147E3 /* Icon-114.png */,
-				0460518A1923D5EF005E5A8D /* fonts */,
-				0460518B1923D5EF005E5A8D /* resultBoard */,
-				04A6B78F191D2B76007AF26F /* cloud */,
-				0473CB851917D7E1006C428E /* mainboard */,
-				044BAB881905048A00D8CCB3 /* balloon */,
 				04AAEACC1913C9FE006147E3 /* music */,
 				0469117E19175937009A0734 /* particles */,
 				044BAB761905045600D8CCB3 /* BalloonScene.ccbi */,
@@ -1360,6 +1351,17 @@
 			);
 			name = UMSocialC2DX;
 			path = ../Classes/UMSocialC2DX;
+			sourceTree = "<group>";
+		};
+		04DEFB121935CF940023F654 /* GameKitFiles */ = {
+			isa = PBXGroup;
+			children = (
+				04DEFB161935F9430023F654 /* GameKitHelper2dx.m */,
+				04DEFB171935F9430023F654 /* GameKitHelper2dx.h */,
+				04DEFB131935D0070023F654 /* GameKitHelper.h */,
+				04DEFB141935D0070023F654 /* GameKitHelper.m */,
+			);
+			name = GameKitFiles;
 			sourceTree = "<group>";
 		};
 		080E96DDFE201D6D7F000001 /* ios */ = {
@@ -2148,6 +2150,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				04DEFB121935CF940023F654 /* GameKitFiles */,
 				15A3D87E1682F7B3002FB0C5 /* cocos2dx.xcodeproj */,
 				044BAB6C1905045600D8CCB3 /* Resources */,
 				15A3D8871682F7D5002FB0C5 /* Box2D */,
@@ -2170,6 +2173,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04DEFB0E1935C9B60023F654 /* GameKit.framework */,
 				04CB2A6C191F3EB8004B2792 /* libiconv.dylib */,
 				04C401F7191BD1AC0087EC75 /* CoreLocation.framework */,
 				04C401F5191BD18A0087EC75 /* Social.framework */,
@@ -2232,6 +2236,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0510;
+				TargetAttributes = {
+					1D6058900D05DD3D006BFB54 = {
+						DevelopmentTeam = 2UWE59VJK9;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+						};
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "PokeBalloon" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -2282,7 +2296,6 @@
 				044BAB831905045600D8CCB3 /* BalloonScene.ccbi in Resources */,
 				0458E80A19167BAB00FA1321 /* Icon-80.png in Resources */,
 				0460516E1923A9DE005E5A8D /* README.md in Resources */,
-				04CB2D501933A3BB00D1111F /* items in Resources */,
 				04612357191F2F11001AE64F /* UMSLoginViewController.xib in Resources */,
 				04612359191F2F11001AE64F /* UMSShareListController.xib in Resources */,
 				04612353191F2F11001AE64F /* UMSCommentInputController.xib in Resources */,
@@ -2291,10 +2304,7 @@
 				04612350191F2F11001AE64F /* UMSocialLocalizable.strings in Resources */,
 				04612352191F2F11001AE64F /* UMSCommentDetailController.xib in Resources */,
 				15A3D9961682F7F9002FB0C5 /* CMakeLists.txt in Resources */,
-				04A6B790191D2B76007AF26F /* cloud in Resources */,
-				0460518C1923D5EF005E5A8D /* fonts in Resources */,
 				04AAEAC3191383F9006147E3 /* Default.png in Resources */,
-				0460518D1923D5EF005E5A8D /* resultBoard in Resources */,
 				1A9CE8881765A12C000E3062 /* json_internalarray.inl in Resources */,
 				04612358191F2F11001AE64F /* UMSnsAccountViewController.xib in Resources */,
 				1A9CE8891765A12C000E3062 /* json_internalmap.inl in Resources */,
@@ -2305,17 +2315,15 @@
 				04612356191F2F11001AE64F /* UMShareEditViewControlleriPad.xib in Resources */,
 				04AAEACD1913C9FE006147E3 /* music in Resources */,
 				043560311928A7070044D838 /* localizableString in Resources */,
-				0473CB861917D7E1006C428E /* mainboard in Resources */,
 				04AAEAC4191383F9006147E3 /* Default@2x.png in Resources */,
 				0435602419264F5F0044D838 /* BalloonResultDialog.ccbi in Resources */,
 				046051731923AE64005E5A8D /* Default-568h@2x.png in Resources */,
 				0458E80919167BAB00FA1321 /* Icon-58.png in Resources */,
 				04612354191F2F11001AE64F /* UMSCommentInputControlleriPad.xib in Resources */,
 				0435603D19291DD60044D838 /* BalloonOptionsDialog.ccbi in Resources */,
-				044BAB891905048A00D8CCB3 /* balloon in Resources */,
-				04356036192916490044D838 /* options in Resources */,
 				0461235A191F2F11001AE64F /* UMSocialSDKResourcesNew.bundle in Resources */,
 				0458E80819167BAB00FA1321 /* Icon-29.png in Resources */,
+				04DEFB111935CCDD0023F654 /* texture in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2355,6 +2363,7 @@
 				15A3D9131682F7D5002FB0C5 /* b2Fixture.cpp in Sources */,
 				15A3D9141682F7D5002FB0C5 /* b2Island.cpp in Sources */,
 				15A3D9151682F7D5002FB0C5 /* b2World.cpp in Sources */,
+				04DEFB151935D0070023F654 /* GameKitHelper.m in Sources */,
 				15A3D9161682F7D5002FB0C5 /* b2WorldCallbacks.cpp in Sources */,
 				15A3D9171682F7D5002FB0C5 /* b2ChainAndCircleContact.cpp in Sources */,
 				15A3D9181682F7D5002FB0C5 /* b2ChainAndPolygonContact.cpp in Sources */,
@@ -2538,6 +2547,7 @@
 				1A9CE88A1765A12C000E3062 /* json_reader.cpp in Sources */,
 				1A9CE88B1765A12C000E3062 /* json_value.cpp in Sources */,
 				1A9CE88D1765A12C000E3062 /* json_writer.cpp in Sources */,
+				04DEFB181935F9430023F654 /* GameKitHelper2dx.m in Sources */,
 				1A9CE88F1765A12C000E3062 /* CCColliderDetector.cpp in Sources */,
 				046051551923A8C8005E5A8D /* dump.c in Sources */,
 				041B1A3D19238B8D00942314 /* TextureManagerProtocol.cpp in Sources */,
@@ -2583,7 +2593,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: ZHIHONG WANG (FSFG36R3L2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2632,7 +2642,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PokeBalloon;
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "60430080-7A13-45E9-A4D5-78179CC20F4A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D2EA56FD-C981-4EEF-95A0-478E9FF218BB";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2645,7 +2655,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: ZHIHONG WANG (FSFG36R3L2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -2690,7 +2700,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PokeBalloon;
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "60430080-7A13-45E9-A4D5-78179CC20F4A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B202FA43-6DF6-4B5F-A47A-0959B2A38142";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";

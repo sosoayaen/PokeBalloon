@@ -94,7 +94,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>resultBoard/label_curr_score.png</string>
+									<string>texture/resultBoard/label_curr_score.png</string>
 								</array>
 							</dict>
 						</array>
@@ -166,7 +166,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>resultBoard/label_high_score.png</string>
+									<string>texture/resultBoard/label_high_score.png</string>
 								</array>
 							</dict>
 						</array>
@@ -236,7 +236,7 @@
 								<key>type</key>
 								<string>FntFile</string>
 								<key>value</key>
-								<string>fonts/font.fnt</string>
+								<string>texture/fonts/font.fnt</string>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -327,7 +327,7 @@
 								<key>type</key>
 								<string>FntFile</string>
 								<key>value</key>
-								<string>fonts/font.fnt</string>
+								<string>texture/fonts/font.fnt</string>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -450,7 +450,7 @@
 										<key>value</key>
 										<array>
 											<string></string>
-											<string>resultBoard/menu_item_share.png</string>
+											<string>texture/resultBoard/menu_item_share.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -645,7 +645,7 @@
 										<key>value</key>
 										<array>
 											<string></string>
-											<string>resultBoard/menu_item_restart.png</string>
+											<string>texture/resultBoard/menu_item_restart.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -758,7 +758,7 @@
 										<key>value</key>
 										<array>
 											<string></string>
-											<string>resultBoard/menu_item_return_menu.png</string>
+											<string>texture/resultBoard/menu_item_return_menu.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -871,7 +871,7 @@
 										<key>value</key>
 										<array>
 											<string></string>
-											<string>resultBoard/menu_item_shop.png</string>
+											<string>texture/resultBoard/menu_item_shop.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -1062,7 +1062,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>resultBoard/new.png</string>
+									<string>texture/resultBoard/new.png</string>
 								</array>
 							</dict>
 						</array>
@@ -1130,7 +1130,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>resultBoard/board.png</string>
+							<string>texture/resultBoard/board.png</string>
 						</array>
 					</dict>
 				</array>

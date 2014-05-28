@@ -159,8 +159,8 @@ void BalloonItemClick::initClickMenu(CCSprite* pSpriteIcon)
     // 创建按钮
     CCMenuItemImage* pMenuItemImage = CCMenuItemImage::create();
     // 设置按钮的图片
-    pMenuItemImage->setNormalImage(CCSprite::create("items/item_btn_normal.png"));
-    // pMenuItemImage->setSelectedImage(CCSprite::create("items/item_btn_selected.png"));
+    pMenuItemImage->setNormalImage(CCSprite::create("texture/items/item_btn_normal.png"));
+    // pMenuItemImage->setSelectedImage(CCSprite::create("texture/items/item_btn_selected.png"));
     
     // 顺便这里更新下控件的大小
     setContentSize(pMenuItemImage->getContentSize());

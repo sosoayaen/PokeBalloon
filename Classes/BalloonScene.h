@@ -48,6 +48,7 @@ public:
         m_pResultDialog = NULL;
         m_pPauseDialog = NULL;
         m_pMenuPause = NULL;
+        m_bCheated = false;
         
         // 注册监听对象
         m_BalloonManager.setBalloonDelegate(this);
@@ -112,6 +113,9 @@ private:
     BalloonPauseDialog* m_pPauseDialog;
 
 private:
+    // 作弊标志
+    bool m_bCheated;
+    
     // 当前播放的帧
     unsigned long m_ulFrame;
     

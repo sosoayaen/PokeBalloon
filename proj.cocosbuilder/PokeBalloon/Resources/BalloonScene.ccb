@@ -89,7 +89,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>balloon/background.png</string>
+							<string>texture/balloon/background.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -177,7 +177,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>balloon/balloon_1_1.png</string>
+									<string>texture/balloon/balloon_1_1.png</string>
 								</array>
 							</dict>
 						</array>
@@ -426,7 +426,7 @@
 										<key>value</key>
 										<array>
 											<string></string>
-											<string>balloon/pause.png</string>
+											<string>texture/balloon/pause.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -597,7 +597,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>balloon/clock.png</string>
+									<string>texture/balloon/clock.png</string>
 								</array>
 							</dict>
 						</array>
@@ -667,7 +667,7 @@
 								<key>type</key>
 								<string>FntFile</string>
 								<key>value</key>
-								<string>fonts/font.fnt</string>
+								<string>texture/fonts/font.fnt</string>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -757,7 +757,7 @@
 								<key>type</key>
 								<string>FntFile</string>
 								<key>value</key>
-								<string>fonts/font.fnt</string>
+								<string>texture/fonts/font.fnt</string>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -845,7 +845,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>balloon/score.png</string>
+							<string>texture/balloon/score.png</string>
 						</array>
 					</dict>
 				</array>

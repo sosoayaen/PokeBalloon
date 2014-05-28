@@ -7,6 +7,8 @@
 
 #include "bailinUtil.h"
 
+#include "GameKitHelper2dx.h"
+
 USING_NS_CC;
 USING_NS_CC_EXT;
 USING_NS_BAILIN_UTIL;
@@ -104,6 +106,7 @@ void BalloonScene::resetData()
 {
     DataManagerUtil* pDMU = DataManagerUtil::sharedDataManagerUtil();
     
+    m_bCheated = false;
     m_ulFrame = 0;
     m_lTotalScore = 0;
     
@@ -237,6 +240,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             // 根据对应的气球分数增加到总分上
             if (!pDMU->SetSecurityData(SECURITY_SCORE, &m_lTotalScore, pBalloon->getBalloonScore()))
             {
+                m_bCheated = true;
                 CCMessageBox("Cheat!!!", "Warnning");
                 m_lTotalScore = 0;
                 return;
@@ -260,6 +264,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             // 除分气球
             if (!pDMU->CheckSecurityData(SECURITY_SCORE, m_lTotalScore))
             {
+                m_bCheated = true;
                 // 分数有问题
                 CCMessageBox("Cheat!!!", "Warnning");
                 m_lTotalScore = 0;
@@ -282,6 +287,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             // 校验时间数据确保未被修改
             if (!pDMU->SetSecurityData(SECURITY_TIME, &m_lTimeLeft, pBalloon->getBalloonScore()))
             {
+                m_bCheated = true;
                 CCMessageBox("Cheat!!!", "Warnning");
                 m_lTimeLeft = 0;
             }
@@ -290,7 +296,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
         case kBalloonTypeAddBalloonScore:
             pBalloon->explosive();
             // 屏幕出现打气筒按钮，并且设置按钮的小时时间
-            m_BalloonItemManager.appendBalloonItemWithItemId(kBalloonItemId_Pumps, "items/item_pump.png", pBalloon->getBalloonScore());
+            m_BalloonItemManager.appendBalloonItemWithItemId(kBalloonItemId_Pumps, "texture/items/item_pump.png", pBalloon->getBalloonScore());
             
             break;
         case kBalloonTypeAddBalloon:
@@ -352,6 +358,7 @@ void BalloonScene::update(float dt)
             {
                 if (!DataManagerUtil::sharedDataManagerUtil()->SetSecurityData(SECURITY_TIME, &m_lTimeLeft, -1))
                 {
+                    m_bCheated = true;
                     CCMessageBox("Cheat!!!", "Warnning");
                     return;
                 }
@@ -406,10 +413,14 @@ void BalloonScene::update(float dt)
             unscheduleUpdate();
             
             m_pLayerBalloon->removeAllChildren();
-            
+
+            if (!m_bCheated)
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+                // 发送成绩到GameCenter
+                GameKitHelper2dx::sendScore(m_lTotalScore);
+#endif
             // 弹出结算框
             showResultDialog();
-            
             
             break;
         default:

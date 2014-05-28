@@ -94,7 +94,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>options/label_music.png</string>
+									<string>texture/options/label_music.png</string>
 								</array>
 							</dict>
 						</array>
@@ -183,7 +183,7 @@
 												<key>value</key>
 												<array>
 													<string></string>
-													<string>options/check_center_music.png</string>
+													<string>texture/options/check_center_music.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -350,7 +350,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>options/check_background_music.png</string>
+									<string>texture/options/check_background_music.png</string>
 								</array>
 							</dict>
 						</array>
@@ -422,7 +422,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>options/label_sound_effect.png</string>
+									<string>texture/options/label_sound_effect.png</string>
 								</array>
 							</dict>
 						</array>
@@ -511,7 +511,7 @@
 												<key>value</key>
 												<array>
 													<string></string>
-													<string>options/check_center_effect.png</string>
+													<string>texture/options/check_center_effect.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -678,7 +678,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>options/check_background_effect.png</string>
+									<string>texture/options/check_background_effect.png</string>
 								</array>
 							</dict>
 						</array>
@@ -746,7 +746,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>resultBoard/board.png</string>
+							<string>texture/resultBoard/board.png</string>
 						</array>
 					</dict>
 				</array>

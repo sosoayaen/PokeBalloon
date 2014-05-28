@@ -5,6 +5,7 @@
 #include "bailinUtil.h"
 
 #include "BalloonOptionsDialog.h"
+#include "GameKitHelper2dx.h"
 
 #define OPT_MUSIC_OFF "opt_MusicOFF"
 
@@ -163,7 +164,7 @@ void BalloonFirstPage::onPressMenuStartGame(cocos2d::CCObject *pSender)
 
 void BalloonFirstPage::onPressMenuShop(cocos2d::CCObject *pSender)
 {
-    
+    GameKitHelper2dx::showLeaderboard();
 }
 
 void BalloonFirstPage::onPressMenuOptions(cocos2d::CCObject *pSender)

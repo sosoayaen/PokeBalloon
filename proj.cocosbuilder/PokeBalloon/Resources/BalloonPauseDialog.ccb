@@ -101,7 +101,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>resultBoard/menu_item_restart.png</string>
+									<string>texture/resultBoard/menu_item_restart.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -202,7 +202,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>balloon/menu_item_resume.png</string>
+									<string>texture/balloon/menu_item_resume.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -303,7 +303,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>balloon/menu_item_return_menu.png</string>
+									<string>texture/balloon/menu_item_return_menu.png</string>
 								</array>
 							</dict>
 							<dict>
