@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>English</string>
+	<string>zh_CN</string>
 	<key>CFBundleDisplayName</key>
 	<string>天天气球大作战</string>
 	<key>CFBundleExecutable</key>
@@ -55,5 +55,7 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>LSHasLocalizedDisplayName</key>
+	<true/>
 </dict>
 </plist>
