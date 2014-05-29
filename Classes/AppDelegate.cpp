@@ -128,9 +128,10 @@ void AppDelegate::applicationDidEnterBackground() {
 
     // if you use SimpleAudioEngine, it must be pause
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
-    
+#ifdef ENABLE_UMENG_DATA
     // 多盟统计进入后台
     MobClickCpp::applicationDidEnterBackground();
+#endif
 }
 
 // this function will be called when the app is active again
@@ -144,8 +145,10 @@ void AppDelegate::applicationWillEnterForeground() {
         SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
     }
     
+#ifdef ENABLE_UMENG_DATA
     // 多盟统计分析回到前台
     MobClickCpp::applicationWillEnterForeground();
+#endif
 }
 
 void AppDelegate::setLocalConfigData()

@@ -5,7 +5,10 @@
 #include "bailinUtil.h"
 
 #include "BalloonOptionsDialog.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "GameKitHelper2dx.h"
+#endif
 
 #define OPT_MUSIC_OFF "opt_MusicOFF"
 
@@ -167,7 +170,9 @@ void BalloonFirstPage::onPressMenuShop(cocos2d::CCObject *pSender)
 {
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     GameKitHelper2dx::showLeaderboard();
+#endif
 }
 
 void BalloonFirstPage::onPressMenuOptions(cocos2d::CCObject *pSender)
