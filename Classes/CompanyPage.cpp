@@ -3,9 +3,9 @@
 
 USING_NS_CC;
 
-#define IMAGE_COMPANY_EN	"company/company_en.png"
-#define IMAGE_COMPANY_ZH	"company/company_zh.png"
-#define IMAGE_COMPANY_LOGO	"company/company_logo.png"
+#define IMAGE_COMPANY_EN	"texture/company/company_en.png"
+#define IMAGE_COMPANY_ZH	"texture/company/company_zh.png"
+#define IMAGE_COMPANY_LOGO	"texture/company/company_logo.png"
 
 CompanyPage::CompanyPage()
 {

@@ -507,7 +507,7 @@
 		04DEFB141935D0070023F654 /* GameKitHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameKitHelper.m; sourceTree = "<group>"; };
 		04DEFB161935F9430023F654 /* GameKitHelper2dx.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GameKitHelper2dx.m; sourceTree = "<group>"; };
 		04DEFB171935F9430023F654 /* GameKitHelper2dx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameKitHelper2dx.h; sourceTree = "<group>"; };
-		04ECB4331925363B00DBBE89 /* CompanyPage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CompanyPage.cpp; path = ../Classes/CompanyPage.cpp; sourceTree = "<group>"; };
+		04ECB4331925363B00DBBE89 /* CompanyPage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = CompanyPage.cpp; path = ../Classes/CompanyPage.cpp; sourceTree = "<group>"; };
 		04ECB4341925363B00DBBE89 /* CompanyPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompanyPage.h; path = ../Classes/CompanyPage.h; sourceTree = "<group>"; };
 		15A3D87E1682F7B3002FB0C5 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		15A3D8891682F7D5002FB0C5 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
