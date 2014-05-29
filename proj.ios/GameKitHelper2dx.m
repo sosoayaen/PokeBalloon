@@ -31,5 +31,6 @@ void GameKitHelper2dx::sendScore(long lScore)
 
 void GameKitHelper2dx::showLeaderboard()
 {
+    authGameCenter();
     [[GameKitHelper sharedGameKitHelper] showLeaderboard:nil];
 }

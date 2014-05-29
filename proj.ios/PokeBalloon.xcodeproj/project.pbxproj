@@ -2607,7 +2607,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: ZHIHONG WANG (FSFG36R3L2)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2656,7 +2656,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PokeBalloon;
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D2EA56FD-C981-4EEF-95A0-478E9FF218BB";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9F3931BC-2B16-4B5E-A9AD-053233B6FB95";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2669,7 +2669,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: ZHIHONG WANG (FSFG36R3L2)";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
@@ -2714,7 +2714,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PokeBalloon;
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B202FA43-6DF6-4B5F-A47A-0959B2A38142";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B2B78C72-7AF7-4757-ABD6-F4F4ED1A91F1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";

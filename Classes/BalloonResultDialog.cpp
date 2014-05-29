@@ -160,3 +160,24 @@ void BalloonResultDialog::setNewFlagVisible(bool bShow)
 {
     m_pSpriteNewFlag->setVisible(bShow);
 }
+
+std::string BalloonResultDialog::getSharedPictureFilePath()
+{
+    // 隐藏按钮
+    m_pMenuResult->setVisible(false);
+    m_pMenuShare->setVisible(false);
+    
+    CCRenderTexture* pTexture = CCRenderTexture::create(int(m_pSpriteResultBoard->getContentSize().width), int(m_pSpriteResultBoard->getContentSize().height));
+    pTexture->begin();
+    m_pSpriteResultBoard->visit();
+    pTexture->end();
+    
+    m_pMenuResult->setVisible(true);
+    m_pMenuShare->setVisible(true);
+    
+    std::string strPath = CCFileUtils::sharedFileUtils()->getWritablePath() + "share.png";
+    if (pTexture->saveToFile(strPath.c_str(), kCCImageFormatPNG))
+        return strPath;
+    
+    return "";
+}

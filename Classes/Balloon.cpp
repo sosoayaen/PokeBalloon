@@ -191,7 +191,7 @@ void Balloon::updateDisplayDesc()
         m_strDisplayDesc = pStrDesc->getCString();
         if (!m_pLabelBMFontDesc)
         {
-            m_pLabelBMFontDesc = CCLabelBMFont::create(m_strDisplayDesc.c_str(), "fonts/font.fnt");
+            m_pLabelBMFontDesc = CCLabelBMFont::create(m_strDisplayDesc.c_str(), "texture/fonts/font.fnt");
             m_pLabelBMFontDesc->setPosition(ccpMult(ccpFromSize(getContentSize()), 0.5f));
             m_pLabelBMFontDesc->setScale(2.0f);
             addChild(m_pLabelBMFontDesc);

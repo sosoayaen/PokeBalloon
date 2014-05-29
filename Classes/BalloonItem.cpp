@@ -192,7 +192,7 @@ void BalloonItemClick::updateLeftCntsLabel()
 {
     if (!m_pLabelBMFontCnts)
     {
-        m_pLabelBMFontCnts = CCLabelBMFont::create("", "fonts/font.fnt");
+        m_pLabelBMFontCnts = CCLabelBMFont::create("", "texture/fonts/font.fnt");
         m_pLabelBMFontCnts->setPosition(ccpFromSize(m_pSpriteIcon->getContentSize()));
         m_pSpriteIcon->addChild(m_pLabelBMFontCnts);
     }

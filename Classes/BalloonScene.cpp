@@ -496,8 +496,11 @@ void BalloonScene::onPressMenuShare(cocos2d::CCObject *pSender)
     CCDictionary* pDictData = CCDictionary::create();
     
     // 截取得分图片
+    std::string strPath = m_pResultDialog->getSharedPictureFilePath();
+    
     // pDictData->setObject(ccs("一起来【气球大作战】吧～伸出你的指头，释放你的压力"), "shareText");
     pDictData->setObject(CCString::createWithFormat(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("share_section", "high_score_share"), m_lTotalScore), "shareText");
+    pDictData->setObject(ccs(strPath.c_str()), "shareImage");
     UMSocial2DX::shareSNS(pDictData);
 }
 

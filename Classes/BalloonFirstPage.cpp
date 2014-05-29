@@ -135,11 +135,11 @@ SEL_CCControlHandler BalloonFirstPage::onResolveCCBCCControlSelector( CCObject *
 
 void BalloonFirstPage::initMenu()
 {
-    CCMenuItemImage* pMenuItemStart = CCMenuItemImage::create("mainboard/menu_item_start.png", "mainboard/menu_item_start.png", this, menu_selector(BalloonFirstPage::onPressMenuStartGame));
+    CCMenuItemImage* pMenuItemStart = CCMenuItemImage::create("texture/mainboard/menu_item_start.png", "texture/mainboard/menu_item_start.png", this, menu_selector(BalloonFirstPage::onPressMenuStartGame));
     
-    CCMenuItemImage* pMenuItemShop = CCMenuItemImage::create("mainboard/menu_item_shop.png", "mainboard/menu_item_shop.png", this, menu_selector(BalloonFirstPage::onPressMenuShop));
+    CCMenuItemImage* pMenuItemShop = CCMenuItemImage::create("texture/mainboard/menu_item_shop.png", "texture/mainboard/menu_item_shop.png", this, menu_selector(BalloonFirstPage::onPressMenuShop));
     
-    CCMenuItemImage* pMenuItemOptions = CCMenuItemImage::create("mainboard/menu_item_options.png", "mainboard/menu_item_options.png", this, menu_selector(BalloonFirstPage::onPressMenuOptions));
+    CCMenuItemImage* pMenuItemOptions = CCMenuItemImage::create("texture/mainboard/menu_item_options.png", "texture/mainboard/menu_item_options.png", this, menu_selector(BalloonFirstPage::onPressMenuOptions));
     
     pMenuItemStart->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, 10.0f), CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, -10.0f), NULL)));
     pMenuItemShop->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, 10.0f), CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, -10.0f), NULL)));
@@ -166,6 +166,7 @@ void BalloonFirstPage::onPressMenuStartGame(cocos2d::CCObject *pSender)
 void BalloonFirstPage::onPressMenuShop(cocos2d::CCObject *pSender)
 {
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
+
     GameKitHelper2dx::showLeaderboard();
 }
 

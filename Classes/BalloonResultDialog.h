@@ -45,6 +45,11 @@ public:
 
 	virtual bool onAssignCCBMemberVariable( cocos2d::CCObject* pTarget, const char* pMemberVariableName, cocos2d::CCNode* pNode );
 
+    /**
+     * @brief 获取分享的截图
+     */
+    std::string getSharedPictureFilePath();
+    
 public:
     // 这里的菜单都public，供外部调用
 	cocos2d::CCMenuItem* m_pMenuItemPlayAgain;
