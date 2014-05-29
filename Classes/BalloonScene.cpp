@@ -7,7 +7,9 @@
 
 #include "bailinUtil.h"
 
-#include "GameKitHelper2dx.h"
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#   include "GameKitHelper2dx.h"
+#endif
 
 USING_NS_CC;
 USING_NS_CC_EXT;
