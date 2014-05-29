@@ -52,7 +52,10 @@
 -(void) setLastError:(NSError *)error {
     _lastError = [error copy];
     if (_lastError) {
-        NSLog(@"GameKitHelper ERROR: %@", [[_lastError userInfo] description]);
+        // NSLog(@"GameKitHelper ERROR: %@", [[_lastError userInfo] description]);
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Game Center Error" message:[_lastError localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        [alert release];
     }
 }
 
