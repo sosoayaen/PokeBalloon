@@ -111,7 +111,7 @@ void BalloonOptionsDialog::onPressMenuMusic(cocos2d::CCObject *pSender)
     CCMenuItemImage* pMenuItem = dynamic_cast<CCMenuItemImage*>(pSender);
     if (pMenuItem)
     {
-        bool bEnable = pMenuItem->getOpacity() == 0;
+        bool bEnable = pMenuItem->getOpacity() != 0;
         setCheckBoxEnable(pMenuItem, bEnable);
         
         DataManagerUtil::sharedDataManagerUtil()->SetGlobalDataLong(OPT_MUSIC_OFF, bEnable ? 0 : 1);
@@ -133,7 +133,7 @@ void BalloonOptionsDialog::onPressMenuEffect(cocos2d::CCObject *pSender)
     CCMenuItemImage* pMenuItem = dynamic_cast<CCMenuItemImage*>(pSender);
     if (pMenuItem)
     {
-        bool bEnable = pMenuItem->getOpacity() == 0;
+        bool bEnable = pMenuItem->getOpacity() != 0;
         setCheckBoxEnable(pMenuItem, bEnable);
         
         DataManagerUtil::sharedDataManagerUtil()->SetGlobalDataLong(OPT_SOUND_EFFECT_OFF, bEnable ? 0 : 1);
@@ -186,9 +186,9 @@ void BalloonOptionsDialog::setCheckBoxEnable(CCMenuItemImage* pMenuItem, bool bE
     if (pMenuItem)
     {
         if (bEnable)
-            pMenuItem->setOpacity(255);
-        else
             pMenuItem->setOpacity(0);
+        else
+            pMenuItem->setOpacity(255);
     }
 }
 

@@ -29,13 +29,13 @@
 				<array>
 					<dict>
 						<key>baseClass</key>
-						<string>CCSprite</string>
+						<string>CCLabelBMFont</string>
 						<key>children</key>
 						<array/>
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCSprite当前分数</string>
+						<string>CCLabelBMFont当前分数</string>
 						<key>memberVarAssignmentName</key>
 						<string></string>
 						<key>memberVarAssignmentType</key>
@@ -50,7 +50,7 @@
 								<key>value</key>
 								<array>
 									<real>50</real>
-									<real>77</real>
+									<real>77.604164123535156</real>
 									<integer>4</integer>
 								</array>
 							</dict>
@@ -72,9 +72,9 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>1</real>
-									<real>1</real>
-									<false/>
+									<real>2</real>
+									<real>2</real>
+									<true/>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -88,26 +88,31 @@
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>displayFrame</string>
+								<string>fntFile</string>
 								<key>type</key>
-								<string>SpriteFrame</string>
+								<string>FntFile</string>
 								<key>value</key>
-								<array>
-									<string></string>
-									<string>texture/resultBoard/label_curr_score.png</string>
-								</array>
+								<string>texture/fonts/font.fnt</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>string</string>
+								<key>type</key>
+								<string>Text</string>
+								<key>value</key>
+								<string>Score</string>
 							</dict>
 						</array>
 					</dict>
 					<dict>
 						<key>baseClass</key>
-						<string>CCSprite</string>
+						<string>CCLabelBMFont</string>
 						<key>children</key>
 						<array/>
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCSprite历史最高分数</string>
+						<string>CCLabelBMFont历史最高分分数</string>
 						<key>memberVarAssignmentName</key>
 						<string></string>
 						<key>memberVarAssignmentType</key>
@@ -122,7 +127,7 @@
 								<key>value</key>
 								<array>
 									<real>50</real>
-									<real>42.1875</real>
+									<real>35.9375</real>
 									<integer>4</integer>
 								</array>
 							</dict>
@@ -144,9 +149,9 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>1</real>
-									<real>1</real>
-									<false/>
+									<real>2</real>
+									<real>2</real>
+									<true/>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -160,14 +165,19 @@
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>displayFrame</string>
+								<string>fntFile</string>
 								<key>type</key>
-								<string>SpriteFrame</string>
+								<string>FntFile</string>
 								<key>value</key>
-								<array>
-									<string></string>
-									<string>texture/resultBoard/label_high_score.png</string>
-								</array>
+								<string>texture/fonts/font.fnt</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>string</string>
+								<key>type</key>
+								<string>Text</string>
+								<key>value</key>
+								<string>High Score</string>
 							</dict>
 						</array>
 					</dict>
@@ -194,7 +204,7 @@
 								<key>value</key>
 								<array>
 									<real>50</real>
-									<real>58.072917938232422</real>
+									<real>57.03125</real>
 									<integer>4</integer>
 								</array>
 							</dict>
@@ -283,7 +293,7 @@
 								<key>value</key>
 								<array>
 									<real>50</real>
-									<real>25</real>
+									<real>19.791666030883789</real>
 									<integer>4</integer>
 								</array>
 							</dict>
@@ -520,7 +530,7 @@
 										<key>value</key>
 										<array>
 											<string></string>
-											<string>texture/resultBoard/menu_item_restart.png</string>
+											<string>texture/menuItems/menu_item_restart.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -633,7 +643,7 @@
 										<key>value</key>
 										<array>
 											<string></string>
-											<string>texture/resultBoard/menu_item_return_menu.png</string>
+											<string>texture/menuItems/menu_item_return_main_menu.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -746,7 +756,7 @@
 										<key>value</key>
 										<array>
 											<string></string>
-											<string>texture/resultBoard/menu_item_shop.png</string>
+											<string>texture/menuItems/menu_item_shop.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -961,7 +971,7 @@
 										<key>value</key>
 										<array>
 											<string></string>
-											<string>texture/resultBoard/menu_item_share.png</string>
+											<string>texture/menuItems/menu_item_share.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -1007,7 +1017,7 @@
 								<key>value</key>
 								<array>
 									<real>84.548614501953125</real>
-									<real>73.697914123535156</real>
+									<real>65.885414123535156</real>
 									<integer>4</integer>
 								</array>
 							</dict>

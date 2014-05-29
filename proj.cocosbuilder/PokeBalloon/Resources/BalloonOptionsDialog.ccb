@@ -29,13 +29,13 @@
 				<array>
 					<dict>
 						<key>baseClass</key>
-						<string>CCSprite</string>
+						<string>CCLabelBMFont</string>
 						<key>children</key>
 						<array/>
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCSprite音乐标签</string>
+						<string>CCLabelBMFont音乐标签</string>
 						<key>memberVarAssignmentName</key>
 						<string></string>
 						<key>memberVarAssignmentType</key>
@@ -49,7 +49,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>34.027778625488281</real>
+									<real>34</real>
 									<real>65.400001525878906</real>
 									<integer>4</integer>
 								</array>
@@ -72,9 +72,9 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>1</real>
-									<real>1</real>
-									<false/>
+									<real>3</real>
+									<real>3</real>
+									<true/>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -88,14 +88,19 @@
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>displayFrame</string>
+								<string>fntFile</string>
 								<key>type</key>
-								<string>SpriteFrame</string>
+								<string>FntFile</string>
 								<key>value</key>
-								<array>
-									<string></string>
-									<string>texture/options/label_music.png</string>
-								</array>
+								<string>texture/fonts/font.fnt</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>string</string>
+								<key>type</key>
+								<string>Text</string>
+								<key>value</key>
+								<string>Music</string>
 							</dict>
 						</array>
 					</dict>
@@ -183,7 +188,7 @@
 												<key>value</key>
 												<array>
 													<string></string>
-													<string>texture/options/check_center_music.png</string>
+													<string>texture/menuItems/menu_item_off.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -350,20 +355,20 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>texture/options/check_background_music.png</string>
+									<string>texture/menuItems/menu_item_music.png</string>
 								</array>
 							</dict>
 						</array>
 					</dict>
 					<dict>
 						<key>baseClass</key>
-						<string>CCSprite</string>
+						<string>CCLabelBMFont</string>
 						<key>children</key>
 						<array/>
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCSprite音效标签</string>
+						<string>CCLabelBMFont音效标签</string>
 						<key>memberVarAssignmentName</key>
 						<string></string>
 						<key>memberVarAssignmentType</key>
@@ -400,9 +405,9 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>1</real>
-									<real>1</real>
-									<false/>
+									<real>3</real>
+									<real>3</real>
+									<true/>
 									<integer>0</integer>
 								</array>
 							</dict>
@@ -416,18 +421,21 @@
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>displayFrame</string>
+								<string>fntFile</string>
 								<key>type</key>
-								<string>SpriteFrame</string>
+								<string>FntFile</string>
 								<key>value</key>
-								<array>
-									<string></string>
-									<string>texture/options/label_sound_effect.png</string>
-								</array>
+								<string>texture/fonts/font.fnt</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>string</string>
+								<key>type</key>
+								<string>Text</string>
+								<key>value</key>
+								<string>Sound</string>
 							</dict>
 						</array>
-						<key>selected</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>
@@ -513,7 +521,7 @@
 												<key>value</key>
 												<array>
 													<string></string>
-													<string>texture/options/check_center_effect.png</string>
+													<string>texture/menuItems/menu_item_off.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -539,6 +547,8 @@
 												</array>
 											</dict>
 										</array>
+										<key>selected</key>
+										<true/>
 									</dict>
 								</array>
 								<key>customClass</key>
@@ -680,7 +690,7 @@
 								<key>value</key>
 								<array>
 									<string></string>
-									<string>texture/options/check_background_effect.png</string>
+									<string>texture/menuItems/menu_item_sound.png</string>
 								</array>
 							</dict>
 						</array>
