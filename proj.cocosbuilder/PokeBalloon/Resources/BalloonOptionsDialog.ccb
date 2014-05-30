@@ -187,8 +187,8 @@
 												<string>SpriteFrame</string>
 												<key>value</key>
 												<array>
-													<string></string>
-													<string>texture/menuItems/menu_item_off.png</string>
+													<string>texture/menuItems/menuItems.plist</string>
+													<string>menu_item_off.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -354,8 +354,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<string>texture/menuItems/menu_item_music.png</string>
+									<string>texture/menuItems/menuItems.plist</string>
+									<string>menu_item_music.png</string>
 								</array>
 							</dict>
 						</array>
@@ -520,8 +520,8 @@
 												<string>SpriteFrame</string>
 												<key>value</key>
 												<array>
-													<string></string>
-													<string>texture/menuItems/menu_item_off.png</string>
+													<string>texture/menuItems/menuItems.plist</string>
+													<string>menu_item_off.png</string>
 												</array>
 											</dict>
 											<dict>
@@ -547,8 +547,6 @@
 												</array>
 											</dict>
 										</array>
-										<key>selected</key>
-										<true/>
 									</dict>
 								</array>
 								<key>customClass</key>
@@ -689,8 +687,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<string>texture/menuItems/menu_item_sound.png</string>
+									<string>texture/menuItems/menuItems.plist</string>
+									<string>menu_item_sound.png</string>
 								</array>
 							</dict>
 						</array>
@@ -757,8 +755,8 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string></string>
-							<string>texture/resultBoard/board.png</string>
+							<string>texture/resultBoard/resultBoard.plist</string>
+							<string>board.png</string>
 						</array>
 					</dict>
 				</array>

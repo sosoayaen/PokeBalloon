@@ -55,6 +55,21 @@ Balloon* Balloon::create(const char* pszFileName, long lScore, BalloonType nType
 	return NULL;
 }
 
+Balloon* Balloon::create(cocos2d::CCSpriteFrame *pSpriteFrame, long lScore, BalloonType nType /* = kBalloonTypeNormal */)
+{
+    Balloon* pobBalloon = new Balloon();
+    if (pSpriteFrame && pobBalloon && pobBalloon->initWithSpriteFrame(pSpriteFrame))
+    {
+        pobBalloon->autorelease();
+        pobBalloon->setBalloonScore(lScore);
+        pobBalloon->setBalloonType(nType);
+        return pobBalloon;
+    }
+    CC_SAFE_DELETE(pobBalloon);
+    
+    return NULL;
+}
+
 Balloon* Balloon::create(const char* pszFileName, const CCRect& rect)
 {
 	Balloon* pobBalloon = new Balloon();

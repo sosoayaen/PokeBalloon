@@ -43,6 +43,11 @@ bool BalloonScene::init()
 	do
 	{
 		CC_BREAK_IF(!CCLayer::init());
+        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/cloud/cloud.plist");
+        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/balloon/balloon.plist");
+        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/items/items.plist");
+        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/menuItems/menuItems.plist");
+        
 		// 加载ccbi
 		CCNodeLoaderLibrary* pLoaderLib = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
 
@@ -298,7 +303,8 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
         case kBalloonTypeAddBalloonScore:
             pBalloon->explosive();
             // 屏幕出现打气筒按钮，并且设置按钮的小时时间
-            m_BalloonItemManager.appendBalloonItemWithItemId(kBalloonItemId_Pumps, "texture/items/item_pump.png", pBalloon->getBalloonScore());
+            // m_BalloonItemManager.appendBalloonItemWithItemId(kBalloonItemId_Pumps, "texture/items/item_pump.png", pBalloon->getBalloonScore());
+            m_BalloonItemManager.appendBalloonItemWithItemId(kBalloonItemId_Pumps, CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("item_pump.png"), pBalloon->getBalloonScore());
             
             break;
         case kBalloonTypeAddBalloon:

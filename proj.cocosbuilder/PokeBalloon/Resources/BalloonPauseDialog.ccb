@@ -100,8 +100,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<string>texture/menuItems/menu_item_restart.png</string>
+									<string>texture/menuItems/menuItems.plist</string>
+									<string>menu_item_restart.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -201,8 +201,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<string>texture/menuItems/menu_item_resume.png</string>
+									<string>texture/menuItems/menuItems.plist</string>
+									<string>menu_item_resume.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -302,8 +302,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<string>texture/menuItems/menu_item_return_main_menu.png</string>
+									<string>texture/menuItems/menuItems.plist</string>
+									<string>menu_item_return_main_menu.png</string>
 								</array>
 							</dict>
 							<dict>

@@ -89,7 +89,7 @@
 						<key>value</key>
 						<array>
 							<string></string>
-							<string>texture/balloon/background.png</string>
+							<string>texture/balloonScene/background.png</string>
 						</array>
 					</dict>
 					<dict>
@@ -176,8 +176,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<string>texture/balloon/balloon_1_1.png</string>
+									<string>texture/balloon/balloon.plist</string>
+									<string>balloon_1_1.png</string>
 								</array>
 							</dict>
 						</array>
@@ -423,8 +423,8 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string></string>
-											<string>texture/balloon/pause.png</string>
+											<string>texture/balloonScene/balloonScene.plist</string>
+											<string>pause.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -594,8 +594,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<string>texture/balloon/clock.png</string>
+									<string>texture/balloonScene/balloonScene.plist</string>
+									<string>clock.png</string>
 								</array>
 							</dict>
 						</array>
@@ -842,8 +842,8 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string></string>
-							<string>texture/balloon/score.png</string>
+							<string>texture/balloonScene/balloonScene.plist</string>
+							<string>score.png</string>
 						</array>
 					</dict>
 				</array>

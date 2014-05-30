@@ -173,7 +173,8 @@ void BalloonManager::addRandomBalloon()
         BalloonType nType = kBalloonTypeNormal;
         int nBalloonStyle = rand()%4 + 1;
 
-        CCString* pStrBalloonName = CCString::createWithFormat("texture/balloon/balloon_%d_%d.png", nBalloonStyle, nBalloonIndex);
+        // CCString* pStrBalloonName = CCString::createWithFormat("texture/balloon/balloon_%d_%d.png", nBalloonStyle, nBalloonIndex);
+        CCString* pStrBalloonName = CCString::createWithFormat("balloon_%d_%d.png", nBalloonStyle, nBalloonIndex);
         
         int nRate = rand()%100;
         if (nRate > 95)
@@ -210,7 +211,9 @@ void BalloonManager::addRandomBalloon()
 		float fScale = (rand()%4 + 8)*0.1f;
 
 		// 增加一个气球到屏幕
-		Balloon* pBalloon = Balloon::create(pStrBalloonName->getCString(), nValue, nType);
+		// Balloon* pBalloon = Balloon::create(pStrBalloonName->getCString(), nValue, nType);
+		Balloon* pBalloon = Balloon::create(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pStrBalloonName->getCString()), nValue, nType);
+        
         if (!pBalloon) return;
         
         CCSize balloonSize = pBalloon->getContentSize();

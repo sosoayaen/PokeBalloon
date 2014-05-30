@@ -139,6 +139,8 @@ public:
 	 * @param ulCnts 道具可按下的次数
 	 */
 	static BalloonItemClick* create(BalloonItemDelegate* pDelegate, const char* pszTextureFile, unsigned long ulCnts);
+    
+    static BalloonItemClick* create(BalloonItemDelegate* pDelegate, cocos2d::CCSpriteFrame* pSpriteFrame, unsigned long ulCnts);
 
 	virtual void updateItemStatus(float dt, unsigned long ulFrame);
 

@@ -103,11 +103,22 @@ void BalloonItemClick::onPressMenuClick(CCObject* pSender)
 
 BalloonItemClick* BalloonItemClick::create(BalloonItemDelegate* pDelegate, const char* pszTextureFile, unsigned long ulCnts)
 {
+    if (pszTextureFile)
+    {
+        CCSpriteFrame* pSpriteFrame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszTextureFile);
+        return BalloonItemClick::create(pDelegate, pSpriteFrame, ulCnts);
+    }
+    
+    return NULL;
+}
+
+BalloonItemClick* BalloonItemClick::create(BalloonItemDelegate *pDelegate, cocos2d::CCSpriteFrame *pSpriteFrame, unsigned long ulCnts)
+{
 	BalloonItemClick* pRet = NULL;
 
-	if (pszTextureFile)
+	if (pSpriteFrame)
 	{
-		CCSprite* pSpriteMenuItem = CCSprite::create(pszTextureFile);
+		CCSprite* pSpriteMenuItem = CCSprite::createWithSpriteFrame(pSpriteFrame);
 		if (pSpriteMenuItem)
 		{
 			// 创建对象
@@ -158,10 +169,14 @@ void BalloonItemClick::onEnter()
 
 void BalloonItemClick::initClickMenu(CCSprite* pSpriteIcon)
 {
+    // 加载按钮图形
+    CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/items/items.plist");
     // 创建按钮
     CCMenuItemImage* pMenuItemImage = CCMenuItemImage::create();
     // 设置按钮的图片
-    pMenuItemImage->setNormalImage(CCSprite::create("texture/items/item_btn_normal.png"));
+    // pMenuItemImage->setNormalImage(CCSprite::create("texture/items/item_btn_normal.png"));
+    pMenuItemImage->setNormalSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("item_btn_normal.png"));
+    // pMenuItemImage->setSelectedSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("item_btn_normal.png"));
     
     // 顺便这里更新下控件的大小
     setContentSize(pMenuItemImage->getContentSize());

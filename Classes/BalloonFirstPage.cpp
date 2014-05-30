@@ -138,11 +138,27 @@ SEL_CCControlHandler BalloonFirstPage::onResolveCCBCCControlSelector( CCObject *
 
 void BalloonFirstPage::initMenu()
 {
-    CCMenuItemImage* pMenuItemStart = CCMenuItemImage::create("texture/menuItems/menu_item_start.png", "texture/menuItems/menu_item_start.png", this, menu_selector(BalloonFirstPage::onPressMenuStartGame));
+    // 加载按钮纹理
+    CCSpriteFrameCache* pSpriteFrameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
+    pSpriteFrameCache->addSpriteFramesWithFile("texture/menuItems/menuItems.plist");
     
-    CCMenuItemImage* pMenuItemShop = CCMenuItemImage::create("texture/menuItems/menu_item_shop.png", "texture/menuItems/menu_item_shop.png", this, menu_selector(BalloonFirstPage::onPressMenuShop));
+    // CCMenuItemImage* pMenuItemStart = CCMenuItemImage::create("texture/menuItems/menu_item_start.png", "texture/menuItems/menu_item_start.png", this, menu_selector(BalloonFirstPage::onPressMenuStartGame));
     
-    CCMenuItemImage* pMenuItemOptions = CCMenuItemImage::create("texture/menuItems/menu_item_options.png", "texture/menuItems/menu_item_options.png", this, menu_selector(BalloonFirstPage::onPressMenuOptions));
+    CCMenuItemImage* pMenuItemStart = CCMenuItemImage::create();
+    pMenuItemStart->setNormalSpriteFrame(pSpriteFrameCache->spriteFrameByName("menu_item_start.png"));
+    pMenuItemStart->setTarget(this, menu_selector(BalloonFirstPage::onPressMenuStartGame));
+    
+    // CCMenuItemImage* pMenuItemShop = CCMenuItemImage::create("texture/menuItems/menu_item_shop.png", "texture/menuItems/menu_item_shop.png", this, menu_selector(BalloonFirstPage::onPressMenuShop));
+    
+    CCMenuItemImage* pMenuItemShop = CCMenuItemImage::create();
+    pMenuItemShop->setNormalSpriteFrame(pSpriteFrameCache->spriteFrameByName("menu_item_shop.png"));
+    pMenuItemShop->setTarget(this, menu_selector(BalloonFirstPage::onPressMenuShop));
+    
+    // CCMenuItemImage* pMenuItemOptions = CCMenuItemImage::create("texture/menuItems/menu_item_options.png", "texture/menuItems/menu_item_options.png", this, menu_selector(BalloonFirstPage::onPressMenuOptions));
+    
+    CCMenuItemImage* pMenuItemOptions = CCMenuItemImage::create();
+    pMenuItemOptions->setNormalSpriteFrame(pSpriteFrameCache->spriteFrameByName("menu_item_options.png"));
+    pMenuItemOptions->setTarget(this, menu_selector(BalloonFirstPage::onPressMenuOptions));
     
     pMenuItemStart->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, 10.0f), CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, -10.0f), NULL)));
     pMenuItemShop->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, 10.0f), CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, -10.0f), NULL)));

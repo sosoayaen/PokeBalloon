@@ -76,10 +76,12 @@ void CloudManager::addRandomCloud()
 	if (!m_bInited) return;
 
 	// 随机得到云朵的ID
-	CCString* pStrCloudTextureName = CCString::createWithFormat("texture/cloud/cloud_%d.png", rand()%8+1);
+	// CCString* pStrCloudTextureName = CCString::createWithFormat("texture/cloud/cloud_%d.png", rand()%8+1);
+	CCString* pStrCloudSpriteFrameName = CCString::createWithFormat("cloud_%d.png", rand()%8+1);
 
 	// 生成云朵对象
-	Cloud* pCloud = Cloud::create(pStrCloudTextureName->getCString());
+	// Cloud* pCloud = Cloud::create(pStrCloudTextureName->getCString());
+	Cloud* pCloud = Cloud::createWithSpriteFrameName(pStrCloudSpriteFrameName->getCString());
 
 	// 云朵的大小
     float fScale = (rand()%15 + 10) / 10.0f;

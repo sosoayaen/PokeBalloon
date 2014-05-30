@@ -433,8 +433,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<string>texture/resultBoard/new.png</string>
+									<string>texture/resultBoard/resultBoard.plist</string>
+									<string>new.png</string>
 								</array>
 							</dict>
 						</array>
@@ -529,8 +529,8 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string></string>
-											<string>texture/menuItems/menu_item_restart.png</string>
+											<string>texture/menuItems/menuItems.plist</string>
+											<string>menu_item_start.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -642,8 +642,8 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string></string>
-											<string>texture/menuItems/menu_item_return_main_menu.png</string>
+											<string>texture/menuItems/menuItems.plist</string>
+											<string>menu_item_return_main_menu.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -755,8 +755,8 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string></string>
-											<string>texture/menuItems/menu_item_shop.png</string>
+											<string>texture/menuItems/menuItems.plist</string>
+											<string>menu_item_shop.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -802,7 +802,7 @@
 								<key>value</key>
 								<array>
 									<real>50</real>
-									<real>-39.0625</real>
+									<real>-54.054054260253906</real>
 									<integer>4</integer>
 								</array>
 							</dict>
@@ -970,8 +970,8 @@
 										<string>SpriteFrame</string>
 										<key>value</key>
 										<array>
-											<string></string>
-											<string>texture/menuItems/menu_item_share.png</string>
+											<string>texture/menuItems/menuItems.plist</string>
+											<string>menu_item_share.png</string>
 										</array>
 									</dict>
 									<dict>
@@ -1016,8 +1016,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>84.548614501953125</real>
-									<real>65.885414123535156</real>
+									<real>84.514923095703125</real>
+									<real>74.774772644042969</real>
 									<integer>4</integer>
 								</array>
 							</dict>
@@ -1137,8 +1137,8 @@
 						<string>SpriteFrame</string>
 						<key>value</key>
 						<array>
-							<string></string>
-							<string>texture/resultBoard/board.png</string>
+							<string>texture/resultBoard/resultBoard.plist</string>
+							<string>board.png</string>
 						</array>
 					</dict>
 				</array>

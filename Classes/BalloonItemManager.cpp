@@ -101,6 +101,29 @@ bool BalloonItemManager::appendBalloonItemWithItemId(BalloonItemId eID, const ch
 	return false;
 }
 
+bool BalloonItemManager::appendBalloonItemWithItemId(BalloonItemId eID, cocos2d::CCSpriteFrame* pSpriteFrame, unsigned long nCnts)
+{
+    
+	BalloonItem* pBalloonItem = NULL;
+	switch(eID)
+	{
+		case kBalloonItemId_Pumps:
+			pBalloonItem = BalloonItemClick::create(m_pDelegate, pSpriteFrame, nCnts);
+			if (pBalloonItem)
+			{
+				pBalloonItem->setItemId(eID);
+				return appendBalloonItem(pBalloonItem);
+			}
+			break;
+		case kBalloonItemId_AddMore:
+			break;
+        default:
+            break;
+	}
+
+	return false;
+}
+
 void BalloonItemManager::alignItems()
 {
     unsigned long nLoopCnts = 0;

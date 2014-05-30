@@ -55,6 +55,8 @@ public:
 	static Balloon* create(const char* pszFileName);
     
     static Balloon* create(const char* pszFileName, long lScore, BalloonType nType = kBalloonTypeNormal);
+    
+    static Balloon* create(cocos2d::CCSpriteFrame* pSpriteFrame, long lScore, BalloonType nType = kBalloonTypeNormal);
 
 	static Balloon* create(const char* pszFileName, const cocos2d::CCRect& rect);
 

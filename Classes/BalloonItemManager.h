@@ -44,6 +44,8 @@ public:
 	bool appendBalloonItem(BalloonItem* pBalloonItem);
 
 	bool appendBalloonItemWithItemId(BalloonItemId eID, const char* pszTextureFile, unsigned long nCnts);
+    
+	bool appendBalloonItemWithItemId(BalloonItemId eID, cocos2d::CCSpriteFrame* pSpriteFrame, unsigned long nCnts);
 
 	// 更新道具的位置，有可能道具持续效果消失，道具会被重新排列位置
 	// 一般每一帧都要调用，以确保位置的及时更新
