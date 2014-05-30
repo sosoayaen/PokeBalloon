@@ -53,11 +53,12 @@ void UMSocial2DX::shareSNS(CCDictionary* pDictData)
 		activityObj = methodInfo.env->CallStaticObjectMethod(methodInfo.classID, methodInfo.methodID);
 	}
 
-	isHave = JniHelper::getMethodInfo(methodInfo, m_strPackageName.c_str(), "showSNSBoard", "(Ljava/lang/String;)V");
+	isHave = JniHelper::getMethodInfo(methodInfo, m_strPackageName.c_str(), "showSNSBoard", "(Ljava/lang/String;Ljava/lang/String;)V");
 
 	if (isHave)
 	{
 		jstring jsContent = methodInfo.env->NewStringUTF(pDictData->valueForKey("shareText")->getCString());
-		methodInfo.env->CallVoidMethod(activityObj, methodInfo.methodID, jsContent);
+		jstring jsImagePath = methodInfo.env->NewStringUTF(pDictData->valueForKey("shareImage")->getCString());
+		methodInfo.env->CallVoidMethod(activityObj, methodInfo.methodID, jsContent, jsImagePath);
 	}
 }

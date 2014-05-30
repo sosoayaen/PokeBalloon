@@ -35,6 +35,7 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 
+import com.easyndk.classes.AndroidNDKHelper;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -69,6 +70,9 @@ public class PokeBalloon extends Cocos2dxActivity {
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		// 设置easyNDK
+		AndroidNDKHelper.SetNDKReciever(this);
 
 		// init ad view
 		mAdLayout = new LinearLayout(this);
@@ -178,8 +182,8 @@ public class PokeBalloon extends Cocos2dxActivity {
 
 						// 测试机器的UDID
 						AdRequest adRequest = new AdRequest.Builder()
-//								.addTestDevice(
-//										"F5471F6D983030F23BA3A3AD14941865")
+						// .addTestDevice(
+						// "F5471F6D983030F23BA3A3AD14941865")
 								.build();
 
 						// load AD
@@ -223,29 +227,36 @@ public class PokeBalloon extends Cocos2dxActivity {
 	 */
 	public void setUMengSocialAppKey(final String strAppKey) {
 		SocializeConstants.APPKEY = strAppKey;
-		
-		mUMSocialController.getConfig().removePlatform(SHARE_MEDIA.RENREN, SHARE_MEDIA.QZONE, SHARE_MEDIA.DOUBAN);
-		// mUMSocialController.getConfig().setPlatforms(SHARE_MEDIA.SINA, SHARE_MEDIA.SMS, SHARE_MEDIA.FACEBOOK, SHARE_MEDIA.TWITTER);
+
+		mUMSocialController.getConfig().removePlatform(SHARE_MEDIA.RENREN,
+				SHARE_MEDIA.QZONE, SHARE_MEDIA.DOUBAN);
+		// mUMSocialController.getConfig().setPlatforms(SHARE_MEDIA.SINA,
+		// SHARE_MEDIA.SMS, SHARE_MEDIA.FACEBOOK, SHARE_MEDIA.TWITTER);
 	}
 
 	/**
 	 * 显示社交分享面板
 	 * 
 	 * @param strShareContent
+	 *            分享内容
+	 * @param strImagePath
+	 *            分享图片
 	 */
-	public void showSNSBoard(final String strShareContent) {
-		
+	public void showSNSBoard(final String strShareContent,
+			final String strImagePath) {
+
 		this.runOnUiThread(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
 				// 设置分享内容
 				mUMSocialController.setShareContent(strShareContent);
 
-				// 设置分享图片
-				mUMSocialController.setShareMedia(new UMImage(mStaticActivity,
-						R.drawable.icon));
+				if (strImagePath.length() > 0) { // 设置分享图片
+					mUMSocialController.setShareMedia(new UMImage(
+							mStaticActivity, strImagePath));
+				}
 
 				// 打开分享面板
 				mUMSocialController.openShare(mStaticActivity, false);
