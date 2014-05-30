@@ -172,6 +172,8 @@ void Balloon::onEnter()
 
 void Balloon::updateDisplayDesc()
 {
+    // 数字的放大倍率，现在数字太小
+    float fScaleRate = 2.0f;
     CCString* pStrDesc = NULL;
     switch (m_eType)
     {
@@ -187,13 +189,15 @@ void Balloon::updateDisplayDesc()
         case kBalloonTypeAddTime:
             {
                 // 添加时钟标志，不需要绘制字体描述，所以直接返回
-                CCSprite* pSpriteClock = CCSprite::create("texture/balloon/balloon_time.png");
+                // CCSprite* pSpriteClock = CCSprite::create("texture/balloon/balloon_time.png");
+                CCSprite* pSpriteClock = CCSprite::createWithSpriteFrameName("balloon_time.png");
                 pSpriteClock->setPosition(ccpMult(ccpFromSize(getContentSize()), 0.5f));
                 addChild(pSpriteClock);
             }
             break;
         case kBalloonTypeAddBalloonScore:
             pStrDesc = ccs("?");
+            fScaleRate = 2.6f;
             break;
         default:
             // 默认是不显示文字
@@ -208,7 +212,7 @@ void Balloon::updateDisplayDesc()
         {
             m_pLabelBMFontDesc = CCLabelBMFont::create(m_strDisplayDesc.c_str(), "texture/fonts/font.fnt");
             m_pLabelBMFontDesc->setPosition(ccpMult(ccpFromSize(getContentSize()), 0.5f));
-            m_pLabelBMFontDesc->setScale(2.0f);
+            m_pLabelBMFontDesc->setScale(fScaleRate);
             addChild(m_pLabelBMFontDesc);
         }
         m_pLabelBMFontDesc->setCString(m_strDisplayDesc.c_str());
