@@ -167,7 +167,8 @@ std::string BalloonResultDialog::getSharedPictureFilePath()
     m_pMenuResult->setVisible(false);
     m_pMenuShare->setVisible(false);
     
-    CCRenderTexture* pTexture = CCRenderTexture::create(int(m_pSpriteResultBoard->getContentSize().width), int(m_pSpriteResultBoard->getContentSize().height));
+    CCSize size = m_pSpriteResultBoard->getContentSize();
+    CCRenderTexture* pTexture = CCRenderTexture::create(size.width, size.height, kCCTexture2DPixelFormat_RGBA8888);
     pTexture->begin();
     m_pSpriteResultBoard->visit();
     pTexture->end();
@@ -175,9 +176,9 @@ std::string BalloonResultDialog::getSharedPictureFilePath()
     m_pMenuResult->setVisible(true);
     m_pMenuShare->setVisible(true);
     
-    std::string strPath = CCFileUtils::sharedFileUtils()->getWritablePath() + "share.png";
-    if (pTexture->saveToFile(strPath.c_str(), kCCImageFormatPNG))
-        return strPath;
+    // std::string strPath = CCFileUtils::sharedFileUtils()->getWritablePath() + "share.png";
+    if (pTexture->saveToFile("share.png", kCCImageFormatPNG))
+        return CCFileUtils::sharedFileUtils()->getWritablePath() + "share.png";
     
     return "";
 }
