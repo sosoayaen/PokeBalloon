@@ -168,10 +168,23 @@ std::string BalloonResultDialog::getSharedPictureFilePath()
     m_pMenuShare->setVisible(false);
     
     CCSize size = m_pSpriteResultBoard->getContentSize();
+    
+    // 保存并设置需要裁剪的节点的图形的位置，和画板位置对齐
+    CCPoint pos = m_pSpriteResultBoard->getPosition();
+    CCPoint anchorPt = m_pSpriteResultBoard->getAnchorPoint();
+    m_pSpriteResultBoard->setPosition(CCPointZero);
+    m_pSpriteResultBoard->setAnchorPoint(CCPointZero);
+    
     CCRenderTexture* pTexture = CCRenderTexture::create(size.width, size.height, kCCTexture2DPixelFormat_RGBA8888);
+    pTexture->clear(0, 0, 0, 0);
+    
     pTexture->begin();
     m_pSpriteResultBoard->visit();
     pTexture->end();
+    
+    // 还原位置
+    m_pSpriteResultBoard->setPosition(pos);
+    m_pSpriteResultBoard->setAnchorPoint(anchorPt);
     
     m_pMenuResult->setVisible(true);
     m_pMenuShare->setVisible(true);
