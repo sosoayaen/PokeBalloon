@@ -5,6 +5,8 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 USING_NS_BAILIN_UTIL;
 
+#define SNS_SHARE_IMAGE_FILE_NAME "sns_share.png"
+
 BalloonResultDialog::~BalloonResultDialog()
 {
     CC_SAFE_RELEASE_NULL(m_pSpriteResultBoard);
@@ -189,9 +191,9 @@ std::string BalloonResultDialog::getSharedPictureFilePath()
     m_pMenuResult->setVisible(true);
     m_pMenuShare->setVisible(true);
     
-    // std::string strPath = CCFileUtils::sharedFileUtils()->getWritablePath() + "share.png";
-    if (pTexture->saveToFile("share.png", kCCImageFormatPNG))
-        return CCFileUtils::sharedFileUtils()->getWritablePath() + "share.png";
+    // 保存截图并返回图片路径
+    if (pTexture->saveToFile(SNS_SHARE_IMAGE_FILE_NAME, kCCImageFormatPNG))
+        return CCFileUtils::sharedFileUtils()->getWritablePath() + SNS_SHARE_IMAGE_FILE_NAME;
     
     return "";
 }
