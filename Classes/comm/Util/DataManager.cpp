@@ -209,8 +209,8 @@ const char* getLocalizableFileName()
 	const char * languageCode = getCurrentLanguageCode(CCApplication::sharedApplication()->getCurrentLanguage());
 	if (languageCode == NULL)
 	{
-		// 默认中文版本
-		languageCode = "zh";
+		// 默认英文版本
+		languageCode = "en";
 	}
 
 	CCString* strFile = CCString::createWithFormat("localizableString/stringData_%s.plist", languageCode);
@@ -227,7 +227,7 @@ const char* getLocalizableFileName()
 	}
 
 	// 默认中文语言包
-	return "localizableString/stringData_zh.plist";
+	return "localizableString/stringData_en.plist";
 }
 
 cocos2d::CCDictionary* bailin::util::DataManagerUtil::getLocaleStringData()
@@ -313,9 +313,9 @@ const char* bailin::util::DataManagerUtil::GetUTF8StringInDictionaryForServer( c
 		const char * languageCode = getCurrentLanguageCode(CCApplication::sharedApplication()->getCurrentLanguage());
 		if (languageCode == NULL)
 		{
-			languageCode = "zh";
+			languageCode = "en";
 		}
-		std::string localString = "localizableString/serverData_zh.plist";
+		std::string localString = "localizableString/serverData_en.plist";
 		CCString* strFile = CCString::createWithFormat("localizableString/serverData_%s.plist", languageCode);
 
 		if (strFile!=NULL)
