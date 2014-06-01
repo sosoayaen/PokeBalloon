@@ -31,6 +31,7 @@ public:
 		m_pMenuResult = NULL;
 		m_pSpriteNewFlag = NULL;
 		m_pSpriteResultBoard = NULL;
+        m_pSpriteStar = NULL;
 
 	}
 	~BalloonResultDialog();
@@ -75,6 +76,8 @@ private:
 	cocos2d::CCMenu* m_pMenuResult;
 	cocos2d::CCSprite* m_pSpriteNewFlag;
 	cocos2d::CCSprite* m_pSpriteResultBoard;
+    // 奖牌上的星星
+    cocos2d::CCSprite* m_pSpriteStar;
 
 public:
 	// Virtual Functions
@@ -82,7 +85,12 @@ public:
 	virtual void onEnter();
 	virtual void onExit();
 
-
+private:
+    // 初始化旋转的星星
+    void initRotateStar();
+    
+    // 星星切换位置
+    void changeStarPosition(cocos2d::CCNode* pNode);
 	
 public:
 	// Funcitons

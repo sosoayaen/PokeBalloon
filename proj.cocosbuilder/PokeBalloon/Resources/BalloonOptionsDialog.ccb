@@ -72,8 +72,8 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>3</real>
-									<real>3</real>
+									<real>2.5</real>
+									<real>2.5</real>
 									<true/>
 									<integer>0</integer>
 								</array>
@@ -93,6 +93,18 @@
 								<string>FntFile</string>
 								<key>value</key>
 								<string>texture/fonts/font.fnt</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>color</string>
+								<key>type</key>
+								<string>Color3</string>
+								<key>value</key>
+								<array>
+									<integer>255</integer>
+									<integer>168</integer>
+									<integer>0</integer>
+								</array>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -405,8 +417,8 @@
 								<string>ScaleLock</string>
 								<key>value</key>
 								<array>
-									<real>3</real>
-									<real>3</real>
+									<real>2.5</real>
+									<real>2.5</real>
 									<true/>
 									<integer>0</integer>
 								</array>
@@ -426,6 +438,18 @@
 								<string>FntFile</string>
 								<key>value</key>
 								<string>texture/fonts/font.fnt</string>
+							</dict>
+							<dict>
+								<key>name</key>
+								<string>color</string>
+								<key>type</key>
+								<string>Color3</string>
+								<key>value</key>
+								<array>
+									<integer>255</integer>
+									<integer>168</integer>
+									<integer>0</integer>
+								</array>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -837,6 +861,8 @@
 				<true/>
 			</dict>
 		</array>
+		<key>selected</key>
+		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>

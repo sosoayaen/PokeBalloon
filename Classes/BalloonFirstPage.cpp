@@ -142,31 +142,27 @@ void BalloonFirstPage::initMenu()
     CCSpriteFrameCache* pSpriteFrameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
     pSpriteFrameCache->addSpriteFramesWithFile("texture/menuItems/menuItems.plist");
     
-    // CCMenuItemImage* pMenuItemStart = CCMenuItemImage::create("texture/menuItems/menu_item_start.png", "texture/menuItems/menu_item_start.png", this, menu_selector(BalloonFirstPage::onPressMenuStartGame));
-    
     CCMenuItemImage* pMenuItemStart = CCMenuItemImage::create();
     pMenuItemStart->setNormalSpriteFrame(pSpriteFrameCache->spriteFrameByName("menu_item_start.png"));
     pMenuItemStart->setTarget(this, menu_selector(BalloonFirstPage::onPressMenuStartGame));
-    
-    // CCMenuItemImage* pMenuItemShop = CCMenuItemImage::create("texture/menuItems/menu_item_shop.png", "texture/menuItems/menu_item_shop.png", this, menu_selector(BalloonFirstPage::onPressMenuShop));
-    
-    CCMenuItemImage* pMenuItemShop = CCMenuItemImage::create();
-    pMenuItemShop->setNormalSpriteFrame(pSpriteFrameCache->spriteFrameByName("menu_item_shop.png"));
-    pMenuItemShop->setTarget(this, menu_selector(BalloonFirstPage::onPressMenuShop));
-    
-    // CCMenuItemImage* pMenuItemOptions = CCMenuItemImage::create("texture/menuItems/menu_item_options.png", "texture/menuItems/menu_item_options.png", this, menu_selector(BalloonFirstPage::onPressMenuOptions));
     
     CCMenuItemImage* pMenuItemOptions = CCMenuItemImage::create();
     pMenuItemOptions->setNormalSpriteFrame(pSpriteFrameCache->spriteFrameByName("menu_item_options.png"));
     pMenuItemOptions->setTarget(this, menu_selector(BalloonFirstPage::onPressMenuOptions));
     
     pMenuItemStart->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, 10.0f), CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, -10.0f), NULL)));
-    pMenuItemShop->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, 10.0f), CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, -10.0f), NULL)));
     pMenuItemOptions->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, 10.0f), CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, -10.0f), NULL)));
     
     m_pMenuMain->addChild(pMenuItemStart);
-    m_pMenuMain->addChild(pMenuItemShop);
     m_pMenuMain->addChild(pMenuItemOptions);
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    CCMenuItemImage* pMenuItemRankBoard = CCMenuItemImage::create();
+    pMenuItemRankBoard->setNormalSpriteFrame(pSpriteFrameCache->spriteFrameByName("menu_item_rank.png"));
+    pMenuItemRankBoard->setTarget(this, menu_selector(BalloonFirstPage::onPressMenuRankBoard));
+    pMenuItemRankBoard->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, 10.0f), CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, -10.0f), NULL)));
+    m_pMenuMain->addChild(pMenuItemRankBoard);
+#endif
     
     ControlUtil::sharedControlUtil()->SetMenuItemSelectedImageWithNormalImage(m_pMenuMain);
     
@@ -182,7 +178,7 @@ void BalloonFirstPage::onPressMenuStartGame(cocos2d::CCObject *pSender)
     CCDirector::sharedDirector()->pushScene(pScene);
 }
 
-void BalloonFirstPage::onPressMenuShop(cocos2d::CCObject *pSender)
+void BalloonFirstPage::onPressMenuRankBoard(cocos2d::CCObject *pSender)
 {
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
 

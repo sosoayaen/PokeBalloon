@@ -106,6 +106,8 @@ void BalloonResultDialog::onEnter()
     
     m_pMenuItemShare->runAction(CCRepeatForever::create(CCSequence::create(CCRotateBy::create(1.5f, 30.0f), CCRotateBy::create(1.5f, -30.0f), NULL)));
     m_pMenuItemShare->runAction(CCRepeatForever::create(CCSequence::create(CCMoveBy::create(2.7f, ccp(0, m_pMenuItemShare->getContentSize().height*0.3f)), CCMoveBy::create(2.5f, ccp(0, -m_pMenuItemShare->getContentSize().height*0.3f)), NULL)));
+    
+    initRotateStar();
 }
 
 void BalloonResultDialog::onExit()
@@ -138,6 +140,7 @@ bool BalloonResultDialog::onAssignCCBMemberVariable( CCObject* pTarget, const ch
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuResult", CCMenu*, this->m_pMenuResult);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteNewFlag", CCSprite*, this->m_pSpriteNewFlag);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteResultBoard", CCSprite*, this->m_pSpriteResultBoard);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteStar", CCSprite*, this->m_pSpriteStar);
 
 	return true;
 }
@@ -196,4 +199,29 @@ std::string BalloonResultDialog::getSharedPictureFilePath()
         return CCFileUtils::sharedFileUtils()->getWritablePath() + SNS_SHARE_IMAGE_FILE_NAME;
     
     return "";
+}
+
+void BalloonResultDialog::initRotateStar()
+{
+    m_pSpriteStar->stopAllActions();
+    float fDuration = 0.5f;
+    m_pSpriteStar->setScale(0.1f);
+    m_pSpriteStar->setOpacity(0);
+    
+    CCAction* pAction1 = CCRepeatForever::create(CCSequence::create(CCSpawn::createWithTwoActions(CCFadeIn::create(fDuration), CCScaleTo::create(fDuration, 2.0f)), CCSpawn::createWithTwoActions(CCFadeOut::create(fDuration), CCScaleTo::create(fDuration, 0.1f)), CCCallFuncN::create(this, callfuncN_selector(BalloonResultDialog::changeStarPosition)), CCDelayTime::create(fDuration), NULL));
+    
+    CCAction* pAction2 = CCRepeatForever::create(CCRotateBy::create(fDuration*2, 360.0f));
+    m_pSpriteStar->runAction(pAction1);
+    m_pSpriteStar->runAction(pAction2);
+}
+
+void BalloonResultDialog::changeStarPosition(cocos2d::CCNode *pNode)
+{
+    if (pNode)
+    {
+        // 随机20%到80%的X轴
+        float width = pNode->getParent()->getContentSize().width;
+        
+        pNode->setPositionX(((rand()%6 + 2) / 10.0f) * width);
+    }
 }
