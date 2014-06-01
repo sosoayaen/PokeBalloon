@@ -3,14 +3,13 @@
 #include "BalloonSoundManager.h"
 #include "UMSocial2DX.h"
 #include "bailinUtil.h"
+#include "Balloon_macro.h"
 
 #include "BalloonOptionsDialog.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #include "GameKitHelper2dx.h"
 #endif
-
-#define OPT_MUSIC_OFF "opt_MusicOFF"
 
 USING_NS_CC;
 USING_NS_CC_EXT;

@@ -46,7 +46,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     UMSocial2DX::setAppKey("5352425256240b09f407dee2");
 
 	// 设置iOS广告ID
-    pGADInstance->init("ca-app-pub-9727130637201516/8034810581");
+    pGADInstance->init("ca-app-pub-4946557086550003/5403608979");
 
 #	elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #       ifdef ENABLE_UMENG_DATA
@@ -55,7 +55,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     UMSocial2DX::setAppKey("535242b756240b0a0506ca56", JNI_CLASS);
 	
 	// 设置Android广告ID以及Android对应的包名
-    pGADInstance->init("ca-app-pub-9727130637201516/7662720589", JNI_CLASS);
+    pGADInstance->init("ca-app-pub-4946557086550003/8357075374", JNI_CLASS);
 #	endif
 
 #   ifdef ENABLE_UMENG_DATA
