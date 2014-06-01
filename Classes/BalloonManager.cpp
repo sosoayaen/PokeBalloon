@@ -183,27 +183,27 @@ void BalloonManager::addRandomBalloon()
             nValue = 2;
             nType = kBalloonTypeMulti;
         }
-        else if (nRate > 85)
+        else if (nRate > 90)
         {
             // 道具气球出现概率为10%
             nType = kBalloonTypeAddBalloonScore;
             nValue = rand()%5 + 1; // 每按一次加1分
         }
-        else if (nRate > 80)
+        else if (nRate > 87)
         {
-            // 除二出现的概率为5%
+            // 除二出现的概率为2%
             nValue = 2;
             nType = kBalloonTypeDiv;
         }
-        else if (nRate > 70)
+        else if (nRate > 82)
         {
             // 时钟出现的概率为5%
             nValue = 5; // 5秒
             nType = kBalloonTypeAddTime;
         }
-        else if (nRate > 40)
+        else if (nRate > 62)
         {
-            // 30%概率出现负分
+            // 20%概率出现负分
             nValue *= -1;
         }
         

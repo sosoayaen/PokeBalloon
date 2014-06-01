@@ -16,7 +16,6 @@ USING_NS_BAILIN_UTIL;
 
 #define JNI_CLASS "com/wardrums/pokeballoon/PokeBalloon"
 
-
 using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()

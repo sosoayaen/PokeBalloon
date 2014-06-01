@@ -15,7 +15,7 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 USING_NS_BAILIN_UTIL;
 
-#define BALLOON_SHOW_RATE    18     // 气球出现的概率，10表示1%，50就是5%
+#define BALLOON_SHOW_RATE    40     // 气球出现的概率，10表示1%，50就是5%
 #define CLOUD_SHOW_RATE      5
 #define DEFAULT_TIME         30
 
