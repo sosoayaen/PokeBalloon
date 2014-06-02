@@ -310,17 +310,48 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
         case kBalloonTypeAddBalloon:
             break;
         case kBalloonTypeFrozen:
+            pBalloon->explosive();
+            // 冻结屏幕上的所有气球
+            m_BalloonManager.setAllBalloonSpeedY(1.5f);
             break;
 		case kBalloonTypeGiant:
+            if (pBalloon->getBalloonClickCnt() == pBalloon->getBalloonClickableCnt())
+            {
+                pBalloon->explosive();
+                // 根据对应的气球分数增加到总分上
+                if (!pDMU->SetSecurityData(SECURITY_SCORE, &m_lTotalScore, pBalloon->getBalloonScore()))
+                {
+                    m_bCheated = true;
+                    CCMessageBox("Cheat!!!", "Warnning");
+                    m_lTotalScore = 0;
+                    return;
+                }
+                
+                // m_lTotalScore += pBalloon->getBalloonScore();
+                if (m_lTotalScore < 0)
+                {
+                    m_lTotalScore = 0;
+                    pDMU->SetSecurityCode(SECURITY_SCORE, crypto::Crc32(&m_lTotalScore, sizeof(m_lTotalScore)));
+                }
+                updateScore();
+            }
+            else
+            {
+                pBalloon->setScale(pBalloon->getScale()*1.1f);
+                BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
+            }
+            
 			break;
 		case kBalloonTypeHurricane:
 			break;
 		case kBalloonTypeReverse:
+            pBalloon->explosive();
+            // 把屏幕上的所有气球分数乘以对应的值
+            m_BalloonManager.multipleBalloonScore(pBalloon->getBalloonScore());
 			break;
         default:
             break;
     }
-    
 }
 
 void BalloonScene::onBalloonItemEffectTrigger(BalloonItem* pItem)

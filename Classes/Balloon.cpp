@@ -16,6 +16,8 @@ Balloon::Balloon():
     m_ulFrame(0),
     m_fSpeedX(0),
     m_fSpeedY(0),
+    m_nClickableCnt(1),
+    m_nClickCnt(0),
     m_fAcceleratedSpeedX(0),
     m_fAcceleratedSpeedY(0)
 {
@@ -196,8 +198,30 @@ void Balloon::updateDisplayDesc()
             }
             break;
         case kBalloonTypeAddBalloonScore:
-            pStrDesc = ccs("?");
-            fScaleRate = 2.6f;
+            // pStrDesc = ccs("?");
+            // fScaleRate = 2.6f;
+            {
+                CCSprite* pSprite = CCSprite::createWithSpriteFrameName("item_pump.png");
+                pSprite->setPosition(ccpMult(ccpFromSize(getContentSize()), 0.5f));
+                addChild(pSprite);
+            }
+            break;
+        case kBalloonTypeFrozen:
+            {
+                CCSprite* pSpriteFrozen = CCSprite::createWithSpriteFrameName("item_frozen.png");
+                pSpriteFrozen->setPosition(ccpMult(ccpFromSize(getContentSize()), 0.5f));
+                addChild(pSpriteFrozen);
+            }
+            break;
+        case kBalloonTypeReverse:
+            {
+                CCSprite* pSpriteReverse = CCSprite::createWithSpriteFrameName("item_reverse.png");
+                pSpriteReverse->setPosition(ccpMult(ccpFromSize(getContentSize()), 0.5f));
+                addChild(pSpriteReverse);
+            }
+            break;
+        case kBalloonTypeGiant:
+            pStrDesc = CCString::createWithFormat("%u/%u", getBalloonClickCnt(), getBalloonClickableCnt());
             break;
         default:
             // 默认是不显示文字

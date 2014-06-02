@@ -48,10 +48,6 @@ bool BalloonManager::getInitFlag()
 
 void BalloonManager::updatePosition()
 {
-	// 迭代气球数组，更新位置
-	// for (BalloonObjectList::iterator iter = m_BalloonObjectList.begin();
-	//	iter != m_BalloonObjectList.end();)
-	// {
     CCObject* pObj = NULL;
     CCARRAY_FOREACH_REVERSE(m_pLayerBalloonContainer->getChildren(), pObj)
     {
@@ -70,23 +66,13 @@ void BalloonManager::updatePosition()
 			{
 				pBalloon->removeFromParent();
 			}
-			// 从数组中移除对象
-			// iter = m_BalloonObjectList.erase(iter);
-			// continue;
 		}
-		// ++iter;
 	}
 }
 
 bool BalloonManager::hitTest(const cocos2d::CCRect& rect, cocos2d::CCSprite* pSprite /* = NULL */) 
 {
 	bool bRet = false;
-	// 迭代气球数组
-	// for (BalloonObjectList::reverse_iterator iter = m_BalloonObjectList.rbegin();
-	// 	iter != m_BalloonObjectList.rend();
-	// 	++iter)
-	// {
-	// 	Balloon* pBalloon = *iter;
 	CCObject* pObj = NULL;
 	CCARRAY_FOREACH_REVERSE(m_pLayerBalloonContainer->getChildren(), pObj)
 	{
@@ -109,18 +95,25 @@ bool BalloonManager::touchTest(const cocos2d::CCPoint point, cocos2d::CCSprite* 
 {
 	bool bRet = false;
 
-	// 迭代气球数组
-	// for (BalloonObjectList::reverse_iterator iter = m_BalloonObjectList.rbegin();
-	// 	iter != m_BalloonObjectList.rend();
-	// 	++iter)
-	// {
-	// 	Balloon* pBalloon = *iter;
 	CCObject* pObj = NULL;
 	CCARRAY_FOREACH_REVERSE(m_pLayerBalloonContainer->getChildren(), pObj)
 	{
         Balloon* pBalloon = dynamic_cast<Balloon*>(pObj);
 		if (pBalloon && pBalloon->isAlive() && pBalloon->touchTest(point))
 		{
+            // 点击次数加1
+            pBalloon->setBalloonClickCnt(pBalloon->getBalloonClickCnt() + 1);
+            
+            switch (pBalloon->getBalloonType())
+            {
+                case kBalloonTypeGiant:
+                    // 更新下气球的描述
+                    pBalloon->updateDisplayDesc();
+                    break;
+                    
+                default:
+                    break;
+            }
 		
 			if (m_pBalloonDelegate)
 				m_pBalloonDelegate->balloonTouchTestSuccess(pBalloon, pSprite);
@@ -172,6 +165,9 @@ void BalloonManager::addRandomBalloon()
         int nValue = rand()%3 + 1;
         BalloonType nType = kBalloonTypeNormal;
         int nBalloonStyle = rand()%4 + 1;
+        
+        // 默认可点击1下
+        unsigned int nClickableCnt = 1;
 
         // CCString* pStrBalloonName = CCString::createWithFormat("texture/balloon/balloon_%d_%d.png", nBalloonStyle, nBalloonIndex);
         CCString* pStrBalloonName = CCString::createWithFormat("balloon_%d_%d.png", nBalloonStyle, nBalloonIndex);
@@ -191,23 +187,39 @@ void BalloonManager::addRandomBalloon()
         }
         else if (nRate > 87)
         {
-            // 除二出现的概率为2%
+            // 除二出现的概率为3%
             nValue = 2;
             nType = kBalloonTypeDiv;
         }
         else if (nRate > 82)
         {
             // 时钟出现的概率为5%
-            nValue = 5; // 5秒
+            nValue = 3; // 3秒
             nType = kBalloonTypeAddTime;
         }
-        else if (nRate > 62)
+        else if (nRate > 80)
         {
-            // 20%概率出现负分
+            nValue = 3; // 3秒
+            nType = kBalloonTypeFrozen;
+        }
+        else if (nRate > 77)
+        {
+            nValue = -2; // 默认正负反向，数值为对应的倍数
+            nType = kBalloonTypeReverse;
+        }
+        else if (nRate > 75)
+        {
+            nValue = rand()%9 + 3; // 最多需要击打12下
+            nType = kBalloonTypeGiant;
+            nClickableCnt = nValue;
+        }
+        else if (nRate > 67)
+        {
+            // 10%概率出现负分
             nValue *= -1;
         }
         
-		// 设定随机缩放
+		// 设定随机缩放，80%到120%
 		float fScale = (rand()%4 + 8)*0.1f;
 
 		// 增加一个气球到屏幕
@@ -241,6 +253,9 @@ void BalloonManager::addRandomBalloon()
         
         // 给气球一个随机角度
         pBalloon->setRotation(rand()%30 - 15);
+        
+        // 设置可点击次数
+        pBalloon->setBalloonClickableCnt(nClickableCnt);
 
 		// m_BalloonObjectList.push_back(pBalloon);
 
@@ -292,6 +307,20 @@ void BalloonManager::addBalloonScoreWithValue(long nValue)
         {
             pBalloon->setBalloonScore(pBalloon->getBalloonScore() + nValue);
             pBalloon->updateDisplayDesc();
+        }
+    }
+}
+
+void BalloonManager::setAllBalloonSpeedY(float fSpeedY)
+{
+    CCObject* pObj = NULL;
+    
+    CCARRAY_FOREACH(m_pLayerBalloonContainer->getChildren(), pObj)
+    {
+        Balloon* pBalloon = dynamic_cast<Balloon*>(pObj);
+        if (pBalloon)
+        {
+            pBalloon->setSpeedY(fSpeedY);
         }
     }
 }

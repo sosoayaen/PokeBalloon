@@ -111,6 +111,11 @@ public:
      * @param
      */
     void addBalloonScoreWithValue(long nValue);
+    
+    /**
+     * @brief 设置当前屏幕上所有气球的Y轴移动分量
+     */
+    void setAllBalloonSpeedY(float fSpeedY);
 
 protected:
 	// protected functions

@@ -113,7 +113,7 @@
 				<key>customClass</key>
 				<string></string>
 				<key>displayName</key>
-				<string>CCMenu</string>
+				<string>CCMenu界面主菜单</string>
 				<key>memberVarAssignmentName</key>
 				<string>m_pMenuMain</string>
 				<key>memberVarAssignmentType</key>

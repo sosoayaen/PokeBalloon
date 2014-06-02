@@ -46,6 +46,10 @@ class Balloon : public cocos2d::CCSprite
     CC_SYNTHESIZE(cocos2d::ccColor4F, m_pBalloonColor4F, BalloonColor4F);
 	// 气球的效果的持续时间
 	CC_SYNTHESIZE(long, m_lLastTime, BalloonLastTime);
+	// 气球可点击的次数
+	CC_SYNTHESIZE(unsigned int, m_nClickableCnt, BalloonClickableCnt);
+	// 气球当前点击的次数
+	CC_SYNTHESIZE(unsigned int, m_nClickCnt, BalloonClickCnt);
 
 public:
     Balloon();
@@ -97,6 +101,7 @@ protected:
     cocos2d::CCLabelBMFont* m_pLabelBMFontDesc;
     
     std::string m_strDisplayDesc;
+    
     
 private:
     
