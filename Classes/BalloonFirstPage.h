@@ -23,6 +23,7 @@ public:
 	{
 		m_pSpriteBackground = NULL;
 		m_pMenuMain = NULL;
+        m_pFireworks = NULL;
 
 	}
 	~BalloonFirstPage();
@@ -45,6 +46,8 @@ private:
 	cocos2d::CCSprite* m_pSpriteBackground;
 	cocos2d::CCMenu* m_pMenuMain;
 
+private:
+    cocos2d::CCParticleSystemQuad* m_pFireworks;
 
 public:
 	// Virtual Functions

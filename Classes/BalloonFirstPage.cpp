@@ -66,6 +66,15 @@ bool BalloonFirstPage::init()
 
 		pCCBReader->release();
         
+        // 顶部有Fireworks的粒子效果
+        if (!m_pFireworks)
+        {
+            m_pFireworks = CCParticleSystemQuad::create("particles/fireworksMainBoard.plist");
+            CCSize size = CCDirector::sharedDirector()->getWinSize();
+            m_pFireworks->setPosition(ccp(size.width*0.5f, size.height));
+            m_pMenuMain->getParent()->addChild(m_pFireworks);
+        }
+        
         // 初始化按钮
         initMenu();
         
@@ -100,6 +109,9 @@ void BalloonFirstPage::onEnter()
     }
     
     m_pMenuMain->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.8f, ccpMult(ccpFromSize(getContentSize()), 0.5f))));
+    
+    m_pFireworks->stopSystem();
+    m_pFireworks->resetSystem();
 }
 
 void BalloonFirstPage::onExit()
@@ -168,6 +180,8 @@ void BalloonFirstPage::initMenu()
     m_pMenuMain->alignItemsVerticallyWithPadding(pMenuItemOptions->getContentSize().height);
     
     m_pMenuMain->setPosition(ccp(getContentSize().width*0.5f, getContentSize().height*1.5f));
+    
+    m_pMenuMain->setZOrder(100);
 }
 
 void BalloonFirstPage::onPressMenuStartGame(cocos2d::CCObject *pSender)
