@@ -71,7 +71,7 @@ bool BalloonFirstPage::init()
         {
             m_pFireworks = CCParticleSystemQuad::create("particles/fireworksMainBoard.plist");
             CCSize size = CCDirector::sharedDirector()->getWinSize();
-            m_pFireworks->setPosition(ccp(size.width*0.5f, size.height));
+            m_pFireworks->setPosition(ccp(size.width*0.5f, size.height * 1.05f));
             m_pMenuMain->getParent()->addChild(m_pFireworks);
         }
         
@@ -108,7 +108,9 @@ void BalloonFirstPage::onEnter()
         SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
     }
     
-    m_pMenuMain->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.8f, ccpMult(ccpFromSize(getContentSize()), 0.5f))));
+    // m_pMenuMain->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.8f, ccpMult(ccpFromSize(getContentSize()), 0.5f))));
+    // 移动到屏幕偏下的位置，给标题留位置
+    m_pMenuMain->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.8f, ccp(getContentSize().width*0.5f, getContentSize().height*0.4f))));
     
     m_pFireworks->stopSystem();
     m_pFireworks->resetSystem();
@@ -177,7 +179,7 @@ void BalloonFirstPage::initMenu()
     
     ControlUtil::sharedControlUtil()->SetMenuItemSelectedImageWithNormalImage(m_pMenuMain);
     
-    m_pMenuMain->alignItemsVerticallyWithPadding(pMenuItemOptions->getContentSize().height);
+    m_pMenuMain->alignItemsVerticallyWithPadding(pMenuItemOptions->getContentSize().height*0.5f);
     
     m_pMenuMain->setPosition(ccp(getContentSize().width*0.5f, getContentSize().height*1.5f));
     

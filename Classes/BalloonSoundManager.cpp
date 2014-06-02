@@ -75,7 +75,8 @@ void BalloonSoundManager::playEffectPushBalloon()
 void BalloonSoundManager::playBackgroundMusic(int soundId)
 {
     const char* pszBackgroundSoundName = NULL;
-    switch (soundId) {
+    switch (soundId)
+    {
         case SOUND_BACKGROUND_AFTER_SCHOOL:
             pszBackgroundSoundName = SOUND_BACKGROUND_AFTER_SCHOOL_FILE;
             break;
