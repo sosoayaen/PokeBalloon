@@ -47,6 +47,7 @@ bool BalloonScene::init()
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/balloon/balloon.plist");
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/items/items.plist");
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/menuItems/menuItems.plist");
+        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/balloonEffect/balloon_effect_frozen.plist");
         
 		// 加载ccbi
 		CCNodeLoaderLibrary* pLoaderLib = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
@@ -312,6 +313,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
         case kBalloonTypeFrozen:
             pBalloon->explosive();
             // 冻结屏幕上的所有气球
+            m_BalloonManager.setAllBalloonEffect(kBalloonEffectFrozen);
             m_BalloonManager.setAllBalloonSpeedY(1.5f);
             break;
 		case kBalloonTypeGiant:

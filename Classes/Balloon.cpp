@@ -10,6 +10,7 @@ USING_NS_CC;
 
 Balloon::Balloon():
     m_eType(kBalloonTypeNormal),
+    m_nBalloonSets(0),
     m_lLastTime(0),
 	m_lScore(1),
 	m_bAlive(true),
@@ -241,4 +242,28 @@ void Balloon::updateDisplayDesc()
         }
         m_pLabelBMFontDesc->setCString(m_strDisplayDesc.c_str());
     }
+}
+
+void Balloon::setBalloonEffect(BalloonEffect effect)
+{
+    CCSprite* pSpriteEffect = NULL;
+    
+    switch (effect) {
+        case kBalloonEffectFrozen:
+            pSpriteEffect = CCSprite::createWithSpriteFrameName(CCString::createWithFormat("balloon_effect_frozen_%d.png", getBalloonSets())->getCString());
+            break;
+            
+        default:
+            break;
+    }
+    
+    if (pSpriteEffect)
+    {
+        pSpriteEffect->setAnchorPoint(ccp(0.5f, 0));
+        pSpriteEffect->setPosition(ccp(getContentSize().width*0.5f, 0));
+        // 放到最下层
+        // pSpriteEffect->setZOrder(-100);
+        addChild(pSpriteEffect);
+    }
+    
 }

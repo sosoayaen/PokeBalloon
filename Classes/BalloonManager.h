@@ -116,6 +116,11 @@ public:
      * @brief 设置当前屏幕上所有气球的Y轴移动分量
      */
     void setAllBalloonSpeedY(float fSpeedY);
+    
+    /**
+     * @brief 设置当前道具的效果
+     */
+    void setAllBalloonEffect(BalloonEffect effect);
 
 protected:
 	// protected functions

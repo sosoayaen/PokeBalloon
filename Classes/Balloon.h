@@ -26,6 +26,12 @@ enum BalloonType
     kBalloonTypeReverse,            // 正负号转换，分数和持续时间无效
 };
 
+enum BalloonEffect
+{
+    kBalloonEffectNone = 0,
+    kBalloonEffectFrozen,       // 冰冻效果
+};
+
 class Balloon : public cocos2d::CCSprite
 {
 	// 气球的类型
@@ -50,6 +56,8 @@ class Balloon : public cocos2d::CCSprite
 	CC_SYNTHESIZE(unsigned int, m_nClickableCnt, BalloonClickableCnt);
 	// 气球当前点击的次数
 	CC_SYNTHESIZE(unsigned int, m_nClickCnt, BalloonClickCnt);
+    // 气球的套图号
+    CC_SYNTHESIZE(unsigned int, m_nBalloonSets, BalloonSets);
 
 public:
     Balloon();
@@ -76,6 +84,9 @@ public:
 
 	// 气球爆炸效果
 	void explosive();
+    
+    // 设置
+    void setBalloonEffect(BalloonEffect effect);
 
 	/**
 	 * @brief 碰撞检测
