@@ -48,6 +48,7 @@ public:
         m_pResultDialog = NULL;
         m_pPauseDialog = NULL;
         m_pMenuPause = NULL;
+        m_pSpriteScoreBar = NULL;
         m_bCheated = false;
         
         // ×¢²á¼àÌý¶ÔÏó
@@ -107,6 +108,8 @@ private:
     cocos2d::CCSprite* m_pSpriteBackground;
     
     cocos2d::CCMenu* m_pMenuPause;
+    
+    cocos2d::CCSprite* m_pSpriteScoreBar;
 
     BalloonResultDialog* m_pResultDialog;
     

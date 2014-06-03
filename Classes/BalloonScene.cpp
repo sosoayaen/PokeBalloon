@@ -98,6 +98,8 @@ bool BalloonScene::init()
         // 初始化道具管理类
         if (!m_BalloonItemManager.getInitFlag())
             m_BalloonItemManager.init(this, m_pLayerItems);
+        // 设置点击和持续性道具的显示位置
+        m_BalloonItemManager.setClickItemPosition(m_pSpriteScoreBar->getPosition());
         
         m_pSpriteBalloonModel->setVisible(false);
         
@@ -198,6 +200,7 @@ bool BalloonScene::onAssignCCBMemberVariable( CCObject* pTarget, const char* pMe
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLayerItems", CCLayer*, this->m_pLayerItems);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteBackground", CCSprite*, this->m_pSpriteBackground);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuPause", CCMenu*, this->m_pMenuPause);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteScoreBar", CCSprite*, this->m_pSpriteScoreBar);
 
 	return true;
 }
@@ -305,7 +308,12 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             pBalloon->explosive();
             // 屏幕出现打气筒按钮，并且设置按钮的小时时间
             // m_BalloonItemManager.appendBalloonItemWithItemId(kBalloonItemId_Pumps, "texture/items/item_pump.png", pBalloon->getBalloonScore());
-            m_BalloonItemManager.appendBalloonItemWithItemId(kBalloonItemId_Pumps, CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("item_pump.png"), pBalloon->getBalloonScore());
+            // m_BalloonItemManager.appendBalloonItemWithItemId(kBalloonItemId_Pumps, CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("item_pump.png"), pBalloon->getBalloonScore());
+            {
+                BalloonItemClick* pBalloonItem = BalloonItemClick::create(this, CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("item_pump.png"), pBalloon->getBalloonScore());
+                
+                m_BalloonItemManager.setScreenBalloonItem(pBalloonItem);
+            }
             
             break;
         case kBalloonTypeAddBalloon:
@@ -373,7 +381,7 @@ void BalloonScene::onBalloonItemAfterDisappear(BalloonItem* pItem)
 {
     CCLOG("BalloonScene::onBalloonItemAfterDisappear(BalloonItem* pItem), called...");
     // 有道具移除需要重新排列
-    m_BalloonItemManager.alignItems();
+    // m_BalloonItemManager.alignItems();
 }
 
 void BalloonScene::keyBackClicked( void )

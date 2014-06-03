@@ -24,6 +24,9 @@
 
 class BalloonItemManager
 {
+    // 可点击道具的位置
+    CC_SYNTHESIZE(cocos2d::CCPoint, m_posClickItem, ClickItemPosition);
+    
 public:
 	BalloonItemManager();
 	~BalloonItemManager();
@@ -38,6 +41,7 @@ public:
 	// bool productItemWithItemType(BalloonItemType eType);
 
 	/**
+     * @desperate 这里的方法暂时不用，往屏幕上添加多个排序的道具可以使用次方法
 	 * @brief 在最后面添加一个道具
 	 * @param pBalloonItem 外面创建好的道具对象
 	 */
@@ -46,6 +50,16 @@ public:
 	bool appendBalloonItemWithItemId(BalloonItemId eID, const char* pszTextureFile, unsigned long nCnts);
     
 	bool appendBalloonItemWithItemId(BalloonItemId eID, cocos2d::CCSpriteFrame* pSpriteFrame, unsigned long nCnts);
+    
+    /**
+     * @brief 屏幕上只允许有一个道具，覆盖
+     *
+     */
+    bool setScreenBalloonItem(BalloonItem* pBalloonItem);
+    
+	bool setScreenBalloonItemWithItemId(BalloonItemId eID, const char* pszTextureFile, unsigned long nCnts);
+    
+	bool setScreenBalloonItemWithItemId(BalloonItemId eID, cocos2d::CCSpriteFrame* pSpriteFrame, unsigned long nCnts);
 
 	// 更新道具的位置，有可能道具持续效果消失，道具会被重新排列位置
 	// 一般每一帧都要调用，以确保位置的及时更新
@@ -66,6 +80,7 @@ public:
         }
     }
 
+    // @desperate
 	// 排列内部元素
 	void alignItems();
 protected:

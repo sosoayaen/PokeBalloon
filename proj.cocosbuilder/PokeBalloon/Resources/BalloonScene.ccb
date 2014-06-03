@@ -261,75 +261,6 @@
 			</dict>
 			<dict>
 				<key>baseClass</key>
-				<string>CCLayer</string>
-				<key>children</key>
-				<array/>
-				<key>customClass</key>
-				<string></string>
-				<key>displayName</key>
-				<string>CCLayer道具层</string>
-				<key>memberVarAssignmentName</key>
-				<string>m_pLayerItems</string>
-				<key>memberVarAssignmentType</key>
-				<integer>2</integer>
-				<key>properties</key>
-				<array>
-					<dict>
-						<key>name</key>
-						<string>anchorPoint</string>
-						<key>type</key>
-						<string>Point</string>
-						<key>value</key>
-						<array>
-							<real>0.5</real>
-							<real>0.5</real>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>scale</string>
-						<key>type</key>
-						<string>ScaleLock</string>
-						<key>value</key>
-						<array>
-							<real>1</real>
-							<real>1</real>
-							<false/>
-							<integer>0</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>ignoreAnchorPointForPosition</string>
-						<key>type</key>
-						<string>Check</string>
-						<key>value</key>
-						<true/>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>touchEnabled</string>
-						<key>platform</key>
-						<string>iOS</string>
-						<key>type</key>
-						<string>Check</string>
-						<key>value</key>
-						<true/>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>mouseEnabled</string>
-						<key>platform</key>
-						<string>Mac</string>
-						<key>type</key>
-						<string>Check</string>
-						<key>value</key>
-						<true/>
-					</dict>
-				</array>
-			</dict>
-			<dict>
-				<key>baseClass</key>
 				<string>CCSprite</string>
 				<key>children</key>
 				<array>
@@ -469,7 +400,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>10.9375</real>
+									<real>7.8125</real>
 									<real>50</real>
 									<integer>4</integer>
 								</array>
@@ -550,7 +481,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>23.75</real>
+									<real>17.5</real>
 									<real>50</real>
 									<integer>4</integer>
 								</array>
@@ -622,7 +553,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>29.53125</real>
+									<real>21.71875</real>
 									<real>50</real>
 									<integer>4</integer>
 								</array>
@@ -712,7 +643,7 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>95.1300048828125</real>
+									<real>96.40625</real>
 									<real>50</real>
 									<integer>4</integer>
 								</array>
@@ -786,9 +717,9 @@
 				<key>displayName</key>
 				<string>CCSprite底部分数条</string>
 				<key>memberVarAssignmentName</key>
-				<string></string>
+				<string>m_pSpriteScoreBar</string>
 				<key>memberVarAssignmentType</key>
-				<integer>0</integer>
+				<integer>2</integer>
 				<key>properties</key>
 				<array>
 					<dict>
@@ -847,6 +778,77 @@
 						</array>
 					</dict>
 				</array>
+			</dict>
+			<dict>
+				<key>baseClass</key>
+				<string>CCLayer</string>
+				<key>children</key>
+				<array/>
+				<key>customClass</key>
+				<string></string>
+				<key>displayName</key>
+				<string>CCLayer道具层</string>
+				<key>memberVarAssignmentName</key>
+				<string>m_pLayerItems</string>
+				<key>memberVarAssignmentType</key>
+				<integer>2</integer>
+				<key>properties</key>
+				<array>
+					<dict>
+						<key>name</key>
+						<string>anchorPoint</string>
+						<key>type</key>
+						<string>Point</string>
+						<key>value</key>
+						<array>
+							<real>0.5</real>
+							<real>0.5</real>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>scale</string>
+						<key>type</key>
+						<string>ScaleLock</string>
+						<key>value</key>
+						<array>
+							<real>1</real>
+							<real>1</real>
+							<false/>
+							<integer>0</integer>
+						</array>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>ignoreAnchorPointForPosition</string>
+						<key>type</key>
+						<string>Check</string>
+						<key>value</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>touchEnabled</string>
+						<key>platform</key>
+						<string>iOS</string>
+						<key>type</key>
+						<string>Check</string>
+						<key>value</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>mouseEnabled</string>
+						<key>platform</key>
+						<string>Mac</string>
+						<key>type</key>
+						<string>Check</string>
+						<key>value</key>
+						<true/>
+					</dict>
+				</array>
+				<key>selected</key>
+				<true/>
 			</dict>
 		</array>
 		<key>customClass</key>

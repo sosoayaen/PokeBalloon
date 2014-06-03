@@ -20,8 +20,12 @@
 
 USING_NS_CC;
 
+// 单个道具在层中的tagid
+#define SINGLE_ITEM_TAG 1000
+
 BalloonItemManager::BalloonItemManager():
 	m_bInited(false),
+    m_posClickItem(CCPointZero),
 	m_pLayerItemContainer(NULL),
 	m_pDelegate(NULL)
 {
@@ -30,7 +34,6 @@ BalloonItemManager::BalloonItemManager():
 
 BalloonItemManager::~BalloonItemManager()
 {
-
 }
 
 bool BalloonItemManager::init(BalloonItemDelegate* pDelegate, cocos2d::CCLayer* pLayerItemContainer)
@@ -70,6 +73,7 @@ bool BalloonItemManager::appendBalloonItem(BalloonItem* pBalloonItem)
 	{
 		pBalloonItem->setBalloonItemDelegate(m_pDelegate);
 	}
+    
 	// 把道具添加到道具层
 	m_pLayerItemContainer->addChild(pBalloonItem);
 
@@ -100,6 +104,7 @@ bool BalloonItemManager::appendBalloonItemWithItemId(BalloonItemId eID, const ch
 
 	return false;
 }
+
 
 bool BalloonItemManager::appendBalloonItemWithItemId(BalloonItemId eID, cocos2d::CCSpriteFrame* pSpriteFrame, unsigned long nCnts)
 {
@@ -165,4 +170,50 @@ void BalloonItemManager::alignItems()
             nLoopCnts++;
 		}
 	}
+}
+
+bool BalloonItemManager::setScreenBalloonItem(BalloonItem *pBalloonItem)
+{
+	if (!pBalloonItem || !m_bInited || !m_pDelegate || !m_pLayerItemContainer) return false;
+
+	if (!pBalloonItem->getBalloonItemDelegate())
+	{
+		pBalloonItem->setBalloonItemDelegate(m_pDelegate);
+	}
+    
+    // 设置位置
+    pBalloonItem->setPosition(m_posClickItem);
+    
+    pBalloonItem->setTag(SINGLE_ITEM_TAG);
+    
+    // 原有道具
+    BalloonItem* pItem = dynamic_cast<BalloonItem*>(m_pLayerItemContainer->getChildByTag(SINGLE_ITEM_TAG));
+    
+    // 判断，当前道具是否存在
+    if (pItem)
+    {
+        if (pItem->getItemType() == pBalloonItem->getItemType())
+        {
+            // 判断，当前添加的道具是否和原有相同，如果相同择变成增益效果
+            pItem->extendEffect(pBalloonItem);
+        }
+        else
+        {
+            // 替换，先移除原有效果
+            pItem->getBalloonItemDelegate()->onBalloonItemBeforeDisappear(pItem);
+            
+            pItem->removeFromParent();
+            
+            pItem->getBalloonItemDelegate()->onBalloonItemAfterDisappear(pItem);
+            
+            m_pLayerItemContainer->addChild(pBalloonItem);
+        }
+    }
+    else
+    {
+        // 把道具添加到道具层
+        m_pLayerItemContainer->addChild(pBalloonItem);
+    }
+
+	return true;
 }

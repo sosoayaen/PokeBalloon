@@ -189,7 +189,7 @@ void BalloonManager::addRandomBalloon()
         {
             // 除二出现的概率为3%
             nValue = 2;
-            nType = kBalloonTypeDiv;
+            nType = kBalloonTypeBoom;
         }
         else if (nRate > 82)
         {
@@ -209,9 +209,10 @@ void BalloonManager::addRandomBalloon()
         }
         else if (nRate > 75)
         {
-            nValue = rand()%9 + 3; // 最多需要击打12下
+            nClickableCnt = rand()%9 + 3; // 最多需要击打12下
             nType = kBalloonTypeGiant;
-            nClickableCnt = nValue;
+            // 得分为按下的2倍
+            nValue = 2*nClickableCnt;
         }
         else if (nRate > 67)
         {
@@ -256,6 +257,9 @@ void BalloonManager::addRandomBalloon()
         
         // 设置可点击次数
         pBalloon->setBalloonClickableCnt(nClickableCnt);
+        
+        // 设置气球的套ID
+        pBalloon->setBalloonSets(nBalloonStyle);
 
 		// m_BalloonObjectList.push_back(pBalloon);
 
@@ -321,6 +325,20 @@ void BalloonManager::setAllBalloonSpeedY(float fSpeedY)
         if (pBalloon)
         {
             pBalloon->setSpeedY(fSpeedY);
+        }
+    }
+}
+
+void BalloonManager::setAllBalloonEffect(BalloonEffect effect)
+{
+    CCObject* pObj = NULL;
+    
+    CCARRAY_FOREACH(m_pLayerBalloonContainer->getChildren(), pObj)
+    {
+        Balloon* pBalloon = dynamic_cast<Balloon*>(pObj);
+        if (pBalloon)
+        {
+            pBalloon->setBalloonEffect(effect);
         }
     }
 }

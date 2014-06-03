@@ -32,6 +32,16 @@ BalloonItem::BalloonItem():
     setAnchorPoint(ccp(0.5f, 0.5f));
 }
 
+void BalloonItem::onEnter()
+{
+    CCNode::onEnter();
+    
+    // 缩小到10%
+    this->setScale(0.1f);
+    // 弹出来
+    this->runAction(CCEaseBounceOut::create(CCScaleTo::create(0.5f, 1.0f)));
+}
+
 /**
  * 持续性道具类实现
  */
@@ -56,6 +66,11 @@ void BalloonItemDurative::pause()
 void BalloonItemDurative::resume()
 {
 
+}
+
+void BalloonItemDurative::extendEffect(BalloonItem *pBalloonItem)
+{
+    
 }
 
 /**
@@ -85,6 +100,7 @@ void BalloonItemClick::onPressMenuClick(CCObject* pSender)
 		m_pBalloonItemDelegate->onBalloonItemEffectTrigger(this);
         
         m_ulClickCounts--;
+        // 更新界面
         updateLeftCntsLabel();
         
 		// 点击次数递减
@@ -211,4 +227,18 @@ void BalloonItemClick::updateLeftCntsLabel()
         m_pSpriteIcon->addChild(m_pLabelBMFontCnts);
     }
     m_pLabelBMFontCnts->setCString(CCString::createWithFormat("%lu", m_ulClickCounts)->getCString());
+}
+
+void BalloonItemClick::extendEffect(BalloonItem *pBalloonItem)
+{
+    BalloonItemClick* pItem = dynamic_cast<BalloonItemClick*>(pBalloonItem);
+    if (pItem)
+    {
+        setClickCounts(getClickCounts() + pItem->getClickCounts());
+        // 更新次数列表
+        updateLeftCntsLabel();
+        
+        // 放大一下右上角数字
+        m_pLabelBMFontCnts->runAction(CCSequence::create(CCScaleTo::create(0.2f, 2.0f), CCScaleTo::create(0.2f, 1.0f)));
+    }
 }

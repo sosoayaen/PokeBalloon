@@ -87,6 +87,14 @@ public:
 
 	// 恢复道具动画
 	virtual void resume() = 0;
+    
+    /**
+     * @brief 叠加增益效果
+     * @param pBalloonItem 要叠加的效果
+     */
+    virtual void extendEffect(BalloonItem* pBalloonItem) = 0;
+    
+    virtual void onEnter();
 };
 
 /**
@@ -112,6 +120,8 @@ public:
 	virtual void pause();
 
 	virtual void resume();
+    
+    virtual void extendEffect(BalloonItem* pBalloonItem);
 };
 
 /**
@@ -150,6 +160,8 @@ public:
     
     virtual void onEnter();
 
+    virtual void extendEffect(BalloonItem* pBalloonItem);
+    
 public:
     void initClickMenu(cocos2d::CCSprite* pSpriteIcon);
 
