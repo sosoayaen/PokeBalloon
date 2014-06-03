@@ -267,7 +267,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             // 乘分气球，当前场景下的所有普通气球分数乘以对应的分值
             m_BalloonManager.multipleBalloonScore(pBalloon->getBalloonScore());
             break;
-        case kBalloonTypeDiv:
+        case kBalloonTypeBoom:
             pBalloon->explosive();
             // 除分气球
             if (!pDMU->CheckSecurityData(SECURITY_SCORE, m_lTotalScore))

@@ -186,8 +186,13 @@ void Balloon::updateDisplayDesc()
         case kBalloonTypeMulti:
             pStrDesc = CCString::createWithFormat("×%ld", getBalloonScore());
             break;
-        case kBalloonTypeDiv:
-            pStrDesc = CCString::createWithFormat("÷%ld", getBalloonScore());
+        case kBalloonTypeBoom:
+            {
+                // pStrDesc = CCString::createWithFormat("÷%ld", getBalloonScore());
+                CCSprite* pSprite = CCSprite::createWithSpriteFrameName("item_boom.png");
+                pSprite->setPosition(ccpMult(ccpFromSize(getContentSize()), 0.5f));
+                addChild(pSprite);
+            }
             break;
         case kBalloonTypeAddTime:
             {

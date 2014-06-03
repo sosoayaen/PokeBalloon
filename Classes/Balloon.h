@@ -16,7 +16,7 @@ enum BalloonType
 {
 	kBalloonTypeNormal = 0,         // 普通气球，分数即为点击后的得分，持续时间无效
     kBalloonTypeMulti,              // 乘分气球，分数即为乘数，持续时间无效
-    kBalloonTypeDiv,                // 除分气球，分数为被除数，持续时间无效
+    kBalloonTypeBoom,               // 除分气球，分数为被除数，持续时间无效
     kBalloonTypeAddTime,            // 增加时间的球，分数为增加的时间，单位为秒，持续时间无效
     kBalloonTypeAddBalloonScore,    // 给全屏的气球加分，给全屏增加的分值，持续时间为秒
     kBalloonTypeAddBalloon,         // 增加屏幕气球个数，分数为给全屏一次性增加的气球个数，持续时间为秒
