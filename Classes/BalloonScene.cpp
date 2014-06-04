@@ -116,14 +116,14 @@ void BalloonScene::resetData()
     
     m_bCheated = false;
     m_ulFrame = 0;
-    m_lTotalScore = 0;
+    m_llTotalScore = 0;
     
     m_lTimeLeft = DEFAULT_TIME;
     
     if (pDMU)
     {
         // 设定初始的校验值
-        pDMU->SetSecurityCode(SECURITY_SCORE, crypto::Crc32(&m_lTotalScore, sizeof(m_lTotalScore)));
+        pDMU->SetSecurityCode(SECURITY_SCORE, crypto::Crc32(&m_llTotalScore, sizeof(m_llTotalScore)));
         pDMU->SetSecurityCode(SECURITY_TIME, crypto::Crc32(&m_lTimeLeft, sizeof(m_lTimeLeft)));
     }
     
@@ -140,7 +140,7 @@ void BalloonScene::resetData()
 void BalloonScene::updateScore()
 {
     // m_pLabelTTFScore->setString(CCString::createWithFormat("Score: %ld", m_lTotalScore)->getCString());
-    m_pLabelBMFontScore->setCString(CCString::createWithFormat("%ld", m_lTotalScore)->getCString());
+    m_pLabelBMFontScore->setCString(CCString::createWithFormat("%lld", m_llTotalScore)->getCString());
 }
 
 void BalloonScene::updateTimeLeft()
@@ -247,19 +247,19 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
         case kBalloonTypeNormal:
             pBalloon->explosive();
             // 根据对应的气球分数增加到总分上
-            if (!pDMU->SetSecurityData(SECURITY_SCORE, &m_lTotalScore, pBalloon->getBalloonScore()))
+            if (!pDMU->SetSecurityData(SECURITY_SCORE, &m_llTotalScore, pBalloon->getBalloonScore()))
             {
                 m_bCheated = true;
                 CCMessageBox("Cheat!!!", "Warnning");
-                m_lTotalScore = 0;
+                m_llTotalScore = 0;
                 return;
             }
             
             // m_lTotalScore += pBalloon->getBalloonScore();
-            if (m_lTotalScore < 0)
+            if (m_llTotalScore < 0)
             {
-                m_lTotalScore = 0;
-                pDMU->SetSecurityCode(SECURITY_SCORE, crypto::Crc32(&m_lTotalScore, sizeof(m_lTotalScore)));
+                m_llTotalScore = 0;
+                pDMU->SetSecurityCode(SECURITY_SCORE, crypto::Crc32(&m_llTotalScore, sizeof(m_llTotalScore)));
             }
             updateScore();
             break;
@@ -271,21 +271,21 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
         case kBalloonTypeBoom:
             pBalloon->explosive();
             // 除分气球
-            if (!pDMU->CheckSecurityData(SECURITY_SCORE, m_lTotalScore))
+            if (!pDMU->CheckSecurityData(SECURITY_SCORE, m_llTotalScore))
             {
                 m_bCheated = true;
                 // 分数有问题
                 CCMessageBox("Cheat!!!", "Warnning");
-                m_lTotalScore = 0;
+                m_llTotalScore = 0;
                 return;
             }
                 
-            m_lTotalScore /= pBalloon->getBalloonScore();
-            if (m_lTotalScore < 0)
+            m_llTotalScore /= pBalloon->getBalloonScore();
+            if (m_llTotalScore < 0)
             {
-                m_lTotalScore = 0;
+                m_llTotalScore = 0;
             }
-            pDMU->SetSecurityCode(SECURITY_SCORE, crypto::Crc32(&m_lTotalScore, sizeof(m_lTotalScore)));
+            pDMU->SetSecurityCode(SECURITY_SCORE, crypto::Crc32(&m_llTotalScore, sizeof(m_llTotalScore)));
             updateScore();
             break;
         case kBalloonTypeAddTime:
@@ -327,19 +327,19 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             {
                 pBalloon->explosive();
                 // 根据对应的气球分数增加到总分上
-                if (!pDMU->SetSecurityData(SECURITY_SCORE, &m_lTotalScore, pBalloon->getBalloonScore()))
+                if (!pDMU->SetSecurityData(SECURITY_SCORE, &m_llTotalScore, pBalloon->getBalloonScore()))
                 {
                     m_bCheated = true;
                     CCMessageBox("Cheat!!!", "Warnning");
-                    m_lTotalScore = 0;
+                    m_llTotalScore = 0;
                     return;
                 }
                 
                 // m_lTotalScore += pBalloon->getBalloonScore();
-                if (m_lTotalScore < 0)
+                if (m_llTotalScore < 0)
                 {
-                    m_lTotalScore = 0;
-                    pDMU->SetSecurityCode(SECURITY_SCORE, crypto::Crc32(&m_lTotalScore, sizeof(m_lTotalScore)));
+                    m_llTotalScore = 0;
+                    pDMU->SetSecurityCode(SECURITY_SCORE, crypto::Crc32(&m_llTotalScore, sizeof(m_llTotalScore)));
                 }
                 updateScore();
             }
@@ -464,7 +464,7 @@ void BalloonScene::update(float dt)
             if (!m_bCheated)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
                 // 发送成绩到GameCenter
-                GameKitHelper2dx::sendScore(m_lTotalScore);
+                GameKitHelper2dx::uploadScore(m_llTotalScore);
 #endif
             // 弹出结算框
             showResultDialog();
@@ -482,17 +482,17 @@ void BalloonScene::showResultDialog()
     GAdMob2DX::sharedGAdMob2DX()->setVisible(true);
     
     // 设定面板分数
-    m_pResultDialog->setScore(m_lTotalScore);
+    m_pResultDialog->setScore(m_llTotalScore);
     CCString* pHighestScore = ccs(DataManagerUtil::sharedDataManagerUtil()->ReadDataFromLocal("HighestScore").c_str());
     long lHighestScore = pHighestScore->intValue();
     
-    bool bNewScore = lHighestScore < m_lTotalScore;
+    bool bNewScore = lHighestScore < m_llTotalScore;
     
     m_pResultDialog->setNewFlagVisible(bNewScore);
     
     if (bNewScore)
     {
-        lHighestScore = m_lTotalScore;
+        lHighestScore = m_llTotalScore;
         const std::string strHighestScore = CCString::createWithFormat("%ld", lHighestScore)->m_sString;
         DataManagerUtil::sharedDataManagerUtil()->WriteDataToLocal("HighestScore", strHighestScore);
     }
@@ -547,12 +547,12 @@ void BalloonScene::onPressMenuShare(cocos2d::CCObject *pSender)
     
     // pDictData->setObject(ccs("一起来【气球大作战】吧～伸出你的指头，释放你的压力"), "shareText");
     const char* pszKey = "high_score_shares";
-    if (m_lTotalScore < 1)
+    if (m_llTotalScore < 1)
     {
         // 采用单数模式的字符串
         pszKey = "high_score_share";
     }
-    pDictData->setObject(CCString::createWithFormat(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("share_section", pszKey), m_lTotalScore), "shareText");
+    pDictData->setObject(CCString::createWithFormat(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("share_section", pszKey), m_llTotalScore), "shareText");
     pDictData->setObject(ccs(strPath.c_str()), "shareImage");
     UMSocial2DX::shareSNS(pDictData);
 }

@@ -606,6 +606,21 @@ bool bailin::util::DataManagerUtil::CheckSecurityData(const char *pszKey, long l
     return nCrc32 == nCrc32Check;
 }
 
+bool bailin::util::DataManagerUtil::CheckSecurityData(const char *pszKey, long long llData)
+{
+    
+    unsigned long nCrc32Check = 0;
+    SecurityMap::iterator iter = m_mapSecurityData.find(string(pszKey));
+    if(iter != m_mapSecurityData.end())
+    {
+        nCrc32Check = iter->second;
+    }
+    
+    unsigned long nCrc32 = bailin::util::crypto::Crc32(&llData, sizeof(llData));
+    
+    return nCrc32 == nCrc32Check;
+}
+
 bool bailin::util::DataManagerUtil::SetSecurityData(const char *pszKey, long *plData, long lAddData)
 {
     bool bRet = CheckSecurityData(pszKey, *plData);
@@ -617,6 +632,24 @@ bool bailin::util::DataManagerUtil::SetSecurityData(const char *pszKey, long *pl
         
         // 回填校验值
         unsigned long nCheckCode = bailin::util::crypto::Crc32(plData, sizeof(long));
+        // m_pDictionarySecurityData->setObject(CCString::createWithFormat("%lu", nCheckCode), pszKey);
+        m_mapSecurityData[string(pszKey)] = nCheckCode;
+    }
+    
+    return bRet;
+}
+
+bool bailin::util::DataManagerUtil::SetSecurityData(const char *pszKey, long long *pllData, long long llAddData)
+{
+    bool bRet = CheckSecurityData(pszKey, *pllData);
+    
+    if (bRet)
+    {
+        // 附加值
+        *pllData += llAddData;
+        
+        // 回填校验值
+        unsigned long nCheckCode = bailin::util::crypto::Crc32(pllData, sizeof(long));
         // m_pDictionarySecurityData->setObject(CCString::createWithFormat("%lu", nCheckCode), pszKey);
         m_mapSecurityData[string(pszKey)] = nCheckCode;
     }

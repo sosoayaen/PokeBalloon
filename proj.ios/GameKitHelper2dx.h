@@ -25,8 +25,9 @@ public:
 	static void authGameCenter();
 
 	// 发送得分
-	static void sendScore(long ulScore);
+	static void uploadScore(long long llScore);
     
+    // 显示排行榜
     static void showLeaderboard();
 
 };

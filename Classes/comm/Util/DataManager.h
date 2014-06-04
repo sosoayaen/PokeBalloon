@@ -133,10 +133,14 @@ public:
      */
     bool SetSecurityData(const char* pszKey, long* plData, long lAddData);
     
+    bool SetSecurityData(const char* pszKey, long long* pllData, long long llAddData);
+    
     /**
      * @brief 检查对应数据是否正常，获取数据时校验
      */
     bool CheckSecurityData(const char* pszKey, long lData);
+    
+    bool CheckSecurityData(const char* pszKey, long long llData);
     
     /**
      * @brief 设置某个key对应的校验值，一般用于初始化的设定，避免误检测

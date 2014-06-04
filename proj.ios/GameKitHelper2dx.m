@@ -24,9 +24,9 @@ void GameKitHelper2dx::authGameCenter()
     [[GameKitHelper sharedGameKitHelper] authenticateLocalPlayer];
 }
 
-void GameKitHelper2dx::sendScore(long lScore)
+void GameKitHelper2dx::uploadScore(long long llScore)
 {
-    [[GameKitHelper sharedGameKitHelper] submitScore:lScore category:@"pokeballoon.maxscore"];
+    [[GameKitHelper sharedGameKitHelper] submitScore:llScore category:@"pokeballoon.maxscore"];
 }
 
 void GameKitHelper2dx::showLeaderboard()

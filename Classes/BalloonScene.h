@@ -55,7 +55,7 @@ public:
         m_BalloonManager.setBalloonDelegate(this);
         
         m_ulFrame = 0;
-        m_lTotalScore = 0;
+        m_llTotalScore = 0;
         m_lTimeLeft = 0;
         
 	}
@@ -132,7 +132,7 @@ private:
     BalloonItemManager m_BalloonItemManager;
     
     // 当前用户分数
-    long m_lTotalScore;
+    long long m_llTotalScore;
     
     // 当前剩余时间
     long m_lTimeLeft;
