@@ -17,8 +17,18 @@ public:
 	static void purgeBalloonSoundManager();
 
 public:
+    /**
+     * @brief 预加载音效
+     */
+    void preloadAllEffect();
+    
+    /**
+     * @brief 卸载所有音效
+     */
+    void unloadAllEffect();
+    
 	/**
-	 * @brief 
+	 * @brief 播放音效
 	 */
 	void playEffectExplosive();
     
@@ -29,7 +39,6 @@ public:
      * @param soundId 对应背景音乐的ID
      */
     void playBackgroundMusic(int soundId);
-    
     
     bool isBackgroundMusicPlaying();
 

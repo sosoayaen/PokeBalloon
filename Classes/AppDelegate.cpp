@@ -1,5 +1,6 @@
 #include "AppDelegate.h"
 #include "SimpleAudioEngine.h"
+#include "BalloonSoundManager.h"
 #include "CompanyPage.h"
 #include "BalloonFirstPage.h"
 #include "UMSocial2DX.h"
@@ -118,6 +119,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     // run
     pDirector->runWithScene(pScene);
 
+    // 初始化载入音效文件
+    BalloonSoundManager::sharedBalloonSoundManager();
+    
     return true;
 }
 
@@ -131,14 +135,19 @@ void AppDelegate::applicationDidEnterBackground() {
     // 多盟统计进入后台
     MobClickCpp::applicationDidEnterBackground();
 #endif
+    // 先把音效文件清理掉
+    BalloonSoundManager::sharedBalloonSoundManager()->unloadAllEffect();
 }
 
 // this function will be called when the app is active again
 void AppDelegate::applicationWillEnterForeground() {
     CCDirector::sharedDirector()->startAnimation();
 
+    // 再次加载音效
+    BalloonSoundManager::sharedBalloonSoundManager()->preloadAllEffect();
+    
     // 预读音乐选项
-    if (!DataManagerUtil::sharedDataManagerUtil()->GetGlobalDataLong("opt_MusicOFF"))
+    if (!DataManagerUtil::sharedDataManagerUtil()->GetGlobalDataLong(OPT_MUSIC_OFF))
     {
         // if you use SimpleAudioEngine, it must resume here
         SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();

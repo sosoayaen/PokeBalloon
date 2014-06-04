@@ -199,12 +199,12 @@ void BalloonManager::addRandomBalloon()
         }
         else if (nRate > 80)
         {
-            nValue = 3; // 3秒
+            nValue = 0; // 冰冻是一次性效果
             nType = kBalloonTypeFrozen;
         }
         else if (nRate > 77)
         {
-            nValue = -2; // 默认正负反向，数值为对应的倍数
+            nValue = -1; // 默认正负反向，数值为对应的倍数
             nType = kBalloonTypeReverse;
         }
         else if (nRate > 75)
@@ -212,7 +212,7 @@ void BalloonManager::addRandomBalloon()
             nClickableCnt = rand()%9 + 3; // 最多需要击打12下
             nType = kBalloonTypeGiant;
             // 得分为按下的2倍
-            nValue = 2*nClickableCnt;
+            nValue = 1*nClickableCnt;
         }
         else if (nRate > 67)
         {

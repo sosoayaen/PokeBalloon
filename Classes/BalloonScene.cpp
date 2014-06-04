@@ -103,8 +103,6 @@ bool BalloonScene::init()
         
         m_pSpriteBalloonModel->setVisible(false);
         
-        BalloonSoundManager::sharedBalloonSoundManager();
-		
 		bRet = true;
 		
 	} while(0);

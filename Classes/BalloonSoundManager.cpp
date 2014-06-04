@@ -28,10 +28,8 @@ BalloonSoundManager* BalloonSoundManager::sharedBalloonSoundManager()
 	if (!g_s_soundManager)
 	{
 		g_s_soundManager = new BalloonSoundManager;
-
-		// preload all effects
-		SimpleAudioEngine::sharedEngine()->preloadEffect(SOUND_EFFECT_EXPLOSIVE);
-		SimpleAudioEngine::sharedEngine()->preloadEffect(SOUND_EFFECT_PUSH_BALLOON);
+        if (g_s_soundManager)
+            g_s_soundManager->preloadAllEffect();
 	}
 
 	return g_s_soundManager;
@@ -42,7 +40,7 @@ void BalloonSoundManager::purgeBalloonSoundManager()
 	if (g_s_soundManager)
 	{
 		// unload all effects
-		SimpleAudioEngine::sharedEngine()->unloadEffect(SOUND_EFFECT_EXPLOSIVE);
+        g_s_soundManager->unloadAllEffect();
 
 		delete g_s_soundManager;	
 		g_s_soundManager = NULL;
@@ -85,4 +83,18 @@ void BalloonSoundManager::playBackgroundMusic(int soundId)
             return;
     }
     SimpleAudioEngine::sharedEngine()->playBackgroundMusic(pszBackgroundSoundName, true);
+}
+
+void BalloonSoundManager::preloadAllEffect()
+{
+    // preload all effects
+    SimpleAudioEngine::sharedEngine()->preloadEffect(SOUND_EFFECT_EXPLOSIVE);
+    SimpleAudioEngine::sharedEngine()->preloadEffect(SOUND_EFFECT_PUSH_BALLOON);
+}
+
+void BalloonSoundManager::unloadAllEffect()
+{
+    // unload all effects
+    SimpleAudioEngine::sharedEngine()->unloadEffect(SOUND_EFFECT_EXPLOSIVE);
+    SimpleAudioEngine::sharedEngine()->unloadEffect(SOUND_EFFECT_PUSH_BALLOON);
 }
