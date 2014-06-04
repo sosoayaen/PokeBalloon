@@ -220,8 +220,8 @@ void BalloonManager::addRandomBalloon()
             nValue *= -1;
         }
         
-		// 设定随机缩放，80%到120%
-		float fScale = (rand()%4 + 8)*0.1f;
+		// 设定随机缩放，90%到120%
+		float fScale = (rand()%3 + 9)*0.1f;
 
 		// 增加一个气球到屏幕
 		// Balloon* pBalloon = Balloon::create(pStrBalloonName->getCString(), nValue, nType);
