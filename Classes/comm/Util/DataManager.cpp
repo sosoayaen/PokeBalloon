@@ -649,7 +649,7 @@ bool bailin::util::DataManagerUtil::SetSecurityData(const char *pszKey, long lon
         *pllData += llAddData;
         
         // 回填校验值
-        unsigned long nCheckCode = bailin::util::crypto::Crc32(pllData, sizeof(long));
+        unsigned long nCheckCode = bailin::util::crypto::Crc32(pllData, sizeof(long long));
         // m_pDictionarySecurityData->setObject(CCString::createWithFormat("%lu", nCheckCode), pszKey);
         m_mapSecurityData[string(pszKey)] = nCheckCode;
     }
