@@ -239,6 +239,6 @@ void BalloonItemClick::extendEffect(BalloonItem *pBalloonItem)
         updateLeftCntsLabel();
         
         // 放大一下右上角数字
-        m_pLabelBMFontCnts->runAction(CCSequence::create(CCScaleTo::create(0.2f, 2.0f), CCScaleTo::create(0.2f, 1.0f)));
+        m_pLabelBMFontCnts->runAction(CCSequence::create(CCScaleTo::create(0.2f, 2.0f), CCScaleTo::create(0.2f, 1.0f), NULL));
     }
 }
