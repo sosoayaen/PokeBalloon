@@ -160,6 +160,7 @@ void BalloonScene::onEnter()
     
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(BalloonScene::notifyEnterBackground), NOTIFY_PAUSE, NULL);
     
+    // 自动开始
     startGame();
     
 }

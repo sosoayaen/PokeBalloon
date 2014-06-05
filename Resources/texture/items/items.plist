@@ -4,19 +4,6 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>balloon_time.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{2,473},{63,65}}</string>
-                <key>offset</key>
-                <string>{1,0}</string>
-                <key>rotated</key>
-                <true/>
-                <key>sourceColorRect</key>
-                <string>{{8,6},{63,65}}</string>
-                <key>sourceSize</key>
-                <string>{77,77}</string>
-            </dict>
             <key>item_boom.png</key>
             <dict>
                 <key>frame</key>
@@ -121,6 +108,19 @@
                 <key>sourceSize</key>
                 <string>{89,82}</string>
             </dict>
+            <key>item_time.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,473},{63,65}}</string>
+                <key>offset</key>
+                <string>{1,0}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{8,6},{63,65}}</string>
+                <key>sourceSize</key>
+                <string>{77,77}</string>
+            </dict>
         </dict>
         <key>metadata</key>
         <dict>
@@ -131,7 +131,7 @@
             <key>size</key>
             <string>{124,631}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:448795bd13fa791fc16a645363edd84f:91736bae634215838853217fed261f6c:9b2c40378ce3448cae3ca053079d3001$</string>
+            <string>$TexturePacker:SmartUpdate:ce4273ca8305fbc5129d9f081d30c9bf:f5fc8ca7b09851ae70eb6d7d2173c14b:9b2c40378ce3448cae3ca053079d3001$</string>
             <key>textureFileName</key>
             <string>items.png</string>
         </dict>
