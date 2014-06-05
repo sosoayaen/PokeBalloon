@@ -158,14 +158,30 @@ void BalloonScene::onEnter()
     // 启动单点触摸回调注册
     CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, this->getTouchPriority(), false);
     
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(BalloonScene::notifyEnterBackground), NOTIFY_PAUSE, NULL);
+    
     startGame();
     
+}
+
+void BalloonScene::notifyEnterBackground(CCObject* pData)
+{
+    if (m_eGameStatus == GAME_STATUS_RUNNING)
+    {
+        // 暂停界面
+        unscheduleUpdate();
+        
+        showPauseDialog();
+        
+        m_eGameStatus = GAME_STATUS_PAUSE;
+    }
 }
 
 void BalloonScene::onExit()
 {
 	CCLayer::onExit();
 	// TODO: 退出场景，取消CCNotificationCenter可以放在这里做，但是对应在onEnter的时候要重新注册
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, NOTIFY_PAUSE);
     
     // 释放结算对话框
     CC_SAFE_RELEASE_NULL(m_pResultDialog);
@@ -560,15 +576,23 @@ void BalloonScene::onPressMenuShare(cocos2d::CCObject *pSender)
 void BalloonScene::onPressMenuPause(cocos2d::CCObject *pSender)
 {
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
+    
     // 暂停游戏
     unscheduleUpdate();
+    
     // 显示暂停界面
     showPauseDialog();
+    
+    // 暂停
+    m_eGameStatus = GAME_STATUS_PAUSE;
 }
 
 void BalloonScene::onPressMenuResume(cocos2d::CCObject *pSender)
 {
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
+    
+    m_eGameStatus = GAME_STATUS_RUNNING;
+    
     // 移除对话框
     if (m_pPauseDialog)
         m_pPauseDialog->endDialog();

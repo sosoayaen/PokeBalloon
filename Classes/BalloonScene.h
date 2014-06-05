@@ -21,6 +21,7 @@ enum BalloonGameStatus
 {
     GAME_STATUS_READY = 0,  // 开始前的准备状态
     GAME_STATUS_RUNNING,    // 游戏进行状态
+    GAME_STATUS_PAUSE,      // 游戏暂停
     GAME_STATUS_TIMES_UP,   // 准备结束状态，时间结束
     GAME_STATUS_STOP        // 游戏结束
     
@@ -167,6 +168,9 @@ private:
     
     // 创建结算对话框
     void createResultDialog();
+    
+    // 响应程序切换到后台
+    void notifyEnterBackground(cocos2d::CCObject* pData);
     
 public:
 	// Virtual Functions

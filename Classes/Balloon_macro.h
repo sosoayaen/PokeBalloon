@@ -27,6 +27,10 @@
 	public: virtual void set##varFunc##Enable(bool parameter) { varMember = parameter;}\
 	public: virtual bool is##varFunc(void) const { return varMember;}
 
+// 全局通知的宏定义
+#define NOTIFY_PAUSE    "NOTIFY_PAUSE"      // 程序进入后台
+#define NOTIFY_RESUME   "NOTIFY_RESUME"     // 回到程序界面
+
 // 全局保存的配置对应的key宏定义
 #define OPT_MUSIC_OFF           "opt_MusicOFF"			// 是否关闭背景音乐
 #define OPT_SOUND_EFFECT_OFF    "opt_SoundEffectOFF"	// 是否关闭音效

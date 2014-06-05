@@ -137,6 +137,8 @@ void AppDelegate::applicationDidEnterBackground() {
 #endif
     // 先把音效文件清理掉
     BalloonSoundManager::sharedBalloonSoundManager()->unloadAllEffect();
+    
+    CCNotificationCenter::sharedNotificationCenter()->postNotification(NOTIFY_PAUSE);
 }
 
 // this function will be called when the app is active again
@@ -157,6 +159,8 @@ void AppDelegate::applicationWillEnterForeground() {
     // 多盟统计分析回到前台
     MobClickCpp::applicationWillEnterForeground();
 #endif
+    
+    CCNotificationCenter::sharedNotificationCenter()->postNotification(NOTIFY_RESUME);
 }
 
 void AppDelegate::setLocalConfigData()
