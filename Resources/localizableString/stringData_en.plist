@@ -5,9 +5,9 @@
 	<key>share_section</key>
 	<dict>
 		<key>high_score_share</key>
-		<string>I get %lu score in Poke Balloon War！Can you rely my CHALLENGE!!</string>
+		<string>I get %lld score in Burst Balloon! Can you rely my CHALLENGE!!</string>
 		<key>high_score_shares</key>
-		<string>I get %lu scores in Poke Balloon War！Can you rely my CHALLENGE!!</string>
+		<string>I get %lld scores in Burst Balloon! Can you rely my CHALLENGE!!</string>
 	</dict>
 	<key>handbook_section</key>
 	<dict>

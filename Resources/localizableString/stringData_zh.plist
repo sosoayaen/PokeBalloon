@@ -5,9 +5,9 @@
 	<key>share_section</key>
 	<dict>
 		<key>high_score_share</key>
-		<string>我在【天天气球大作战】中获得%lu分！敢不敢超越我？一起来释放心中聚积的压力吧～</string>
+		<string>我在【天天气球大作战】中获得%lld分！敢不敢超越我？一起来释放心中聚积的压力吧～</string>
 		<key>high_score_shares</key>
-		<string>我在【天天气球大作战】中获得%lu分！敢不敢超越我？一起来释放心中聚积的压力吧～</string>
+		<string>我在【天天气球大作战】中获得%lld分！敢不敢超越我？一起来释放心中聚积的压力吧～</string>
 	</dict>
 	<key>handbook_section</key>
 	<dict>
