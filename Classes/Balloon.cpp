@@ -253,7 +253,8 @@ void Balloon::setBalloonEffect(BalloonEffect effect)
 {
     CCSprite* pSpriteEffect = NULL;
     
-    switch (effect) {
+    switch (effect)
+    {
         case kBalloonEffectFrozen:
             pSpriteEffect = CCSprite::createWithSpriteFrameName(CCString::createWithFormat("balloon_effect_frozen_%d.png", getBalloonSets())->getCString());
             break;

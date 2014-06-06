@@ -9,5 +9,44 @@
 		<key>high_score_shares</key>
 		<string>I get %lu scores in Poke Balloon War！Can you rely my CHALLENGE!!</string>
 	</dict>
+	<key>handbook_section</key>
+	<dict>
+		<key>normal_balloon_name</key>
+		<string>Normal Balloon</string>
+		<key>normal_balloon_description</key>
+		<string>I&apos;m normal one, but we are the best!</string>
+		<key>boom_name</key>
+		<string>Boom Balloon</string>
+		<key>boom_description</key>
+		<string>Be careful, your score will cry for me.</string>
+		<key>time_name</key>
+		<string>Time Balloon</string>
+		<key>time_description</key>
+		<string>Time will last... balabalabala. Good luck!</string>
+		<key>pump_name</key>
+		<string>Pump Balloon</string>
+		<key>pump_descritpion</key>
+		<string>So nice! Every press will increase normal balloon&apos;s score with 1 point in the screen.</string>
+		<key>multi_name</key>
+		<string>Double Balloon</string>
+		<key>multi_description</key>
+		<string>Every balloon will be double, sometime it made big trouble</string>
+		<key>reverse_name</key>
+		<string>Reverse Balloon</string>
+		<key>reverse_description</key>
+		<string>Oh Noooooooooo!</string>
+		<key>giant_name</key>
+		<string>Giant Balloon</string>
+		<key>giant_description</key>
+		<string>You&apos;ll love the way you press...</string>
+		<key>frozen_name</key>
+		<string>Frozen Balloon</string>
+		<key>frozen_description</key>
+		<string>I love the ICE!</string>
+		<key>endless_name</key>
+		<string>Endless Mode</string>
+		<key>endless_description</key>
+		<string>Go go go!!!</string>
+	</dict>
 </dict>
 </plist>

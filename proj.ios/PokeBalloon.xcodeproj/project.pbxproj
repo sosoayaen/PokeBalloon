@@ -72,6 +72,9 @@
 		049552671936409C00AAE2F5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 049552691936409C00AAE2F5 /* InfoPlist.strings */; };
 		04A6B795191D3FAC007AF26F /* Cloud.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A6B791191D3FAC007AF26F /* Cloud.cpp */; };
 		04A6B796191D3FAC007AF26F /* CloudManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A6B793191D3FAC007AF26F /* CloudManager.cpp */; };
+		04AA6F801940BB7F006B37B6 /* BalloonHandBookScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04AA6F7E1940BB7F006B37B6 /* BalloonHandBookScene.cpp */; };
+		04AA6F821940D4DD006B37B6 /* BalloonHandBookScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 04AA6F811940D4DD006B37B6 /* BalloonHandBookScene.ccbi */; };
+		04AA6F84194205BF006B37B6 /* configuration in Resources */ = {isa = PBXBuildFile; fileRef = 04AA6F83194205BF006B37B6 /* configuration */; };
 		04AAEAC3191383F9006147E3 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 04AAEABC191383F9006147E3 /* Default.png */; };
 		04AAEAC4191383F9006147E3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04AAEABD191383F9006147E3 /* Default@2x.png */; };
 		04AAEAC5191383F9006147E3 /* Icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 04AAEABE191383F9006147E3 /* Icon-57.png */; };
@@ -449,6 +452,10 @@
 		04A6B792191D3FAC007AF26F /* Cloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cloud.h; path = ../Classes/Cloud.h; sourceTree = "<group>"; };
 		04A6B793191D3FAC007AF26F /* CloudManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CloudManager.cpp; path = ../Classes/CloudManager.cpp; sourceTree = "<group>"; };
 		04A6B794191D3FAC007AF26F /* CloudManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CloudManager.h; path = ../Classes/CloudManager.h; sourceTree = "<group>"; };
+		04AA6F7E1940BB7F006B37B6 /* BalloonHandBookScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BalloonHandBookScene.cpp; path = ../Classes/BalloonHandBookScene.cpp; sourceTree = "<group>"; };
+		04AA6F7F1940BB7F006B37B6 /* BalloonHandBookScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BalloonHandBookScene.h; path = ../Classes/BalloonHandBookScene.h; sourceTree = "<group>"; };
+		04AA6F811940D4DD006B37B6 /* BalloonHandBookScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonHandBookScene.ccbi; sourceTree = "<group>"; };
+		04AA6F83194205BF006B37B6 /* configuration */ = {isa = PBXFileReference; lastKnownFileType = folder; path = configuration; sourceTree = "<group>"; };
 		04AAEABC191383F9006147E3 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		04AAEABD191383F9006147E3 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = SOURCE_ROOT; };
 		04AAEABE191383F9006147E3 /* Icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-57.png"; sourceTree = SOURCE_ROOT; };
@@ -1065,6 +1072,7 @@
 		044BAB6C1905045600D8CCB3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				04AA6F83194205BF006B37B6 /* configuration */,
 				04DEFB101935CCDD0023F654 /* texture */,
 				043560301928A7070044D838 /* localizableString */,
 				046051721923AE64005E5A8D /* Default-568h@2x.png */,
@@ -1083,6 +1091,7 @@
 				0435602319264F5F0044D838 /* BalloonResultDialog.ccbi */,
 				0435602519265F0E0044D838 /* BalloonPauseDialog.ccbi */,
 				0435603C19291DD60044D838 /* BalloonOptionsDialog.ccbi */,
+				04AA6F811940D4DD006B37B6 /* BalloonHandBookScene.ccbi */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -1861,6 +1870,8 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				04AA6F7E1940BB7F006B37B6 /* BalloonHandBookScene.cpp */,
+				04AA6F7F1940BB7F006B37B6 /* BalloonHandBookScene.h */,
 				04CB2D49193312D600D1111F /* BalloonItem.cpp */,
 				04CB2D4A193312D600D1111F /* BalloonItem.h */,
 				04CB2D4B193312D600D1111F /* BalloonItemManager.cpp */,
@@ -2317,6 +2328,7 @@
 				1A9CE88E1765A12C000E3062 /* sconscript in Resources */,
 				0458E80B19167BAB00FA1321 /* Icon-120.png in Resources */,
 				04612356191F2F11001AE64F /* UMShareEditViewControlleriPad.xib in Resources */,
+				04AA6F821940D4DD006B37B6 /* BalloonHandBookScene.ccbi in Resources */,
 				04AAEACD1913C9FE006147E3 /* music in Resources */,
 				049552671936409C00AAE2F5 /* InfoPlist.strings in Resources */,
 				043560311928A7070044D838 /* localizableString in Resources */,
@@ -2329,6 +2341,7 @@
 				0461235A191F2F11001AE64F /* UMSocialSDKResourcesNew.bundle in Resources */,
 				0458E80819167BAB00FA1321 /* Icon-29.png in Resources */,
 				04DEFB111935CCDD0023F654 /* texture in Resources */,
+				04AA6F84194205BF006B37B6 /* configuration in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2482,6 +2495,7 @@
 				15A3DA551682F826002FB0C5 /* CCEditBox.cpp in Sources */,
 				15A3DA571682F826002FB0C5 /* CCEditBoxImplIOS.mm in Sources */,
 				15A3DA591682F826002FB0C5 /* CCScrollView.cpp in Sources */,
+				04AA6F801940BB7F006B37B6 /* BalloonHandBookScene.cpp in Sources */,
 				0460515B1923A8C8005E5A8D /* strbuffer.c in Sources */,
 				15A3DA5A1682F826002FB0C5 /* CCSorting.cpp in Sources */,
 				15A3DA5B1682F826002FB0C5 /* CCTableView.cpp in Sources */,

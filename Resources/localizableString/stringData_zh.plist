@@ -9,5 +9,44 @@
 		<key>high_score_shares</key>
 		<string>我在【天天气球大作战】中获得%lu分！敢不敢超越我？一起来释放心中聚积的压力吧～</string>
 	</dict>
+	<key>handbook_section</key>
+	<dict>
+		<key>normal_balloon_name</key>
+		<string>普通气球</string>
+		<key>normal_balloon_description</key>
+		<string>不要小看普通得分气球哦，所有的分数都是我提供的呢</string>
+		<key>boom_name</key>
+		<string>炸弹气球</string>
+		<key>boom_description</key>
+		<string>点到炸弹会使你的总分除以2哦！小心，千万千万不要在后期点到它</string>
+		<key>time_name</key>
+		<string>时间气球</string>
+		<key>time_description</key>
+		<string>点击后时间延长3秒哦，期盼好运快来吧</string>
+		<key>pump_name</key>
+		<string>打气筒</string>
+		<key>pump_descritpion</key>
+		<string>点到后会在下方出现一个打气筒的按钮，每按一下，全屏幕上的普通气球都会加1分，好好利用</string>
+		<key>multi_name</key>
+		<string>乘分气球</string>
+		<key>multi_description</key>
+		<string>全屏幕的普通气球的分数都会乘以气球上的分值，不过负分的会更小，看准了再点</string>
+		<key>reverse_name</key>
+		<string>逆转气球</string>
+		<key>reverse_description</key>
+		<string>全屏幕的普通气球会正负逆转，这，看起来不怎么厉害，关键看高手如何使用了</string>
+		<key>giant_name</key>
+		<string>巨人气球</string>
+		<key>giant_description</key>
+		<string>哦～快点点爆它！分数不少啊！照着这个气球上的数字看，我点3下就能拿3分吧，什么？不点爆不给分，喂喂喂～</string>
+		<key>frozen_name</key>
+		<string>冰冻气球</string>
+		<key>frozen_description</key>
+		<string>冻结冻结，啊，真是给力！能多几个出来就好了，每个气球都不放过！</string>
+		<key>endless_name</key>
+		<string>无尽模式</string>
+		<key>endless_description</key>
+		<string>无尽模式，来吧，看你能撑到第几轮哦～</string>
+	</dict>
 </dict>
 </plist>

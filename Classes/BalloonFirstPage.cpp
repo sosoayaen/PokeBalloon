@@ -1,6 +1,7 @@
 #include "BalloonFirstPage.h"
 #include "BalloonScene.h"
 #include "BalloonSoundManager.h"
+#include "BalloonHandBookScene.h"
 #include "UMSocial2DX.h"
 #include "bailinUtil.h"
 #include "Balloon_macro.h"
@@ -218,4 +219,6 @@ void BalloonFirstPage::onPressMenuHandbook(cocos2d::CCObject *pSender)
 {
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
     // 显示图鉴场景
+    CCScene* pScene = BalloonHandBookScene::scene();
+    CCDirector::sharedDirector()->pushScene(pScene);
 }
