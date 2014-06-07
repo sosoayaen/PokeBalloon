@@ -500,21 +500,21 @@ void BalloonScene::showResultDialog()
     
     // 设定面板分数
     m_pResultDialog->setScore(m_llTotalScore);
-    CCString* pHighestScore = ccs(DataManagerUtil::sharedDataManagerUtil()->ReadDataFromLocal("HighestScore").c_str());
-    long lHighestScore = pHighestScore->intValue();
+    std::string strHighScore = DataManagerUtil::sharedDataManagerUtil()->ReadDataFromLocal("HighestScore");
+    long long llHighestScore = atoll(strHighScore.c_str());// pHighestScore->intValue();
     
-    bool bNewScore = lHighestScore < m_llTotalScore;
+    bool bNewScore = llHighestScore < m_llTotalScore;
     
     m_pResultDialog->setNewFlagVisible(bNewScore);
     
     if (bNewScore)
     {
-        lHighestScore = m_llTotalScore;
-        const std::string strHighestScore = CCString::createWithFormat("%ld", lHighestScore)->m_sString;
+        llHighestScore = m_llTotalScore;
+        const std::string strHighestScore = CCString::createWithFormat("%lld", llHighestScore)->m_sString;
         DataManagerUtil::sharedDataManagerUtil()->WriteDataToLocal("HighestScore", strHighestScore);
     }
         
-    m_pResultDialog->setHighScore(lHighestScore);
+    m_pResultDialog->setHighScore(llHighestScore);
     
     
     addChild(m_pResultDialog);

@@ -96,10 +96,10 @@ public:
 	// Funcitons
     
     // 设置结果分数
-    void setScore(long lScore);
+    void setScore(long long llScore);
     
     // 设置最高分
-    void setHighScore(long lScore);
+    void setHighScore(long long llScore);
     
     // 设置是否显示新的记录标志
     void setNewFlagVisible(bool bShow);

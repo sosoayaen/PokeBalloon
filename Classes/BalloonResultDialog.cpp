@@ -14,7 +14,6 @@ BalloonResultDialog::~BalloonResultDialog()
 
 bool BalloonResultDialog::init()
 {
-	// TODO:
 	bool bRet = false;
 	do
 	{
@@ -84,22 +83,6 @@ bool BalloonResultDialog::init()
 void BalloonResultDialog::onEnter()
 {
 	DialogLayer::onEnter();
-	// TODO: 这里可以定义进入场景的初始化，比如控件的初始位置，初始状态等
-    
-    /*/ 分享界面不停摇动
-    CCMoveBy* pMoveUp = CCMoveBy::create(2.0f, ccp(0, m_pMenuItemReturn->getContentSize().height));
-    
-    CCMoveBy* pMoveRight = CCMoveBy::create(2.0f, ccp(m_pMenuItemReturn->getContentSize().height*0.3f, 0));
-    
-    m_pMenuShare->runAction(CCSpawn::create(
-        CCRepeatForever::create(CCSequence::create(
-            pMoveUp, pMoveUp->reverse(),
-            NULL)),
-        CCRepeatForever::create(CCSequence::create(
-            pMoveRight, pMoveRight->reverse(),
-            NULL)),
-            NULL));
-    //*/
     m_pMenuItemShare->stopAllActions();
     m_pMenuItemShare->setPosition(m_posShareItemOri);
     m_pMenuItemShare->setRotation(m_fShareItemAngleOri);
@@ -113,7 +96,6 @@ void BalloonResultDialog::onEnter()
 void BalloonResultDialog::onExit()
 {
 	DialogLayer::onExit();
-	// TODO: 退出场景，取消CCNotificationCenter可以放在这里做，但是对应在onEnter的时候要重新注册
 }
 
 SEL_CallFuncN BalloonResultDialog::onResolveCCBCCCallFuncSelector( CCObject * pTarget, const char* pSelectorName )
@@ -151,14 +133,14 @@ SEL_CCControlHandler BalloonResultDialog::onResolveCCBCCControlSelector( CCObjec
 	return NULL;
 }
 
-void BalloonResultDialog::setScore(long lScore)
+void BalloonResultDialog::setScore(long long llScore)
 {
-    m_pLabelBMFontCurrentScore->setCString(CCString::createWithFormat("%ld", lScore)->getCString());
+    m_pLabelBMFontCurrentScore->setCString(CCString::createWithFormat("%lld", llScore)->getCString());
 }
 
-void BalloonResultDialog::setHighScore(long lScore)
+void BalloonResultDialog::setHighScore(long long llScore)
 {
-    m_pLabelBMFontHighestScore->setCString(CCString::createWithFormat("%ld", lScore)->getCString());
+    m_pLabelBMFontHighestScore->setCString(CCString::createWithFormat("%lld", llScore)->getCString());
 }
 
 void BalloonResultDialog::setNewFlagVisible(bool bShow)
