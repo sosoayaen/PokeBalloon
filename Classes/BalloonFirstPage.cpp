@@ -129,7 +129,6 @@ void BalloonFirstPage::onEnter()
         SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
     }
     
-    // m_pMenuMain->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.8f, ccpMult(ccpFromSize(getContentSize()), 0.5f))));
     // 移动到屏幕偏下的位置，给标题留位置
     m_pMenuMain->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.8f, ccp(getContentSize().width*0.5f, getContentSize().height*0.3f))));
     
@@ -149,7 +148,7 @@ void BalloonFirstPage::onEnter()
 void BalloonFirstPage::onExit()
 {
 	CCLayer::onExit();
-	// TODO: 退出场景，取消CCNotificationCenter可以放在这里做，但是对应在onEnter的时候要重新注册
+    // 退出场景时，把菜单拎到屏幕外，进场时直接落下即可
     m_pMenuMain->setPosition(ccp(getContentSize().width*0.5f, getContentSize().height*1.5f));
 }
 
