@@ -55,8 +55,10 @@ bool BalloonHandBookScene::init()
         // 设定图鉴的列表容器位置
         m_pLayerItemContainer->setPosition(ccp((winSize.width - m_pLayerItemContainer->getContentSize().width)*0.5f, (winSize.height - m_pLayerItemContainer->getContentSize().height)*0.5f));
 		
+        // 设定屏幕大笑
         m_winSize = CCDirector::sharedDirector()->getWinSize();
         
+        // 初始化TableView
         initItemTableView();
         
         ControlUtil::sharedControlUtil()->SetMenuItemSelectedImageWithNormalImage(m_pMenu);
@@ -72,6 +74,7 @@ void BalloonHandBookScene::onEnter()
 {
 	CCLayer::onEnter();
 	// TODO: 这里可以定义进入场景的初始化，比如控件的初始位置，初始状态等
+    reLayoutCoins();
 }
 
 void BalloonHandBookScene::onExit()
@@ -88,7 +91,6 @@ SEL_CallFuncN BalloonHandBookScene::onResolveCCBCCCallFuncSelector( CCObject * p
 
 SEL_MenuHandler BalloonHandBookScene::onResolveCCBCCMenuItemSelector( CCObject * pTarget, const char* pSelectorName )
 {
-
     CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onPressMenuReturnMainBoard", BalloonHandBookScene::onPressMenuReturnMainBoard);
 	return NULL;
 }
@@ -98,6 +100,8 @@ bool BalloonHandBookScene::onAssignCCBMemberVariable( CCObject* pTarget, const c
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteBackground", CCSprite*, this->m_pSpriteBackground);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLayerItemContainer", CCLayer*, this->m_pLayerItemContainer);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenu", CCMenu*, this->m_pMenu);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteCoin", CCSprite*, this->m_pSpriteCoin);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLabelBMFontCoins", CCLabelBMFont*, this->m_pLabelBMFontCoins);
 
 	return true;
 }
@@ -166,7 +170,7 @@ CCTableViewCell* BalloonHandBookScene::tableCellAtIndex( CCTableView *table, uns
         if (pDict)
         {
             // 创建图形
-            CCSprite* pSpriteBalloon = CCSprite::createWithSpriteFrameName("balloon_1_4.png");
+            CCSprite* pSpriteBalloon = CCSprite::createWithSpriteFrameName(CCString::createWithFormat("balloon_1_%d.png", (idx%8) + 1)->getCString());
             
             // 根据配置得到内部图片
             CCNode* pNode = NULL;
@@ -267,4 +271,10 @@ void BalloonHandBookScene::onPressMenuReturnMainBoard(cocos2d::CCObject *pSender
 {
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
     CCDirector::sharedDirector()->popScene();
+}
+
+void BalloonHandBookScene::reLayoutCoins()
+{
+    // 根据金钱的数量重新定位金币标志
+    m_pSpriteCoin->setPosition(ccp(m_pLabelBMFontCoins->getPositionX() - m_pLabelBMFontCoins->boundingBox().size.width - m_pSpriteCoin->getContentSize().width*0.2f, m_pSpriteCoin->getPositionY()));
 }

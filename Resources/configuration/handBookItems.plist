@@ -94,18 +94,6 @@
 			<key>frameName</key>
 			<string>item_frozen.png</string>
 		</dict>
-		<dict>
-			<key>name</key>
-			<string>endless_name</string>
-			<key>description</key>
-			<string>endless_description</string>
-			<key>unlock</key>
-			<string>endless_unlock_description</string>
-			<key>displayType</key>
-			<string>2</string>
-			<key>bmfValue</key>
-			<string>Endless</string>
-		</dict>
 	</array>
 </dict>
 </plist>

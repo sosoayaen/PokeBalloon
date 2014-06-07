@@ -23,7 +23,9 @@ public:
 	{
 		m_pSpriteBackground = NULL;
 		m_pMenuMain = NULL;
+        m_pSpriteTitle = NULL;
         m_pFireworks = NULL;
+        m_pFireworks2 = NULL;
 
 	}
 	~BalloonFirstPage();
@@ -45,9 +47,11 @@ private:
 	// Attributes for CCB
 	cocos2d::CCSprite* m_pSpriteBackground;
 	cocos2d::CCMenu* m_pMenuMain;
+    cocos2d::CCSprite* m_pSpriteTitle;
 
 private:
     cocos2d::CCParticleSystemQuad* m_pFireworks;
+    cocos2d::CCParticleSystemQuad* m_pFireworks2;
 
 public:
 	// Virtual Functions

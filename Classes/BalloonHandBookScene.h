@@ -25,6 +25,8 @@ public:
         m_pSpriteBackground = NULL;
         m_pLayerItemContainer = NULL;
         m_pMenu = NULL;
+        m_pSpriteCoin = NULL;
+        m_pLabelBMFontCoins = NULL;
         
         m_pTableViewHandbook = NULL;
         
@@ -54,6 +56,8 @@ private:
     cocos2d::CCSprite* m_pSpriteBackground;
     cocos2d::CCLayer* m_pLayerItemContainer;
     cocos2d::CCMenu* m_pMenu;
+    cocos2d::CCSprite* m_pSpriteCoin;
+    cocos2d::CCLabelBMFont* m_pLabelBMFontCoins;
     
 private:
     // 图鉴列表
@@ -62,6 +66,7 @@ private:
     // 图鉴配置文件
     cocos2d::CCDictionary* m_pDictHandbookData;
     
+    // 屏幕大小
     cocos2d::CCSize m_winSize;
 
 public:
@@ -94,6 +99,9 @@ private:
     void initItemTableView();
     
     void onPressMenuReturnMainBoard(cocos2d::CCObject* pSender);
+    
+    // 根据金币数目重新布局
+    void reLayoutCoins();
 	
 public:
 	// Funcitons

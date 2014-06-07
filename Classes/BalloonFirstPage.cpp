@@ -72,8 +72,17 @@ bool BalloonFirstPage::init()
         {
             m_pFireworks = CCParticleSystemQuad::create("particles/fireworksMainBoard.plist");
             CCSize size = CCDirector::sharedDirector()->getWinSize();
-            m_pFireworks->setPosition(ccp(size.width*0.5f, size.height * 1.05f));
+            m_pFireworks->setPosition(ccp(size.width*0.25f, size.height * 1.05f));
             m_pMenuMain->getParent()->addChild(m_pFireworks);
+        }
+        
+        // 顶部有Fireworks的粒子效果
+        if (!m_pFireworks2)
+        {
+            m_pFireworks2 = CCParticleSystemQuad::create("particles/fireworksMainBoard.plist");
+            CCSize size = CCDirector::sharedDirector()->getWinSize();
+            m_pFireworks2->setPosition(ccp(size.width*0.75f, size.height * 1.05f));
+            m_pMenuMain->getParent()->addChild(m_pFireworks2);
         }
         
         // 初始化按钮
@@ -85,7 +94,18 @@ bool BalloonFirstPage::init()
             m_pSpriteBackground->setScaleX(this->getContentSize().width/m_pSpriteBackground->getContentSize().width);
             m_pSpriteBackground->setScaleY(this->getContentSize().height/m_pSpriteBackground->getContentSize().height);
         }
-		
+        
+        // 标题动起来
+        if (m_pSpriteTitle)
+        {
+            float fDuration = 5.0f;
+            CCPoint pos = m_pSpriteTitle->getPosition();
+            CCPoint pos2 = ccpAdd(pos, ccp(0, m_pSpriteTitle->getContentSize().height*0.3f));
+            m_pSpriteTitle->runAction(CCRepeatForever::create(CCSequence::create(
+                                 CCSpawn::createWithTwoActions(CCMoveTo::create(fDuration, pos2), CCScaleTo::create(fDuration, 1.05f)),
+                                 CCSpawn::createWithTwoActions(CCMoveTo::create(fDuration, pos), CCScaleTo::create(fDuration, 1.0f)), NULL)));
+            m_pSpriteTitle->setZOrder(1);
+        }
 		
 		bRet = true;
 		
@@ -111,10 +131,19 @@ void BalloonFirstPage::onEnter()
     
     // m_pMenuMain->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.8f, ccpMult(ccpFromSize(getContentSize()), 0.5f))));
     // 移动到屏幕偏下的位置，给标题留位置
-    m_pMenuMain->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.8f, ccp(getContentSize().width*0.5f, getContentSize().height*0.4f))));
+    m_pMenuMain->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.8f, ccp(getContentSize().width*0.5f, getContentSize().height*0.3f))));
     
     m_pFireworks->stopSystem();
     m_pFireworks->resetSystem();
+    m_pFireworks2->stopSystem();
+    m_pFireworks2->resetSystem();
+    
+    // 判断下当前的语言版本，替换主题界面
+    if (CCApplication::sharedApplication()->getCurrentLanguage() == kLanguageChinese)
+    {
+        CCSprite* pSprite = CCSprite::create("texture/mainboard/main_title_zh.png");
+        m_pSpriteTitle->setDisplayFrame(pSprite->displayFrame());
+    }
 }
 
 void BalloonFirstPage::onExit()
@@ -140,6 +169,7 @@ bool BalloonFirstPage::onAssignCCBMemberVariable( CCObject* pTarget, const char*
 {
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteBackground", CCSprite*, this->m_pSpriteBackground);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuMain", CCMenu*, this->m_pMenuMain);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteTitle", CCSprite*, this->m_pSpriteTitle);
 
 	return true;
 }
@@ -173,7 +203,6 @@ void BalloonFirstPage::initMenu()
     pMenuItemHandbook->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, 10.0f), CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, -10.0f), NULL)));
     
     m_pMenuMain->addChild(pMenuItemStart);
-    m_pMenuMain->addChild(pMenuItemOptions);
     m_pMenuMain->addChild(pMenuItemHandbook);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -183,6 +212,8 @@ void BalloonFirstPage::initMenu()
     pMenuItemRankBoard->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, 10.0f), CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, -10.0f), NULL)));
     m_pMenuMain->addChild(pMenuItemRankBoard);
 #endif
+    
+    m_pMenuMain->addChild(pMenuItemOptions);
     
     ControlUtil::sharedControlUtil()->SetMenuItemSelectedImageWithNormalImage(m_pMenuMain);
     
