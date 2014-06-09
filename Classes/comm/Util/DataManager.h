@@ -149,6 +149,21 @@ public:
      */
     void SetSecurityCode(const char* pszKey, unsigned long nCode);
     
+    /**
+     * @brief 读取带签名数据，带校验
+     */
+    std::string ReadDataWithChecksum(const char* pszKey);
+    
+    /**
+     * @brief 写带签名的数据，带校验
+     */
+    void WriteDataWithChecksum(const char* pszKey, const char* pszValue);
+    
+    /**
+     * @brief 关键数据和签名是否相符，不相符表示文件被非法修改
+     */
+    bool IsCheckKeyDataValidate(const char* pszKey);
+    
 private:
 
 protected:

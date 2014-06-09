@@ -516,9 +516,7 @@ void BalloonScene::showResultDialog()
         
     m_pResultDialog->setHighScore(llHighestScore);
     
-    
     addChild(m_pResultDialog);
-    
 }
 
 void BalloonScene::onPressMenuRestartGame(cocos2d::CCObject *pSender)

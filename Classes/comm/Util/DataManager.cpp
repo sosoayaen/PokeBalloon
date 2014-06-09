@@ -661,3 +661,58 @@ void bailin::util::DataManagerUtil::SetSecurityCode(const char *pszKey, unsigned
 {
     m_mapSecurityData[string(pszKey)] = nCode;
 }
+
+std::string bailin::util::DataManagerUtil::ReadDataWithChecksum(const char *pszKey)
+{
+    std::string strRet = "";
+    if (IsCheckKeyDataValidate(pszKey))
+    {
+        strRet = CCUserDefault::sharedUserDefault()->getStringForKey(pszKey);
+    }
+    return strRet;
+}
+
+void bailin::util::DataManagerUtil::WriteDataWithChecksum(const char *pszKey, const char* pszValue)
+{
+    // 写入数据，顺带写入校验码
+    CCUserDefault::sharedUserDefault()->setStringForKey(pszKey, pszValue);
+    
+    // 校验Key
+    std::string strCheckKey = pszKey;
+    strCheckKey += "Checksum";
+    // 校验数据，加上一个私钥
+    std::string strCheckValue = pszValue;
+    strCheckValue += SECRECT_KEY;
+    // 计算数据的校验码
+    std::string strCheckSum = crypto::MD5(strCheckValue.c_str());
+    
+    // 写入校验数据
+    CCUserDefault::sharedUserDefault()->setStringForKey(strCheckKey.c_str(), strCheckSum);
+}
+
+bool bailin::util::DataManagerUtil::IsCheckKeyDataValidate(const char *pszKey)
+{
+    bool bRet = false;
+    std::string strValue = CCUserDefault::sharedUserDefault()->getStringForKey(pszKey, "");
+    std::string strCheckData = strValue + SECRECT_KEY;
+    // 得到校验码
+    std::string strCheckSumData = crypto::MD5(strCheckData.c_str());
+    
+    std::string strCheckKey = pszKey;
+    strCheckKey += "Checksum";
+    std::string strCheckSum = CCUserDefault::sharedUserDefault()->getStringForKey(strCheckKey.c_str(), "");
+    
+    if (strValue.empty() && strCheckSum.empty())
+    {
+        // 无存储数据，有效
+        return true;
+    }
+    
+    if (strCheckSumData == strCheckSum)
+    {
+        // 校验码一致，有效
+        bRet = true;
+    }
+    
+    return bRet;
+}
