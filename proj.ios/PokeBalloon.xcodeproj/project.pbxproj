@@ -2233,6 +2233,7 @@
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+				04E8EA01194747F700AD0DDC /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2346,6 +2347,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		04E8EA01194747F700AD0DDC /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#fly bird 的音频目录\nSoundEffect=\"$TARGET_BUILD_DIR/$PRODUCT_NAME.app/music/effect\"\n\n# 删除资源文件中音效中的mp3格式和ogg格式，只留下m4a\nMusicCleanDir=\"$SoundEffect\"\nfor mDir in $MusicCleanDir\ndo\n    echo \"clean non-m4a file in $mDir\"\n    rm -f \"$mDir\"/*.mp3\n    rm -f \"$mDir\"/*.ogg\n    rm -f \"$mDir\"/*.wav\ndone";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
