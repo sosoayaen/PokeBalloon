@@ -52,6 +52,8 @@ public:
         m_pSpriteScoreBar = NULL;
         m_bCheated = false;
         
+        m_nReadyTimeTime = 0.0;
+        
         // 注册监听对象
         m_BalloonManager.setBalloonDelegate(this);
         
@@ -117,6 +119,7 @@ private:
     BalloonPauseDialog* m_pPauseDialog;
 
 private:
+    int m_nReadyTimeTime;
     // 作弊标志
     bool m_bCheated;
     
@@ -162,8 +165,13 @@ private:
     // 对话框结束回调
     void onResultDialogEndCall(cocos2d::CCNode* pNode);
     
-    void timeCount(float dt);
+    // 倒计时回调函数
+    void timeCountCallback(CCNode* pNode);
     
+    // 读秒倒计时
+    void readReadySecond();
+    
+    // 游戏开始
     void startGame();
     
     // 创建结算对话框

@@ -117,6 +117,7 @@ void BalloonScene::resetData()
     m_bCheated = false;
     m_ulFrame = 0;
     m_llTotalScore = 0;
+    m_nReadyTimeTime = 0;
     
     m_lTimeLeft = DEFAULT_TIME;
     
@@ -161,7 +162,8 @@ void BalloonScene::onEnter()
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(BalloonScene::notifyEnterBackground), NOTIFY_PAUSE, NULL);
     
     // 自动开始
-    startGame();
+    // startGame();
+    readReadySecond();
     
 }
 
@@ -416,6 +418,7 @@ void BalloonScene::update(float dt)
     switch (m_eGameStatus)
     {
         case GAME_STATUS_READY:
+            // 读秒状态
             break;
         case GAME_STATUS_RUNNING:
             if (m_lTimeLeft > 0 && m_ulFrame % int(1/CCDirector::sharedDirector()->getAnimationInterval()) == 0)
@@ -544,7 +547,8 @@ void BalloonScene::onPressMenuRestartGame(cocos2d::CCObject *pSender)
             break;
     }
     
-    startGame();
+    // startGame();
+    readReadySecond();
 }
 
 void BalloonScene::onPressMenuReturnMainMenu(cocos2d::CCObject *pSender)
@@ -609,6 +613,37 @@ void BalloonScene::onPressMenuResume(cocos2d::CCObject *pSender)
 void BalloonScene::onResultDialogEndCall(CCNode* pNode)
 {
     
+}
+
+void BalloonScene::timeCountCallback(CCNode* pNode)
+{
+    m_nReadyTimeTime++;
+    if (m_nReadyTimeTime == 3)
+    {
+        pNode->removeFromParent();
+        startGame();
+    }
+    else
+    {
+        CCLabelBMFont* pLabel = dynamic_cast<CCLabelBMFont*>(pNode);
+        if (pLabel)
+        {
+            pLabel->setString(CCString::createWithFormat("%d", 3 - m_nReadyTimeTime)->getCString());
+            pNode->setScale(6.0f);
+            pNode->runAction(CCSequence::create(CCScaleTo::create(1.0f, 0), CCCallFuncN::create(this, callfuncN_selector(BalloonScene::timeCountCallback)), NULL));
+        }
+    }
+}
+
+void BalloonScene::readReadySecond()
+{
+    // 启动读秒回调
+    // CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(BalloonScene::readSecond), this, 1.0f, true, 1.0f, false);
+    CCLabelBMFont* pLabelBMFontTime = CCLabelBMFont::create("3", "texture/fonts/font.fnt");
+    pLabelBMFontTime->setPosition(ccpMult(ccpFromSize(getContentSize()), 0.5f));
+    pLabelBMFontTime->setScale(6.0f);
+    addChild(pLabelBMFontTime);
+    pLabelBMFontTime->runAction(CCSequence::create(CCScaleTo::create(1.0f, 0), CCCallFuncN::create(this, callfuncN_selector(BalloonScene::timeCountCallback)), NULL));
 }
 
 void BalloonScene::startGame()
