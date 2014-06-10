@@ -9,7 +9,11 @@
 #include "BalloonOptionsDialog.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#include "GameKitHelper2dx.h"
+#   include "GameKitHelper2dx.h"
+#endif
+
+#ifdef ENABLE_UMENG_DATA
+#   include "MobClickCpp.h"
 #endif
 
 USING_NS_CC;
@@ -129,19 +133,75 @@ void BalloonFirstPage::onEnter()
         SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
     }
     
+    CCSize size = CCDirector::sharedDirector()->getWinSize();
     // 移动到屏幕偏下的位置，给标题留位置
-    m_pMenuMain->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.8f, ccp(getContentSize().width*0.5f, getContentSize().height*0.3f))));
+    m_pMenuMain->runAction(CCEaseBounceOut::create(CCMoveTo::create(0.8f, ccp(size.width*0.5f, size.height*0.3f))));
     
     m_pFireworks->stopSystem();
     m_pFireworks->resetSystem();
     m_pFireworks2->stopSystem();
     m_pFireworks2->resetSystem();
     
+    ccLanguageType language = CCApplication::sharedApplication()->getCurrentLanguage();
     // 判断下当前的语言版本，替换主题界面
-    if (CCApplication::sharedApplication()->getCurrentLanguage() == kLanguageChinese)
+    if ( language == kLanguageChinese)
     {
         CCSprite* pSprite = CCSprite::create("texture/mainboard/main_title_zh.png");
         m_pSpriteTitle->setDisplayFrame(pSprite->displayFrame());
+    }
+    
+    
+#ifdef ENABLE_UMENG_DATA
+    // 得到友盟配置的公告数据，跑马灯形式在上面滚动显示
+    const char* pszSuffix = "_en";
+    if (language == kLanguageChinese)
+        pszSuffix = "_zh";
+    
+    CCString* pStrNoticeKeyName = CCString::createWithFormat("FirstPageNotice%s", pszSuffix);
+    std::string strNotice = MobClickCpp::getConfigParams(pStrNoticeKeyName->getCString());
+    if (!strNotice.empty())
+    {
+        
+        if (!m_pLabelTTFNotice)
+        {
+            // 滚动显示公告
+            m_pLabelTTFNotice = CCLabelTTF::create(strNotice.c_str(), "", size.width/18);
+            m_pLabelTTFNotice->setAnchorPoint(ccp(0, 0.5f));
+            addChild(m_pLabelTTFNotice);
+            // 把字体放到背景之上
+            m_pLabelTTFNotice->setZOrder(10);
+        }
+        
+        // 背景展开
+        if (!m_pSpriteNoticeBackground)
+        {
+            m_pSpriteNoticeBackground = CCSprite::create("texture/mainboard/firstPageNoticeBackground.png");
+            m_pSpriteNoticeBackground->setOpacity(190);
+            addChild(m_pSpriteNoticeBackground);
+        }
+        
+        float fSpeed = 640/6.0f;
+        float fDuration = m_pLabelTTFNotice->getContentSize().width/fSpeed;
+        
+        m_pSpriteNoticeBackground->stopAllActions();
+        m_pSpriteNoticeBackground->setScaleY(0);
+        m_pSpriteNoticeBackground->setPosition(ccp(size.width*0.5f, size.height*0.85f));
+        m_pSpriteNoticeBackground->runAction(CCSequence::create(CCScaleTo::create(1.0f, 1.0f, 1.0f), CCDelayTime::create(fDuration),
+                                                                CCScaleTo::create(0.5f, 1.0f, 0), NULL));
+        
+        m_pLabelTTFNotice->stopAllActions();
+        m_pLabelTTFNotice->setPosition(ccp(size.width, size.height*0.85f));
+        m_pLabelTTFNotice->runAction(CCSequence::create(CCDelayTime::create(1.0f), CCMoveTo::create(fDuration, ccp(-m_pLabelTTFNotice->getContentSize().width, m_pLabelTTFNotice->getPositionY())), NULL));
+    }
+#endif
+    
+    // 放上版本号
+    if (!m_pLabelTTFVersion)
+    {
+        m_pLabelTTFVersion = CCLabelTTF::create("v1.00.00", "", size.width/25);
+        m_pLabelTTFVersion->setAnchorPoint(ccp(1.0f, 0));
+        m_pLabelTTFVersion->setPosition(ccp(size.width, 0));
+        addChild(m_pLabelTTFVersion);
     }
 }
 

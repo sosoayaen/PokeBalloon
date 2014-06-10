@@ -26,6 +26,9 @@ public:
         m_pSpriteTitle = NULL;
         m_pFireworks = NULL;
         m_pFireworks2 = NULL;
+        m_pLabelTTFNotice = NULL;
+        m_pSpriteNoticeBackground = NULL;
+        m_pLabelTTFVersion = NULL;
 
 	}
 	~BalloonFirstPage();
@@ -48,6 +51,9 @@ private:
 	cocos2d::CCSprite* m_pSpriteBackground;
 	cocos2d::CCMenu* m_pMenuMain;
     cocos2d::CCSprite* m_pSpriteTitle;
+    cocos2d::CCLabelTTF* m_pLabelTTFNotice;
+    cocos2d::CCSprite* m_pSpriteNoticeBackground;
+    cocos2d::CCLabelTTF* m_pLabelTTFVersion;
 
 private:
     cocos2d::CCParticleSystemQuad* m_pFireworks;

@@ -2670,7 +2670,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PokeBalloon;
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C404C1D6-9CEF-4E62-AD25-B2296F4BFD4D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5C9A7A2B-E876-47F1-AC36-7D30A4015135";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -2682,7 +2682,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: ZHIHONG WANG (FSFG36R3L2)";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -2728,7 +2728,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PokeBalloon;
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C404C1D6-9CEF-4E62-AD25-B2296F4BFD4D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5C9A7A2B-E876-47F1-AC36-7D30A4015135";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";

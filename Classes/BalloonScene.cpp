@@ -482,7 +482,10 @@ void BalloonScene::update(float dt)
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
                 // 发送成绩到GameCenter
                 GameKitHelper2dx::uploadScore(m_llTotalScore);
+#else
+                ;
 #endif
+            
             // 弹出结算框
             showResultDialog();
             
