@@ -14,15 +14,15 @@
 		<key>normal_balloon_name</key>
 		<string>Normal Balloon</string>
 		<key>normal_balloon_description</key>
-		<string>I&apos;m normal one, but we are the best!</string>
+		<string>I&apos;m normal one, but we are the best! Every score is mine.</string>
 		<key>boom_name</key>
 		<string>Boom Balloon</string>
 		<key>boom_description</key>
-		<string>Be careful, your score will cry for me.</string>
+		<string>Be careful, your score will cry for me. If you click me, your score will be half off.</string>
 		<key>time_name</key>
 		<string>Time Balloon</string>
 		<key>time_description</key>
-		<string>Time will last... balabalabala. Good luck!</string>
+		<string>Hey guy! You just got 3 seconds more.</string>
 		<key>pump_name</key>
 		<string>Pump Balloon</string>
 		<key>pump_descritpion</key>
@@ -34,15 +34,15 @@
 		<key>reverse_name</key>
 		<string>Reverse Balloon</string>
 		<key>reverse_description</key>
-		<string>Oh Noooooooooo!</string>
+		<string>You know, we don&apos;t want meet you neither</string>
 		<key>giant_name</key>
 		<string>Giant Balloon</string>
 		<key>giant_description</key>
-		<string>You&apos;ll love the way you press...</string>
+		<string>You&apos;ll love the way you press... BOOM! HURRY UP!</string>
 		<key>frozen_name</key>
 		<string>Frozen Balloon</string>
 		<key>frozen_description</key>
-		<string>I love the ICE!</string>
+		<string>I love the ICE, but sometimes we will confuse you...</string>
 		<key>endless_name</key>
 		<string>Endless Mode</string>
 		<key>endless_description</key>
