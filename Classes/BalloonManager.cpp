@@ -61,6 +61,9 @@ void BalloonManager::updatePosition()
 		// 判断如果气球移出屏幕择直接消失
 		if (pBalloon->getPositionY() > m_sizeScreen.height + pBalloon->getContentSize().height)
 		{
+            // 通知外层，这个气球移出屏幕边界了
+            m_pBalloonDelegate->balloonMoveOutOfScreen(pBalloon);
+            
 			// 从层中移除对象
 			if (pBalloon->getParent())
 			{
@@ -132,38 +135,12 @@ void BalloonManager::addRandomBalloon()
 	{
 		// 随机生成一个气球
         int nBalloonIndex = rand()%8 + 1;
-        ccColor4F color = ccc4f(1.0f, 1.0f, 1.0f, 1.0f);
-        switch (nBalloonIndex)
-        {
-            case 1:
-                color = ccc4f(0, 0.69f, 0.203f, 1.0f);
-                break;
-            case 2:
-                color = ccc4f(0.376f, 0.376f, 0.376f, 1.0f);
-                break;
-            case 3:
-                color = ccc4f(0.933f, 0.608f, 0, 1.0f);
-                break;
-            case 4:
-                color = ccc4f(0.765f, 0.051f, 0.137f, 1.0f);
-                break;
-            case 5:
-                color = ccc4f(0.157f, 0.655f, 0.882f, 1.0f);
-                break;
-            case 6:
-                color = ccc4f(1.0f, 0.945f, 0, 1.0f);
-                break;
-            case 7:
-                color = ccc4f(0.659f, 0.498f, 0.29f, 1.0f);
-                break;
-            case 8:
-                color = ccc4f(0.949f, 0.624f, 0.686f, 1.0f);
-                break;
-            default:
-                break;
-        }
+        // 这里是气球点击爆炸后的粒子效果的颜色
+        BalloonColor eColor = (BalloonColor)nBalloonIndex;
+        // 普通气球是1至3分
         int nValue = rand()%3 + 1;
         BalloonType nType = kBalloonTypeNormal;
+        // 目前只有4个不同种类的气球
         int nBalloonStyle = rand()%4 + 1;
         
         // 默认可点击1下
@@ -182,7 +159,7 @@ void BalloonManager::addRandomBalloon()
         else if (nRate > 90)
         {
             // 道具气球出现概率为10%
-            nType = kBalloonTypeAddBalloonScore;
+            nType = kBalloonTypePump;
             nValue = rand()%5 + 1; // 每按一次加1分
         }
         else if (nRate > 87)
@@ -236,7 +213,8 @@ void BalloonManager::addRandomBalloon()
 		float fStartPosY = - balloonSize.height;
 		pBalloon->setPosition(ccp(fStartPosX + balloonSize.width/2, fStartPosY));
 		pBalloon->setSpeedY(rand()%50/5.0f + 1.0f);
-        pBalloon->setBalloonColor4F(color);
+        // pBalloon->setBalloonColor4F(color);
+        pBalloon->setBalloonColor(eColor);
         
         pBalloon->setScale(fScale);
         

@@ -145,7 +145,38 @@ void Balloon::explosive()
         CCParticleSystemQuad* pParticleExplosive = CCParticleSystemQuad::create("particles/explosive.plist");
         pParticleExplosive->setAutoRemoveOnFinish(true);
         pParticleExplosive->setPosition(getPosition());
-        pParticleExplosive->setEndColor(getBalloonColor4F());
+        ccColor4F color = ccc4f(1.0f, 1.0f, 1.0f, 1.0f);
+        switch (getBalloonColor())
+        {
+            case kBalloonColorGreen:
+                color = ccc4f(0, 0.69f, 0.203f, 1.0f);
+                break;
+            case kBalloonColorBlack:
+                color = ccc4f(0.376f, 0.376f, 0.376f, 1.0f);
+                break;
+            case kBalloonColorOrange:
+                color = ccc4f(0.933f, 0.608f, 0, 1.0f);
+                break;
+            case kBalloonColorRed:
+                color = ccc4f(0.765f, 0.051f, 0.137f, 1.0f);
+                break;
+            case kBalloonColorBlue:
+                color = ccc4f(0.157f, 0.655f, 0.882f, 1.0f);
+                break;
+            case kBalloonColorYellow:
+                color = ccc4f(1.0f, 0.945f, 0, 1.0f);
+                break;
+            case kBalloonColorBrown:
+                color = ccc4f(0.659f, 0.498f, 0.29f, 1.0f);
+                break;
+            case kBalloonColorPink:
+                color = ccc4f(0.949f, 0.624f, 0.686f, 1.0f);
+                break;
+            default:
+                break;
+        }
+        
+        pParticleExplosive->setEndColor(color);
         getParent()->addChild(pParticleExplosive);
     }
 }
@@ -203,7 +234,7 @@ void Balloon::updateDisplayDesc()
                 addChild(pSpriteClock);
             }
             break;
-        case kBalloonTypeAddBalloonScore:
+        case kBalloonTypePump:
             // pStrDesc = ccs("?");
             // fScaleRate = 2.6f;
             {

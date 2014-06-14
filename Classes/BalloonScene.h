@@ -17,13 +17,15 @@
 #include "BalloonResultDialog.h"
 #include "BalloonPauseDialog.h"
 
+#include "BalloonAnalysis.h"
+
 enum BalloonGameStatus
 {
-    GAME_STATUS_READY = 0,  // ¿ªÊ¼Ç°µÄ×¼±¸×´Ì¬
-    GAME_STATUS_RUNNING,    // ÓÎÏ·½øĞĞ×´Ì¬
-    GAME_STATUS_PAUSE,      // ÓÎÏ·ÔİÍ£
-    GAME_STATUS_TIMES_UP,   // ×¼±¸½áÊø×´Ì¬£¬Ê±¼ä½áÊø
-    GAME_STATUS_STOP        // ÓÎÏ·½áÊø
+    GAME_STATUS_READY = 0,  // å¼€å§‹å‰çš„å‡†å¤‡çŠ¶æ€
+    GAME_STATUS_RUNNING,    // æ¸¸æˆè¿›è¡ŒçŠ¶æ€
+    GAME_STATUS_PAUSE,      // æ¸¸æˆæš‚åœ
+    GAME_STATUS_TIMES_UP,   // å‡†å¤‡ç»“æŸçŠ¶æ€ï¼Œæ—¶é—´ç»“æŸ
+    GAME_STATUS_STOP        // æ¸¸æˆç»“æŸ
     
 };
 
@@ -54,7 +56,7 @@ public:
         
         m_nReadyTimeTime = 0.0;
         
-        // ×¢²á¼àÌı¶ÔÏó
+        // æ³¨å†Œç›‘å¬å¯¹è±¡
         m_BalloonManager.setBalloonDelegate(this);
         
         m_ulFrame = 0;
@@ -86,16 +88,28 @@ public:
     
     virtual void update(float dt);
     
+    /**
+     * @brief æ°”çƒç¢°æ’å±å¹•ä¸Šçš„ç‰©ä½“æˆåŠŸå›è°ƒ
+     */
 	virtual void balloonHitTestSuccess(Balloon* pBalloon, cocos2d::CCSprite* pSprite);
     
+    /**
+     * @brief æ°”çƒè¢«ç‚¹å‡»ä¸­åçš„å›è°ƒ
+     */
 	virtual void balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite* pSprite);
+    
+    /**
+     * @brief æ°”çƒç§»å‡ºå±å¹•åçš„å›è°ƒ
+     */
+    virtual void balloonMoveOutOfScreen(Balloon* pBalloon);
 	
-	// µÀ¾ßÆğĞ§Í¨Öª£¬Ò»°ãÎª°´Å¥°´ÏÂºóµÄĞ§¹û
+	// é“å…·èµ·æ•ˆé€šçŸ¥ï¼Œä¸€èˆ¬ä¸ºæŒ‰é’®æŒ‰ä¸‹åçš„æ•ˆæœ
 	virtual void onBalloonItemEffectTrigger(BalloonItem* pItem);
     
-	// µÀ¾ßÏûÊ§Í¨Öª
+	// é“å…·ä½¿ç”¨åæ¶ˆå¤±é€šçŸ¥
 	virtual void onBalloonItemBeforeDisappear(BalloonItem* pItem);
 	virtual void onBalloonItemAfterDisappear(BalloonItem* pItem);
+    
 private:
 	// Attributes for CCB
 	cocos2d::CCSprite* m_pSpriteBalloonModel;
@@ -103,11 +117,11 @@ private:
     cocos2d::CCLabelBMFont* m_pLabelBMFontScore;
     
     cocos2d::CCSprite* m_pSpriteClock;
-    // ÆøÇò²ã
+    // æ°”çƒå±‚
     cocos2d::CCLayer* m_pLayerBalloon;
-    // µÀ¾ß²ã
+    // é“å…·å±‚
     cocos2d::CCLayer* m_pLayerItems;
-    // ±³¾°
+    // èƒŒæ™¯
     cocos2d::CCSprite* m_pSpriteBackground;
     
     cocos2d::CCMenu* m_pMenuPause;
@@ -119,33 +133,37 @@ private:
     BalloonPauseDialog* m_pPauseDialog;
 
 private:
+    // ç»Ÿè®¡å¯¹è±¡
+    BalloonAnalysis m_BalloonAnalysis;
+    
+    // å¼€å§‹å‰å€’è®¡æ—¶çš„å˜é‡
     int m_nReadyTimeTime;
-    // ×÷±×±êÖ¾
+    // ä½œå¼Šæ ‡å¿—
     bool m_bCheated;
     
-    // µ±Ç°²¥·ÅµÄÖ¡
+    // å½“å‰æ’­æ”¾çš„å¸§
     unsigned long m_ulFrame;
     
-    // ÆøÇò¹ÜÀíÀà
+    // æ°”çƒç®¡ç†ç±»
     BalloonManager m_BalloonManager;
     
-    // ÔÆ¶ä¹ÜÀí¶ÔÏó
+    // äº‘æœµç®¡ç†å¯¹è±¡
     CloudManager m_CloudManager;
     
-    // µÀ¾ß¹ÜÀíÀà
+    // é“å…·ç®¡ç†ç±»
     BalloonItemManager m_BalloonItemManager;
     
-    // µ±Ç°ÓÃ»§·ÖÊı
+    // å½“å‰ç”¨æˆ·åˆ†æ•°
     long long m_llTotalScore;
     
-    // µ±Ç°Ê£ÓàÊ±¼ä
+    // å½“å‰å‰©ä½™æ—¶é—´
     long m_lTimeLeft;
     
-    // ÓÎÏ·×´Ì¬
+    // æ¸¸æˆçŠ¶æ€
     BalloonGameStatus m_eGameStatus;
     
 private:
-    // ÖØÖÃÊı¾İ
+    // é‡ç½®æ•°æ®
     void resetData();
     
     void updateScore();
@@ -156,28 +174,28 @@ private:
     
     void showPauseDialog();
     
-    // °´Å¥»Øµ÷
+    // æŒ‰é’®å›è°ƒ
     void onPressMenuRestartGame(cocos2d::CCObject* pSender);
     void onPressMenuReturnMainMenu(cocos2d::CCObject* pSender);
     void onPressMenuShare(cocos2d::CCObject* pSender);
     void onPressMenuResume(cocos2d::CCObject* pSender);
     void onPressMenuPause(cocos2d::CCObject* pSender);
-    // ¶Ô»°¿ò½áÊø»Øµ÷
+    // å¯¹è¯æ¡†ç»“æŸå›è°ƒ
     void onResultDialogEndCall(cocos2d::CCNode* pNode);
     
-    // µ¹¼ÆÊ±»Øµ÷º¯Êı
+    // å€’è®¡æ—¶å›è°ƒå‡½æ•°
     void timeCountCallback(CCNode* pNode);
     
-    // ¶ÁÃëµ¹¼ÆÊ±
+    // è¯»ç§’å€’è®¡æ—¶
     void readReadySecond();
     
-    // ÓÎÏ·¿ªÊ¼
+    // æ¸¸æˆå¼€å§‹
     void startGame();
     
-    // ´´½¨½áËã¶Ô»°¿ò
+    // åˆ›å»ºç»“ç®—å¯¹è¯æ¡†
     void createResultDialog();
     
-    // ÏìÓ¦³ÌĞòÇĞ»»µ½ºóÌ¨
+    // å“åº”ç¨‹åºåˆ‡æ¢åˆ°åå°
     void notifyEnterBackground(cocos2d::CCObject* pData);
     
 public:

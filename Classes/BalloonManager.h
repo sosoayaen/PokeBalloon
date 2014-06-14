@@ -39,6 +39,11 @@ public:
 	 * @brief 气球触摸检测成功回调
 	 */
 	virtual void balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite* pSprite) = 0;
+    
+    /**
+     * @brief 气球移出屏幕后的回调
+     */
+    virtual void balloonMoveOutOfScreen(Balloon* pBalloon) = 0;
 };
 
 class BalloonManager

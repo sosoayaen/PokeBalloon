@@ -19,6 +19,7 @@
 		041B1A4519238B8D00942314 /* StringUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041B1A3719238B8D00942314 /* StringUtil.cpp */; };
 		041B1A4E1923A1A000942314 /* CCJSONConverter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041B1A481923A1A000942314 /* CCJSONConverter.cpp */; };
 		041B1A4F1923A1A000942314 /* cJSON.c in Sources */ = {isa = PBXBuildFile; fileRef = 041B1A4C1923A1A000942314 /* cJSON.c */; };
+		04329516194C2E96006873EF /* BalloonAnalysis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04329514194C2E96006873EF /* BalloonAnalysis.cpp */; };
 		0435602419264F5F0044D838 /* BalloonResultDialog.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 0435602319264F5F0044D838 /* BalloonResultDialog.ccbi */; };
 		0435602619265F0E0044D838 /* BalloonPauseDialog.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 0435602519265F0E0044D838 /* BalloonPauseDialog.ccbi */; };
 		0435602919265FC40044D838 /* BalloonPauseDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0435602719265FC40044D838 /* BalloonPauseDialog.cpp */; };
@@ -359,6 +360,8 @@
 		041B1A4A1923A1A000942314 /* CCJSONData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCJSONData.h; sourceTree = "<group>"; };
 		041B1A4C1923A1A000942314 /* cJSON.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cJSON.c; sourceTree = "<group>"; };
 		041B1A4D1923A1A000942314 /* cJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cJSON.h; sourceTree = "<group>"; };
+		04329514194C2E96006873EF /* BalloonAnalysis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BalloonAnalysis.cpp; sourceTree = "<group>"; };
+		04329515194C2E96006873EF /* BalloonAnalysis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalloonAnalysis.h; sourceTree = "<group>"; };
 		0435602319264F5F0044D838 /* BalloonResultDialog.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonResultDialog.ccbi; sourceTree = "<group>"; };
 		0435602519265F0E0044D838 /* BalloonPauseDialog.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonPauseDialog.ccbi; sourceTree = "<group>"; };
 		0435602719265FC40044D838 /* BalloonPauseDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BalloonPauseDialog.cpp; path = ../Classes/BalloonPauseDialog.cpp; sourceTree = "<group>"; };
@@ -464,7 +467,7 @@
 		04AAEACA1913C9F0006147E3 /* BalloonSoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = BalloonSoundManager.h; path = ../Classes/BalloonSoundManager.h; sourceTree = "<group>"; };
 		04AAEACC1913C9FE006147E3 /* music */ = {isa = PBXFileReference; lastKnownFileType = folder; path = music; sourceTree = "<group>"; };
 		04C2A2A319028D7E004256B2 /* BalloonScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BalloonScene.cpp; path = ../Classes/BalloonScene.cpp; sourceTree = "<group>"; };
-		04C2A2A419028D7E004256B2 /* BalloonScene.h */ = {isa = PBXFileReference; fileEncoding = 2147484705; lastKnownFileType = sourcecode.c.h; name = BalloonScene.h; path = ../Classes/BalloonScene.h; sourceTree = "<group>"; };
+		04C2A2A419028D7E004256B2 /* BalloonScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BalloonScene.h; path = ../Classes/BalloonScene.h; sourceTree = "<group>"; };
 		04C2A2A61902B898004256B2 /* Balloon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Balloon.cpp; path = ../Classes/Balloon.cpp; sourceTree = "<group>"; };
 		04C2A2A71902B898004256B2 /* Balloon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Balloon.h; path = ../Classes/Balloon.h; sourceTree = "<group>"; };
 		04C2A2A919041F2B004256B2 /* Balloon_macro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Balloon_macro.h; path = ../Classes/Balloon_macro.h; sourceTree = "<group>"; };
@@ -1067,6 +1070,16 @@
 				041B1A4D1923A1A000942314 /* cJSON.h */,
 			);
 			path = cJSON;
+			sourceTree = "<group>";
+		};
+		04329513194C2E96006873EF /* Analysis */ = {
+			isa = PBXGroup;
+			children = (
+				04329514194C2E96006873EF /* BalloonAnalysis.cpp */,
+				04329515194C2E96006873EF /* BalloonAnalysis.h */,
+			);
+			name = Analysis;
+			path = ../Classes/Analysis;
 			sourceTree = "<group>";
 		};
 		044BAB6C1905045600D8CCB3 /* Resources */ = {
@@ -1870,12 +1883,7 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				04AA6F7E1940BB7F006B37B6 /* BalloonHandBookScene.cpp */,
-				04AA6F7F1940BB7F006B37B6 /* BalloonHandBookScene.h */,
-				04CB2D49193312D600D1111F /* BalloonItem.cpp */,
-				04CB2D4A193312D600D1111F /* BalloonItem.h */,
-				04CB2D4B193312D600D1111F /* BalloonItemManager.cpp */,
-				04CB2D4C193312D600D1111F /* BalloonItemManager.h */,
+				04329513194C2E96006873EF /* Analysis */,
 				041B1A1D19238B8D00942314 /* comm */,
 				04CB2B62191F74EF004B2792 /* ADMobC2DX */,
 				04CB2B65191F74EF004B2792 /* UMSocialC2DX */,
@@ -1904,6 +1912,12 @@
 				0435602819265FC40044D838 /* BalloonPauseDialog.h */,
 				04356037192916550044D838 /* BalloonOptionsDialog.cpp */,
 				04356038192916550044D838 /* BalloonOptionsDialog.h */,
+				04AA6F7E1940BB7F006B37B6 /* BalloonHandBookScene.cpp */,
+				04AA6F7F1940BB7F006B37B6 /* BalloonHandBookScene.h */,
+				04CB2D49193312D600D1111F /* BalloonItem.cpp */,
+				04CB2D4A193312D600D1111F /* BalloonItem.h */,
+				04CB2D4B193312D600D1111F /* BalloonItemManager.cpp */,
+				04CB2D4C193312D600D1111F /* BalloonItemManager.h */,
 			);
 			name = Classes;
 			path = ../classes;
@@ -2564,6 +2578,7 @@
 				041B1A4319238B8D00942314 /* Encrypt.cpp in Sources */,
 				1A9CE8781765A12C000E3062 /* AssetsManager.cpp in Sources */,
 				1A9CE8791765A12C000E3062 /* CCArmatureAnimation.cpp in Sources */,
+				04329516194C2E96006873EF /* BalloonAnalysis.cpp in Sources */,
 				1A9CE87A1765A12C000E3062 /* CCProcessBase.cpp in Sources */,
 				1A9CE87B1765A12C000E3062 /* CCTween.cpp in Sources */,
 				1A9CE87C1765A12C000E3062 /* CCArmature.cpp in Sources */,
@@ -2638,7 +2653,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: ZHIHONG WANG (FSFG36R3L2)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2700,7 +2715,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: ZHIHONG WANG (2UWE59VJK9)";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;

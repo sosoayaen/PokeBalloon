@@ -136,6 +136,9 @@ void BalloonScene::resetData()
     
     updateScore();
     updateTimeLeft();
+    
+    // 初始化统计数据
+    m_BalloonAnalysis.initData();
 }
 
 void BalloonScene::updateScore()
@@ -153,7 +156,7 @@ void BalloonScene::updateTimeLeft()
 void BalloonScene::onEnter()
 {
 	CCLayer::onEnter();
-	// TODO: 这里可以定义进入场景的初始化，比如控件的初始位置，初始状态等
+	// 这里可以定义进入场景的初始化，比如控件的初始位置，初始状态等
     createResultDialog();
     
     // 启动单点触摸回调注册
@@ -183,7 +186,7 @@ void BalloonScene::notifyEnterBackground(CCObject* pData)
 void BalloonScene::onExit()
 {
 	CCLayer::onExit();
-	// TODO: 退出场景，取消CCNotificationCenter可以放在这里做，但是对应在onEnter的时候要重新注册
+	// 退出场景，取消CCNotificationCenter可以放在这里做，但是对应在onEnter的时候要重新注册
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, NOTIFY_PAUSE);
     
     // 释放结算对话框
@@ -256,6 +259,9 @@ void BalloonScene::balloonHitTestSuccess(Balloon* pBalloon, cocos2d::CCSprite* p
 
 void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite* pSprite)
 {
+    // 增加统计
+    m_BalloonAnalysis.countWithBalloonObject(pBalloon);
+    
     DataManagerUtil* pDMU = DataManagerUtil::sharedDataManagerUtil();
     
     if (!pDMU) return;
@@ -321,11 +327,9 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             }
             updateTimeLeft();
             break;
-        case kBalloonTypeAddBalloonScore:
+        case kBalloonTypePump:
             pBalloon->explosive();
             // 屏幕出现打气筒按钮，并且设置按钮的小时时间
-            // m_BalloonItemManager.appendBalloonItemWithItemId(kBalloonItemId_Pumps, "texture/items/item_pump.png", pBalloon->getBalloonScore());
-            // m_BalloonItemManager.appendBalloonItemWithItemId(kBalloonItemId_Pumps, CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("item_pump.png"), pBalloon->getBalloonScore());
             {
                 BalloonItemClick* pBalloonItem = BalloonItemClick::create(this, CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("item_pump.png"), pBalloon->getBalloonScore());
                 
@@ -339,6 +343,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             pBalloon->explosive();
             // 冻结屏幕上的所有气球
             m_BalloonManager.setAllBalloonEffect(kBalloonEffectFrozen);
+            // 设定统一的Y轴时间
             m_BalloonManager.setAllBalloonSpeedY(1.5f);
             break;
 		case kBalloonTypeGiant:
@@ -379,6 +384,12 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
         default:
             break;
     }
+}
+
+void BalloonScene::balloonMoveOutOfScreen(Balloon *pBalloon)
+{
+    // 这里可以计算哪些气球被漏过了，根据气球的属性设置对应的结算数据
+    
 }
 
 void BalloonScene::onBalloonItemEffectTrigger(BalloonItem* pItem)
@@ -521,6 +532,16 @@ void BalloonScene::showResultDialog()
     }
         
     m_pResultDialog->setHighScore(llHighestScore);
+    
+#if COCOS2D_DEBUG > 0
+    CCLabelTTF* pLabelTTFAnalysis = CCLabelTTF::create(m_BalloonAnalysis.dumpDebugInfo(), "", 30);
+    pLabelTTFAnalysis->setHorizontalAlignment(kCCTextAlignmentLeft);
+    pLabelTTFAnalysis->setVerticalAlignment(kCCVerticalTextAlignmentBottom);
+    pLabelTTFAnalysis->setDimensions(getContentSize());
+    pLabelTTFAnalysis->setAnchorPoint(CCPointZero);
+    pLabelTTFAnalysis->setPosition(CCPointZero);
+    m_pResultDialog->addChild(pLabelTTFAnalysis);
+#endif
     
     addChild(m_pResultDialog);
 }
