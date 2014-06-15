@@ -590,7 +590,7 @@ void BalloonScene::onPressMenuShare(cocos2d::CCObject *pSender)
     
     // pDictData->setObject(ccs("一起来【气球大作战】吧～伸出你的指头，释放你的压力"), "shareText");
     const char* pszKey = "high_score_shares";
-    if (m_llTotalScore < 1)
+    if (m_llTotalScore <= 1)
     {
         // 采用单数模式的字符串
         pszKey = "high_score_share";
@@ -659,7 +659,6 @@ void BalloonScene::timeCountCallback(CCNode* pNode)
 void BalloonScene::readReadySecond()
 {
     // 启动读秒回调
-    // CCDirector::sharedDirector()->getScheduler()->scheduleSelector(schedule_selector(BalloonScene::readSecond), this, 1.0f, true, 1.0f, false);
     CCLabelBMFont* pLabelBMFontTime = CCLabelBMFont::create("3", "texture/fonts/font.fnt");
     pLabelBMFontTime->setPosition(ccpMult(ccpFromSize(getContentSize()), 0.5f));
     pLabelBMFontTime->setScale(6.0f);
