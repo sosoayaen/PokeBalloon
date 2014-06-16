@@ -186,7 +186,7 @@ void BalloonAnalysis::merge(const BalloonAnalysis &analysisData)
     while (nLen-- > 0)
     {
         // 逐个累加数据
-        *pDestData++ = *pData++;
+        *pDestData++ += *pData++;
     }
 }
 
@@ -235,10 +235,10 @@ const char* BalloonAnalysis::dumpDebugInfo() const
 //////////////////////////////////////////////////////////////////////////////////
 // 全局数据类实现
 
-#define KEY_ITEM_DATA   "itemData"      // 数据字典中道具数据的key
-#define KEY_COLOR_DATA  "colorData"     // 数据字典中颜色数据的key
-#define KEY_NORMAL_DATA "normalData"    // 数据字典中普通计分数据的key
-#define ARCHIVEMENT_FILE_NAME "archivement" // 存放数据的文件名
+#define KEY_ITEM_DATA           "itemData"      // 数据字典中道具数据的key
+#define KEY_COLOR_DATA          "colorData"     // 数据字典中颜色数据的key
+#define KEY_NORMAL_DATA         "normalData"    // 数据字典中普通计分数据的key
+#define ARCHIVEMENT_FILE_NAME   "archivement"   // 存放数据的文件名
 
 BalloonGlobalAnalysis* g_sharedGlobalAnalysis = NULL;
 
@@ -321,9 +321,10 @@ void BalloonGlobalAnalysis::loadData()
         // 载入数据
         unsigned long nSize = 0;
         const unsigned char* pData = CCFileUtils::sharedFileUtils()->getFileData(strPath.c_str(), "rb", &nSize);
-        if (pData)
+        if (pData && nSize > 0)
         {
             const char* pszJSONData = (const char*)pData;
+            // CCLog("%s", pszJSONData);
             CCDictionary* pDict = CCJSONConverter::sharedConverter()->dictionaryFrom(pszJSONData);
             // 转换数据到结构体
             setDataWithDictionary(pDict);
@@ -388,6 +389,7 @@ bool BalloonGlobalAnalysis::saveData()
     CCDictionary* pDict = dictionayFromData();
     
     if (!pDict) return false;
+    
     // 转换成JSON数据
     std::string strJSON = CCJSONConverter::sharedConverter()->strFrom(pDict);
     // 保存数据到磁盘

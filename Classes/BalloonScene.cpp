@@ -139,6 +139,7 @@ void BalloonScene::resetData()
     
     // 初始化统计数据
     m_BalloonAnalysis.initData();
+    m_BalloonMissedAnalysis.initData();
 }
 
 void BalloonScene::updateScore()
@@ -332,6 +333,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             // 屏幕出现打气筒按钮，并且设置按钮的小时时间
             {
                 BalloonItemClick* pBalloonItem = BalloonItemClick::create(this, CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("item_pump.png"), pBalloon->getBalloonScore());
+                pBalloonItem->setItemId(kBalloonItemId_Pumps);
                 
                 m_BalloonItemManager.setScreenBalloonItem(pBalloonItem);
             }
@@ -389,15 +391,22 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
 void BalloonScene::balloonMoveOutOfScreen(Balloon *pBalloon)
 {
     // 这里可以计算哪些气球被漏过了，根据气球的属性设置对应的结算数据
-    
+    m_BalloonMissedAnalysis.countWithBalloonObject(pBalloon);
 }
 
 void BalloonScene::onBalloonItemEffectTrigger(BalloonItem* pItem)
 {
     CCLOG("BalloonScene::onBalloonItemEffectTrigger(BalloonItem* pItem), called...");
     
-    // 按一下后给屏幕上随机增加1到5分到所有的积分气球
-    m_BalloonManager.addBalloonScoreWithValue(1);
+    switch (pItem->getItemId())
+    {
+        case kBalloonItemId_Pumps:
+            // 按一下后给屏幕上随机增加1到5分到所有的积分气球
+            m_BalloonManager.addBalloonScoreWithValue(1);
+            break;
+        default:
+            break;
+    }
 }
 
 void BalloonScene::onBalloonItemBeforeDisappear(BalloonItem* pItem)
@@ -490,20 +499,27 @@ void BalloonScene::update(float dt)
         case GAME_STATUS_STOP:
             unscheduleUpdate();
             
+            // 移除界面上的气球和云朵
             m_pLayerBalloon->removeAllChildren();
 
+            // 判断是否作弊
             if (!m_bCheated)
+            {
+                // 合并统计数据
+                BalloonGlobalAnalysis::sharedGlobalAnalysis()->merge(m_BalloonAnalysis);
+                // 存盘
+                BalloonGlobalAnalysis::sharedGlobalAnalysis()->saveData();
+                // m_GlobalAnalysis.merge(m_BalloonAnalysis);
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
                 // 发送成绩到GameCenter
                 GameKitHelper2dx::uploadScore(m_llTotalScore);
-#else
-                ;
 #endif
+            }
             
             // 弹出结算框
             showResultDialog();
-            
             break;
+            
         default:
             break;
     }
@@ -534,13 +550,18 @@ void BalloonScene::showResultDialog()
     m_pResultDialog->setHighScore(llHighestScore);
     
 #if COCOS2D_DEBUG > 0
-    CCLabelTTF* pLabelTTFAnalysis = CCLabelTTF::create(m_BalloonAnalysis.dumpDebugInfo(), "", 30);
-    pLabelTTFAnalysis->setHorizontalAlignment(kCCTextAlignmentLeft);
-    pLabelTTFAnalysis->setVerticalAlignment(kCCVerticalTextAlignmentBottom);
-    pLabelTTFAnalysis->setDimensions(getContentSize());
-    pLabelTTFAnalysis->setAnchorPoint(CCPointZero);
-    pLabelTTFAnalysis->setPosition(CCPointZero);
-    m_pResultDialog->addChild(pLabelTTFAnalysis);
+    CCLabelTTF* pLabelTTFAnalysis = dynamic_cast<CCLabelTTF*>(m_pResultDialog->getChildByTag(101));
+    if (!pLabelTTFAnalysis)
+    {
+        pLabelTTFAnalysis = CCLabelTTF::create("", "", 30);
+        pLabelTTFAnalysis->setHorizontalAlignment(kCCTextAlignmentLeft);
+        pLabelTTFAnalysis->setVerticalAlignment(kCCVerticalTextAlignmentBottom);
+        pLabelTTFAnalysis->setDimensions(getContentSize());
+        pLabelTTFAnalysis->setAnchorPoint(CCPointZero);
+        pLabelTTFAnalysis->setPosition(CCPointZero);
+        m_pResultDialog->addChild(pLabelTTFAnalysis);
+    }
+    pLabelTTFAnalysis->setString(m_BalloonAnalysis.dumpDebugInfo());
 #endif
     
     addChild(m_pResultDialog);
@@ -602,6 +623,10 @@ void BalloonScene::onPressMenuShare(cocos2d::CCObject *pSender)
 
 void BalloonScene::onPressMenuPause(cocos2d::CCObject *pSender)
 {
+    // 校验下是否在运行状态
+    if (m_eGameStatus != GAME_STATUS_RUNNING)
+        return;
+    
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
     
     // 暂停游戏

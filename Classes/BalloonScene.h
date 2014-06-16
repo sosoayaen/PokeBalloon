@@ -41,8 +41,6 @@ public:
 	BalloonScene()
 	{
 		m_pSpriteBalloonModel = NULL;
-		// m_pLabelTTFScore = NULL;
-		// m_pLabelTTFTime = NULL;
         m_pLabelBMFontScore = NULL;
         m_pLabelBMFontTimeLeft = NULL;
         m_pLayerBalloon = NULL;
@@ -133,11 +131,15 @@ private:
     BalloonPauseDialog* m_pPauseDialog;
 
 private:
-    // 统计对象
+    // 当前局统计对象
     BalloonAnalysis m_BalloonAnalysis;
+    
+    // 漏过的气球
+    BalloonAnalysis m_BalloonMissedAnalysis;
     
     // 开始前倒计时的变量
     int m_nReadyTimeTime;
+    
     // 作弊标志
     bool m_bCheated;
     
@@ -205,15 +207,9 @@ public:
 	virtual void onExit();
 	virtual void keyBackClicked( void );
 	virtual void keyMenuClicked( void );
-
-
 	
 public:
 	// Funcitons
-
-
-
-
 
 };
 
