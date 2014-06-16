@@ -17,6 +17,10 @@
  */
 
 #include "BalloonAnalysis.h"
+#include "CCJSONConverter.h"
+
+
+USING_NS_CC;
 
 void BalloonAnalysis::initData()
 {
@@ -172,6 +176,20 @@ long long BalloonAnalysis::getItemBalloonCounts() const
     return llSumData;
 }
 
+void BalloonAnalysis::merge(const BalloonAnalysis &analysisData)
+{
+    const long long* pData = (long long*)&analysisData.getAnalysisData();
+    long long* pDestData = (long long*)&m_AnalysisData;
+    
+    // 得到数据结构内数据个数
+    int nLen = sizeof(BalloonAnalysisData)/sizeof(long long);
+    while (nLen-- > 0)
+    {
+        // 逐个累加数据
+        *pDestData++ = *pData++;
+    }
+}
+
 const char* BalloonAnalysis::dumpDebugInfo() const
 {
 	// 输出统计调试信息
@@ -212,4 +230,176 @@ const char* BalloonAnalysis::dumpDebugInfo() const
     stream << "- time: " << m_AnalysisData.itemData.time << "\n";
 
 	return stream.str().c_str();
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// 全局数据类实现
+
+#define KEY_ITEM_DATA   "itemData"      // 数据字典中道具数据的key
+#define KEY_COLOR_DATA  "colorData"     // 数据字典中颜色数据的key
+#define KEY_NORMAL_DATA "normalData"    // 数据字典中普通计分数据的key
+#define ARCHIVEMENT_FILE_NAME "archivement" // 存放数据的文件名
+
+BalloonGlobalAnalysis* g_sharedGlobalAnalysis = NULL;
+
+BalloonGlobalAnalysis* BalloonGlobalAnalysis::sharedGlobalAnalysis()
+{
+    if (!g_sharedGlobalAnalysis)
+    {
+        g_sharedGlobalAnalysis = new BalloonGlobalAnalysis;
+        CCAssert(g_sharedGlobalAnalysis, "g_sharedGlobalAnalysis malloc failed!");
+        g_sharedGlobalAnalysis->initData();
+        g_sharedGlobalAnalysis->loadData();
+    }
+    return g_sharedGlobalAnalysis;
+}
+
+void BalloonGlobalAnalysis::purgeGlobalAnalysis()
+{
+    if (g_sharedGlobalAnalysis)
+    {
+        delete g_sharedGlobalAnalysis;
+        g_sharedGlobalAnalysis = NULL;
+    }
+}
+
+// 加速书写过程的宏定义
+#define getColorData(color) m_AnalysisData.colorData.color = atoll(pDictColor->valueForKey(#color)->getCString())
+#define getNormalData(data) m_AnalysisData.normalData.data = atoll(pDictNormal->valueForKey(#data)->getCString())
+#define getItemData(data) m_AnalysisData.itemData.data = atoll(pDictItem->valueForKey(#data)->getCString())
+
+void BalloonGlobalAnalysis::setDataWithDictionary(cocos2d::CCDictionary *pDict)
+{
+    // 得到总数
+    m_AnalysisData.total = atoll(pDict->valueForKey("total")->getCString());
+    
+    // 设置颜色数据
+    CCDictionary* pDictColor = dynamic_cast<CCDictionary*>(pDict->objectForKey(KEY_COLOR_DATA));
+    if (pDictColor)
+    {
+        // m_AnalysisData.colorData.red = atoll(pDictColor->valueForKey("red")->getCString());
+        getColorData(red);
+        getColorData(black);
+        getColorData(yellow);
+        getColorData(green);
+        getColorData(pink);
+        getColorData(blue);
+        getColorData(brown);
+        getColorData(orange);
+    }
+    
+    // 设置普通气球数据
+    CCDictionary* pDictNormal = dynamic_cast<CCDictionary*>(pDict->objectForKey(KEY_NORMAL_DATA));
+    if (pDictNormal)
+    {
+        getNormalData(normal_positive);
+        getNormalData(normal_negative);
+        getNormalData(normal_zero);
+    }
+    
+    // 设置道具气球数据
+    CCDictionary* pDictItem = dynamic_cast<CCDictionary*>(pDict->objectForKey(KEY_ITEM_DATA));
+    if (pDictItem)
+    {
+        getItemData(boom);
+        getItemData(frozen);
+        getItemData(giant);
+        getItemData(multi);
+        getItemData(reverse_ex);
+        getItemData(reverse);
+        getItemData(pump);
+        getItemData(time);
+    }
+}
+
+void BalloonGlobalAnalysis::loadData()
+{
+    // 从磁盘中把数据读入，如果没有，则跳过
+    std::string strPath = CCFileUtils::sharedFileUtils()->getWritablePath() + ARCHIVEMENT_FILE_NAME;
+    if (CCFileUtils::sharedFileUtils()->isFileExist(strPath))
+    {
+        // 载入数据
+        unsigned long nSize = 0;
+        const unsigned char* pData = CCFileUtils::sharedFileUtils()->getFileData(strPath.c_str(), "rb", &nSize);
+        if (pData)
+        {
+            const char* pszJSONData = (const char*)pData;
+            CCDictionary* pDict = CCJSONConverter::sharedConverter()->dictionaryFrom(pszJSONData);
+            // 转换数据到结构体
+            setDataWithDictionary(pDict);
+            // 释放数据
+            delete pData;
+        }
+    }
+}
+
+// 加速书写过程的宏定义
+#define setColorData(color) pDictColor->setObject(CCString::createWithFormat("%lld", m_AnalysisData.colorData.color), #color)
+#define setNormalData(data) pDictNormal->setObject(CCString::createWithFormat("%lld", m_AnalysisData.normalData.data), #data)
+#define setItemData(data) pDictItem->setObject(CCString::createWithFormat("%lld", m_AnalysisData.itemData.data), #data)
+
+CCDictionary* BalloonGlobalAnalysis::dictionayFromData()
+{
+    CCDictionary* pDict = CCDictionary::create();
+    pDict->removeAllObjects();
+    
+    // 从数据中得到总数
+    pDict->setObject(CCString::createWithFormat("%lld", m_AnalysisData.total), "total");
+    
+    // 处理颜色数据
+    CCDictionary* pDictColor = CCDictionary::create();
+    // pDictColor->setObject(CCString::createWithFormat("%lld", colorData.red), "red");
+    setColorData(red);
+    setColorData(blue);
+    setColorData(black);
+    setColorData(orange);
+    setColorData(pink);
+    setColorData(green);
+    setColorData(brown);
+    setColorData(yellow);
+    pDict->setObject(pDictColor, KEY_COLOR_DATA);
+    
+    // 处理分数气球
+    CCDictionary* pDictNormal = CCDictionary::create();
+    // pDictNormal->setObject(CCString::createWithFormat("%lld", m_AnalysisData.normalData.normal_positive), "normal_positive");
+    setNormalData(normal_positive);
+    setNormalData(normal_negative);
+    setNormalData(normal_zero);
+    pDict->setObject(pDictNormal, KEY_NORMAL_DATA);
+    
+    // 处理道具气球
+    CCDictionary* pDictItem = CCDictionary::create();
+    setItemData(pump);
+    setItemData(boom);
+    setItemData(giant);
+    setItemData(multi);
+    setItemData(reverse);
+    setItemData(reverse_ex);
+    setItemData(frozen);
+    setItemData(time);
+    pDict->setObject(pDictItem, KEY_ITEM_DATA);
+    
+    return pDict;
+}
+
+bool BalloonGlobalAnalysis::saveData()
+{
+    // 把数据结构转换成CCDictionary对象
+    CCDictionary* pDict = dictionayFromData();
+    
+    if (!pDict) return false;
+    // 转换成JSON数据
+    std::string strJSON = CCJSONConverter::sharedConverter()->strFrom(pDict);
+    // 保存数据到磁盘
+    std::string strPath = CCFileUtils::sharedFileUtils()->getWritablePath() + ARCHIVEMENT_FILE_NAME;
+    FILE* file = fopen(strPath.c_str(), "wb");
+    CCAssert(file, "archivement file open failed...");
+    if (file)
+    {
+        fwrite(strJSON.c_str(), 1, strJSON.length(), file);
+        fflush(file);
+        fclose(file);
+    }
+    
+    return true;
 }

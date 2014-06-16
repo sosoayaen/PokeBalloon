@@ -15,8 +15,10 @@
  *
  * =====================================================================================
  */
-
+#ifndef __BALLOON_ANALYSIS_H__
+#define __BALLOON_ANALYSIS_H__
 #include "Balloon.h"
+#include "cocos2d.h"
 
 // 颜色气球统计数据
 struct tagBalloonColorAnalysisData
@@ -66,7 +68,7 @@ class BalloonAnalysis
 {
 public:
 	BalloonAnalysis(){}
-	~BalloonAnalysis(){}
+	virtual ~BalloonAnalysis(){}
 
 	/**
 	 * @brief 初始化数据
@@ -103,6 +105,12 @@ public:
      */
     long long getNormalBalloonCounts() const;
     
+    /**
+     * @brief 把统计数据合并，注意，数据结构必须时long long型的
+     * @param analysisData
+     */
+    void merge(const BalloonAnalysis& analysisData);
+    
 	/**
 	 * @brief 输出统计信息
 	 */
@@ -130,8 +138,41 @@ protected:
 	 */
 	void handleBalloonData(Balloon* pBalloon);
 
-private:
+protected:
 	// 分析结构体
 	BalloonAnalysisData m_AnalysisData;
 
 };
+
+/**
+ * @class 全局分析数据
+ */
+class BalloonGlobalAnalysis : public BalloonAnalysis
+{
+public:
+    BalloonGlobalAnalysis(){}
+    ~BalloonGlobalAnalysis(){}
+    
+    // 得到全局静态的记录数据
+    static BalloonGlobalAnalysis* sharedGlobalAnalysis();
+    
+    /**
+     * @brief 释放全局记录对象
+     */
+    void purgeGlobalAnalysis();
+    
+    /**
+     * @brief 从磁盘加载记录数据，一般只有全局数据允许调用此接口
+     */
+    void loadData();
+    
+    /**
+     * @brief 保存数据到磁盘，一般只允许全局数据调用此接口
+     */
+    bool saveData();
+private:
+    cocos2d::CCDictionary* dictionayFromData();
+    void setDataWithDictionary(cocos2d::CCDictionary* pDict);
+};
+
+#endif // __BALLOON_ANALYSIS_H__
