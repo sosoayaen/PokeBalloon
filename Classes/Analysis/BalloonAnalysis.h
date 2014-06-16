@@ -114,7 +114,7 @@ public:
 	/**
 	 * @brief 输出统计信息
 	 */
-	const char* dumpDebugInfo() const;
+    std::string dumpDebugInfo() const;
 
 protected:
 

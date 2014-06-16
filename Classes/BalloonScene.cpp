@@ -554,6 +554,7 @@ void BalloonScene::showResultDialog()
     if (!pLabelTTFAnalysis)
     {
         pLabelTTFAnalysis = CCLabelTTF::create("", "", 30);
+        pLabelTTFAnalysis->setTag(101);
         pLabelTTFAnalysis->setHorizontalAlignment(kCCTextAlignmentLeft);
         pLabelTTFAnalysis->setVerticalAlignment(kCCVerticalTextAlignmentBottom);
         pLabelTTFAnalysis->setDimensions(getContentSize());
@@ -561,7 +562,7 @@ void BalloonScene::showResultDialog()
         pLabelTTFAnalysis->setPosition(CCPointZero);
         m_pResultDialog->addChild(pLabelTTFAnalysis);
     }
-    pLabelTTFAnalysis->setString(m_BalloonAnalysis.dumpDebugInfo());
+    pLabelTTFAnalysis->setString(m_BalloonAnalysis.dumpDebugInfo().c_str());
 #endif
     
     addChild(m_pResultDialog);

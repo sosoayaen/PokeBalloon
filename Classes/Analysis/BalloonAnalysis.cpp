@@ -190,7 +190,7 @@ void BalloonAnalysis::merge(const BalloonAnalysis &analysisData)
     }
 }
 
-const char* BalloonAnalysis::dumpDebugInfo() const
+std::string BalloonAnalysis::dumpDebugInfo() const
 {
 	// 输出统计调试信息
 	std::stringstream stream;
@@ -229,7 +229,7 @@ const char* BalloonAnalysis::dumpDebugInfo() const
     // 增加时间气球数目
     stream << "- time: " << m_AnalysisData.itemData.time << "\n";
 
-	return stream.str().c_str();
+	return stream.str();
 }
 
 //////////////////////////////////////////////////////////////////////////////////
