@@ -25,6 +25,10 @@ DialogLayer::DialogLayer():
 
 DialogLayer::~DialogLayer()
 {
+    // 移除可能retain的数据
+    CC_SAFE_RELEASE_NULL(m_pBoardOnEnterAction);
+    CC_SAFE_RELEASE_NULL(m_pBoardOnExitAction);
+    CC_SAFE_RELEASE_NULL(m_pCallFuncN);
 }
 
 bool DialogLayer::init()

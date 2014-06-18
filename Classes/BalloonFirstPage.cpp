@@ -226,9 +226,9 @@ SEL_MenuHandler BalloonFirstPage::onResolveCCBCCMenuItemSelector( CCObject * pTa
 
 bool BalloonFirstPage::onAssignCCBMemberVariable( CCObject* pTarget, const char* pMemberVariableName, CCNode* pNode )
 {
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteBackground", CCSprite*, this->m_pSpriteBackground);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuMain", CCMenu*, this->m_pMenuMain);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteTitle", CCSprite*, this->m_pSpriteTitle);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteBackground", CCSprite*, this->m_pSpriteBackground);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuMain", CCMenu*, this->m_pMenuMain);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteTitle", CCSprite*, this->m_pSpriteTitle);
 
 	return true;
 }

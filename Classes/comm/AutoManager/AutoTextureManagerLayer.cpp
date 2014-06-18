@@ -43,14 +43,9 @@ void AutoTextureManagerLayer::onEnter()
 
 void AutoTextureManagerLayer::onExit()
 {
-	CCLayer::onExit();
-
 	unloadTextureResources();
-
-	// 释放场景的消息队列
-//	CommandCenter::sharedCommandCenter()->clearMessageCache();
-	// 释放自定义头像缓存
-//	LocalPhotoAccessMgr::shareInstance()->cleanMemoryCache();
+    
+	CCLayer::onExit();
 }
 
 void AutoTextureManagerLayer::loadTextureResources()

@@ -112,17 +112,17 @@ SEL_MenuHandler BalloonResultDialog::onResolveCCBCCMenuItemSelector( CCObject * 
 
 bool BalloonResultDialog::onAssignCCBMemberVariable( CCObject* pTarget, const char* pMemberVariableName, CCNode* pNode )
 {
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLabelBMFontCurrentScore", CCLabelBMFont*, this->m_pLabelBMFontCurrentScore);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLabelBMFontHighestScore", CCLabelBMFont*, this->m_pLabelBMFontHighestScore);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuShare", CCMenu*, this->m_pMenuShare);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuItemPlayAgain", CCMenuItem*, this->m_pMenuItemPlayAgain);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuItemReturn", CCMenuItem*, this->m_pMenuItemReturn);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuItemShare", CCMenuItem*, this->m_pMenuItemShare);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuItemGotoShop", CCMenuItem*, this->m_pMenuItemGotoShop);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuResult", CCMenu*, this->m_pMenuResult);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteNewFlag", CCSprite*, this->m_pSpriteNewFlag);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteResultBoard", CCSprite*, this->m_pSpriteResultBoard);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteStar", CCSprite*, this->m_pSpriteStar);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelBMFontCurrentScore", CCLabelBMFont*, this->m_pLabelBMFontCurrentScore);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelBMFontHighestScore", CCLabelBMFont*, this->m_pLabelBMFontHighestScore);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuShare", CCMenu*, this->m_pMenuShare);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuItemPlayAgain", CCMenuItem*, this->m_pMenuItemPlayAgain);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuItemReturn", CCMenuItem*, this->m_pMenuItemReturn);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuItemShare", CCMenuItem*, this->m_pMenuItemShare);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuItemGotoShop", CCMenuItem*, this->m_pMenuItemGotoShop);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuResult", CCMenu*, this->m_pMenuResult);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteNewFlag", CCSprite*, this->m_pSpriteNewFlag);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteResultBoard", CCSprite*, this->m_pSpriteResultBoard);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteStar", CCSprite*, this->m_pSpriteStar);
 
 	return true;
 }

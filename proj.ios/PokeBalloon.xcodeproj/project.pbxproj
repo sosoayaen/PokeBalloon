@@ -336,7 +336,7 @@
 		041B1A1F19238B8D00942314 /* AutoTextureManagerLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AutoTextureManagerLayer.cpp; sourceTree = "<group>"; };
 		041B1A2019238B8D00942314 /* AutoTextureManagerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoTextureManagerLayer.h; sourceTree = "<group>"; };
 		041B1A2119238B8D00942314 /* TextureManagerProtocol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TextureManagerProtocol.cpp; sourceTree = "<group>"; };
-		041B1A2219238B8D00942314 /* TextureManagerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureManagerProtocol.h; sourceTree = "<group>"; };
+		041B1A2219238B8D00942314 /* TextureManagerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = TextureManagerProtocol.h; sourceTree = "<group>"; };
 		041B1A2519238B8D00942314 /* DialogLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = DialogLayer.cpp; sourceTree = "<group>"; };
 		041B1A2619238B8D00942314 /* DialogLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DialogLayer.h; sourceTree = "<group>"; };
 		041B1A2819238B8D00942314 /* bailinMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bailinMacro.h; sourceTree = "<group>"; };

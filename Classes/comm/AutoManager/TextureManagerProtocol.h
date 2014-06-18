@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-// ×ÊÔ´×Ö·û´®ÁĞ±í
+// èµ„æºå­—ç¬¦ä¸²åˆ—è¡¨
 typedef std::vector<std::string> TextureStringArray;
 
 class TextureManagerProtocol
@@ -14,25 +14,25 @@ public:
 	virtual ~TextureManagerProtocol();
 
 	/**
-	 * @brief ¼ÓÔØÎÆÀí×ÊÔ´£¬¶ÔÓ¦µÄ×ÊÔ´ÃèÊö´æÔÚ m_vTexturesString Ö®ÖĞ
+	 * @brief åŠ è½½çº¹ç†èµ„æºï¼Œå¯¹åº”çš„èµ„æºæè¿°å­˜åœ¨ m_vTexturesString ä¹‹ä¸­
 	 */
 	virtual void loadTextureResources();
 
 	/**
-	 * @brief Ğ¶ÔØÎÆÀí×ÊÔ´
+	 * @brief å¸è½½çº¹ç†èµ„æº
 	 */
 	virtual void unloadTextureResources();	
 
 protected:
 
 	/**
-	 * @brief ÉèÖÃ×ÊÔ´ÎÄ¼şÁĞ±í
+	 * @brief è®¾ç½®èµ„æºæ–‡ä»¶åˆ—è¡¨
 	 */
 	virtual bool setResourceString() = 0;
 
 protected:
 
-	// ÎÆÀí×ÊÔ´Êı×é
+	// çº¹ç†èµ„æºæ•°ç»„
 	TextureStringArray m_vTexturesString;
 
 private:

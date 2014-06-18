@@ -18,6 +18,7 @@
 #include "BalloonPauseDialog.h"
 
 #include "BalloonAnalysis.h"
+#include "AutoTextureManagerLayer.h"
 
 enum BalloonGameStatus
 {
@@ -30,7 +31,8 @@ enum BalloonGameStatus
 };
 
 class BalloonScene:
-	public cocos2d::CCLayer,
+	// public cocos2d::CCLayer,
+    public AutoTextureManagerLayer,
     public BalloonDelegate,
     public BalloonItemDelegate,
 	public cocos2d::extension::CCBSelectorResolver,
@@ -199,6 +201,9 @@ private:
     
     // 响应程序切换到后台
     void notifyEnterBackground(cocos2d::CCObject* pData);
+    
+protected:
+    virtual bool setResourceString();
     
 public:
 	// Virtual Functions

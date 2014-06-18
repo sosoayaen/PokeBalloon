@@ -19,7 +19,7 @@ void TextureManagerProtocol::loadTextureResources()
 		iterTextureFilePath != m_vTexturesString.end();
 		iterTextureFilePath++)
 	{
-		// ÅĞ¶ÏÏÂÊÇ·ñÊÇÖ±½Ó¼ÓÔØ·ÇplistÎÄ¼ş£¬Ö±½Ó¼ÓÔØµ½CCTextrueÖĞ¼´¿É
+		// åˆ¤æ–­ä¸‹æ˜¯å¦æ˜¯ç›´æ¥åŠ è½½éplistæ–‡ä»¶ï¼Œç›´æ¥åŠ è½½åˆ°CCTextrueä¸­å³å¯
 		if (iterTextureFilePath->find(".plist") != std::string::npos)
 		{
 			CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(iterTextureFilePath->c_str());
@@ -40,7 +40,7 @@ void TextureManagerProtocol::loadTextureResources()
 
 void TextureManagerProtocol::unloadTextureResources()
 {
-	// ÊÍ·ÅÎÆÀí×ÊÔ´
+	// é‡Šæ”¾çº¹ç†èµ„æº
 	for (std::vector<std::string>::iterator iterTextureFilePath = m_vTexturesString.begin();
 		iterTextureFilePath != m_vTexturesString.end();
 		iterTextureFilePath++)

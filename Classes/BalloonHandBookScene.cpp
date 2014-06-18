@@ -73,14 +73,14 @@ bool BalloonHandBookScene::init()
 void BalloonHandBookScene::onEnter()
 {
 	CCLayer::onEnter();
-	// TODO: 这里可以定义进入场景的初始化，比如控件的初始位置，初始状态等
+	// 这里可以定义进入场景的初始化，比如控件的初始位置，初始状态等
     reLayoutCoins();
 }
 
 void BalloonHandBookScene::onExit()
 {
 	CCLayer::onExit();
-	// TODO: 退出场景，取消CCNotificationCenter可以放在这里做，但是对应在onEnter的时候要重新注册
+	// 退出场景，取消CCNotificationCenter可以放在这里做，但是对应在onEnter的时候要重新注册
 }
 
 SEL_CallFuncN BalloonHandBookScene::onResolveCCBCCCallFuncSelector( CCObject * pTarget, const char* pSelectorName )
@@ -97,11 +97,11 @@ SEL_MenuHandler BalloonHandBookScene::onResolveCCBCCMenuItemSelector( CCObject *
 
 bool BalloonHandBookScene::onAssignCCBMemberVariable( CCObject* pTarget, const char* pMemberVariableName, CCNode* pNode )
 {
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteBackground", CCSprite*, this->m_pSpriteBackground);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLayerItemContainer", CCLayer*, this->m_pLayerItemContainer);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenu", CCMenu*, this->m_pMenu);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteCoin", CCSprite*, this->m_pSpriteCoin);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLabelBMFontCoins", CCLabelBMFont*, this->m_pLabelBMFontCoins);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteBackground", CCSprite*, this->m_pSpriteBackground);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLayerItemContainer", CCLayer*, this->m_pLayerItemContainer);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenu", CCMenu*, this->m_pMenu);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteCoin", CCSprite*, this->m_pSpriteCoin);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelBMFontCoins", CCLabelBMFont*, this->m_pLabelBMFontCoins);
 
 	return true;
 }
@@ -224,7 +224,7 @@ CCTableViewCell* BalloonHandBookScene::tableCellAtIndex( CCTableView *table, uns
 
 unsigned int BalloonHandBookScene::numberOfCellsInTableView( CCTableView *table )
 {
-	// TODO: return the counts of TableView
+	// return the counts of TableView
     if (m_pDictHandbookData)
     {
         CCArray* pArrayData = dynamic_cast<CCArray*>(m_pDictHandbookData->objectForKey("items"));

@@ -24,7 +24,12 @@ USING_NS_BAILIN_UTIL;
 
 BalloonScene::~BalloonScene()
 {
+    if (m_pPauseDialog && m_pPauseDialog->getParent())
+        m_pPauseDialog->removeFromParent();
     CC_SAFE_RELEASE_NULL(m_pPauseDialog);
+    
+    if (m_pResultDialog && m_pResultDialog->getParent())
+        m_pResultDialog->removeFromParent();
     CC_SAFE_RELEASE_NULL(m_pResultDialog);
 }
 
@@ -42,12 +47,15 @@ bool BalloonScene::init()
 	bool bRet = false;
 	do
 	{
-		CC_BREAK_IF(!CCLayer::init());
+		// CC_BREAK_IF(!CCLayer::init());
+        CC_BREAK_IF(!AutoTextureManagerLayer::init());
+        /*
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/cloud/cloud.plist");
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/balloon/balloon.plist");
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/items/items.plist");
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/menuItems/menuItems.plist");
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/balloonEffect/balloon_effect_frozen.plist");
+        */
         
 		// 加载ccbi
 		CCNodeLoaderLibrary* pLoaderLib = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
@@ -85,7 +93,7 @@ bool BalloonScene::init()
         m_pSpriteBackground->setScaleX(getContentSize().width/m_pSpriteBackground->getContentSize().width);
         m_pSpriteBackground->setScaleY(getContentSize().height/m_pSpriteBackground->getContentSize().height);
 		
-		setKeypadEnabled(true);
+//		setKeypadEnabled(true);
         
         // 初始化气球管理类
         if (!m_BalloonManager.getInitFlag())
@@ -156,9 +164,8 @@ void BalloonScene::updateTimeLeft()
 
 void BalloonScene::onEnter()
 {
-	CCLayer::onEnter();
-	// 这里可以定义进入场景的初始化，比如控件的初始位置，初始状态等
-    createResultDialog();
+	// CCLayer::onEnter();
+    AutoTextureManagerLayer::onEnter();
     
     // 启动单点触摸回调注册
     CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, this->getTouchPriority(), false);
@@ -186,18 +193,20 @@ void BalloonScene::notifyEnterBackground(CCObject* pData)
 
 void BalloonScene::onExit()
 {
-	CCLayer::onExit();
+	// CCLayer::onExit();
 	// 退出场景，取消CCNotificationCenter可以放在这里做，但是对应在onEnter的时候要重新注册
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, NOTIFY_PAUSE);
     
     // 释放结算对话框
-    CC_SAFE_RELEASE_NULL(m_pResultDialog);
+    // CC_SAFE_RELEASE_NULL(m_pResultDialog);
     
     // 停止场景回调
     unscheduleUpdate();
     
     // 注销单点触摸回调注册
     CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
+    
+    AutoTextureManagerLayer::onExit();
 }
 
 SEL_CallFuncN BalloonScene::onResolveCCBCCCallFuncSelector( CCObject * pTarget, const char* pSelectorName )
@@ -214,14 +223,14 @@ SEL_MenuHandler BalloonScene::onResolveCCBCCMenuItemSelector( CCObject * pTarget
 
 bool BalloonScene::onAssignCCBMemberVariable( CCObject* pTarget, const char* pMemberVariableName, CCNode* pNode )
 {
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteBalloonModel", CCSprite*, this->m_pSpriteBalloonModel);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLabelBMFontTimeLeft", CCLabelBMFont*, this->m_pLabelBMFontTimeLeft);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLabelBMFontScore", CCLabelBMFont*, this->m_pLabelBMFontScore);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLayerBalloon", CCLayer*, this->m_pLayerBalloon);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pLayerItems", CCLayer*, this->m_pLayerItems);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteBackground", CCSprite*, this->m_pSpriteBackground);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuPause", CCMenu*, this->m_pMenuPause);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteScoreBar", CCSprite*, this->m_pSpriteScoreBar);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteBalloonModel", CCSprite*, this->m_pSpriteBalloonModel);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelBMFontTimeLeft", CCLabelBMFont*, this->m_pLabelBMFontTimeLeft);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelBMFontScore", CCLabelBMFont*, this->m_pLabelBMFontScore);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLayerBalloon", CCLayer*, this->m_pLayerBalloon);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLayerItems", CCLayer*, this->m_pLayerItems);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteBackground", CCSprite*, this->m_pSpriteBackground);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuPause", CCMenu*, this->m_pMenuPause);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteScoreBar", CCSprite*, this->m_pSpriteScoreBar);
 
 	return true;
 }
@@ -531,6 +540,9 @@ void BalloonScene::showResultDialog()
     // 显示广告条
     GAdMob2DX::sharedGAdMob2DX()->setVisible(true);
     
+	// 这里可以定义进入场景的初始化，比如控件的初始位置，初始状态等
+    createResultDialog();
+    
     // 设定面板分数
     m_pResultDialog->setScore(m_llTotalScore);
     std::string strHighScore = DataManagerUtil::sharedDataManagerUtil()->ReadDataFromLocal("HighestScore");
@@ -597,7 +609,7 @@ void BalloonScene::onPressMenuRestartGame(cocos2d::CCObject *pSender)
 void BalloonScene::onPressMenuReturnMainMenu(cocos2d::CCObject *pSender)
 {
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
-    m_pResultDialog->endDialog();
+//    m_pResultDialog->endDialog();
     
     CCDirector::sharedDirector()->popScene();
 }
@@ -742,4 +754,16 @@ void BalloonScene::showPauseDialog()
     
     addChild(m_pPauseDialog);
     GAdMob2DX::sharedGAdMob2DX()->setVisible(true);
+}
+
+bool BalloonScene::setResourceString()
+{
+    m_vTexturesString.push_back("texture/cloud/cloud.plist");
+    m_vTexturesString.push_back("texture/balloon/balloon.plist");
+    m_vTexturesString.push_back("texture/items/items.plist");
+    m_vTexturesString.push_back("texture/menuItems/menuItems.plist");
+    m_vTexturesString.push_back("texture/balloonEffect/balloon_effect_frozen.plist");
+    m_vTexturesString.push_back("texture/balloonScene/background.png");
+    
+    return true;
 }

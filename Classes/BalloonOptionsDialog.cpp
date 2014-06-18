@@ -84,11 +84,11 @@ SEL_MenuHandler BalloonOptionsDialog::onResolveCCBCCMenuItemSelector( CCObject *
 
 bool BalloonOptionsDialog::onAssignCCBMemberVariable( CCObject* pTarget, const char* pMemberVariableName, CCNode* pNode )
 {
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuItemMusic", CCMenuItemImage*, this->m_pMenuItemMusic);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuItemEffect", CCMenuItemImage*, this->m_pMenuItemEffect);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuMusic", CCMenu*, this->m_pMenuMusic);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuEffect", CCMenu*, this->m_pMenuEffect);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pSpriteBoard", CCSprite*, this->m_pSpriteBoard);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuItemMusic", CCMenuItemImage*, this->m_pMenuItemMusic);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuItemEffect", CCMenuItemImage*, this->m_pMenuItemEffect);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuMusic", CCMenu*, this->m_pMenuMusic);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuEffect", CCMenu*, this->m_pMenuEffect);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteBoard", CCSprite*, this->m_pSpriteBoard);
 
 	return true;
 }

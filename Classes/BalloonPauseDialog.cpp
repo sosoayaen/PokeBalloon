@@ -82,10 +82,10 @@ SEL_MenuHandler BalloonPauseDialog::onResolveCCBCCMenuItemSelector( CCObject * p
 
 bool BalloonPauseDialog::onAssignCCBMemberVariable( CCObject* pTarget, const char* pMemberVariableName, CCNode* pNode )
 {
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuItemAgain", CCMenuItem*, this->m_pMenuItemAgain);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuItemResume", CCMenuItem*, this->m_pMenuItemResume);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenuItemReturn", CCMenuItem*, this->m_pMenuItemReturn);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE(this, "m_pMenu", CCMenu*, this->m_pMenu);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuItemAgain", CCMenuItem*, this->m_pMenuItemAgain);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuItemResume", CCMenuItem*, this->m_pMenuItemResume);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuItemReturn", CCMenuItem*, this->m_pMenuItemReturn);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenu", CCMenu*, this->m_pMenu);
 
 	return true;
 }
