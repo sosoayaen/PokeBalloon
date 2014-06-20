@@ -10,9 +10,11 @@
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
+#include "AutoTextureManagerLayer.h"
 
 class BalloonHandBookScene:
-    public cocos2d::CCLayer,
+    // public cocos2d::CCLayer,
+    public AutoTextureManagerLayer,
 	public cocos2d::extension::CCTableViewDataSource,
 	public cocos2d::extension::CCTableViewDelegate,
 	public cocos2d::extension::CCBSelectorResolver,
@@ -107,6 +109,8 @@ public:
 	// Funcitons
 
 
+protected:
+    virtual bool setResourceString();
 
 
 

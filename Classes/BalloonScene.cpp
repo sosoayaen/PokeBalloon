@@ -22,8 +22,14 @@ USING_NS_BAILIN_UTIL;
 #define SECURITY_TIME "S_TIME"
 #define SECURITY_SCORE "S_SCORE"
 
+#define TAG_ID_RESULT_DIALOG_PLAYAGAIN 1000
+#define TAG_ID_PAUSE_DIALOG_PLAYAGAIN 1001
+#define TAG_ID_RESULT_DIALOG_RETURN 1002
+#define TAG_ID_PAUSE_DIALOG_RETURN 1003
+
 BalloonScene::~BalloonScene()
 {
+    /*
     if (m_pPauseDialog && m_pPauseDialog->getParent())
         m_pPauseDialog->removeFromParent();
     CC_SAFE_RELEASE_NULL(m_pPauseDialog);
@@ -31,6 +37,7 @@ BalloonScene::~BalloonScene()
     if (m_pResultDialog && m_pResultDialog->getParent())
         m_pResultDialog->removeFromParent();
     CC_SAFE_RELEASE_NULL(m_pResultDialog);
+    */
 }
 
 CCScene* BalloonScene::scene()
@@ -53,9 +60,9 @@ bool BalloonScene::init()
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/cloud/cloud.plist");
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/balloon/balloon.plist");
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/items/items.plist");
-        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/menuItems/menuItems.plist");
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/balloonEffect/balloon_effect_frozen.plist");
         */
+        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/menuItems/menuItems.plist");
         
 		// 加载ccbi
 		CCNodeLoaderLibrary* pLoaderLib = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
@@ -176,6 +183,8 @@ void BalloonScene::onEnter()
     // startGame();
     readReadySecond();
     
+    // 删除下未用到的纹理缓存
+    CCTextureCache::sharedTextureCache()->removeUnusedTextures();
 }
 
 void BalloonScene::notifyEnterBackground(CCObject* pData)
@@ -241,9 +250,12 @@ SEL_CCControlHandler BalloonScene::onResolveCCBCCControlSelector( CCObject * pTa
 	return NULL;
 }
 
+
 bool BalloonScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
     m_BalloonManager.touchTest(pTouch->getLocation());
+
+    CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
     return true;
 }
 
@@ -591,11 +603,12 @@ void BalloonScene::onPressMenuRestartGame(cocos2d::CCObject *pSender)
     */
     
     int nValue = int(pNode->getUserData());
-    switch (nValue) {
-        case 1000:
+    switch (nValue)
+    {
+        case TAG_ID_RESULT_DIALOG_PLAYAGAIN:
             m_pResultDialog->endDialog();
             break;
-        case 1001:
+        case TAG_ID_PAUSE_DIALOG_PLAYAGAIN:
             m_pPauseDialog->endDialog();
             break;
         default:
@@ -609,7 +622,24 @@ void BalloonScene::onPressMenuRestartGame(cocos2d::CCObject *pSender)
 void BalloonScene::onPressMenuReturnMainMenu(cocos2d::CCObject *pSender)
 {
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
-//    m_pResultDialog->endDialog();
+    
+    CCNode* pNode = dynamic_cast<CCNode*>(pSender);
+    if (!pNode) return;
+    
+    int nValue = int(pNode->getUserData());
+    switch (nValue)
+    {
+        case TAG_ID_RESULT_DIALOG_RETURN:
+            if (m_pResultDialog->getParent())
+                m_pResultDialog->removeFromParent();
+            break;
+        case TAG_ID_PAUSE_DIALOG_RETURN:
+            if (m_pPauseDialog)
+                m_pPauseDialog->removeFromParent();
+            break;
+        default:
+            break;
+    }
     
     CCDirector::sharedDirector()->popScene();
 }
@@ -727,13 +757,11 @@ void BalloonScene::createResultDialog()
         
         // 设定按钮回调
         m_pResultDialog->m_pMenuItemReturn->setTarget(this, menu_selector(BalloonScene::onPressMenuReturnMainMenu));
+        m_pResultDialog->m_pMenuItemReturn->setUserData((void*)TAG_ID_RESULT_DIALOG_RETURN);
         m_pResultDialog->m_pMenuItemPlayAgain->setTarget(this, menu_selector(BalloonScene::onPressMenuRestartGame));
-        m_pResultDialog->m_pMenuItemPlayAgain->setUserData((void*)1000);
+        m_pResultDialog->m_pMenuItemPlayAgain->setUserData((void*)TAG_ID_RESULT_DIALOG_PLAYAGAIN);
         m_pResultDialog->m_pMenuItemShare->setTarget(this, menu_selector(BalloonScene::onPressMenuShare));
         m_pResultDialog->setEndCallbackFuncN(CCCallFuncN::create(this, callfuncN_selector(BalloonScene::onResultDialogEndCall)));
-        
-        // 保存对话框
-        CC_SAFE_RETAIN(m_pResultDialog);
     }
 }
 
@@ -745,11 +773,10 @@ void BalloonScene::showPauseDialog()
         
         // 绑定按钮效果
         m_pPauseDialog->m_pMenuItemAgain->setTarget(this, menu_selector(BalloonScene::onPressMenuRestartGame));
-        m_pPauseDialog->m_pMenuItemAgain->setUserData((void*)1001);
+        m_pPauseDialog->m_pMenuItemAgain->setUserData((void*)TAG_ID_PAUSE_DIALOG_PLAYAGAIN);
         m_pPauseDialog->m_pMenuItemReturn->setTarget(this, menu_selector(BalloonScene::onPressMenuReturnMainMenu));
+        m_pPauseDialog->m_pMenuItemReturn->setUserData((void*)TAG_ID_PAUSE_DIALOG_RETURN);
         m_pPauseDialog->m_pMenuItemResume->setTarget(this, menu_selector(BalloonScene::onPressMenuResume));
-        
-        CC_SAFE_RETAIN(m_pPauseDialog);
     }
     
     addChild(m_pPauseDialog);
@@ -760,8 +787,9 @@ bool BalloonScene::setResourceString()
 {
     m_vTexturesString.push_back("texture/cloud/cloud.plist");
     m_vTexturesString.push_back("texture/balloon/balloon.plist");
+    m_vTexturesString.push_back("texture/balloonScene/balloonScene.plist");
     m_vTexturesString.push_back("texture/items/items.plist");
-    m_vTexturesString.push_back("texture/menuItems/menuItems.plist");
+//    m_vTexturesString.push_back("texture/menuItems/menuItems.plist");
     m_vTexturesString.push_back("texture/balloonEffect/balloon_effect_frozen.plist");
     m_vTexturesString.push_back("texture/balloonScene/background.png");
     

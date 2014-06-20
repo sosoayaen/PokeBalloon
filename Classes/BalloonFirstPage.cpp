@@ -44,7 +44,9 @@ bool BalloonFirstPage::init()
 	bool bRet = false;
 	do
 	{
-		CC_BREAK_IF(!CCLayer::init());
+		// CC_BREAK_IF(!CCLayer::init());
+		CC_BREAK_IF(!AutoTextureManagerLayer::init());
+        
 		// 加载ccbi
 		CCNodeLoaderLibrary* pLoaderLib = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
 
@@ -71,11 +73,11 @@ bool BalloonFirstPage::init()
 
 		pCCBReader->release();
         
+        CCSize size = CCDirector::sharedDirector()->getWinSize();
         // 顶部有Fireworks的粒子效果
         if (!m_pFireworks)
         {
             m_pFireworks = CCParticleSystemQuad::create("particles/fireworksMainBoard.plist");
-            CCSize size = CCDirector::sharedDirector()->getWinSize();
             m_pFireworks->setPosition(ccp(size.width*0.25f, size.height * 1.05f));
             m_pMenuMain->getParent()->addChild(m_pFireworks);
         }
@@ -84,7 +86,6 @@ bool BalloonFirstPage::init()
         if (!m_pFireworks2)
         {
             m_pFireworks2 = CCParticleSystemQuad::create("particles/fireworksMainBoard.plist");
-            CCSize size = CCDirector::sharedDirector()->getWinSize();
             m_pFireworks2->setPosition(ccp(size.width*0.75f, size.height * 1.05f));
             m_pMenuMain->getParent()->addChild(m_pFireworks2);
         }
@@ -110,6 +111,15 @@ bool BalloonFirstPage::init()
                                  CCSpawn::createWithTwoActions(CCMoveTo::create(fDuration, pos), CCScaleTo::create(fDuration, 1.0f)), NULL)));
             m_pSpriteTitle->setZOrder(1);
         }
+        
+        // 放上版本号
+        if (!m_pLabelTTFVersion)
+        {
+            m_pLabelTTFVersion = CCLabelTTF::create("v1.00.00", "", size.width/25);
+            m_pLabelTTFVersion->setAnchorPoint(ccp(1.0f, 0));
+            m_pLabelTTFVersion->setPosition(ccp(size.width, 0));
+            addChild(m_pLabelTTFVersion);
+        }
 		
 		bRet = true;
 		
@@ -120,8 +130,9 @@ bool BalloonFirstPage::init()
 
 void BalloonFirstPage::onEnter()
 {
-	CCLayer::onEnter();
-	// TODO: 这里可以定义进入场景的初始化，比如控件的初始位置，初始状态等
+	// CCLayer::onEnter();
+    AutoTextureManagerLayer::onEnter();
+	// 这里可以定义进入场景的初始化，比如控件的初始位置，初始状态等
     
     if (!BalloonSoundManager::sharedBalloonSoundManager()->isBackgroundMusicPlaying())
     {
@@ -195,21 +206,18 @@ void BalloonFirstPage::onEnter()
     }
 #endif
     
-    // 放上版本号
-    if (!m_pLabelTTFVersion)
-    {
-        m_pLabelTTFVersion = CCLabelTTF::create("v1.00.00", "", size.width/25);
-        m_pLabelTTFVersion->setAnchorPoint(ccp(1.0f, 0));
-        m_pLabelTTFVersion->setPosition(ccp(size.width, 0));
-        addChild(m_pLabelTTFVersion);
-    }
+    // 删除下未用到的纹理缓存
+    CCTextureCache::sharedTextureCache()->removeUnusedTextures();
+    
 }
 
 void BalloonFirstPage::onExit()
 {
-	CCLayer::onExit();
+	// CCLayer::onExit();
     // 退出场景时，把菜单拎到屏幕外，进场时直接落下即可
     m_pMenuMain->setPosition(ccp(getContentSize().width*0.5f, getContentSize().height*1.5f));
+    
+    AutoTextureManagerLayer::onExit();
 }
 
 SEL_CallFuncN BalloonFirstPage::onResolveCCBCCCallFuncSelector( CCObject * pTarget, const char* pSelectorName )
@@ -311,4 +319,14 @@ void BalloonFirstPage::onPressMenuHandbook(cocos2d::CCObject *pSender)
     // 显示图鉴场景
     CCScene* pScene = BalloonHandBookScene::scene();
     CCDirector::sharedDirector()->pushScene(pScene);
+}
+
+bool BalloonFirstPage::setResourceString()
+{
+//    m_vTexturesString.push_back("texture/menuItems/menuItems.plist");
+	m_vTexturesString.push_back("texture/mainboard/firstPageNoticeBackground.png");
+	m_vTexturesString.push_back("texture/mainboard/main_background.png");
+	m_vTexturesString.push_back("texture/mainboard/main_title_en.png");
+	m_vTexturesString.push_back("texture/mainboard/main_title_zh.png");
+    return true;
 }

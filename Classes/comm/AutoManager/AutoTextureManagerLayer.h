@@ -16,7 +16,7 @@
  *           以，一般继承的子类在onExit中不要操作纹理，因为首先纹理已经被卸载了
  */
 #ifndef __AUTO_TEXTURE_MANAGER_LAYER_H__
-#define __BAILIN_BASE_SCENE_H__
+#define __AUTO_TEXTURE_MANAGER_LAYER_H__
 
 #include "cocos2d.h"
 // #include "TextureManagerProtocol.h"
@@ -60,4 +60,4 @@ protected:
 
 private:
 };
-#endif // __BAILIN_BASE_SCENE_H__
+#endif // __AUTO_TEXTURE_MANAGER_LAYER_H__

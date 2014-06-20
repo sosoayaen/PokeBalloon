@@ -17,7 +17,8 @@ bool BalloonHandBookScene::init()
 	bool bRet = false;
 	do
 	{
-		CC_BREAK_IF(!CCLayer::init());
+		// CC_BREAK_IF(!CCLayer::init());
+		CC_BREAK_IF(!AutoTextureManagerLayer::init());
 		// 加载ccbi
 		CCNodeLoaderLibrary* pLoaderLib = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
 
@@ -44,8 +45,8 @@ bool BalloonHandBookScene::init()
 
 		pCCBReader->release();
 		
-        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/balloon/balloon.plist");
-        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/items/items.plist");
+        // CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/balloon/balloon.plist");
+        // CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/items/items.plist");
         
         CCSize winSize = CCDirector::sharedDirector()->getWinSize();
 		// 拉伸底图
@@ -72,15 +73,20 @@ bool BalloonHandBookScene::init()
 
 void BalloonHandBookScene::onEnter()
 {
-	CCLayer::onEnter();
+	// CCLayer::onEnter();
+    AutoTextureManagerLayer::onEnter();
 	// 这里可以定义进入场景的初始化，比如控件的初始位置，初始状态等
     reLayoutCoins();
+    
+    // 删除下未用到的纹理缓存
+    CCTextureCache::sharedTextureCache()->removeUnusedTextures();
 }
 
 void BalloonHandBookScene::onExit()
 {
-	CCLayer::onExit();
 	// 退出场景，取消CCNotificationCenter可以放在这里做，但是对应在onEnter的时候要重新注册
+    AutoTextureManagerLayer::onExit();
+    
 }
 
 SEL_CallFuncN BalloonHandBookScene::onResolveCCBCCCallFuncSelector( CCObject * pTarget, const char* pSelectorName )
@@ -151,7 +157,7 @@ CCTableViewCell* BalloonHandBookScene::tableCellAtIndex( CCTableView *table, uns
 		
 		bCreateCell = true;
 	}
-	
+    
 	if (pCell)
 	{
         // 清空内部数据
@@ -277,4 +283,14 @@ void BalloonHandBookScene::reLayoutCoins()
 {
     // 根据金钱的数量重新定位金币标志
     m_pSpriteCoin->setPosition(ccp(m_pLabelBMFontCoins->getPositionX() - m_pLabelBMFontCoins->boundingBox().size.width - m_pSpriteCoin->getContentSize().width*0.2f, m_pSpriteCoin->getPositionY()));
+}
+
+bool BalloonHandBookScene::setResourceString()
+{
+    m_vTexturesString.push_back("texture/balloon/balloon.plist");
+    m_vTexturesString.push_back("texture/items/items.plist");
+    m_vTexturesString.push_back("texture/common/common.plist");
+    m_vTexturesString.push_back("texture/balloonScene/background.png");
+    
+    return true;
 }

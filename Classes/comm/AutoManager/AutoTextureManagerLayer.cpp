@@ -11,7 +11,8 @@ AutoTextureManagerLayer::AutoTextureManagerLayer()
 
 AutoTextureManagerLayer::~AutoTextureManagerLayer()
 {
-
+    removeAllChildren();
+	unloadTextureResources();
 }
 
 bool AutoTextureManagerLayer::init()
@@ -36,14 +37,13 @@ void AutoTextureManagerLayer::onEnter()
 {
 	CCLayer::onEnter();
 
-	loadTextureResources();
+	// loadTextureResources();
 
 	CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
 }
 
 void AutoTextureManagerLayer::onExit()
 {
-	unloadTextureResources();
     
 	CCLayer::onExit();
 }
@@ -91,12 +91,25 @@ void AutoTextureManagerLayer::unloadTextureResources()
 					pDictMetaData->valueForKey("textureFileName")->getCString(),
 					iterTextureFilePath->c_str());
 
-				CCTextureCache::sharedTextureCache()->removeTextureForKey(pszTextureFilePath);
+                // 先对引用计数减一，如果纹理计数到了1，就彻底删除
+                CCTexture2D* pTexture = CCTextureCache::sharedTextureCache()->textureForKey(pszTextureFilePath);
+                if (pTexture->retainCount() == 1)
+                {
+                    CCTextureCache::sharedTextureCache()->removeTextureForKey(pszTextureFilePath);
+                }
 			}
 		}
 		else
 		{
-			CCTextureCache::sharedTextureCache()->removeTextureForKey(iterTextureFilePath->c_str());
+            // CCTextureCache::sharedTextureCache()->removeTextureForKey(iterTextureFilePath->c_str());
+            CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName(iterTextureFilePath->c_str());
+            // 先对引用计数减一，如果纹理计数到了1，就彻底删除
+            CCTexture2D* pTexture = CCTextureCache::sharedTextureCache()->textureForKey(iterTextureFilePath->c_str());
+            if (pTexture->retainCount() == 1)
+            {
+                CCTextureCache::sharedTextureCache()->removeTextureForKey(iterTextureFilePath->c_str());
+            }
+            //*/
 		}
 	}
 }

@@ -10,10 +10,12 @@
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
+#include "AutoTextureManagerLayer.h"
 
 
 class BalloonFirstPage:
-	public cocos2d::CCLayer,
+	// public cocos2d::CCLayer,
+    public AutoTextureManagerLayer,
 	public cocos2d::extension::CCBSelectorResolver,
 	public cocos2d::extension::CCBMemberVariableAssigner
 {
@@ -68,7 +70,10 @@ public:
 
 	
 public:
-	// Funcitons
+	// Funcitonsjj
+    
+protected:
+    virtual bool setResourceString();
 
 private:
     
