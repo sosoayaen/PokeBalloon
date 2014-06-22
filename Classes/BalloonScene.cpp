@@ -4,6 +4,7 @@
 #include "GAdMob2DX.h"
 #include "UMSocial2DX.h"
 #include "BalloonPauseDialog.h"
+#include "BalloonResultDialog.h"
 
 #include "bailinUtil.h"
 
@@ -22,10 +23,14 @@ USING_NS_BAILIN_UTIL;
 #define SECURITY_TIME "S_TIME"
 #define SECURITY_SCORE "S_SCORE"
 
+// 结算对话框和暂停对话框中的再玩一次与回到主界面按钮的UserData数据
 #define TAG_ID_RESULT_DIALOG_PLAYAGAIN 1000
 #define TAG_ID_PAUSE_DIALOG_PLAYAGAIN 1001
 #define TAG_ID_RESULT_DIALOG_RETURN 1002
 #define TAG_ID_PAUSE_DIALOG_RETURN 1003
+// 结算对话框和暂停对话框
+#define TAG_ID_RESULT_DIALOG    1000
+#define TAG_ID_PAUSE_DIALOG     1001
 
 BalloonScene::~BalloonScene()
 {
@@ -553,16 +558,30 @@ void BalloonScene::showResultDialog()
     GAdMob2DX::sharedGAdMob2DX()->setVisible(true);
     
 	// 这里可以定义进入场景的初始化，比如控件的初始位置，初始状态等
-    createResultDialog();
+    
+    // 生成结算对话框
+    BalloonResultDialog* pResultDialog = dynamic_cast<BalloonResultDialog*>(getChildByTag(TAG_ID_RESULT_DIALOG));
+    if (!pResultDialog)
+    {
+        pResultDialog = BalloonResultDialog::create();
+        // 设定按钮回调
+        pResultDialog->m_pMenuItemReturn->setTarget(this, menu_selector(BalloonScene::onPressMenuReturnMainMenu));
+        pResultDialog->m_pMenuItemReturn->setUserData((void*)TAG_ID_RESULT_DIALOG_RETURN);
+        pResultDialog->m_pMenuItemPlayAgain->setTarget(this, menu_selector(BalloonScene::onPressMenuRestartGame));
+        pResultDialog->m_pMenuItemPlayAgain->setUserData((void*)TAG_ID_RESULT_DIALOG_PLAYAGAIN);
+        pResultDialog->m_pMenuItemShare->setTarget(this, menu_selector(BalloonScene::onPressMenuShare));
+        pResultDialog->setEndCallbackFuncN(CCCallFuncN::create(this, callfuncN_selector(BalloonScene::onResultDialogEndCall)));
+        pResultDialog->setTag(TAG_ID_RESULT_DIALOG);
+    }
     
     // 设定面板分数
-    m_pResultDialog->setScore(m_llTotalScore);
+    pResultDialog->setScore(m_llTotalScore);
     std::string strHighScore = DataManagerUtil::sharedDataManagerUtil()->ReadDataFromLocal("HighestScore");
     long long llHighestScore = atoll(strHighScore.c_str());// pHighestScore->intValue();
     
     bool bNewScore = llHighestScore < m_llTotalScore;
     
-    m_pResultDialog->setNewFlagVisible(bNewScore);
+    pResultDialog->setNewFlagVisible(bNewScore);
     
     if (bNewScore)
     {
@@ -571,10 +590,10 @@ void BalloonScene::showResultDialog()
         DataManagerUtil::sharedDataManagerUtil()->WriteDataToLocal("HighestScore", strHighestScore);
     }
         
-    m_pResultDialog->setHighScore(llHighestScore);
+    pResultDialog->setHighScore(llHighestScore);
     
 #if COCOS2D_DEBUG > 0
-    CCLabelTTF* pLabelTTFAnalysis = dynamic_cast<CCLabelTTF*>(m_pResultDialog->getChildByTag(101));
+    CCLabelTTF* pLabelTTFAnalysis = dynamic_cast<CCLabelTTF*>(pResultDialog->getChildByTag(101));
     if (!pLabelTTFAnalysis)
     {
         pLabelTTFAnalysis = CCLabelTTF::create("", "", 30);
@@ -584,12 +603,12 @@ void BalloonScene::showResultDialog()
         pLabelTTFAnalysis->setDimensions(getContentSize());
         pLabelTTFAnalysis->setAnchorPoint(CCPointZero);
         pLabelTTFAnalysis->setPosition(CCPointZero);
-        m_pResultDialog->addChild(pLabelTTFAnalysis);
+        pResultDialog->addChild(pLabelTTFAnalysis);
     }
     pLabelTTFAnalysis->setString(m_BalloonAnalysis.dumpDebugInfo().c_str());
 #endif
     
-    addChild(m_pResultDialog);
+    addChild(pResultDialog);
 }
 
 void BalloonScene::onPressMenuRestartGame(cocos2d::CCObject *pSender)
@@ -606,11 +625,19 @@ void BalloonScene::onPressMenuRestartGame(cocos2d::CCObject *pSender)
     switch (nValue)
     {
         case TAG_ID_RESULT_DIALOG_PLAYAGAIN:
-            m_pResultDialog->endDialog();
+        {
+            BalloonResultDialog* pResultDialog = dynamic_cast<BalloonResultDialog*>(getChildByTag(TAG_ID_RESULT_DIALOG));
+            if (pResultDialog)
+                pResultDialog->endDialog();
             break;
+        }
         case TAG_ID_PAUSE_DIALOG_PLAYAGAIN:
-            m_pPauseDialog->endDialog();
+        {
+            BalloonPauseDialog* pPauseDialog = dynamic_cast<BalloonPauseDialog*>(getChildByTag(TAG_ID_PAUSE_DIALOG));
+            if (pPauseDialog)
+                pPauseDialog->endDialog();
             break;
+        }
         default:
             break;
     }
@@ -626,20 +653,22 @@ void BalloonScene::onPressMenuReturnMainMenu(cocos2d::CCObject *pSender)
     CCNode* pNode = dynamic_cast<CCNode*>(pSender);
     if (!pNode) return;
     
+    DialogLayer* pDialog = NULL;
     int nValue = int(pNode->getUserData());
     switch (nValue)
     {
         case TAG_ID_RESULT_DIALOG_RETURN:
-            if (m_pResultDialog->getParent())
-                m_pResultDialog->removeFromParent();
+            pDialog = dynamic_cast<DialogLayer*>(getChildByTag(TAG_ID_RESULT_DIALOG));
             break;
         case TAG_ID_PAUSE_DIALOG_RETURN:
-            if (m_pPauseDialog)
-                m_pPauseDialog->removeFromParent();
+            pDialog = dynamic_cast<DialogLayer*>(getChildByTag(TAG_ID_PAUSE_DIALOG));
             break;
         default:
             break;
     }
+    // 把对话框删掉
+    if (pDialog && pDialog->getParent())
+        pDialog->removeFromParent();
     
     CCDirector::sharedDirector()->popScene();
 }
@@ -649,8 +678,11 @@ void BalloonScene::onPressMenuShare(cocos2d::CCObject *pSender)
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
     CCDictionary* pDictData = CCDictionary::create();
     
+    BalloonResultDialog* pDialog = dynamic_cast<BalloonResultDialog*>(getChildByTag(TAG_ID_RESULT_DIALOG));
+    if (!pDialog) return;
+    
     // 截取得分图片
-    std::string strPath = m_pResultDialog->getSharedPictureFilePath();
+    std::string strPath = pDialog->getSharedPictureFilePath();
     
     // pDictData->setObject(ccs("一起来【气球大作战】吧～伸出你的指头，释放你的压力"), "shareText");
     const char* pszKey = "high_score_shares";
@@ -688,9 +720,10 @@ void BalloonScene::onPressMenuResume(cocos2d::CCObject *pSender)
     
     m_eGameStatus = GAME_STATUS_RUNNING;
     
-    // 移除对话框
-    if (m_pPauseDialog)
-        m_pPauseDialog->endDialog();
+    // 移除暂停对话框
+    BalloonPauseDialog* pDialog = dynamic_cast<BalloonPauseDialog*>(getChildByTag(TAG_ID_PAUSE_DIALOG));
+    if (pDialog)
+        pDialog->endDialog();
     
     // 继续游戏
     scheduleUpdate();
@@ -748,38 +781,22 @@ void BalloonScene::startGame()
     scheduleUpdate();
 }
 
-void BalloonScene::createResultDialog()
-{
-    if (!m_pResultDialog)
-    {
-        // 生成结算对话框
-        m_pResultDialog = BalloonResultDialog::create();
-        
-        // 设定按钮回调
-        m_pResultDialog->m_pMenuItemReturn->setTarget(this, menu_selector(BalloonScene::onPressMenuReturnMainMenu));
-        m_pResultDialog->m_pMenuItemReturn->setUserData((void*)TAG_ID_RESULT_DIALOG_RETURN);
-        m_pResultDialog->m_pMenuItemPlayAgain->setTarget(this, menu_selector(BalloonScene::onPressMenuRestartGame));
-        m_pResultDialog->m_pMenuItemPlayAgain->setUserData((void*)TAG_ID_RESULT_DIALOG_PLAYAGAIN);
-        m_pResultDialog->m_pMenuItemShare->setTarget(this, menu_selector(BalloonScene::onPressMenuShare));
-        m_pResultDialog->setEndCallbackFuncN(CCCallFuncN::create(this, callfuncN_selector(BalloonScene::onResultDialogEndCall)));
-    }
-}
-
 void BalloonScene::showPauseDialog()
 {
-    if (!m_pPauseDialog)
+    BalloonPauseDialog* pPauseDialog = dynamic_cast<BalloonPauseDialog*>(getChildByTag(TAG_ID_PAUSE_DIALOG));
+    if (!pPauseDialog)
     {
-        m_pPauseDialog = BalloonPauseDialog::create();
+        pPauseDialog = BalloonPauseDialog::create();
         
         // 绑定按钮效果
-        m_pPauseDialog->m_pMenuItemAgain->setTarget(this, menu_selector(BalloonScene::onPressMenuRestartGame));
-        m_pPauseDialog->m_pMenuItemAgain->setUserData((void*)TAG_ID_PAUSE_DIALOG_PLAYAGAIN);
-        m_pPauseDialog->m_pMenuItemReturn->setTarget(this, menu_selector(BalloonScene::onPressMenuReturnMainMenu));
-        m_pPauseDialog->m_pMenuItemReturn->setUserData((void*)TAG_ID_PAUSE_DIALOG_RETURN);
-        m_pPauseDialog->m_pMenuItemResume->setTarget(this, menu_selector(BalloonScene::onPressMenuResume));
+        pPauseDialog->m_pMenuItemAgain->setTarget(this, menu_selector(BalloonScene::onPressMenuRestartGame));
+        pPauseDialog->m_pMenuItemAgain->setUserData((void*)TAG_ID_PAUSE_DIALOG_PLAYAGAIN);
+        pPauseDialog->m_pMenuItemReturn->setTarget(this, menu_selector(BalloonScene::onPressMenuReturnMainMenu));
+        pPauseDialog->m_pMenuItemReturn->setUserData((void*)TAG_ID_PAUSE_DIALOG_RETURN);
+        pPauseDialog->m_pMenuItemResume->setTarget(this, menu_selector(BalloonScene::onPressMenuResume));
     }
     
-    addChild(m_pPauseDialog);
+    addChild(pPauseDialog);
     GAdMob2DX::sharedGAdMob2DX()->setVisible(true);
 }
 

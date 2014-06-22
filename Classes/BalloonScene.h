@@ -13,10 +13,6 @@
 #include "BalloonManager.h"
 #include "CloudManager.h"
 #include "BalloonItemManager.h"
-
-#include "BalloonResultDialog.h"
-#include "BalloonPauseDialog.h"
-
 #include "BalloonAnalysis.h"
 #include "AutoTextureManagerLayer.h"
 
@@ -48,8 +44,6 @@ public:
         m_pLayerBalloon = NULL;
         m_pLayerItems = NULL;
         m_pSpriteBackground = NULL;
-        m_pResultDialog = NULL;
-        m_pPauseDialog = NULL;
         m_pMenuPause = NULL;
         m_pSpriteScoreBar = NULL;
         m_bCheated = false;
@@ -128,10 +122,6 @@ private:
     
     cocos2d::CCSprite* m_pSpriteScoreBar;
 
-    BalloonResultDialog* m_pResultDialog;
-    
-    BalloonPauseDialog* m_pPauseDialog;
-
 private:
     // 当前局统计对象
     BalloonAnalysis m_BalloonAnalysis;
@@ -195,9 +185,6 @@ private:
     
     // 游戏开始
     void startGame();
-    
-    // 创建结算对话框
-    void createResultDialog();
     
     // 响应程序切换到后台
     void notifyEnterBackground(cocos2d::CCObject* pData);
