@@ -93,7 +93,6 @@
 		04C40059191AA64A0087EC75 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C40058191AA64A0087EC75 /* libsqlite3.dylib */; };
 		04C4005B191AA6A00087EC75 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C4005A191AA6A00087EC75 /* Security.framework */; };
 		04C4005D191AA76B0087EC75 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C4005C191AA76B0087EC75 /* CoreMotion.framework */; };
-		04C4005F191AAACE0087EC75 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C4005E191AAACE0087EC75 /* StoreKit.framework */; };
 		04C401EA191BCB860087EC75 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C401E9191BCB860087EC75 /* AdSupport.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		04C401EC191BCFE90087EC75 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C401EB191BCFE90087EC75 /* AddressBook.framework */; };
 		04C401EE191BD1010087EC75 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C401ED191BD1010087EC75 /* CoreText.framework */; };
@@ -108,11 +107,12 @@
 		04CB2B69191F74EF004B2792 /* UMSocial2DX.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04CB2B67191F74EF004B2792 /* UMSocial2DX.mm */; };
 		04CB2D4D193312D600D1111F /* BalloonItem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CB2D49193312D600D1111F /* BalloonItem.cpp */; };
 		04CB2D4E193312D600D1111F /* BalloonItemManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CB2D4B193312D600D1111F /* BalloonItemManager.cpp */; };
-		04DEFB0F1935C9B60023F654 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04DEFB0E1935C9B60023F654 /* GameKit.framework */; };
 		04DEFB111935CCDD0023F654 /* texture in Resources */ = {isa = PBXBuildFile; fileRef = 04DEFB101935CCDD0023F654 /* texture */; };
 		04DEFB151935D0070023F654 /* GameKitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DEFB141935D0070023F654 /* GameKitHelper.m */; };
 		04DEFB181935F9430023F654 /* GameKitHelper2dx.m in Sources */ = {isa = PBXBuildFile; fileRef = 04DEFB161935F9430023F654 /* GameKitHelper2dx.m */; };
 		04ECB4351925363B00DBBE89 /* CompanyPage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04ECB4331925363B00DBBE89 /* CompanyPage.cpp */; };
+		04EF660019560172004BFDDF /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EF65FF19560172004BFDDF /* StoreKit.framework */; };
+		04EF66021956018A004BFDDF /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EF66011956018A004BFDDF /* GameKit.framework */; };
 		15A3D8FF1682F7D5002FB0C5 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D88B1682F7D5002FB0C5 /* b2BroadPhase.cpp */; };
 		15A3D9001682F7D5002FB0C5 /* b2CollideCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D88D1682F7D5002FB0C5 /* b2CollideCircle.cpp */; };
 		15A3D9011682F7D5002FB0C5 /* b2CollideEdge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D88E1682F7D5002FB0C5 /* b2CollideEdge.cpp */; };
@@ -482,7 +482,6 @@
 		04C40058191AA64A0087EC75 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		04C4005A191AA6A00087EC75 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		04C4005C191AA76B0087EC75 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		04C4005E191AAACE0087EC75 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		04C401E9191BCB860087EC75 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		04C401EB191BCFE90087EC75 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		04C401ED191BD1010087EC75 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -511,14 +510,15 @@
 		04CB2D4A193312D600D1111F /* BalloonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BalloonItem.h; path = ../Classes/BalloonItem.h; sourceTree = "<group>"; };
 		04CB2D4B193312D600D1111F /* BalloonItemManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BalloonItemManager.cpp; path = ../Classes/BalloonItemManager.cpp; sourceTree = "<group>"; };
 		04CB2D4C193312D600D1111F /* BalloonItemManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BalloonItemManager.h; path = ../Classes/BalloonItemManager.h; sourceTree = "<group>"; };
-		04DEFB0E1935C9B60023F654 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		04DEFB101935CCDD0023F654 /* texture */ = {isa = PBXFileReference; lastKnownFileType = folder; path = texture; sourceTree = "<group>"; };
 		04DEFB131935D0070023F654 /* GameKitHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameKitHelper.h; sourceTree = "<group>"; };
-		04DEFB141935D0070023F654 /* GameKitHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameKitHelper.m; sourceTree = "<group>"; };
+		04DEFB141935D0070023F654 /* GameKitHelper.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GameKitHelper.m; sourceTree = "<group>"; };
 		04DEFB161935F9430023F654 /* GameKitHelper2dx.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GameKitHelper2dx.m; sourceTree = "<group>"; };
 		04DEFB171935F9430023F654 /* GameKitHelper2dx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameKitHelper2dx.h; sourceTree = "<group>"; };
 		04ECB4331925363B00DBBE89 /* CompanyPage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = CompanyPage.cpp; path = ../Classes/CompanyPage.cpp; sourceTree = "<group>"; };
 		04ECB4341925363B00DBBE89 /* CompanyPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompanyPage.h; path = ../Classes/CompanyPage.h; sourceTree = "<group>"; };
+		04EF65FF19560172004BFDDF /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		04EF66011956018A004BFDDF /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		15A3D87E1682F7B3002FB0C5 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		15A3D8891682F7D5002FB0C5 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		15A3D88B1682F7D5002FB0C5 /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
@@ -932,9 +932,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04DEFB0F1935C9B60023F654 /* GameKit.framework in Frameworks */,
 				04CB2A6D191F3EB8004B2792 /* libiconv.dylib in Frameworks */,
 				04C401F8191BD1AC0087EC75 /* CoreLocation.framework in Frameworks */,
+				04EF660019560172004BFDDF /* StoreKit.framework in Frameworks */,
 				0461235B191F2F11001AE64F /* libSocialFacebook.a in Frameworks */,
 				0461235E191F2F11001AE64F /* libWeChatSDK.a in Frameworks */,
 				04C401F4191BD17D0087EC75 /* AssetsLibrary.framework in Frameworks */,
@@ -945,10 +945,10 @@
 				04C401EC191BCFE90087EC75 /* AddressBook.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
 				04CB2B5A191F626A004B2792 /* libGoogleAdMobAds.a in Frameworks */,
+				04EF66021956018A004BFDDF /* GameKit.framework in Frameworks */,
 				D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */,
 				D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */,
 				04C401EA191BCB860087EC75 /* AdSupport.framework in Frameworks */,
-				04C4005F191AAACE0087EC75 /* StoreKit.framework in Frameworks */,
 				04C4005D191AA76B0087EC75 /* CoreMotion.framework in Frameworks */,
 				04C4005B191AA6A00087EC75 /* Security.framework in Frameworks */,
 				04C40059191AA64A0087EC75 /* libsqlite3.dylib in Frameworks */,
@@ -2202,7 +2202,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				04DEFB0E1935C9B60023F654 /* GameKit.framework */,
+				04EF66011956018A004BFDDF /* GameKit.framework */,
+				04EF65FF19560172004BFDDF /* StoreKit.framework */,
 				04CB2A6C191F3EB8004B2792 /* libiconv.dylib */,
 				04C401F7191BD1AC0087EC75 /* CoreLocation.framework */,
 				04C401F5191BD18A0087EC75 /* Social.framework */,
@@ -2212,7 +2213,6 @@
 				04C401ED191BD1010087EC75 /* CoreText.framework */,
 				04C401EB191BCFE90087EC75 /* AddressBook.framework */,
 				04C401E9191BCB860087EC75 /* AdSupport.framework */,
-				04C4005E191AAACE0087EC75 /* StoreKit.framework */,
 				04C4005C191AA76B0087EC75 /* CoreMotion.framework */,
 				04C4005A191AA6A00087EC75 /* Security.framework */,
 				04C40058191AA64A0087EC75 /* libsqlite3.dylib */,
@@ -2271,6 +2271,9 @@
 						DevelopmentTeam = 2UWE59VJK9;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
+								enabled = 1;
+							};
+							com.apple.InAppPurchase = {
 								enabled = 1;
 							};
 						};
@@ -2702,7 +2705,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PokeBalloon;
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5C9A7A2B-E876-47F1-AC36-7D30A4015135";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8F7D2C8F-9EC4-4C92-94D0-E552DD1287B6";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 1;
 				USER_HEADER_SEARCH_PATHS = "";

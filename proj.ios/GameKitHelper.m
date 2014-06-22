@@ -6,6 +6,7 @@
 //
 //
 
+#import "cocos2d.h"
 #import "GameKitHelper.h"
 
 @interface GameKitHelper()
@@ -37,9 +38,15 @@
     ^(UIViewController *viewController, NSError *error) {
         [self setLastError:error];
         
+        if (cocos2d::CCDirector::sharedDirector()->isPaused()) {
+            cocos2d::CCDirector::sharedDirector()->resume();
+        }
+        
+        // Player already authenticated
         if (localPlayer.authenticated) {
             _gameCenterFeaturesEnabled = YES;
         } else if (viewController) {
+            cocos2d::CCDirector::sharedDirector()->pause();
             [self presentViewController:viewController];
         } else {
             _gameCenterFeaturesEnabled = NO;
@@ -52,10 +59,12 @@
 -(void) setLastError:(NSError *)error {
     _lastError = [error copy];
     if (_lastError) {
-        // NSLog(@"GameKitHelper ERROR: %@", [[_lastError userInfo] description]);
+        NSLog(@"GameKitHelper ERROR: [%@] [%@]", [[_lastError userInfo] description], [_lastError localizedDescription]);
+        /*
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Game Center Error" message:[_lastError localizedDescription] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
         [alert release];
+        */
     }
 }
 
