@@ -527,6 +527,9 @@ void BalloonScene::update(float dt)
             
             // 移除界面上的气球和云朵
             m_pLayerBalloon->removeAllChildren();
+            
+            // 移除道具数据
+            m_BalloonItemManager.clearItems();
 
             // 判断是否作弊
             if (!m_bCheated)
