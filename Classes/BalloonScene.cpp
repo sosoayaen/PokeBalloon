@@ -762,6 +762,7 @@ void BalloonScene::timeCountCallback(CCNode* pNode)
 
 void BalloonScene::readReadySecond()
 {
+    resetData();
     // 启动读秒回调
     CCLabelBMFont* pLabelBMFontTime = CCLabelBMFont::create("3", "texture/fonts/font.fnt");
     pLabelBMFontTime->setPosition(ccpMult(ccpFromSize(getContentSize()), 0.5f));
@@ -777,7 +778,7 @@ void BalloonScene::startGame()
     // 开始游戏隐藏广告条
     GAdMob2DX::sharedGAdMob2DX()->setVisible(false);
     
-    resetData();
+    // resetData();
     
     m_eGameStatus = GAME_STATUS_RUNNING;
     
@@ -797,6 +798,7 @@ void BalloonScene::showPauseDialog()
         pPauseDialog->m_pMenuItemReturn->setTarget(this, menu_selector(BalloonScene::onPressMenuReturnMainMenu));
         pPauseDialog->m_pMenuItemReturn->setUserData((void*)TAG_ID_PAUSE_DIALOG_RETURN);
         pPauseDialog->m_pMenuItemResume->setTarget(this, menu_selector(BalloonScene::onPressMenuResume));
+        pPauseDialog->setTag(TAG_ID_PAUSE_DIALOG);
     }
     
     addChild(pPauseDialog);

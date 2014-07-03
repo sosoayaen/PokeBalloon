@@ -36,6 +36,8 @@ bool AutoTextureManagerLayer::init()
 void AutoTextureManagerLayer::onEnter()
 {
 	CCLayer::onEnter();
+    
+    CCTextureCache::sharedTextureCache()->removeUnusedTextures();
 
 	// loadTextureResources();
 
