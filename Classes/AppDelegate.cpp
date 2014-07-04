@@ -15,7 +15,7 @@
 USING_NS_CC;
 USING_NS_BAILIN_UTIL;
 
-#define JNI_CLASS "com/wardrums/pokeballoon/PokeBalloon"
+#define JNI_CLASS "com/wardrums/lib/WDBaseActivity"
 
 using namespace CocosDenshion;
 
