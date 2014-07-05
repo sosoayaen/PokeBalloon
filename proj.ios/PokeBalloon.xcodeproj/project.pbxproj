@@ -27,6 +27,7 @@
 		04356039192916550044D838 /* BalloonOptionsDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04356037192916550044D838 /* BalloonOptionsDialog.cpp */; };
 		0435603D19291DD60044D838 /* BalloonOptionsDialog.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 0435603C19291DD60044D838 /* BalloonOptionsDialog.ccbi */; };
 		04356044192A49360044D838 /* crc32.c in Sources */ = {isa = PBXBuildFile; fileRef = 04356043192A49360044D838 /* crc32.c */; };
+		0440CF231967D217008F79CC /* AppInfo.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0440CF221967D217008F79CC /* AppInfo.mm */; };
 		044BAB831905045600D8CCB3 /* BalloonScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 044BAB761905045600D8CCB3 /* BalloonScene.ccbi */; };
 		0458E80819167BAB00FA1321 /* Icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 0458E80419167BAB00FA1321 /* Icon-29.png */; };
 		0458E80919167BAB00FA1321 /* Icon-58.png in Resources */ = {isa = PBXBuildFile; fileRef = 0458E80519167BAB00FA1321 /* Icon-58.png */; };
@@ -373,6 +374,8 @@
 		0435603C19291DD60044D838 /* BalloonOptionsDialog.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonOptionsDialog.ccbi; sourceTree = "<group>"; };
 		04356043192A49360044D838 /* crc32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crc32.c; sourceTree = "<group>"; };
 		04356045192A4BBB0044D838 /* crc32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = crc32.h; sourceTree = "<group>"; };
+		0440CF201967D0BB008F79CC /* AppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppInfo.h; sourceTree = "<group>"; };
+		0440CF221967D217008F79CC /* AppInfo.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppInfo.mm; sourceTree = "<group>"; };
 		044BAB761905045600D8CCB3 /* BalloonScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonScene.ccbi; sourceTree = "<group>"; };
 		0458E80419167BAB00FA1321 /* Icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-29.png"; sourceTree = SOURCE_ROOT; };
 		0458E80519167BAB00FA1321 /* Icon-58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-58.png"; sourceTree = SOURCE_ROOT; };
@@ -1083,6 +1086,16 @@
 			);
 			name = Analysis;
 			path = ../Classes/Analysis;
+			sourceTree = "<group>";
+		};
+		0440CF1E1967D0BB008F79CC /* AppInfo */ = {
+			isa = PBXGroup;
+			children = (
+				0440CF201967D0BB008F79CC /* AppInfo.h */,
+				0440CF221967D217008F79CC /* AppInfo.mm */,
+			);
+			name = AppInfo;
+			path = ../Classes/AppInfo;
 			sourceTree = "<group>";
 		};
 		044BAB6C1905045600D8CCB3 /* Resources */ = {
@@ -1887,6 +1900,7 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0440CF1E1967D0BB008F79CC /* AppInfo */,
 				04329513194C2E96006873EF /* Analysis */,
 				041B1A1D19238B8D00942314 /* comm */,
 				04CB2B62191F74EF004B2792 /* ADMobC2DX */,
@@ -2534,6 +2548,7 @@
 				15A3DA551682F826002FB0C5 /* CCEditBox.cpp in Sources */,
 				15A3DA571682F826002FB0C5 /* CCEditBoxImplIOS.mm in Sources */,
 				15A3DA591682F826002FB0C5 /* CCScrollView.cpp in Sources */,
+				0440CF231967D217008F79CC /* AppInfo.mm in Sources */,
 				04AA6F801940BB7F006B37B6 /* BalloonHandBookScene.cpp in Sources */,
 				0460515B1923A8C8005E5A8D /* strbuffer.c in Sources */,
 				15A3DA5A1682F826002FB0C5 /* CCSorting.cpp in Sources */,
