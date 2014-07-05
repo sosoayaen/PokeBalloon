@@ -115,7 +115,8 @@ bool BalloonFirstPage::init()
         // 放上版本号
         if (!m_pLabelTTFVersion)
         {
-            m_pLabelTTFVersion = CCLabelTTF::create("v1.00.01", "", size.width/25);
+			CCString* pStringVersion = CCString::createWithFormat("v%s", DataManagerUtil::sharedDataManagerUtil()->GetGlobalDataString("versionName"));
+            m_pLabelTTFVersion = CCLabelTTF::create(pStringVersion->getCString(), "", size.width/25);
             m_pLabelTTFVersion->setAnchorPoint(ccp(1.0f, 0));
             m_pLabelTTFVersion->setPosition(ccp(size.width, 0));
             addChild(m_pLabelTTFVersion);

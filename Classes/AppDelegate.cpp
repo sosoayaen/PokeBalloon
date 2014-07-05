@@ -7,6 +7,7 @@
 #include "GAdMob2DX.h"
 #include "bailinUtil.h"
 #include "Balloon_macro.h"
+#include "AppInfo.h"
 
 #ifdef ENABLE_UMENG_DATA
 #   include "MobClickCpp.h"
@@ -15,7 +16,7 @@
 USING_NS_CC;
 USING_NS_BAILIN_UTIL;
 
-#define JNI_CLASS "com/wardrums/pokeballoon/PokeBalloon"
+#define JNI_CLASS "com/wardrums/lib/WDBaseActivity"
 
 using namespace CocosDenshion;
 
@@ -73,6 +74,14 @@ bool AppDelegate::applicationDidFinishLaunching()
     
     
 #endif
+
+	// 得到程序的版本号以及编译版本值
+	std::string strVersion = AppInfo::sharedAppInfo()->getVersionName();
+	int nVersionCode = AppInfo::sharedAppInfo()->getVersionCode();
+
+	// 把对应的值存入全局数据中
+	DataManagerUtil::sharedDataManagerUtil()->SetGlobalDataString("versionName", strVersion.c_str());
+	DataManagerUtil::sharedDataManagerUtil()->SetGlobalDataLong("versionCode", nVersionCode);
     
     // 读取本地配置数据
     setLocalConfigData();
