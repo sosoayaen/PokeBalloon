@@ -700,7 +700,15 @@ void BalloonScene::onPressMenuShare(cocos2d::CCObject *pSender)
         // 采用单数模式的字符串
         pszKey = "high_score_share";
     }
-    pDictData->setObject(CCString::createWithFormat(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("share_section", pszKey), m_llTotalScore), "shareText");
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#endif
+    
+    // 尾部挂上应用程序的链接地址
+    CCString* pStrShareText = CCString::createWithFormat("%s %s", CCString::createWithFormat(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("share_section", pszKey), m_llTotalScore)->getCString(), "http://itunes.apple.com/app/id882836376");
+    
+    pDictData->setObject(pStrShareText, "shareText");
     pDictData->setObject(ccs(strPath.c_str()), "shareImage");
     UMSocial2DX::shareSNS(pDictData);
 }

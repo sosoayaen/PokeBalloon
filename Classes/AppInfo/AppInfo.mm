@@ -1,3 +1,6 @@
+/**
+ * 用来获取iOS应用的信息等
+ */
 #include "AppInfo.h"
 
 static AppInfo* g_sAppInfo = NULL;
