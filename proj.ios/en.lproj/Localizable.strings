@@ -9,3 +9,6 @@ MessageBoxTitle="Tips";
 RateMessageBoxContent="Let's rate the Game?";
 RateMessageBoxCancel="Cancel";
 RateMessageBoxOk="Rate!";
+MessageOK="OK";
+
+LocalNotificationContent="Hey! Balloons is fullfill in your DEVICE, help me to release them, dada.....";

@@ -9,3 +9,7 @@ MessageBoxTitle="提示";
 RateMessageBoxContent="既然点得那么顺手，也顺手给个好评吧～";
 RateMessageBoxCancel="评个球";
 RateMessageBoxOk="走你";
+MessageOK="朕知道了";
+
+// 通知消息
+LocalNotificationContent="好久没来点点点了，看来最近心情不错啊，希望好心情一直保持哦，不爽的时候不要忘记来戳戳戳呀～要不就现在戳几下？貌似好多人的分数超过你了哟";

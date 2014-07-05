@@ -8,6 +8,7 @@
 #include "bailinUtil.h"
 #include "Balloon_macro.h"
 #include "AppInfo.h"
+#include "NDKBridge.h"
 
 #ifdef ENABLE_UMENG_DATA
 #   include "MobClickCpp.h"
@@ -148,6 +149,17 @@ void AppDelegate::applicationDidEnterBackground() {
     BalloonSoundManager::sharedBalloonSoundManager()->unloadAllEffect();
     
     CCNotificationCenter::sharedNotificationCenter()->postNotification(NOTIFY_PAUSE);
+    
+    // 设置推送消息
+    CCDictionary* dict = CCDictionary::create();
+    dict->setObject(ccs(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("notification_section", "localNotificationText")), "notificationText");
+    dict->setObject(ccs(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("notification_section", "localNotificationName")), "notificationName");
+#if COCOS2D_DEBUG > 0
+    dict->setObject(ccs("15"), "timeinterval");
+#endif
+    NDKBridge::sharedNDKBridge()->setNotification(dict);
+    dict->release();
+    
 }
 
 // this function will be called when the app is active again
@@ -170,6 +182,12 @@ void AppDelegate::applicationWillEnterForeground() {
 #endif
     
     CCNotificationCenter::sharedNotificationCenter()->postNotification(NOTIFY_RESUME);
+    
+    // 取消当前推送通知
+    CCDictionary* dict = CCDictionary::create();
+    dict->setObject(ccs(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("notification_section", "localNotificationName")), "notificationName");
+    NDKBridge::sharedNDKBridge()->cancelNotification(dict);
+    dict->release();
 }
 
 void AppDelegate::setLocalConfigData()
