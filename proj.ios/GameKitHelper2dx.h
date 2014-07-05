@@ -29,6 +29,9 @@ public:
     
     // 显示排行榜
     static void showLeaderboard();
+    
+    // 弹出对应评分对话框
+    static void showRateMessageBox();
 
 };
 

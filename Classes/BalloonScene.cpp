@@ -182,14 +182,12 @@ void BalloonScene::onEnter()
     // 启动单点触摸回调注册
     CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, this->getTouchPriority(), false);
     
+    // 注册游戏暂停的消息
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(BalloonScene::notifyEnterBackground), NOTIFY_PAUSE, NULL);
     
     // 自动开始
     // startGame();
     readReadySecond();
-    
-    // 删除下未用到的纹理缓存
-    CCTextureCache::sharedTextureCache()->removeUnusedTextures();
 }
 
 void BalloonScene::notifyEnterBackground(CCObject* pData)
@@ -260,7 +258,9 @@ bool BalloonScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEve
 {
     m_BalloonManager.touchTest(pTouch->getLocation());
 
+#if COCOS2D_DEBUG > 0
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
+#endif
     return true;
 }
 
@@ -547,6 +547,12 @@ void BalloonScene::update(float dt)
             
             // 弹出结算框
             showResultDialog();
+            
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+            // 首先判断下当前用户是否点击过评论
+            // 玩5盘弹出评论对话框
+            // GameKitHelper2dx::showRateMessageBox();
+#endif
             break;
             
         default:

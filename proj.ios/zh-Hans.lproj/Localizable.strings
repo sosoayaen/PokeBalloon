@@ -1,0 +1,11 @@
+/* 
+  NSLocalizedString.strings
+  PokeBalloon
+
+  Created by JasonTou on 14-7-4.
+
+*/
+MessageBoxTitle="提示";
+RateMessageBoxContent="既然点得那么顺手，也顺手给个好评吧～";
+RateMessageBoxCancel="评个球";
+RateMessageBoxOk="走你";

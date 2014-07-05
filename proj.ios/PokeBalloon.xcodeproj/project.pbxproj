@@ -113,6 +113,7 @@
 		04ECB4351925363B00DBBE89 /* CompanyPage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04ECB4331925363B00DBBE89 /* CompanyPage.cpp */; };
 		04EF660019560172004BFDDF /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EF65FF19560172004BFDDF /* StoreKit.framework */; };
 		04EF66021956018A004BFDDF /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EF66011956018A004BFDDF /* GameKit.framework */; };
+		04F1BF8E1965C8560066950F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04F1BF901965C8560066950F /* Localizable.strings */; };
 		15A3D8FF1682F7D5002FB0C5 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D88B1682F7D5002FB0C5 /* b2BroadPhase.cpp */; };
 		15A3D9001682F7D5002FB0C5 /* b2CollideCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D88D1682F7D5002FB0C5 /* b2CollideCircle.cpp */; };
 		15A3D9011682F7D5002FB0C5 /* b2CollideEdge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D88E1682F7D5002FB0C5 /* b2CollideEdge.cpp */; };
@@ -519,6 +520,8 @@
 		04ECB4341925363B00DBBE89 /* CompanyPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CompanyPage.h; path = ../Classes/CompanyPage.h; sourceTree = "<group>"; };
 		04EF65FF19560172004BFDDF /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		04EF66011956018A004BFDDF /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		04F1BF8F1965C8560066950F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		04F1BF911965C8590066950F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		15A3D87E1682F7B3002FB0C5 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		15A3D8891682F7D5002FB0C5 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		15A3D88B1682F7D5002FB0C5 /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
@@ -1400,6 +1403,7 @@
 				1AC3624616D4A1E8000847F2 /* Prefix.pch */,
 				1AFCDA8016D4A25900906EA6 /* RootViewController.h */,
 				1AFCDA8116D4A25900906EA6 /* RootViewController.mm */,
+				04F1BF901965C8560066950F /* Localizable.strings */,
 			);
 			name = ios;
 			path = Classes;
@@ -2346,6 +2350,7 @@
 				1A9CE88E1765A12C000E3062 /* sconscript in Resources */,
 				0458E80B19167BAB00FA1321 /* Icon-120.png in Resources */,
 				04612356191F2F11001AE64F /* UMShareEditViewControlleriPad.xib in Resources */,
+				04F1BF8E1965C8560066950F /* Localizable.strings in Resources */,
 				04AA6F821940D4DD006B37B6 /* BalloonHandBookScene.ccbi in Resources */,
 				04AAEACD1913C9FE006147E3 /* music in Resources */,
 				049552671936409C00AAE2F5 /* InfoPlist.strings in Resources */,
@@ -2646,6 +2651,15 @@
 				0495526A193640A200AAE2F5 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = SOURCE_ROOT;
+		};
+		04F1BF901965C8560066950F /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				04F1BF8F1965C8560066950F /* en */,
+				04F1BF911965C8590066950F /* zh-Hans */,
+			);
+			name = Localizable.strings;
 			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXVariantGroup section */

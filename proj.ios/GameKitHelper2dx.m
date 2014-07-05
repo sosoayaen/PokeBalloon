@@ -34,3 +34,8 @@ void GameKitHelper2dx::showLeaderboard()
     authGameCenter();
     [[GameKitHelper sharedGameKitHelper] showLeaderboard:nil];
 }
+
+void GameKitHelper2dx::showRateMessageBox()
+{
+    [[GameKitHelper sharedGameKitHelper] showRateView];
+}
