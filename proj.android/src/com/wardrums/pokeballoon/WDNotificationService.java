@@ -10,8 +10,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.IBinder;
 
-import com.wardrums.lib.WDBaseActivity;
-
 public class WDNotificationService extends Service {
 
 	private static final String TAG = "WDNotificationService";
@@ -33,7 +31,6 @@ public class WDNotificationService extends Service {
 		// 启动线程去判断是否需要弹出提示
 		new Thread(new Runnable() {
 
-			@SuppressWarnings("deprecation")
 			@SuppressLint("WorldWriteableFiles")
 			@Override
 			public void run() {
@@ -84,20 +81,21 @@ public class WDNotificationService extends Service {
 							continue;
 						}
 
-						Notification noti = new Notification();
-						noti.icon = R.drawable.icon;
-						noti.tickerText = strNotificationText;
-						noti.when = timeNow;
-						noti.defaults |= Notification.DEFAULT_SOUND
-								| Notification.DEFAULT_LIGHTS;
-
 						// 判断数据中是否有对应到期的通知提醒
-						Intent intent = new Intent(context,
-								WDBaseActivity.class);
+						Intent intent = new Intent(context, PokeBalloon.class);
 
 						PendingIntent pi = PendingIntent.getActivity(context,
 								0, intent, 0);
-						noti.contentIntent = pi;
+
+						// 生成一个通知对象
+						Notification noti = new Notification.Builder(context)
+								.setAutoCancel(true)
+								.setContentText(strNotificationText)
+								.setContentTitle(
+										context.getString(R.string.app_name))
+								.setTicker(strNotificationText)
+								.setSmallIcon(R.drawable.icon).setWhen(timeNow)
+								.setNumber(1).setContentIntent(pi).build();
 
 						// 获取通知管理器
 						NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);

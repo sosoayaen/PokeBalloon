@@ -50,9 +50,12 @@ const std::string& AppInfo::getVersionName()
 	if (isHave)
 	{
 		jstring jStrValue = (jstring)methodInfo.env->CallObjectMethod(activityObj, methodInfo.methodID);
+		/*
 		char* pszValue = strdup(methodInfo.env->GetStringUTFChars(jStrValue, false));
 		m_strVersionName = pszValue;
 		methodInfo.env->ReleaseStringUTFChars(jStrValue, pszValue);
+		*/
+		m_strVersionName = JniHelper::jstring2string(jStrValue);
 	}
 
 	return m_strVersionName;
