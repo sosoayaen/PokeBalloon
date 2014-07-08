@@ -48,5 +48,12 @@
 		<key>endless_description</key>
 		<string>Go go go!!!</string>
 	</dict>
+	<key>notification_section</key>
+	<dict>
+		<key>localNotificationText</key>
+		<string>Hey! Balloons is fullfill in your DEVICE, help me to release them, dada.....</string>
+		<key>localNotificationName</key>
+		<string>wardrums.pokeballoon</string>
+	</dict>
 </dict>
 </plist>

@@ -10,7 +10,7 @@
 #import "GameKitHelper.h"
 
 @interface GameKitHelper()
-        <GKGameCenterControllerDelegate> {
+        <GKGameCenterControllerDelegate, UIAlertViewDelegate> {
     BOOL _gameCenterFeaturesEnabled;
 }
 @end
@@ -122,4 +122,25 @@
 -(void) gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController {
     [[self getRootViewController] dismissViewControllerAnimated:YES completion:nil];
 }
+
+-(void) showRateView {
+    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"MessageBoxTitle", @"") message:NSLocalizedString(@"RateMessageBoxContent", @"") delegate:self cancelButtonTitle:NSLocalizedString(@"RateMessageBoxCancel", @"") otherButtonTitles:NSLocalizedString(@"RateMessageBoxOk", @""), nil];
+    [alertView show];
+    [alertView release];
+}
+
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        NSString* urlString = nil;
+        if ( [[UIDevice currentDevice].systemVersion floatValue] < 7.0) {
+            // 转到评论页面
+            urlString = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@", @"882836376"];
+        }
+        else {
+            urlString = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@", @"882836376"];
+        }
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlString]];
+    }
+}
+
 @end

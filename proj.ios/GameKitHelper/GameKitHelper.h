@@ -18,7 +18,7 @@
 
 @end
 
-@interface GameKitHelper : NSObject<GKGameCenterControllerDelegate>
+@interface GameKitHelper : NSObject<GKGameCenterControllerDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, assign)
     id<GameKitHelperProtocol> delegate;
@@ -38,5 +38,8 @@
 
 // Show Leaderboard
 -(void) showLeaderboard : (NSString*)leaderboard;
+
+// Show Rate View
+-(void) showRateView;
 
 @end

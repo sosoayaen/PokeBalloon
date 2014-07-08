@@ -182,14 +182,12 @@ void BalloonScene::onEnter()
     // 启动单点触摸回调注册
     CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, this->getTouchPriority(), false);
     
+    // 注册游戏暂停的消息
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(BalloonScene::notifyEnterBackground), NOTIFY_PAUSE, NULL);
     
     // 自动开始
     // startGame();
     readReadySecond();
-    
-    // 删除下未用到的纹理缓存
-    CCTextureCache::sharedTextureCache()->removeUnusedTextures();
 }
 
 void BalloonScene::notifyEnterBackground(CCObject* pData)
@@ -260,7 +258,9 @@ bool BalloonScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEve
 {
     m_BalloonManager.touchTest(pTouch->getLocation());
 
+#if COCOS2D_DEBUG > 0
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
+#endif
     return true;
 }
 
@@ -547,6 +547,12 @@ void BalloonScene::update(float dt)
             
             // 弹出结算框
             showResultDialog();
+            
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+            // 首先判断下当前用户是否点击过评论
+            // 玩5盘弹出评论对话框
+            // GameKitHelper2dx::showRateMessageBox();
+#endif
             break;
             
         default:
@@ -694,7 +700,15 @@ void BalloonScene::onPressMenuShare(cocos2d::CCObject *pSender)
         // 采用单数模式的字符串
         pszKey = "high_score_share";
     }
-    pDictData->setObject(CCString::createWithFormat(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("share_section", pszKey), m_llTotalScore), "shareText");
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
+#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#endif
+    
+    // 尾部挂上应用程序的链接地址
+    CCString* pStrShareText = CCString::createWithFormat("%s %s", CCString::createWithFormat(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("share_section", pszKey), m_llTotalScore)->getCString(), "http://itunes.apple.com/app/id882836376");
+    
+    pDictData->setObject(pStrShareText, "shareText");
     pDictData->setObject(ccs(strPath.c_str()), "shareImage");
     UMSocial2DX::shareSNS(pDictData);
 }

@@ -4,6 +4,7 @@
 #import "AppDelegate.h"
 #import "RootViewController.h"
 #import "GameKitHelper.h"
+#import "NDKManager.h"
 
 @implementation AppController
 
@@ -14,6 +15,13 @@
 static AppDelegate s_sharedApplication;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
+    
+    /**
+    UILocalNotification *localNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsAnnotationKey];
+    if ( localNotification ) {
+    }
+    */
+    application.applicationIconBadgeNumber = 0;
     
     // Override point for customization after application launch.
 
@@ -49,7 +57,6 @@ static AppDelegate s_sharedApplication;
     [window makeKeyAndVisible];
     
     
-    
     [[UIApplication sharedApplication] setStatusBarHidden:true];
     
     cocos2d::CCApplication::sharedApplication()->run();
@@ -57,6 +64,14 @@ static AppDelegate s_sharedApplication;
     return YES;
 }
 
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"MessageBoxTitle", nil) message:notification.alertBody delegate:nil cancelButtonTitle:NSLocalizedString(@"MessageOK", nil) otherButtonTitles:nil, nil];
+    
+    [alertView show];
+    [alertView release];
+    
+    application.applicationIconBadgeNumber -= 1;
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     /*
@@ -80,6 +95,8 @@ static AppDelegate s_sharedApplication;
      If your application supports background execution, called instead of applicationWillTerminate: when the user quits.
      */
     cocos2d::CCApplication::sharedApplication()->applicationDidEnterBackground();
+    // 激活本地推送通知
+    // [[NDKManager sharedNDKManager] setLocalNotificationWithContent:NSLocalizedString(@"LocalNotificationContent", nil) cancelNotificationName:@"wardrums.pokeballoon" timeinterval:0 forceAdd:NO];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -87,6 +104,9 @@ static AppDelegate s_sharedApplication;
      Called as part of  transition from the background to the inactive state: here you can undo many of the changes made on entering the background.
      */
     cocos2d::CCApplication::sharedApplication()->applicationWillEnterForeground();
+    application.applicationIconBadgeNumber = 0;
+    // 取消本地推送通知
+    // [[NDKManager sharedNDKManager] cancelNotification:@"wardrums.pokeballoon"];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -94,6 +114,8 @@ static AppDelegate s_sharedApplication;
      Called when the application is about to terminate.
      See also applicationDidEnterBackground:.
      */
+    // 激活本地推送通知
+    // [[NDKManager sharedNDKManager] setLocalNotificationWithContent:NSLocalizedString(@"LocalNotificationContent", nil) cancelNotificationName:@"wardrums.pokeballoon" timeinterval:0 forceAdd:NO];
 }
 
 
