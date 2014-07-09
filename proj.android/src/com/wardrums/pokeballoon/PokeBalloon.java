@@ -25,6 +25,7 @@ package com.wardrums.pokeballoon;
 
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.wardrums.lib.WDBaseActivity;
@@ -34,6 +35,8 @@ public class PokeBalloon extends WDBaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		// 启动通知服务
+		startService(new Intent("com.wardrums.pokeballoon.WDNotificationService"));
 	}
 
 	public Cocos2dxGLSurfaceView onCreateView() {

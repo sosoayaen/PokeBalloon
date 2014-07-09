@@ -8,7 +8,9 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.IBinder;
+import android.util.Log;
 
 public class WDNotificationService extends Service {
 
@@ -48,21 +50,24 @@ public class WDNotificationService extends Service {
 								.getSharedPreferences("notification",
 										MODE_WORLD_WRITEABLE);
 
-						if (sharedPreferences == null)
+						if (sharedPreferences == null) {
+							Log.d(TAG, "sharedPreferences is null");
 							continue;
+						}
 
 						// 判断下是否时间到期了，如果到期就弹出提示，并且更新当前时间
 						String strNotificationText = sharedPreferences
 								.getString("notificationText", "");
-						if (strNotificationText.isEmpty())
+						if (strNotificationText.isEmpty()) {
+							Log.d(TAG, "Notification Text is null");
 							continue;
+						}
 
-						long lTimeInterval = sharedPreferences.getLong(
-								"timeInterval", 0);
+						// long lTimeInterval = sharedPreferences.getLong(
+						// "timeInterval", 0);
 
 						// 提示间隔默认一周时间
-						if (lTimeInterval == 0)
-							lTimeInterval = 86400 * 7;
+						long lTimeInterval = 86400 * 7 * 1000;
 
 						// 当前时间
 						long timeNow = System.currentTimeMillis();
@@ -70,17 +75,26 @@ public class WDNotificationService extends Service {
 						// 显示通知的时间
 						long lNotificationShowTime = sharedPreferences.getLong(
 								"showTime", 0);
-						if (lNotificationShowTime + lTimeInterval < timeNow) {
-							// 更新通知弹出时间到下一个周期时间
-							sharedPreferences.edit().putLong("showTime",
-									timeNow + lTimeInterval);
 
-							sharedPreferences.edit().commit();
+						Log.d(TAG, "showTime:" + lNotificationShowTime
+								+ " now:" + timeNow);
+
+						if (lNotificationShowTime < timeNow) {
+							// 更新通知弹出时间到下一个周期时间
+							Editor edit = sharedPreferences.edit();
+							edit.putLong("showTime", timeNow + lTimeInterval);
+
+							Log.d(TAG, "nextShowTime:"
+									+ (lNotificationShowTime + lTimeInterval));
+
+							edit.commit();
 						} else {
 							// 继续下个循环判断
+							Log.d(TAG, "idle ...");
 							continue;
 						}
 
+						Log.d(TAG, "send a notification...");
 						// 判断数据中是否有对应到期的通知提醒
 						Intent intent = new Intent(context, PokeBalloon.class);
 
@@ -123,5 +137,6 @@ public class WDNotificationService extends Service {
 	public void onStart(Intent intent, int startId) {
 		// TODO Auto-generated method stub
 		super.onStart(intent, startId);
+		Log.d(TAG, "onStart");
 	}
 }
