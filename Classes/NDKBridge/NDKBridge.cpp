@@ -63,15 +63,18 @@ void NDKBridge::setNotification(CCDictionary* pData)
 		activityObj = methodInfo.env->CallStaticObjectMethod(methodInfo.classID, methodInfo.methodID);
 	}
 
-	isHave = JniHelper::getMethodInfo(methodInfo, JNI_CLASS, "setNotification", "(Ljava/lang/String;LL)");
+	isHave = JniHelper::getMethodInfo(methodInfo, JNI_CLASS, "setNotification", "(Ljava/lang/String;J)V");
 
 	if (isHave)
 	{
-		long timeinterval = pData->valueForKey("timeinterval")->intValue();
+		long lTimeinterval = pData->valueForKey("timeinterval")->intValue();
+		// 结束游戏2天后弹出提示，之后一周一次
+		if (lTimeinterval == 0)
+			lTimeinterval = 86400*2;
 		const std::string& strContent = pData->valueForKey("notificationText")->m_sString;
-		int len = strContent.length();
-		jstring jstrContent = stoJstring(methodInfo.env, strContent.c_str());
-		methodInfo.env->CallVoidMethod(activityObj, methodInfo.methodID, jstrContent, timeinterval);
+		jstring jstrContent = methodInfo.env->NewStringUTF(strContent.c_str());
+		jlong jlTime = (jlong)lTimeinterval;
+		methodInfo.env->CallVoidMethod(activityObj, methodInfo.methodID, jstrContent, jlTime);
 	}	
 }
 

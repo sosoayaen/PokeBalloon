@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <application android:label="@string/app_name"
         android:icon="@drawable/icon" android:debuggable="true">
@@ -32,6 +33,18 @@
         </activity>
         <activity android:theme="@android:style/Theme.Translucent.NoTitleBar" android:name="com.umeng.update.UpdateDialogActivity"></activity>
         <service android:process=":DownloadingService" android:name="com.umeng.common.net.DownloadingService"></service>
+        <receiver android:label="@string/app_name" android:name=".WDNotificationReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </receiver>
+        <service android:name=".WDNotificationService">
+            <intent-filter>
+                <action android:name="com.wardrums.pokeballoon.WDNotificationService"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </service>
     </application>
     <supports-screens android:largeScreens="true"
                       android:smallScreens="true"
