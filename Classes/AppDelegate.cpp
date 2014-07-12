@@ -10,6 +10,7 @@
 #include "BalloonAnalysis.h"
 #include "AppInfo.h"
 #include "NDKBridge.h"
+#include "UserData.h"
 
 #ifdef ENABLE_UMENG_DATA
 #   include "MobClickCpp.h"
@@ -151,16 +152,19 @@ void AppDelegate::applicationDidEnterBackground() {
     
     CCNotificationCenter::sharedNotificationCenter()->postNotification(NOTIFY_PAUSE);
     
+    // 保存本地数据
+    UserDataManager::sharedUserDataManager()->saveData();
+    
     // 设置推送消息
     CCDictionary* dict = CCDictionary::create();
     dict->setObject(ccs(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("notification_section", "localNotificationText")), "notificationText");
     dict->setObject(ccs(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("notification_section", "localNotificationName")), "notificationName");
 #if COCOS2D_DEBUG > 0
+    // 测试数据15秒发送
     dict->setObject(ccs("15"), "timeinterval");
 #endif
     NDKBridge::sharedNDKBridge()->setNotification(dict);
     dict->release();
-    
 }
 
 // this function will be called when the app is active again
@@ -206,20 +210,6 @@ void AppDelegate::setLocalConfigData()
         pDMU->SetGlobalDataLong(OPT_SOUND_EFFECT_OFF, nValue);
     }
     
-#if COCOS2D_DEBUG > 0
-    unsigned char content[] = "{123}dddd";
-    unsigned int len = 0;
-    unsigned char* pszEn = crypto::BlowfishEncode(content, sizeof(content), len);
-    unsigned int olen = len;
-    unsigned char* pszDe = crypto::BlowfishDecode(pszEn, olen, len);
-    
-    CCLOG("%s", (const char*)pszDe);
-    delete [] pszEn;
-    delete [] pszDe;
-    
-#endif
-    
-    // 创建游戏分析数据实例
-    BalloonGlobalAnalysis::sharedGlobalAnalysis();
-    
+    // 加载存在本地的用户数据
+    UserDataManager::sharedUserDataManager()->loadData();
 }

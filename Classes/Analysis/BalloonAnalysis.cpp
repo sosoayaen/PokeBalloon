@@ -243,7 +243,7 @@ std::string BalloonAnalysis::dumpDebugInfo() const
 #define KEY_ITEM_DATA           "itemData"      // 数据字典中道具数据的key
 #define KEY_COLOR_DATA          "colorData"     // 数据字典中颜色数据的key
 #define KEY_NORMAL_DATA         "normalData"    // 数据字典中普通计分数据的key
-#define ARCHIVEMENT_FILE_NAME   "archivement"   // 存放数据的文件名
+#define ARCHIVEMENT_FILE_NAME   "analysisArchivement"   // 存放数据的文件名
 #define XOR_KEY                 "wardrums_20140419"      // XOR
 
 BalloonGlobalAnalysis* g_sharedGlobalAnalysis = NULL;

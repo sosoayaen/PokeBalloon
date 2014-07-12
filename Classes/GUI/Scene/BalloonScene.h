@@ -13,9 +13,9 @@
 #include "BalloonManager.h"
 #include "CloudManager.h"
 #include "BalloonItemManager.h"
-#include "BalloonAnalysis.h"
 #include "AutoTextureManagerLayer.h"
 
+#include "BalloonAnalysis.h"
 enum BalloonGameStatus
 {
     GAME_STATUS_READY = 0,  // 开始前的准备状态

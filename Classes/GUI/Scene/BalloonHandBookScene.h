@@ -47,11 +47,6 @@ public:
 	virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector( cocos2d::CCObject * pTarget, const char* pSelectorName );
 
 	virtual bool onAssignCCBMemberVariable( cocos2d::CCObject* pTarget, const char* pMemberVariableName, cocos2d::CCNode* pNode );
-
-	virtual bool onInitDialog()
-	{
-		return true;
-	}
 	
 private:
 	// Attributes for CCB
@@ -104,6 +99,9 @@ private:
     
     // 根据金币数目重新布局
     void reLayoutCoins();
+    
+    // 更新金币
+    void updateCoins();
 	
 public:
 	// Funcitons

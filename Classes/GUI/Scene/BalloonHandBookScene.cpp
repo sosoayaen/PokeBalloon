@@ -1,6 +1,7 @@
 #include "BalloonHandBookScene.h"
 #include "BalloonSoundManager.h"
 #include "bailinUtil.h"
+#include "UserData.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -76,7 +77,8 @@ void BalloonHandBookScene::onEnter()
 	// CCLayer::onEnter();
     AutoTextureManagerLayer::onEnter();
 	// 这里可以定义进入场景的初始化，比如控件的初始位置，初始状态等
-    reLayoutCoins();
+    
+    updateCoins();
     
     // 删除下未用到的纹理缓存
     CCTextureCache::sharedTextureCache()->removeUnusedTextures();
@@ -283,6 +285,13 @@ void BalloonHandBookScene::reLayoutCoins()
 {
     // 根据金钱的数量重新定位金币标志
     m_pSpriteCoin->setPosition(ccp(m_pLabelBMFontCoins->getPositionX() - m_pLabelBMFontCoins->boundingBox().size.width - m_pSpriteCoin->getContentSize().width*0.2f, m_pSpriteCoin->getPositionY()));
+}
+
+void BalloonHandBookScene::updateCoins()
+{
+    m_pLabelBMFontCoins->setString(CCString::createWithFormat("%lu", UserDataManager::sharedUserDataManager()->getGoldenCoins())->getCString());
+    // 设置完数据顺便重新定位下
+    reLayoutCoins();
 }
 
 bool BalloonHandBookScene::setResourceString()

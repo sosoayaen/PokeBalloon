@@ -5,6 +5,7 @@
 #include "UMSocial2DX.h"
 #include "BalloonPauseDialog.h"
 #include "BalloonResultDialog.h"
+#include "UserData.h"
 
 #include "bailinUtil.h"
 
@@ -215,6 +216,8 @@ void BalloonScene::onExit()
     // 停止场景回调
     unscheduleUpdate();
     
+    UserDataManager::sharedUserDataManager()->saveData();
+    
     // 注销单点触摸回调注册
     CCDirector::sharedDirector()->getTouchDispatcher()->removeDelegate(this);
     
@@ -299,7 +302,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
         case kBalloonTypeNormal:
             pBalloon->explosive();
             // 根据对应的气球分数增加到总分上
-            if (!pDMU->SetSecurityData(SECURITY_SCORE, &m_llTotalScore, pBalloon->getBalloonScore()))
+            if (!pDMU->SetSecurityData(SECURITY_SCORE, &m_llTotalScore, (long long)pBalloon->getBalloonScore()))
             {
                 m_bCheated = true;
                 CCMessageBox("Cheat!!!", "Warnning");
@@ -379,7 +382,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             {
                 pBalloon->explosive();
                 // 根据对应的气球分数增加到总分上
-                if (!pDMU->SetSecurityData(SECURITY_SCORE, &m_llTotalScore, pBalloon->getBalloonScore()))
+                if (!pDMU->SetSecurityData(SECURITY_SCORE, &m_llTotalScore, (long long)pBalloon->getBalloonScore()))
                 {
                     m_bCheated = true;
                     CCMessageBox("Cheat!!!", "Warnning");
@@ -469,7 +472,7 @@ void BalloonScene::update(float dt)
         case GAME_STATUS_RUNNING:
             if (m_lTimeLeft > 0 && m_ulFrame % int(1/CCDirector::sharedDirector()->getAnimationInterval()) == 0)
             {
-                if (!DataManagerUtil::sharedDataManagerUtil()->SetSecurityData(SECURITY_TIME, &m_lTimeLeft, -1))
+                if (!DataManagerUtil::sharedDataManagerUtil()->SetSecurityData(SECURITY_TIME, &m_lTimeLeft, (long)-1))
                 {
                     m_bCheated = true;
                     CCMessageBox("Cheat!!!", "Warnning");
@@ -535,10 +538,14 @@ void BalloonScene::update(float dt)
             if (!m_bCheated)
             {
                 // 合并统计数据
-                BalloonGlobalAnalysis::sharedGlobalAnalysis()->merge(m_BalloonAnalysis);
+                UserDataManager::sharedUserDataManager()->getGlobalAnalysisDataRef()->merge(m_BalloonAnalysis);
                 // 存盘
-                BalloonGlobalAnalysis::sharedGlobalAnalysis()->saveData();
-                // m_GlobalAnalysis.merge(m_BalloonAnalysis);
+                // UserDataManager::sharedUserDataManager()->getGlobalAnalysisDataRef()->saveData();
+                
+                // 记录得到的金币
+                unsigned long ulCoins = m_llTotalScore/20;
+                UserDataManager::sharedUserDataManager()->addGoldenCoins(ulCoins);
+                
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
                 // 发送成绩到GameCenter
                 GameKitHelper2dx::uploadScore(m_llTotalScore);

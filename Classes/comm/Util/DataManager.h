@@ -131,16 +131,33 @@ public:
      * @param lAddData 用作修改数据的附加值
      * @return bool 表明保护的时候是否被篡改，如果返回false表示被篡改了
      */
+//*
     bool SetSecurityData(const char* pszKey, long* plData, long lAddData);
     
+    bool SetSecurityData(const char* pszKey, unsigned long* pulData, unsigned long ulAddData);
+    
     bool SetSecurityData(const char* pszKey, long long* pllData, long long llAddData);
+//*/
+    
+    /*
+    template<typename T>
+    bool SetSecurityData(const char* pszKey, T* pData, T addData);
+    */
     
     /**
      * @brief 检查对应数据是否正常，获取数据时校验
      */
+//*
     bool CheckSecurityData(const char* pszKey, long lData);
     
+    bool CheckSecurityData(const char* pszKey, unsigned long ulData);
+    
     bool CheckSecurityData(const char* pszKey, long long llData);
+//*/
+    /*
+    template<typename T>
+    bool CheckSecurityData(const char* pszKey, T data);
+    */
     
     /**
      * @brief 设置某个key对应的校验值，一般用于初始化的设定，避免误检测
@@ -150,12 +167,12 @@ public:
     void SetSecurityCode(const char* pszKey, unsigned long nCode);
     
     /**
-     * @brief 读取带签名数据，带校验
+     * @brief 从配置文件中读取带签名数据（如金币），带校验
      */
     std::string ReadDataWithChecksum(const char* pszKey);
     
     /**
-     * @brief 写带签名的数据，带校验
+     * @brief 写带签名的数据到配置文件中（如金币），带校验
      */
     void WriteDataWithChecksum(const char* pszKey, const char* pszValue);
     

@@ -67,7 +67,11 @@ typedef struct tagBalloonAnalysisData
 class BalloonAnalysis
 {
 public:
-	BalloonAnalysis(){}
+	BalloonAnalysis()
+    {
+        initData();
+    }
+    
 	virtual ~BalloonAnalysis(){}
 
 	/**
@@ -151,7 +155,8 @@ class BalloonGlobalAnalysis : public BalloonAnalysis
 {
 public:
     BalloonGlobalAnalysis(){}
-    ~BalloonGlobalAnalysis(){}
+    
+    virtual ~BalloonGlobalAnalysis(){}
     
     // 得到全局静态的记录数据
     static BalloonGlobalAnalysis* sharedGlobalAnalysis();

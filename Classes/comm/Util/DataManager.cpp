@@ -591,6 +591,44 @@ void DataManagerUtil::SendNDKMessages( const char* pszNativeFuncName, cocos2d::C
 #endif
 }
 
+/*
+template<typename T>
+bool DataManagerUtil::CheckSecurityData(const char *pszKey, T data)
+{
+    unsigned long nCrc32Check = 0;
+    SecurityMap::iterator iter = m_mapSecurityData.find(string(pszKey));
+    if(iter != m_mapSecurityData.end())
+    {
+        // CCLOG("key:[%s], value:[%lu]", iter->first.c_str(), iter->second);
+        nCrc32Check = iter->second;
+    }
+    
+    unsigned long nCrc32 = crypto::Crc32(&data, sizeof(T));
+    
+    return nCrc32 == nCrc32Check;
+}
+
+template <typename T>
+bool DataManagerUtil::SetSecurityData(const char *pszKey, T *pData, T addData)
+{
+    bool bRet = CheckSecurityData(pszKey, *pData);
+    
+    if (bRet)
+    {
+        // 附加值
+        *pData += addData;
+        
+        // 回填校验值
+        unsigned long nCheckCode = crypto::Crc32(pData, sizeof(T));
+        // m_pDictionarySecurityData->setObject(CCString::createWithFormat("%lu", nCheckCode), pszKey);
+        m_mapSecurityData[string(pszKey)] = nCheckCode;
+    }
+    
+    return bRet;
+}
+//*/
+
+//*
 bool DataManagerUtil::CheckSecurityData(const char *pszKey, long lData)
 {
     // CCString* pCheckCode = dynamic_cast<CCString*>(m_pDictionarySecurityData->objectForKey(pszKey));
@@ -604,6 +642,23 @@ bool DataManagerUtil::CheckSecurityData(const char *pszKey, long lData)
     }
     
     unsigned long nCrc32 = crypto::Crc32(&lData, sizeof(lData));
+    
+    return nCrc32 == nCrc32Check;
+}
+
+bool DataManagerUtil::CheckSecurityData(const char *pszKey, unsigned long ulData)
+{
+    // CCString* pCheckCode = dynamic_cast<CCString*>(m_pDictionarySecurityData->objectForKey(pszKey));
+    
+    unsigned long nCrc32Check = 0;
+    SecurityMap::iterator iter = m_mapSecurityData.find(string(pszKey));
+    if(iter != m_mapSecurityData.end())
+    {
+        // CCLOG("key:[%s], value:[%lu]", iter->first.c_str(), iter->second);
+        nCrc32Check = iter->second;
+    }
+    
+    unsigned long nCrc32 = crypto::Crc32(&ulData, sizeof(ulData));
     
     return nCrc32 == nCrc32Check;
 }
@@ -641,6 +696,24 @@ bool DataManagerUtil::SetSecurityData(const char *pszKey, long *plData, long lAd
     return bRet;
 }
 
+bool DataManagerUtil::SetSecurityData(const char *pszKey, unsigned long *pulData, unsigned long ulAddData)
+{
+    bool bRet = CheckSecurityData(pszKey, *pulData);
+    
+    if (bRet)
+    {
+        // 附加值
+        *pulData += ulAddData;
+        
+        // 回填校验值
+        unsigned long nCheckCode = crypto::Crc32(pulData, sizeof(unsigned long));
+        // m_pDictionarySecurityData->setObject(CCString::createWithFormat("%lu", nCheckCode), pszKey);
+        m_mapSecurityData[string(pszKey)] = nCheckCode;
+    }
+    
+    return bRet;
+}
+
 bool DataManagerUtil::SetSecurityData(const char *pszKey, long long *pllData, long long llAddData)
 {
     bool bRet = CheckSecurityData(pszKey, *pllData);
@@ -658,6 +731,7 @@ bool DataManagerUtil::SetSecurityData(const char *pszKey, long long *pllData, lo
     
     return bRet;
 }
+//*/
 
 void DataManagerUtil::SetSecurityCode(const char *pszKey, unsigned long nCode)
 {
