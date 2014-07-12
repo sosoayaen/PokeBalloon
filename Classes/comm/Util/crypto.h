@@ -32,6 +32,14 @@ public:
      * @return unsigned long 校验码
      */
     static unsigned long Crc32(const void *buf, size_t bufLen );
+    
+    /**
+     * @brief blowfish数据加解密
+     * @warnning 返回的加解密数据需要外部释放
+     * @return 加解密后的数据
+     */
+    static unsigned char* BlowfishEncode(const unsigned char* pBuffer, unsigned int in_len, unsigned int& out_len, const char* pszKey = NULL);
+    static unsigned char* BlowfishDecode(const unsigned char* pBuffer, unsigned int in_len, unsigned int& out_len, const char* pszKey = NULL);
 };
 
 NS_BAILIN_UTIL_END

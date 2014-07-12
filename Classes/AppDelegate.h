@@ -35,7 +35,7 @@ public:
     
 private:
     /**
-     * @brief 读取本地配置数据
+     * @brief 璇诲彇鏈湴閰嶇疆鏁版嵁
      */
     void setLocalConfigData();
 };

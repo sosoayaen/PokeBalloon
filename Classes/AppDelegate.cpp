@@ -7,6 +7,7 @@
 #include "GAdMob2DX.h"
 #include "bailinUtil.h"
 #include "Balloon_macro.h"
+#include "BalloonAnalysis.h"
 #include "AppInfo.h"
 #include "NDKBridge.h"
 
@@ -35,10 +36,10 @@ bool AppDelegate::applicationDidFinishLaunching()
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
 
-// ³õÊ¼»¯ÓÑÃËÊı¾İ
+// åˆå§‹åŒ–å‹ç›Ÿæ•°æ®
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 
-	// ´´½¨¹ã¸æ¿ØÖÆÊµÀı
+	// åˆ›å»ºå¹¿å‘Šæ§åˆ¶å®ä¾‹
     GAdMob2DX* pGADInstance = GAdMob2DX::sharedGAdMob2DX();
 
 #   if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -47,7 +48,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 #       endif
     UMSocial2DX::setAppKey("5352425256240b09f407dee2");
 
-	// ÉèÖÃiOS¹ã¸æID
+	// è®¾ç½®iOSå¹¿å‘ŠID
     pGADInstance->init("ca-app-pub-4946557086550003/5403608979");
 
 #	elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -56,7 +57,7 @@ bool AppDelegate::applicationDidFinishLaunching()
 #       endif
     UMSocial2DX::setAppKey("535242b756240b0a0506ca56", JNI_CLASS);
 	
-	// ÉèÖÃAndroid¹ã¸æIDÒÔ¼°Android¶ÔÓ¦µÄ°üÃû
+	// è®¾ç½®Androidå¹¿å‘ŠIDä»¥åŠAndroidå¯¹åº”çš„åŒ…å
     pGADInstance->init("ca-app-pub-4946557086550003/8357075374", JNI_CLASS);
 #	endif
 
@@ -65,10 +66,10 @@ bool AppDelegate::applicationDidFinishLaunching()
 	MobClickCpp::setLogEnabled(true);
 #       endif
 
-    // ¼ì²é°æ±¾¸üĞÂ
+    // æ£€æŸ¥ç‰ˆæœ¬æ›´æ–°
     MobClickCpp::checkUpdate();
     
-    // ¸üĞÂÔÚÏßÅäÖÃÊı¾İ
+    // æ›´æ–°åœ¨çº¿é…ç½®æ•°æ®
     MobClickCpp::updateOnlineConfig();
     
 #   endif
@@ -76,15 +77,15 @@ bool AppDelegate::applicationDidFinishLaunching()
     
 #endif
 
-	// µÃµ½³ÌĞòµÄ°æ±¾ºÅÒÔ¼°±àÒë°æ±¾Öµ
+	// å¾—åˆ°ç¨‹åºçš„ç‰ˆæœ¬å·ä»¥åŠç¼–è¯‘ç‰ˆæœ¬å€¼
 	std::string strVersion = AppInfo::sharedAppInfo()->getVersionName();
 	int nVersionCode = AppInfo::sharedAppInfo()->getVersionCode();
 
-	// °Ñ¶ÔÓ¦µÄÖµ´æÈëÈ«¾ÖÊı¾İÖĞ
+	// æŠŠå¯¹åº”çš„å€¼å­˜å…¥å…¨å±€æ•°æ®ä¸­
 	DataManagerUtil::sharedDataManagerUtil()->SetGlobalDataString("versionName", strVersion.c_str());
 	DataManagerUtil::sharedDataManagerUtil()->SetGlobalDataLong("versionCode", nVersionCode);
     
-    // ¶ÁÈ¡±¾µØÅäÖÃÊı¾İ
+    // è¯»å–æœ¬åœ°é…ç½®æ•°æ®
     setLocalConfigData();
 
     pDirector->setOpenGLView(pEGLView);
@@ -96,7 +97,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     float fScaleFactor = 1.0f;
     if (screenSize.height/screenSize.width > resSize.height/resSize.width)
     {
-        // ÆÁÄ»µÄ¿í¸ß±È´óÓÚÉè¶¨µÄ¿í¸ß±È£¬±êÊ¶ĞèÒª°´ÕÕ¸ß¶ÈµÄ±ê×¼À­Éì
+        // å±å¹•çš„å®½é«˜æ¯”å¤§äºè®¾å®šçš„å®½é«˜æ¯”ï¼Œæ ‡è¯†éœ€è¦æŒ‰ç…§é«˜åº¦çš„æ ‡å‡†æ‹‰ä¼¸
         fScaleFactor = resSize.width / screenSize.width;
     }
     else
@@ -107,7 +108,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setContentScaleFactor(fScaleFactor);
     pEGLView->setDesignResolutionSize(screenSize.width, screenSize.height, kResolutionShowAll);
     
-    // ³õÊ¼»¯Ëæ»úÊıÖÖ×Ó
+    // åˆå§‹åŒ–éšæœºæ•°ç§å­
     srand(time(NULL));
     
 
@@ -129,7 +130,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     // run
     pDirector->runWithScene(pScene);
 
-    // ³õÊ¼»¯ÔØÈëÒôĞ§ÎÄ¼ş
+    // åˆå§‹åŒ–è½½å…¥éŸ³æ•ˆæ–‡ä»¶
     BalloonSoundManager::sharedBalloonSoundManager();
     
     return true;
@@ -142,15 +143,15 @@ void AppDelegate::applicationDidEnterBackground() {
     // if you use SimpleAudioEngine, it must be pause
     SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
 #ifdef ENABLE_UMENG_DATA
-    // ¶àÃËÍ³¼Æ½øÈëºóÌ¨
+    // å¤šç›Ÿç»Ÿè®¡è¿›å…¥åå°
     MobClickCpp::applicationDidEnterBackground();
 #endif
-    // ÏÈ°ÑÒôĞ§ÎÄ¼şÇåÀíµô
+    // å…ˆæŠŠéŸ³æ•ˆæ–‡ä»¶æ¸…ç†æ‰
     BalloonSoundManager::sharedBalloonSoundManager()->unloadAllEffect();
     
     CCNotificationCenter::sharedNotificationCenter()->postNotification(NOTIFY_PAUSE);
     
-    // ÉèÖÃÍÆËÍÏûÏ¢
+    // è®¾ç½®æ¨é€æ¶ˆæ¯
     CCDictionary* dict = CCDictionary::create();
     dict->setObject(ccs(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("notification_section", "localNotificationText")), "notificationText");
     dict->setObject(ccs(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("notification_section", "localNotificationName")), "notificationName");
@@ -166,10 +167,10 @@ void AppDelegate::applicationDidEnterBackground() {
 void AppDelegate::applicationWillEnterForeground() {
     CCDirector::sharedDirector()->startAnimation();
 
-    // ÔÙ´Î¼ÓÔØÒôĞ§
+    // å†æ¬¡åŠ è½½éŸ³æ•ˆ
     BalloonSoundManager::sharedBalloonSoundManager()->preloadAllEffect();
     
-    // Ô¤¶ÁÒôÀÖÑ¡Ïî
+    // é¢„è¯»éŸ³ä¹é€‰é¡¹
     if (!DataManagerUtil::sharedDataManagerUtil()->GetGlobalDataLong(OPT_MUSIC_OFF))
     {
         // if you use SimpleAudioEngine, it must resume here
@@ -177,13 +178,13 @@ void AppDelegate::applicationWillEnterForeground() {
     }
     
 #ifdef ENABLE_UMENG_DATA
-    // ¶àÃËÍ³¼Æ·ÖÎö»Øµ½Ç°Ì¨
+    // å¤šç›Ÿç»Ÿè®¡åˆ†æå›åˆ°å‰å°
     MobClickCpp::applicationWillEnterForeground();
 #endif
     
     CCNotificationCenter::sharedNotificationCenter()->postNotification(NOTIFY_RESUME);
     
-    // È¡Ïûµ±Ç°ÍÆËÍÍ¨Öª
+    // å–æ¶ˆå½“å‰æ¨é€é€šçŸ¥
     CCDictionary* dict = CCDictionary::create();
     dict->setObject(ccs(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("notification_section", "localNotificationName")), "notificationName");
     NDKBridge::sharedNDKBridge()->cancelNotification(dict);
@@ -198,10 +199,27 @@ void AppDelegate::setLocalConfigData()
     
     if (pDMU)
     {
-        // ¶ÁÈ¡ÒôĞ§ºÍÒôÀÖÅäÖÃ
+        // è¯»å–éŸ³æ•ˆå’ŒéŸ³ä¹é…ç½®
         int nValue = CCUserDefault::sharedUserDefault()->getIntegerForKey(OPT_MUSIC_OFF, 0);
         pDMU->SetGlobalDataLong(OPT_MUSIC_OFF, nValue);
         nValue = CCUserDefault::sharedUserDefault()->getIntegerForKey(OPT_SOUND_EFFECT_OFF, 0);
         pDMU->SetGlobalDataLong(OPT_SOUND_EFFECT_OFF, nValue);
     }
+    
+#if COCOS2D_DEBUG > 0
+    unsigned char content[] = "{123}dddd";
+    unsigned int len = 0;
+    unsigned char* pszEn = crypto::BlowfishEncode(content, sizeof(content), len);
+    unsigned int olen = len;
+    unsigned char* pszDe = crypto::BlowfishDecode(pszEn, olen, len);
+    
+    CCLOG("%s", (const char*)pszDe);
+    delete [] pszEn;
+    delete [] pszDe;
+    
+#endif
+    
+    // åˆ›å»ºæ¸¸æˆåˆ†ææ•°æ®å®ä¾‹
+    BalloonGlobalAnalysis::sharedGlobalAnalysis();
+    
 }

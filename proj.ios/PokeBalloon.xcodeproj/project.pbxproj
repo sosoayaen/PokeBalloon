@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04059B0319705F6C005429E4 /* blowfish.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04059B0019705F6C005429E4 /* blowfish.cpp */; };
+		04059B0419705F6C005429E4 /* blowfish.h2 in Resources */ = {isa = PBXBuildFile; fileRef = 04059B0219705F6C005429E4 /* blowfish.h2 */; };
 		0435602419264F5F0044D838 /* BalloonResultDialog.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 0435602319264F5F0044D838 /* BalloonResultDialog.ccbi */; };
 		0435602619265F0E0044D838 /* BalloonPauseDialog.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 0435602519265F0E0044D838 /* BalloonPauseDialog.ccbi */; };
 		043560311928A7070044D838 /* localizableString in Resources */ = {isa = PBXBuildFile; fileRef = 043560301928A7070044D838 /* localizableString */; };
@@ -338,6 +340,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04059B0019705F6C005429E4 /* blowfish.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = blowfish.cpp; sourceTree = "<group>"; };
+		04059B0119705F6C005429E4 /* blowfish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blowfish.h; sourceTree = "<group>"; };
+		04059B0219705F6C005429E4 /* blowfish.h2 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = blowfish.h2; sourceTree = "<group>"; };
 		0435602319264F5F0044D838 /* BalloonResultDialog.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonResultDialog.ccbi; sourceTree = "<group>"; };
 		0435602519265F0E0044D838 /* BalloonPauseDialog.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonPauseDialog.ccbi; sourceTree = "<group>"; };
 		043560301928A7070044D838 /* localizableString */ = {isa = PBXFileReference; lastKnownFileType = folder; path = localizableString; sourceTree = "<group>"; };
@@ -991,6 +996,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04059AFF19705F6C005429E4 /* blowfish2 */ = {
+			isa = PBXGroup;
+			children = (
+				04059B0019705F6C005429E4 /* blowfish.cpp */,
+				04059B0119705F6C005429E4 /* blowfish.h */,
+				04059B0219705F6C005429E4 /* blowfish.h2 */,
+			);
+			path = blowfish2;
+			sourceTree = "<group>";
+		};
 		044BAB6C1905045600D8CCB3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1236,6 +1251,7 @@
 		0452D851196ECF3800F16E38 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				04059AFF19705F6C005429E4 /* blowfish2 */,
 				0452D852196ECF3800F16E38 /* bailinMacro.h */,
 				0452D853196ECF3800F16E38 /* bailinUtil.h */,
 				0452D854196ECF3800F16E38 /* Base64.cpp */,
@@ -1999,17 +2015,17 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0452D82C196ECF3800F16E38 /* comm */,
 				0452D7F3196ECF3800F16E38 /* SoundManager */,
 				0452D7F6196ECF3800F16E38 /* GUI */,
 				0452D814196ECF3800F16E38 /* NDKBridge */,
-				0452D81A196ECF3800F16E38 /* AppDelegate.cpp */,
-				0452D81B196ECF3800F16E38 /* AppInfo */,
-				0452D81F196ECF3800F16E38 /* Balloon_macro.h */,
 				0452D820196ECF3800F16E38 /* Analysis */,
-				0452D823196ECF3800F16E38 /* AppDelegate.h */,
-				0452D824196ECF3800F16E38 /* UMSocialC2DX */,
+				0452D81B196ECF3800F16E38 /* AppInfo */,
 				0452D828196ECF3800F16E38 /* ADMobC2DX */,
-				0452D82C196ECF3800F16E38 /* comm */,
+				0452D824196ECF3800F16E38 /* UMSocialC2DX */,
+				0452D81F196ECF3800F16E38 /* Balloon_macro.h */,
+				0452D823196ECF3800F16E38 /* AppDelegate.h */,
+				0452D81A196ECF3800F16E38 /* AppDelegate.cpp */,
 			);
 			name = Classes;
 			path = ../classes;
@@ -2423,6 +2439,7 @@
 				0460516E1923A9DE005E5A8D /* README.md in Resources */,
 				04612357191F2F11001AE64F /* UMSLoginViewController.xib in Resources */,
 				04612359191F2F11001AE64F /* UMSShareListController.xib in Resources */,
+				04059B0419705F6C005429E4 /* blowfish.h2 in Resources */,
 				04612353191F2F11001AE64F /* UMSCommentInputController.xib in Resources */,
 				0435602619265F0E0044D838 /* BalloonPauseDialog.ccbi in Resources */,
 				04AAEAC5191383F9006147E3 /* Icon-57.png in Resources */,
@@ -2513,6 +2530,7 @@
 				15A3D9171682F7D5002FB0C5 /* b2ChainAndCircleContact.cpp in Sources */,
 				15A3D9181682F7D5002FB0C5 /* b2ChainAndPolygonContact.cpp in Sources */,
 				0452D889196ECF3800F16E38 /* BalloonAnalysis.cpp in Sources */,
+				04059B0319705F6C005429E4 /* blowfish.cpp in Sources */,
 				15A3D9191682F7D5002FB0C5 /* b2CircleContact.cpp in Sources */,
 				15A3D91A1682F7D5002FB0C5 /* b2Contact.cpp in Sources */,
 				15A3D91B1682F7D5002FB0C5 /* b2ContactSolver.cpp in Sources */,

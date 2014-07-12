@@ -18,9 +18,10 @@
 
 #include "BalloonAnalysis.h"
 #include "CCJSONConverter.h"
-
+#include "bailinUtil.h"
 
 USING_NS_CC;
+USING_NS_BAILIN_UTIL;
 
 void BalloonAnalysis::initData()
 {
@@ -192,6 +193,7 @@ void BalloonAnalysis::merge(const BalloonAnalysis &analysisData)
 
 std::string BalloonAnalysis::dumpDebugInfo() const
 {
+#if COCOS2D_DEBUG > 0
 	// 输出统计调试信息
 	std::stringstream stream;
 	stream << "=======>debug info<=======\n";
@@ -230,6 +232,9 @@ std::string BalloonAnalysis::dumpDebugInfo() const
     stream << "- time: " << m_AnalysisData.itemData.time << "\n";
 
 	return stream.str();
+#else
+    return "";
+#endif
 }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -239,6 +244,7 @@ std::string BalloonAnalysis::dumpDebugInfo() const
 #define KEY_COLOR_DATA          "colorData"     // 数据字典中颜色数据的key
 #define KEY_NORMAL_DATA         "normalData"    // 数据字典中普通计分数据的key
 #define ARCHIVEMENT_FILE_NAME   "archivement"   // 存放数据的文件名
+#define XOR_KEY                 "wardrums_20140419"      // XOR
 
 BalloonGlobalAnalysis* g_sharedGlobalAnalysis = NULL;
 
@@ -323,13 +329,15 @@ void BalloonGlobalAnalysis::loadData()
         const unsigned char* pData = CCFileUtils::sharedFileUtils()->getFileData(strPath.c_str(), "rb", &nSize);
         if (pData && nSize > 0)
         {
-            const char* pszJSONData = (const char*)pData;
+            unsigned int nBufferLen = 0;
+            const char* pszJSONData = (const char*)crypto::BlowfishDecode(pData, nSize, nBufferLen);
             // CCLog("%s", pszJSONData);
             CCDictionary* pDict = CCJSONConverter::sharedConverter()->dictionaryFrom(pszJSONData);
             // 转换数据到结构体
             setDataWithDictionary(pDict);
             // 释放数据
             delete pData;
+            delete pszJSONData;
         }
     }
 }
@@ -392,16 +400,24 @@ bool BalloonGlobalAnalysis::saveData()
     
     // 转换成JSON数据
     std::string strJSON = CCJSONConverter::sharedConverter()->strFrom(pDict);
+    
+    // 加密JSON数据
+    unsigned int nBuffLen = 0;
+    unsigned char* pBufferData = crypto::BlowfishEncode((const unsigned char*)strJSON.c_str(), strJSON.length(), nBuffLen);
+    
     // 保存数据到磁盘
     std::string strPath = CCFileUtils::sharedFileUtils()->getWritablePath() + ARCHIVEMENT_FILE_NAME;
     FILE* file = fopen(strPath.c_str(), "wb");
     CCAssert(file, "archivement file open failed...");
     if (file)
     {
-        fwrite(strJSON.c_str(), 1, strJSON.length(), file);
+        fwrite(pBufferData, 1, nBuffLen, file);
         fflush(file);
         fclose(file);
     }
+    
+    // 删除加密生成的零时数据
+    delete pBufferData;
     
     return true;
 }

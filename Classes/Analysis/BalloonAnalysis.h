@@ -170,9 +170,17 @@ public:
      * @brief 保存数据到磁盘，一般只允许全局数据调用此接口
      */
     bool saveData();
+    
 private:
+    // 从对象数据转化为字典
     cocos2d::CCDictionary* dictionayFromData();
+    
+    // 从字典数据填充对象
     void setDataWithDictionary(cocos2d::CCDictionary* pDict);
+    
+private:
+    // 是否明文模式用于存储和读取数据
+    bool m_bPlainMode;
 };
 
 #endif // __BALLOON_ANALYSIS_H__
