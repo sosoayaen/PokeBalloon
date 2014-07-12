@@ -32,7 +32,9 @@ const char SECRECT_KEY[] = "20140419";
 // 帐号和密码的异或key （密码存的是MD5的值，所以不暂时不用）
 // const char ACCOUNT_KEY[] = "20140501";
 
-bailin::util::DataManagerUtil::DataManagerUtil()
+NS_BAILIN_UTIL_BEGIN
+
+DataManagerUtil::DataManagerUtil()
 {
 	m_pDictionaryGlobalData = NULL;
 
@@ -42,15 +44,15 @@ bailin::util::DataManagerUtil::DataManagerUtil()
 	m_pDictionaryGlobalData = getGlobalData();
 }
 
-bailin::util::DataManagerUtil::~DataManagerUtil()
+DataManagerUtil::~DataManagerUtil()
 {
 	CC_SAFE_RELEASE_NULL(m_pDictionaryStringData);
 	CC_SAFE_RELEASE_NULL(m_pDictionaryGlobalData);
 	// CC_SAFE_RELEASE_NULL(m_pDictionarySecurityData);
 }
 
-static bailin::util::DataManagerUtil* g_sharedDataManager = NULL;
-bailin::util:: DataManagerUtil* bailin::util::DataManagerUtil::sharedDataManagerUtil()
+static DataManagerUtil* g_sharedDataManager = NULL;
+ DataManagerUtil* DataManagerUtil::sharedDataManagerUtil()
 {
 	if (!g_sharedDataManager)
 	{
@@ -139,12 +141,12 @@ bailin::util:: DataManagerUtil* bailin::util::DataManagerUtil::sharedDataManager
 	return g_sharedDataManager;
 }
 
-void bailin::util::DataManagerUtil::purgeSharedDataManagerUtil()
+void DataManagerUtil::purgeSharedDataManagerUtil()
 {
 	CC_SAFE_DELETE(g_sharedDataManager);
 }
 
-cocos2d::CCDictionary* bailin::util::DataManagerUtil::getGlobalData()
+cocos2d::CCDictionary* DataManagerUtil::getGlobalData()
 {
 	if (!m_pDictionaryGlobalData)
 	{
@@ -230,7 +232,7 @@ const char* getLocalizableFileName()
 	return "localizableString/stringData_en.plist";
 }
 
-cocos2d::CCDictionary* bailin::util::DataManagerUtil::getLocaleStringData()
+cocos2d::CCDictionary* DataManagerUtil::getLocaleStringData()
 {
 	CCDictionary* pDictData = NULL;
 	std::string localString = getLocalizableFileName();
@@ -245,7 +247,7 @@ cocos2d::CCDictionary* bailin::util::DataManagerUtil::getLocaleStringData()
 	return pDictData;
 }
 
-std::string bailin::util::DataManagerUtil::GetUmengOnlineConfig(const char*pkey)
+std::string DataManagerUtil::GetUmengOnlineConfig(const char*pkey)
 {
     std::string strValue = "";
 #ifdef ENABLE_UMENG_DATA
@@ -256,7 +258,7 @@ std::string bailin::util::DataManagerUtil::GetUmengOnlineConfig(const char*pkey)
     return strValue;
 }
 
-const char* bailin::util::DataManagerUtil::GetUTF8StringInDictionary( const char* pszSection, const char* pszKey )
+const char* DataManagerUtil::GetUTF8StringInDictionary( const char* pszSection, const char* pszKey )
 {
 	if (!m_pDictionaryStringData)
 	{
@@ -305,7 +307,7 @@ const char* bailin::util::DataManagerUtil::GetUTF8StringInDictionary( const char
 	return "";
 }
 
-const char* bailin::util::DataManagerUtil::GetUTF8StringInDictionaryForServer( const char* pszKey )
+const char* DataManagerUtil::GetUTF8StringInDictionaryForServer( const char* pszKey )
 {
 	CCDictionary*  pDictStringData=NULL;
 	if (!pDictStringData)
@@ -380,7 +382,7 @@ const char* bailin::util::DataManagerUtil::GetUTF8StringInDictionaryForServer( c
 	return "";
 }
 
-long bailin::util::DataManagerUtil::GetLongValueInDictionary( const char* pszSection, const char* pszKey )
+long DataManagerUtil::GetLongValueInDictionary( const char* pszSection, const char* pszKey )
 {
 	long lRet = 0;
 	if (!m_pDictionaryStringData)
@@ -407,7 +409,7 @@ long bailin::util::DataManagerUtil::GetLongValueInDictionary( const char* pszSec
 	return lRet;
 }
 
-long bailin::util::DataManagerUtil::GetGlobalDataLong( const char* pszKey )
+long DataManagerUtil::GetGlobalDataLong( const char* pszKey )
 {
 	CCDictionary* pDict = getGlobalData();
 	if (pDict)
@@ -421,7 +423,7 @@ long bailin::util::DataManagerUtil::GetGlobalDataLong( const char* pszKey )
 	return 0;
 }
 
-void bailin::util::DataManagerUtil::SetGlobalDataLong( const char* pszKey, long lValue )
+void DataManagerUtil::SetGlobalDataLong( const char* pszKey, long lValue )
 {
 	CCDictionary* pDict = getGlobalData();
 	if (pDict)
@@ -430,7 +432,7 @@ void bailin::util::DataManagerUtil::SetGlobalDataLong( const char* pszKey, long 
 	}
 }
 
-const char* bailin::util::DataManagerUtil::GetGlobalDataString( const char* pszKey )
+const char* DataManagerUtil::GetGlobalDataString( const char* pszKey )
 {
 	CCDictionary* pDict = getGlobalData();
 	if (pDict)
@@ -445,7 +447,7 @@ const char* bailin::util::DataManagerUtil::GetGlobalDataString( const char* pszK
 	return "";
 }
 
-void bailin::util::DataManagerUtil::SetGlobalDataString( const char* pszKey, const char* pszValue )
+void DataManagerUtil::SetGlobalDataString( const char* pszKey, const char* pszValue )
 {
 	CCDictionary* pDict = getGlobalData();
 	if (pDict)
@@ -454,7 +456,7 @@ void bailin::util::DataManagerUtil::SetGlobalDataString( const char* pszKey, con
 	}
 }
 
-long bailin::util::DataManagerUtil::GetLongValueWithObject( cocos2d::CCObject* pObj )
+long DataManagerUtil::GetLongValueWithObject( cocos2d::CCObject* pObj )
 {
 	long nRet =0;
 	if (pObj) {
@@ -474,7 +476,7 @@ long bailin::util::DataManagerUtil::GetLongValueWithObject( cocos2d::CCObject* p
 	return nRet;
 }
 
-std::string bailin::util::DataManagerUtil::ReadDataFromLocal( const std::string& key )
+std::string DataManagerUtil::ReadDataFromLocal( const std::string& key )
 {
 	std::string retStr = "";
 	if (key.empty())
@@ -489,7 +491,7 @@ std::string bailin::util::DataManagerUtil::ReadDataFromLocal( const std::string&
 	return retStr;
 }
 
-bool bailin::util::DataManagerUtil::WriteDataToLocal( const std::string& key, const std::string& value )
+bool DataManagerUtil::WriteDataToLocal( const std::string& key, const std::string& value )
 {
 	if (value.empty())
 	{
@@ -504,12 +506,12 @@ bool bailin::util::DataManagerUtil::WriteDataToLocal( const std::string& key, co
 	return true;
 }
 
-std::string bailin::util::DataManagerUtil::GetEncryptString( const std::string& str )
+std::string DataManagerUtil::GetEncryptString( const std::string& str )
 {
 	return crypto::getXORString(SECRECT_KEY, str);
 }
 
-float bailin::util::DataManagerUtil::GetFloatValueWithObject( cocos2d::CCObject* pObj )
+float DataManagerUtil::GetFloatValueWithObject( cocos2d::CCObject* pObj )
 {
 	float fRet = 0.0f;
 	if (pObj) 
@@ -532,7 +534,7 @@ float bailin::util::DataManagerUtil::GetFloatValueWithObject( cocos2d::CCObject*
 	return fRet;
 }
 
-double bailin::util::DataManagerUtil::GetDoubleValueWithObject( cocos2d::CCObject* pObj )
+double DataManagerUtil::GetDoubleValueWithObject( cocos2d::CCObject* pObj )
 {
 	double dRet =0;
 	if (pObj)
@@ -555,7 +557,7 @@ double bailin::util::DataManagerUtil::GetDoubleValueWithObject( cocos2d::CCObjec
 	return dRet;
 }
 
-long long bailin::util::DataManagerUtil::GetLongLongValueWithObject(CCObject* pObj)
+long long DataManagerUtil::GetLongLongValueWithObject(CCObject* pObj)
 {
 	long long nRet =0;
 	if (pObj)
@@ -582,14 +584,14 @@ long long bailin::util::DataManagerUtil::GetLongLongValueWithObject(CCObject* pO
 	return nRet;
 }
 
-void bailin::util::DataManagerUtil::SendNDKMessages( const char* pszNativeFuncName, cocos2d::CCDictionary* pData )
+void DataManagerUtil::SendNDKMessages( const char* pszNativeFuncName, cocos2d::CCDictionary* pData )
 {
 #if (CC_PLATFORM_WIN32 != CC_TARGET_PLATFORM)
 	SendMessageWithParams(pszNativeFuncName, pData);
 #endif
 }
 
-bool bailin::util::DataManagerUtil::CheckSecurityData(const char *pszKey, long lData)
+bool DataManagerUtil::CheckSecurityData(const char *pszKey, long lData)
 {
     // CCString* pCheckCode = dynamic_cast<CCString*>(m_pDictionarySecurityData->objectForKey(pszKey));
     
@@ -601,12 +603,12 @@ bool bailin::util::DataManagerUtil::CheckSecurityData(const char *pszKey, long l
         nCrc32Check = iter->second;
     }
     
-    unsigned long nCrc32 = bailin::util::crypto::Crc32(&lData, sizeof(lData));
+    unsigned long nCrc32 = crypto::Crc32(&lData, sizeof(lData));
     
     return nCrc32 == nCrc32Check;
 }
 
-bool bailin::util::DataManagerUtil::CheckSecurityData(const char *pszKey, long long llData)
+bool DataManagerUtil::CheckSecurityData(const char *pszKey, long long llData)
 {
     
     unsigned long nCrc32Check = 0;
@@ -616,12 +618,12 @@ bool bailin::util::DataManagerUtil::CheckSecurityData(const char *pszKey, long l
         nCrc32Check = iter->second;
     }
     
-    unsigned long nCrc32 = bailin::util::crypto::Crc32(&llData, sizeof(llData));
+    unsigned long nCrc32 = crypto::Crc32(&llData, sizeof(llData));
     
     return nCrc32 == nCrc32Check;
 }
 
-bool bailin::util::DataManagerUtil::SetSecurityData(const char *pszKey, long *plData, long lAddData)
+bool DataManagerUtil::SetSecurityData(const char *pszKey, long *plData, long lAddData)
 {
     bool bRet = CheckSecurityData(pszKey, *plData);
     
@@ -631,7 +633,7 @@ bool bailin::util::DataManagerUtil::SetSecurityData(const char *pszKey, long *pl
         *plData += lAddData;
         
         // 回填校验值
-        unsigned long nCheckCode = bailin::util::crypto::Crc32(plData, sizeof(long));
+        unsigned long nCheckCode = crypto::Crc32(plData, sizeof(long));
         // m_pDictionarySecurityData->setObject(CCString::createWithFormat("%lu", nCheckCode), pszKey);
         m_mapSecurityData[string(pszKey)] = nCheckCode;
     }
@@ -639,7 +641,7 @@ bool bailin::util::DataManagerUtil::SetSecurityData(const char *pszKey, long *pl
     return bRet;
 }
 
-bool bailin::util::DataManagerUtil::SetSecurityData(const char *pszKey, long long *pllData, long long llAddData)
+bool DataManagerUtil::SetSecurityData(const char *pszKey, long long *pllData, long long llAddData)
 {
     bool bRet = CheckSecurityData(pszKey, *pllData);
     
@@ -649,7 +651,7 @@ bool bailin::util::DataManagerUtil::SetSecurityData(const char *pszKey, long lon
         *pllData += llAddData;
         
         // 回填校验值
-        unsigned long nCheckCode = bailin::util::crypto::Crc32(pllData, sizeof(long long));
+        unsigned long nCheckCode = crypto::Crc32(pllData, sizeof(long long));
         // m_pDictionarySecurityData->setObject(CCString::createWithFormat("%lu", nCheckCode), pszKey);
         m_mapSecurityData[string(pszKey)] = nCheckCode;
     }
@@ -657,12 +659,12 @@ bool bailin::util::DataManagerUtil::SetSecurityData(const char *pszKey, long lon
     return bRet;
 }
 
-void bailin::util::DataManagerUtil::SetSecurityCode(const char *pszKey, unsigned long nCode)
+void DataManagerUtil::SetSecurityCode(const char *pszKey, unsigned long nCode)
 {
     m_mapSecurityData[string(pszKey)] = nCode;
 }
 
-std::string bailin::util::DataManagerUtil::ReadDataWithChecksum(const char *pszKey)
+std::string DataManagerUtil::ReadDataWithChecksum(const char *pszKey)
 {
     std::string strRet = "";
     if (IsCheckKeyDataValidate(pszKey))
@@ -672,7 +674,7 @@ std::string bailin::util::DataManagerUtil::ReadDataWithChecksum(const char *pszK
     return strRet;
 }
 
-void bailin::util::DataManagerUtil::WriteDataWithChecksum(const char *pszKey, const char* pszValue)
+void DataManagerUtil::WriteDataWithChecksum(const char *pszKey, const char* pszValue)
 {
     // 写入数据，顺带写入校验码
     CCUserDefault::sharedUserDefault()->setStringForKey(pszKey, pszValue);
@@ -690,7 +692,7 @@ void bailin::util::DataManagerUtil::WriteDataWithChecksum(const char *pszKey, co
     CCUserDefault::sharedUserDefault()->setStringForKey(strCheckKey.c_str(), strCheckSum);
 }
 
-bool bailin::util::DataManagerUtil::IsCheckKeyDataValidate(const char *pszKey)
+bool DataManagerUtil::IsCheckKeyDataValidate(const char *pszKey)
 {
     bool bRet = false;
     std::string strValue = CCUserDefault::sharedUserDefault()->getStringForKey(pszKey, "");
@@ -716,3 +718,5 @@ bool bailin::util::DataManagerUtil::IsCheckKeyDataValidate(const char *pszKey)
     
     return bRet;
 }
+
+NS_BAILIN_UTIL_END

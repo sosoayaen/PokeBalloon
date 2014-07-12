@@ -7,6 +7,8 @@
 USING_NS_CC;
 USING_NS_BAILIN_UTIL;
 
+NS_BAILIN_UTIL_BEGIN
+
 StringUtil::StringUtil()
 {
 
@@ -87,7 +89,7 @@ std::string StringUtil::StringTrim( const std::string& strContent )
 	return StringTrimLeft(StringTrimRight(strContent));
 }
 
-std::string bailin::util::StringUtil::GetKeyValueStringWithDictionary( cocos2d::CCDictionary* pData, const char* pszSep1, const char* pszSep2 )
+std::string StringUtil::GetKeyValueStringWithDictionary( cocos2d::CCDictionary* pData, const char* pszSep1, const char* pszSep2 )
 {
 	std::stringstream str;
 	if (pData)
@@ -112,7 +114,7 @@ std::string bailin::util::StringUtil::GetKeyValueStringWithDictionary( cocos2d::
 
 
 
-time_t bailin::util::StringUtil::GetTime(size_t year,size_t month,size_t day)
+time_t StringUtil::GetTime(size_t year,size_t month,size_t day)
 {
     time_t tt1;
     tm     tm1;
@@ -124,4 +126,6 @@ time_t bailin::util::StringUtil::GetTime(size_t year,size_t month,size_t day)
     tt1=mktime(&tm1);
     return tt1;
 }
+
+NS_BAILIN_UTIL_END
 

@@ -422,8 +422,8 @@
 		0452D853196ECF3800F16E38 /* bailinUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bailinUtil.h; sourceTree = "<group>"; };
 		0452D854196ECF3800F16E38 /* Base64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Base64.cpp; sourceTree = "<group>"; };
 		0452D855196ECF3800F16E38 /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
-		0452D856196ECF3800F16E38 /* ControlUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ControlUtil.cpp; sourceTree = "<group>"; };
-		0452D857196ECF3800F16E38 /* ControlUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ControlUtil.h; sourceTree = "<group>"; };
+		0452D856196ECF3800F16E38 /* ControlUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = ControlUtil.cpp; sourceTree = "<group>"; };
+		0452D857196ECF3800F16E38 /* ControlUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = ControlUtil.h; sourceTree = "<group>"; };
 		0452D858196ECF3800F16E38 /* crc32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crc32.c; sourceTree = "<group>"; };
 		0452D859196ECF3800F16E38 /* crc32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crc32.h; sourceTree = "<group>"; };
 		0452D85A196ECF3800F16E38 /* crypto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = crypto.cpp; sourceTree = "<group>"; };
@@ -443,8 +443,8 @@
 		0452D86B196ECF3800F16E38 /* cJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cJSON.h; sourceTree = "<group>"; };
 		0452D86D196ECF3800F16E38 /* LoadingSprit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoadingSprit.cpp; sourceTree = "<group>"; };
 		0452D86E196ECF3800F16E38 /* LoadingSprit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingSprit.h; sourceTree = "<group>"; };
-		0452D86F196ECF3800F16E38 /* StringUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringUtil.cpp; sourceTree = "<group>"; };
-		0452D870196ECF3800F16E38 /* StringUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringUtil.h; sourceTree = "<group>"; };
+		0452D86F196ECF3800F16E38 /* StringUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = StringUtil.cpp; sourceTree = "<group>"; };
+		0452D870196ECF3800F16E38 /* StringUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = StringUtil.h; sourceTree = "<group>"; };
 		0452D871196ECF3800F16E38 /* userDataMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = userDataMacro.h; sourceTree = "<group>"; };
 		0452D873196ECF3800F16E38 /* waitinglayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = waitinglayer.cpp; sourceTree = "<group>"; };
 		0452D874196ECF3800F16E38 /* waitinglayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = waitinglayer.h; sourceTree = "<group>"; };

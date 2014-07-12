@@ -7,20 +7,21 @@ USING_NS_CC;
 USING_NS_CC_EXT;
 USING_NS_BAILIN_UTIL;
 
-bailin::util::ControlUtil::ControlUtil()
+NS_BAILIN_UTIL_BEGIN
+ControlUtil::ControlUtil()
 {
 	m_sizeScreen = CCDirector::sharedDirector()->getWinSize();
 //	m_fScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
 }
 
-bailin::util::ControlUtil::~ControlUtil()
+ControlUtil::~ControlUtil()
 {
 
 }
 
 static ControlUtil* g_sharedControlUtil = NULL;
 
-ControlUtil* bailin::util::ControlUtil::sharedControlUtil()
+ControlUtil* ControlUtil::sharedControlUtil()
 {
 	if (!g_sharedControlUtil)
 	{
@@ -30,12 +31,12 @@ ControlUtil* bailin::util::ControlUtil::sharedControlUtil()
 	return g_sharedControlUtil;
 }
 
-void bailin::util::ControlUtil::purgeSharedControlUtil()
+void ControlUtil::purgeSharedControlUtil()
 {
 	CC_SAFE_DELETE(g_sharedControlUtil);
 }
 
-void bailin::util::ControlUtil::FitLabelTTFFontSize( cocos2d::CCLabelTTF* pLabel )
+void ControlUtil::FitLabelTTFFontSize( cocos2d::CCLabelTTF* pLabel )
 {
 	if (pLabel)
 	{
@@ -43,7 +44,7 @@ void bailin::util::ControlUtil::FitLabelTTFFontSize( cocos2d::CCLabelTTF* pLabel
 	}
 }
 
-void bailin::util::ControlUtil::SetMenuItemSelectedImageWithNormalImage( cocos2d::CCMenu* pMenu, float fRate /*= 1.1f */ )
+void ControlUtil::SetMenuItemSelectedImageWithNormalImage( cocos2d::CCMenu* pMenu, float fRate /*= 1.1f */ )
 {
 	CCObject* pObj = NULL;
     
@@ -54,7 +55,7 @@ void bailin::util::ControlUtil::SetMenuItemSelectedImageWithNormalImage( cocos2d
 	}
 }
 
-void bailin::util::ControlUtil::SetMenuItemSelectedImageWithNormalImage( cocos2d::CCMenuItemImage* pMenuItemImage, float fRate /*= 1.1f */ )
+void ControlUtil::SetMenuItemSelectedImageWithNormalImage( cocos2d::CCMenuItemImage* pMenuItemImage, float fRate /*= 1.1f */ )
 {
 	if (pMenuItemImage)
 	{
@@ -79,7 +80,7 @@ void bailin::util::ControlUtil::SetMenuItemSelectedImageWithNormalImage( cocos2d
 	}
 }
 
-void bailin::util::ControlUtil::ShowCocos2dxMessageBox( const char* pszContent, const char* pszTitle /*= NULL*/ )
+void ControlUtil::ShowCocos2dxMessageBox( const char* pszContent, const char* pszTitle /*= NULL*/ )
 {
 	if (!pszContent)
 	{
@@ -98,7 +99,7 @@ void bailin::util::ControlUtil::ShowCocos2dxMessageBox( const char* pszContent, 
 
 }
 
-void bailin::util::ControlUtil::SetNodeVisible( cocos2d::CCNode* pNode, bool bVisible )
+void ControlUtil::SetNodeVisible( cocos2d::CCNode* pNode, bool bVisible )
 {
 	if (pNode)
 	{
@@ -106,7 +107,7 @@ void bailin::util::ControlUtil::SetNodeVisible( cocos2d::CCNode* pNode, bool bVi
 	}
 }
 
-void bailin::util::ControlUtil::SetMenuItemSelectedImageWithNormalImageAndLabel( cocos2d::CCMenuItemImage* pMenuItemImage, float fRate /*= 1.1f */ )
+void ControlUtil::SetMenuItemSelectedImageWithNormalImageAndLabel( cocos2d::CCMenuItemImage* pMenuItemImage, float fRate /*= 1.1f */ )
 {
 	if (pMenuItemImage)
 	{
@@ -145,7 +146,7 @@ void bailin::util::ControlUtil::SetMenuItemSelectedImageWithNormalImageAndLabel(
 	}
 }
 
-void bailin::util::ControlUtil::SetMenuItemSelectedImageWithNormalImageAndLabel( cocos2d::CCMenu* pMenu, float fRate /*= 1.1f */ )
+void ControlUtil::SetMenuItemSelectedImageWithNormalImageAndLabel( cocos2d::CCMenu* pMenu, float fRate /*= 1.1f */ )
 {
 	CCObject* pObj = NULL;
 	CCARRAY_FOREACH(pMenu->getChildren(), pObj)
@@ -155,13 +156,13 @@ void bailin::util::ControlUtil::SetMenuItemSelectedImageWithNormalImageAndLabel(
 	}
 }
 
-void bailin::util::ControlUtil::ShowLoadingWaitLayer()
+void ControlUtil::ShowLoadingWaitLayer()
 {
 //	WaitingLayer::shareWaitingLayer()->showProgress(NULL);
 	LoadingSprit::ShowLoading(CCDirector::sharedDirector()->getRunningScene(), ccpMult(ccpFromSize(CCDirector::sharedDirector()->getWinSize()), 0.5f));
 }
 
-void bailin::util::ControlUtil::HideLoadingWaitLayer()
+void ControlUtil::HideLoadingWaitLayer()
 {
 //	WaitingLayer::shareWaitingLayer()->closeProgress();
 	LoadingSprit::HideLoading(CCDirector::sharedDirector()->getRunningScene());
@@ -169,7 +170,7 @@ void bailin::util::ControlUtil::HideLoadingWaitLayer()
 
 
 //为 sprit 增加菜单事件监听。menuItemTag 是用来做标记的，事件回调时候可以知道是哪个菜单。touchArea 可以指定相对于 sprit 的任意区域
-bool bailin::util::ControlUtil::AddEventListenToSprit( cocos2d::CCSprite* sprit ,CCObject *target, SEL_MenuHandler selector , int menuItemTag)
+bool ControlUtil::AddEventListenToSprit( cocos2d::CCSprite* sprit ,CCObject *target, SEL_MenuHandler selector , int menuItemTag)
 {
 	if (sprit == NULL )
 	{
@@ -198,3 +199,5 @@ bool bailin::util::ControlUtil::AddEventListenToSprit( cocos2d::CCSprite* sprit 
     
 	return true;
 }
+
+NS_BAILIN_UTIL_END
