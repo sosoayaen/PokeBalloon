@@ -55,5 +55,16 @@
 		<key>localNotificationName</key>
 		<string>wardrums.pokeballoon</string>
 	</dict>
+	<key>itemPreBuy_section</key>
+	<dict>
+		<key>pumpTitle</key>
+		<string>增益打气筒</string>
+		<key>pumpDesc</key>
+		<string>道具会使得你每次点击打气筒效果时把每次增加的分数额外增加1</string>
+		<key>timeTitle</key>
+		<string>额外时间</string>
+		<key>timeDesc</key>
+		<string>额外时间道具会使得你游戏开始时就额外获得5秒时间</string>
+	</dict>
 </dict>
 </plist>

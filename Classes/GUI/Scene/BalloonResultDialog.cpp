@@ -1,5 +1,7 @@
 #include "BalloonResultDialog.h"
 #include "bailinUtil.h"
+#include "UserData.h"
+#include <string>
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -123,6 +125,8 @@ bool BalloonResultDialog::onAssignCCBMemberVariable( CCObject* pTarget, const ch
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteNewFlag", CCSprite*, this->m_pSpriteNewFlag);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteResultBoard", CCSprite*, this->m_pSpriteResultBoard);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteStar", CCSprite*, this->m_pSpriteStar);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteCoin", CCSprite*, this->m_pSpriteCoin);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelBMFontCoins", CCLabelBMFont*, this->m_pLabelBMFontCoins);
 
 	return true;
 }
@@ -136,6 +140,8 @@ SEL_CCControlHandler BalloonResultDialog::onResolveCCBCCControlSelector( CCObjec
 void BalloonResultDialog::setScore(long long llScore)
 {
     m_pLabelBMFontCurrentScore->setCString(CCString::createWithFormat("%lld", llScore)->getCString());
+    
+    updateCoins(llScore/SCORE_COINS_RATE);
 }
 
 void BalloonResultDialog::setHighScore(long long llScore)
@@ -206,4 +212,14 @@ void BalloonResultDialog::changeStarPosition(cocos2d::CCNode *pNode)
         
         pNode->setPositionX(((rand()%6 + 2) / 10.0f) * width);
     }
+}
+
+void BalloonResultDialog::updateCoins(long long llCoins)
+{
+    std::stringstream stream;
+    stream << llCoins;
+    m_pLabelBMFontCoins->setString(stream.str().c_str());
+    
+    // 更新位置
+    m_pSpriteCoin->setPosition(ccp(m_pLabelBMFontCoins->getPositionX() - m_pLabelBMFontCoins->getContentSize().width*m_pLabelBMFontCoins->getScaleX(), m_pSpriteCoin->getPositionY()));
 }

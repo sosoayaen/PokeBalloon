@@ -57,6 +57,8 @@ public:
         m_llTotalScore = 0;
         m_lTimeLeft = 0;
         
+        m_lExTimeLeft = 0;
+        
 	}
 	~BalloonScene();
 
@@ -156,6 +158,12 @@ private:
     // 游戏状态
     BalloonGameStatus m_eGameStatus;
     
+    // 额外道具是否启用标志
+    bool m_bUseItemExPump;
+    bool m_bUseItemExPreTime;
+    
+    long m_lExTimeLeft;
+    
 private:
     // 重置数据
     void resetData();
@@ -176,9 +184,13 @@ private:
     void onPressMenuPause(cocos2d::CCObject* pSender);
     // 对话框结束回调
     void onResultDialogEndCall(cocos2d::CCNode* pNode);
-    
+    // 购买对话框结束回调
+    void onBuyItemsDialogEndCall(cocos2d::CCNode* pNode);
     // 倒计时回调函数
     void timeCountCallback(CCNode* pNode);
+    
+    // 显示购买道具对话框
+    void showBuyItemsDialog();
     
     // 读秒倒计时
     void readReadySecond();

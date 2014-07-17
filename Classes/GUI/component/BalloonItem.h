@@ -63,6 +63,8 @@ class BalloonItem : public cocos2d::CCNode
 	CC_SYNTHESIZE(BalloonItemId, m_eItemId, ItemId);
 	// 监听回调对象
 	CC_SYNTHESIZE(BalloonItemDelegate*, m_pBalloonItemDelegate, BalloonItemDelegate);
+    // 数值
+    CC_SYNTHESIZE(int, m_nItemValue, ItemValue);
 	
 public:
 

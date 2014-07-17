@@ -5,6 +5,7 @@
 #include "UMSocial2DX.h"
 #include "BalloonPauseDialog.h"
 #include "BalloonResultDialog.h"
+#include "BalloonItemSelectDialog.h"
 #include "UserData.h"
 
 #include "bailinUtil.h"
@@ -140,7 +141,7 @@ void BalloonScene::resetData()
     m_llTotalScore = 0;
     m_nReadyTimeTime = 0;
     
-    m_lTimeLeft = DEFAULT_TIME;
+    m_lTimeLeft = DEFAULT_TIME + m_lExTimeLeft;
     
     if (pDMU)
     {
@@ -188,7 +189,8 @@ void BalloonScene::onEnter()
     
     // 自动开始
     // startGame();
-    readReadySecond();
+    // readReadySecond();
+    showBuyItemsDialog();
 }
 
 void BalloonScene::notifyEnterBackground(CCObject* pData)
@@ -362,6 +364,9 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             // 屏幕出现打气筒按钮，并且设置按钮的小时时间
             {
                 BalloonItemClick* pBalloonItem = BalloonItemClick::create(this, CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("item_pump.png"), pBalloon->getBalloonScore());
+                // 这里设置充气筒按下后的值，从1开始，如果有使用道具啥的就在此基础往上累加
+                pBalloonItem->setItemValue(1 + DataManagerUtil::sharedDataManagerUtil()->GetGlobalDataLong("pumpsClickExtendValue"));
+                
                 pBalloonItem->setItemId(kBalloonItemId_Pumps);
                 
                 m_BalloonItemManager.setScreenBalloonItem(pBalloonItem);
@@ -408,10 +413,18 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
 		case kBalloonTypeHurricane:
 			break;
 		case kBalloonTypeReverse:
-            pBalloon->explosive();
-            // 把屏幕上的所有气球分数乘以对应的值
-            m_BalloonManager.multipleBalloonScore(pBalloon->getBalloonScore());
-			break;
+            {
+                pBalloon->explosive();
+                // 把屏幕上的所有气球分数乘以对应的值
+                int nScore = pBalloon->getBalloonScore();
+                int nExtendValue = DataManagerUtil::sharedDataManagerUtil()->GetGlobalDataLong("reverseEffectExtendValue");
+                if (nExtendValue)
+                {
+                    nScore *= nExtendValue;
+                }
+                m_BalloonManager.multipleBalloonScore(nScore);
+            }
+            break;
         default:
             break;
     }
@@ -431,7 +444,14 @@ void BalloonScene::onBalloonItemEffectTrigger(BalloonItem* pItem)
     {
         case kBalloonItemId_Pumps:
             // 按一下后给屏幕上随机增加1到5分到所有的积分气球
-            m_BalloonManager.addBalloonScoreWithValue(1);
+            {
+                long lExScore = 0;
+                if (m_bUseItemExPump)
+                {
+                    lExScore = 1;
+                }
+                m_BalloonManager.addBalloonScoreWithValue(pItem->getItemValue() + lExScore);
+            }
             break;
         default:
             break;
@@ -537,14 +557,16 @@ void BalloonScene::update(float dt)
             // 判断是否作弊
             if (!m_bCheated)
             {
+                // 游戏盘数增加一盘
+                UserDataManager::sharedUserDataManager()->addOneGameCount();
                 // 合并统计数据
                 UserDataManager::sharedUserDataManager()->getGlobalAnalysisDataRef()->merge(m_BalloonAnalysis);
                 // 存盘
                 // UserDataManager::sharedUserDataManager()->getGlobalAnalysisDataRef()->saveData();
                 
                 // 记录得到的金币
-                unsigned long ulCoins = m_llTotalScore/20;
-                UserDataManager::sharedUserDataManager()->addGoldenCoins(ulCoins);
+                long long llCoins = m_llTotalScore/SCORE_COINS_RATE;
+                UserDataManager::sharedUserDataManager()->addGoldenCoins(llCoins);
                 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
                 // 发送成绩到GameCenter
@@ -555,11 +577,6 @@ void BalloonScene::update(float dt)
             // 弹出结算框
             showResultDialog();
             
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-            // 首先判断下当前用户是否点击过评论
-            // 玩5盘弹出评论对话框
-            // GameKitHelper2dx::showRateMessageBox();
-#endif
             break;
             
         default:
@@ -624,6 +641,18 @@ void BalloonScene::showResultDialog()
     pLabelTTFAnalysis->setString(m_BalloonAnalysis.dumpDebugInfo().c_str());
 #endif
     
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    // 首先判断下当前用户是否点击过评论
+    if (0)
+    {
+        // 玩5盘弹出评论对话框
+        long long llGameCounts = UserDataManager::sharedUserDataManager()->getGameCounts();
+        if (llGameCounts > 20 && llGameCounts % 20)
+        {
+            GameKitHelper2dx::showRateMessageBox();
+        }
+    }
+#endif
     addChild(pResultDialog);
 }
 
@@ -659,7 +688,8 @@ void BalloonScene::onPressMenuRestartGame(cocos2d::CCObject *pSender)
     }
     
     // startGame();
-    readReadySecond();
+    // readReadySecond();
+    showBuyItemsDialog();
 }
 
 void BalloonScene::onPressMenuReturnMainMenu(cocos2d::CCObject *pSender)
@@ -759,6 +789,36 @@ void BalloonScene::onPressMenuResume(cocos2d::CCObject *pSender)
 void BalloonScene::onResultDialogEndCall(CCNode* pNode)
 {
     
+}
+
+void BalloonScene::onBuyItemsDialogEndCall(CCNode* pNode)
+{
+    // 根据全局数据设定当前的道具影响
+    m_bUseItemExPump = UserDataManager::sharedUserDataManager()->getItemExPumpCounts() > 0;
+    m_bUseItemExPreTime = UserDataManager::sharedUserDataManager()->getItemExPreTimeCounts() > 0;
+    
+    if (m_bUseItemExPump)
+    {
+        // 计算打气筒的消耗道具
+        UserDataManager::sharedUserDataManager()->addItemExPumpCount(-1);
+    }
+    
+    m_lExTimeLeft = 0;
+    if (m_bUseItemExPreTime)
+    {
+        UserDataManager::sharedUserDataManager()->addItemExPreTimeCount(-1);
+        m_lExTimeLeft = 5;
+    }
+    
+    // 读秒开始
+    readReadySecond();
+}
+
+void BalloonScene::showBuyItemsDialog()
+{
+    BalloonItemSelectDialog* pDialog = BalloonItemSelectDialog::create();
+    pDialog->setEndCallbackFuncN(CCCallFuncN::create(this, callfuncN_selector(BalloonScene::onBuyItemsDialogEndCall)));
+    addChild(pDialog);
 }
 
 void BalloonScene::timeCountCallback(CCNode* pNode)

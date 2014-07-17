@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		04059B0319705F6C005429E4 /* blowfish.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04059B0019705F6C005429E4 /* blowfish.cpp */; };
 		04059B0419705F6C005429E4 /* blowfish.h2 in Resources */ = {isa = PBXBuildFile; fileRef = 04059B0219705F6C005429E4 /* blowfish.h2 */; };
+		041503A119741B730015B85F /* BalloonItemSelectDialog.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 041503A019741B730015B85F /* BalloonItemSelectDialog.ccbi */; };
+		041503A419741C5E0015B85F /* BalloonItemSelectDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041503A319741C5E0015B85F /* BalloonItemSelectDialog.cpp */; };
 		0435602419264F5F0044D838 /* BalloonResultDialog.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 0435602319264F5F0044D838 /* BalloonResultDialog.ccbi */; };
 		0435602619265F0E0044D838 /* BalloonPauseDialog.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 0435602519265F0E0044D838 /* BalloonPauseDialog.ccbi */; };
 		043560311928A7070044D838 /* localizableString in Resources */ = {isa = PBXBuildFile; fileRef = 043560301928A7070044D838 /* localizableString */; };
@@ -344,6 +346,9 @@
 		04059B0019705F6C005429E4 /* blowfish.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = blowfish.cpp; sourceTree = "<group>"; };
 		04059B0119705F6C005429E4 /* blowfish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blowfish.h; sourceTree = "<group>"; };
 		04059B0219705F6C005429E4 /* blowfish.h2 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = blowfish.h2; sourceTree = "<group>"; };
+		041503A019741B730015B85F /* BalloonItemSelectDialog.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonItemSelectDialog.ccbi; sourceTree = "<group>"; };
+		041503A219741C5E0015B85F /* BalloonItemSelectDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalloonItemSelectDialog.h; sourceTree = "<group>"; };
+		041503A319741C5E0015B85F /* BalloonItemSelectDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BalloonItemSelectDialog.cpp; sourceTree = "<group>"; };
 		0435602319264F5F0044D838 /* BalloonResultDialog.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonResultDialog.ccbi; sourceTree = "<group>"; };
 		0435602519265F0E0044D838 /* BalloonPauseDialog.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonPauseDialog.ccbi; sourceTree = "<group>"; };
 		043560301928A7070044D838 /* localizableString */ = {isa = PBXFileReference; lastKnownFileType = folder; path = localizableString; sourceTree = "<group>"; };
@@ -1032,6 +1037,7 @@
 				0435602519265F0E0044D838 /* BalloonPauseDialog.ccbi */,
 				0435603C19291DD60044D838 /* BalloonOptionsDialog.ccbi */,
 				04AA6F811940D4DD006B37B6 /* BalloonHandBookScene.ccbi */,
+				041503A019741B730015B85F /* BalloonItemSelectDialog.ccbi */,
 			);
 			name = Resources;
 			path = ../Resources;
@@ -1087,6 +1093,8 @@
 		0452D805196ECF3800F16E38 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				041503A219741C5E0015B85F /* BalloonItemSelectDialog.h */,
+				041503A319741C5E0015B85F /* BalloonItemSelectDialog.cpp */,
 				0452D8AD196ECFCB00F16E38 /* CompanyPage.h */,
 				0452D8AB196ECFB800F16E38 /* CompanyPage.cpp */,
 				0452D806196ECF3800F16E38 /* BalloonFirstPage.cpp */,
@@ -2448,6 +2456,7 @@
 				0469117F19175937009A0734 /* particles in Resources */,
 				04612355191F2F11001AE64F /* UMShareEditViewController.xib in Resources */,
 				04AAEAC7191383F9006147E3 /* Icon-114.png in Resources */,
+				041503A119741B730015B85F /* BalloonItemSelectDialog.ccbi in Resources */,
 				044BAB831905045600D8CCB3 /* BalloonScene.ccbi in Resources */,
 				0458E80A19167BAB00FA1321 /* Icon-80.png in Resources */,
 				0460516E1923A9DE005E5A8D /* README.md in Resources */,
@@ -2619,6 +2628,7 @@
 				15A3DA3E1682F826002FB0C5 /* CCLayerGradientLoader.cpp in Sources */,
 				15A3DA3F1682F826002FB0C5 /* CCLayerLoader.cpp in Sources */,
 				15A3DA401682F826002FB0C5 /* CCMenuItemImageLoader.cpp in Sources */,
+				041503A419741C5E0015B85F /* BalloonItemSelectDialog.cpp in Sources */,
 				15A3DA411682F826002FB0C5 /* CCMenuItemLoader.cpp in Sources */,
 				0452D8A0196ECF3800F16E38 /* crc32.c in Sources */,
 				0452D88D196ECF3800F16E38 /* GAdMob2DX.mm in Sources */,

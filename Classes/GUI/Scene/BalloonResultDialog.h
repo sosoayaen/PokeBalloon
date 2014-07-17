@@ -32,7 +32,9 @@ public:
 		m_pSpriteNewFlag = NULL;
 		m_pSpriteResultBoard = NULL;
         m_pSpriteStar = NULL;
-
+        m_pSpriteCoin = NULL;
+        m_pLabelBMFontCoins = NULL;
+        
 	}
 	~BalloonResultDialog();
 
@@ -47,7 +49,7 @@ public:
 	virtual bool onAssignCCBMemberVariable( cocos2d::CCObject* pTarget, const char* pMemberVariableName, cocos2d::CCNode* pNode );
 
     /**
-     * @brief 获取分享的截图
+     * @brief 获取分享的截图文件路径
      */
     std::string getSharedPictureFilePath();
     
@@ -78,6 +80,10 @@ private:
 	cocos2d::CCSprite* m_pSpriteResultBoard;
     // 奖牌上的星星
     cocos2d::CCSprite* m_pSpriteStar;
+    // 结算对话框上的金币
+    cocos2d::CCSprite* m_pSpriteCoin;
+    // 当次得到金币的数量
+    cocos2d::CCLabelBMFont* m_pLabelBMFontCoins;
 
 public:
 	// Virtual Functions
@@ -91,7 +97,10 @@ private:
     
     // 星星切换位置
     void changeStarPosition(cocos2d::CCNode* pNode);
-	
+    
+    // 更新
+    void updateCoins(long long ulCoins);
+    
 public:
 	// Funcitons
     

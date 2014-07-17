@@ -25,6 +25,7 @@ USING_NS_BAILIN_UTIL;
 
 BalloonItem::BalloonItem():
     m_pBalloonItemDelegate(NULL),
+    m_nItemValue(0),
     m_eItemId(kBalloonItemId_Unknow),
     m_eType(kBalloonItemType_Unknow)
 {

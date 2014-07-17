@@ -34,6 +34,7 @@ public:
     
     void playEffectPushBalloon();
     
+    void playEffectSpendCoin();
     /**
      * @brief 播放背景音乐
      * @param soundId 对应背景音乐的ID

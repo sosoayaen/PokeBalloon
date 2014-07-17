@@ -55,5 +55,12 @@
 		<key>localNotificationName</key>
 		<string>wardrums.pokeballoon</string>
 	</dict>
+	<key>itemPreBuy_section</key>
+	<dict>
+		<key>pumpDesc</key>
+		<string>pump item will increase your pump effect add one</string>
+		<key>timeDesc</key>
+		<string>time item will add 5 seconds to total time</string>
+	</dict>
 </dict>
 </plist>

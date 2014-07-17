@@ -22,13 +22,27 @@
 // 气球统计数据
 #include "BalloonAnalysis.h"
 
+enum ItemExType
+{
+    kCCItemExTypeNone = 0,
+    kCCItemExTypePump,
+    kCCItemExTypePreTime,
+};
+
+typedef struct tagItemExtend
+{
+    long lPump;     // 加强版的打气筒
+    long lPreTime;  // 预置时间
+} ItemExtend;
 /**
  * 用户数据结构体
  * */
 typedef struct tagUserData
 {
-	unsigned long ulGoldenCoins;	// 金币
-    unsigned long ulDiamond;        // 钻石数量
+	long long llGoldenCoins;	// 金币
+    long long llGameCounts;     // 游戏盘数
+    ItemExtend itemEx;
+    // long long llDiamond;        // 钻石数量
     // 用户成就数据
     // 用户任务数据
 } UserData;
@@ -58,23 +72,66 @@ public:
     BalloonAnalysis* getAnalysisDataRef();
     
     // 得到用户的金币数量
-    unsigned long getGoldenCoins();
+    long long getGoldenCoins();
     
     // 增加用户的金币数量
-    void addGoldenCoins(unsigned long ulCoins);
+    void addGoldenCoins(long long llCoins);
     
     // 消费金币
-    bool subGoldenCoins(unsigned long ulCoins);
+    bool subGoldenCoins(long long llCoins);
     
     // 判断金币是否够支付
-    bool isGoldenEnough(unsigned long ulCoins);
+    bool isGoldenEnough(long long llCoins);
+    
+    // 获得游戏盘数
+    long long getGameCounts();
+    
+    // 增加一盘游戏数据
+    void addOneGameCount();
+    
+    // 得到打气筒数目
+    long getItemExPumpCounts();
+    
+    void addItemExPumpCount(long lCnts);
+    // 增加一个打气筒
+    void addOneItemExPump();
+    
+    // 得到打气筒数目
+    long getItemExPreTimeCounts();
+    
+    void addItemExPreTimeCount(long lCnts);
+    // 增加一个打气筒
+    void addOneItemExPreTime();
+    
+    // 根据道具的类型得到道具的保有量
+    long getItemExCountsByID(ItemExType type);
+    
+    long addItemExOneCountByID(ItemExType type);
+    
 private:
     // 校验当前金币值是否合法
     bool verifyGoldenCoins();
     
     // 设置当前金币的校验值
     void setGoldenCoinsCheckCode();
+    
+    // 校验游戏盘数值是否合法
+    bool verifyGameCounts();
+    
+    // 设置游戏盘数验证码
+    void setGameCountsCheckCode();
 	
+    // 校验当前打气筒
+    bool verifyItemExPump();
+    
+    // 设置当前打气筒
+    void setItemExPumpCheckCode();
+    
+    // 校验当前游戏总时间
+    bool verifyItemExPreTime();
+    
+    // 设置当前游戏总时间
+    void setItemExPreTimeCheckCode();
 private:
 	// 用户数据
 	UserData m_UserData;

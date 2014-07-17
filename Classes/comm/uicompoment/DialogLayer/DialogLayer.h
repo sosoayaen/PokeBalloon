@@ -19,6 +19,8 @@ class DialogLayer: public cocos2d::CCLayerColor
 public:
     DialogLayer();
     virtual ~DialogLayer();
+    
+    CREATE_FUNC(DialogLayer);
 
 public:
 	/**
