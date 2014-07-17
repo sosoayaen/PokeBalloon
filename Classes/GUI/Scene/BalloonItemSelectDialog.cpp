@@ -13,6 +13,7 @@ USING_NS_BAILIN_UTIL;
 BalloonItemSelectDialog::~BalloonItemSelectDialog()
 {
     CC_SAFE_DELETE(m_pArrayItems);
+    // CC_SAFE_DELETE(m_pDictExtItemConfig);
 }
 
 bool BalloonItemSelectDialog::init()
@@ -69,8 +70,34 @@ bool BalloonItemSelectDialog::init()
         m_pScale9SpriteBuyBoard->addChild(pBMFontTitle);
         
         // 初始化道具内容
-        m_pArrayItems = CCArray::createWithCapacity(3);
+        CCDictionary* pDictExtItemConfig = CCDictionary::createWithContentsOfFile("configuration/buyExtendItems.plist");
+        CCAssert(pDictExtItemConfig, "configruation/buyExtendItems.plist is incorrect!!");
+        
+        // 得到配置数据
+        CCArray* pArrayConfig = dynamic_cast<CCArray*>(pDictExtItemConfig->objectForKey("items"));
+        
+        unsigned int nCnts = pArrayConfig->count();
+        
+        m_pArrayItems = CCArray::createWithCapacity(nCnts);
         CC_SAFE_RETAIN(m_pArrayItems);
+        
+        CCObject* pObj = NULL;
+        CCARRAY_FOREACH(pArrayConfig, pObj)
+        {
+            CCDictionary* pDictData = dynamic_cast<CCDictionary*>(pObj);
+            if (pDictData)
+            {
+                CCDictionary* pDict = CCDictionary::create();
+                pDict->setObject(pDictData->objectForKey("iconSpriteName"), "iconSpriteName");
+                pDict->setObject(pDictData->objectForKey("cost"), "cost");
+                pDict->setObject(pDictData->objectForKey("type"), "type");
+                const char* pszItemName = pDictData->valueForKey("name")->getCString();
+                pDict->setObject(ccs(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("itemPreBuy_section", CCString::createWithFormat("%sDesc", pszItemName)->getCString())), "desc");
+                pDict->setObject(ccs(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("itemPreBuy_section", CCString::createWithFormat("%sTitle", pszItemName)->getCString())), "title");
+                m_pArrayItems->addObject(pDict);
+            }
+        }
+        /*
         CCDictionary* pDict = CCDictionary::create();
         pDict->setObject(ccs("item_pump.png"), "iconSpriteName");
         pDict->setObject(ccs(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("itemPreBuy_section", "pumpDesc")), "desc");
@@ -85,6 +112,7 @@ bool BalloonItemSelectDialog::init()
         pDict->setObject(ccs("5"), "cost");
         pDict->setObject(ccs("2"), "type");
         m_pArrayItems->addObject(pDict);
+        //*/
         
         // 创建表格
         CCSize boardSize = m_pScale9SpriteBuyBoard->getContentSize();
@@ -251,14 +279,26 @@ CCTableViewCell* BalloonItemSelectDialog::tableCellAtIndex( CCTableView *table, 
         pLabelTTFTitle->setPosition(ccp(pSprite->getPositionX() + pSprite->getContentSize().width*0.5f, cellSize.height*0.7f));
         pCell->addChild(pLabelTTFTitle);
         
-        CCLabelTTF* pLabelTTFDesc = CCLabelTTF::create(pDict->valueForKey("desc")->getCString(), "", cellSize.height*0.18f);
-        pLabelTTFDesc->setDimensions(CCSizeMake(cellSize.width*0.75f, cellSize.height*0.6f));
+        CCLabelTTF* pLabelTTFDesc = CCLabelTTF::create(pDict->valueForKey("desc")->getCString(), "", cellSize.height*0.165f);
+        pLabelTTFDesc->setDimensions(CCSizeMake(cellSize.width*0.60f, cellSize.height*0.6f));
         pLabelTTFDesc->setHorizontalAlignment(kCCTextAlignmentLeft);
         pLabelTTFDesc->setVerticalAlignment(kCCVerticalTextAlignmentTop);
         pLabelTTFDesc->setAnchorPoint(ccp(0, 1.0f));
         pLabelTTFDesc->setPosition(ccp(pSprite->getPositionX() + pSprite->getContentSize().width*0.5f, pLabelTTFTitle->getPositionY()));
         pCell->addChild(pLabelTTFDesc);
         
+        // 放置金币标志和金币数值
+        CCSprite* pSpriteCoin = CCSprite::createWithSpriteFrame(m_pSpriteCoin->displayFrame());
+        pSpriteCoin->setAnchorPoint(ccp(0, 0.5f));
+        pSpriteCoin->setPosition(ccp(pLabelTTFDesc->getContentSize().width + pLabelTTFDesc->getPositionX(), cellSize.height*0.5f));
+        pSpriteCoin->setScale(0.5f);
+        pCell->addChild(pSpriteCoin);
+        
+        CCLabelBMFont* pBMFontValue = CCLabelBMFont::create(pDict->valueForKey("cost")->getCString(), "texture/fonts/font.fnt");
+        pBMFontValue->setScale(1.5f);
+        pBMFontValue->setAnchorPoint(ccp(0, 0.5f));
+        pBMFontValue->setPosition(ccp(pSpriteCoin->getPositionX() + pSpriteCoin->boundingBox().size.width*1.15f, cellSize.height*0.5f));
+        pCell->addChild(pBMFontValue);
 	}
 	return pCell;
 }

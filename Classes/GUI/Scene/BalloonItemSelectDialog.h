@@ -52,6 +52,8 @@ private:
 
     cocos2d::CCArray* m_pArrayItems;
     
+    // cocos2d::CCDictionary* m_pDictExtItemConfig;
+    
 public:
 	// Virtual Functions
 	virtual bool init();

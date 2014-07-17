@@ -57,8 +57,12 @@
 	</dict>
 	<key>itemPreBuy_section</key>
 	<dict>
+		<key>pumpTitle</key>
+		<string>Super Pump</string>
 		<key>pumpDesc</key>
 		<string>pump item will increase your pump effect add one</string>
+		<key>timeTitle</key>
+		<string>More Time</string>
 		<key>timeDesc</key>
 		<string>time item will add 5 seconds to total time</string>
 	</dict>
