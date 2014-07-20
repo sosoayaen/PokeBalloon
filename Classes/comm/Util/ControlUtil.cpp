@@ -74,7 +74,7 @@ void ControlUtil::SetMenuItemSelectedImageWithNormalImage( cocos2d::CCMenuItemIm
 			float y = (fRate - 1.0f)*pSpriteSelected->getContentSize().height*0.5f;
 			pSpriteSelected->setPosition(ccpSub(CCPointZero, ccp(x, y)));
 
-			pSpriteSelected->setScale(fRate);
+			pSpriteSelected->setScale(pSpriteSelected->getScale()*fRate);
 			pMenuItemImage->setSelectedImage(pSpriteSelected);
 		}
 	}
