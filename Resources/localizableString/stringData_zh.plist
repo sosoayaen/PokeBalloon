@@ -62,9 +62,17 @@
 		<key>pumpDesc</key>
 		<string>道具会使得你每次点击打气筒效果时把每次增加的分数额外增加1</string>
 		<key>timeTitle</key>
-		<string>额外时间</string>
+		<string>总额外时间</string>
 		<key>timeDesc</key>
 		<string>额外时间道具会使得你游戏开始时就额外获得5秒时间</string>
+		<key>timeAddTitle</key>
+		<string>时间道具增益</string>
+		<key>timeAddDesc</key>
+		<string>游戏中出现的时间道具增加2秒钟</string>
+		<key>giantTitle</key>
+		<string>巨人收割</string>
+		<key>giantDesc</key>
+		<string>点击一次巨人气球，直接获得1分，无需气球倍点爆</string>
 	</dict>
 </dict>
 </plist>

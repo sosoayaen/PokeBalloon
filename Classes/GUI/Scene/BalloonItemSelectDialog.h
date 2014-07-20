@@ -26,6 +26,7 @@ public:
 		m_pScale9SpriteBuyBoard = NULL;
         m_pLabelBMFontCoins = NULL;
         m_pSpriteCoin = NULL;
+        m_pMenu = NULL;
         
         m_pArrayItems = NULL;
         
@@ -47,6 +48,7 @@ private:
 	cocos2d::extension::CCScale9Sprite* m_pScale9SpriteBuyBoard;
     cocos2d::CCLabelBMFont* m_pLabelBMFontCoins;
     cocos2d::CCSprite* m_pSpriteCoin;
+    cocos2d::CCMenu* m_pMenu;
     
     cocos2d::extension::CCTableView* m_pTableView;
 
@@ -77,6 +79,9 @@ public:
 	virtual cocos2d::extension::CCTableViewCell* tableCellAtIndex(cocos2d::extension::CCTableView *table, unsigned int idx);
 
 	virtual unsigned int numberOfCellsInTableView(cocos2d::extension::CCTableView *table);
+    
+    void onPressMenuStart(cocos2d::CCObject* pSender);
+    void onPressMenuReturnMain(cocos2d::CCObject* pSender);
 
 	
 public:

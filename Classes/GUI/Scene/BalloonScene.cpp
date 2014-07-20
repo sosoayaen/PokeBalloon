@@ -141,7 +141,13 @@ void BalloonScene::resetData()
     m_llTotalScore = 0;
     m_nReadyTimeTime = 0;
     
-    m_lTimeLeft = DEFAULT_TIME + m_lExTimeLeft;
+    long lExTimeLeft = 0;
+    if (m_bUseItemExPreTime)
+    {
+        // 获得额外5秒钟
+        lExTimeLeft = 5;
+    }
+    m_lTimeLeft = DEFAULT_TIME + lExTimeLeft;
     
     if (pDMU)
     {
@@ -347,17 +353,19 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             break;
         case kBalloonTypeAddTime:
             pBalloon->explosive();
-            // 时间增加
-            // m_lTimeLeft += pBalloon->getBalloonScore();
-            
-            // 校验时间数据确保未被修改
-            if (!pDMU->SetSecurityData(SECURITY_TIME, &m_lTimeLeft, pBalloon->getBalloonScore()))
             {
-                m_bCheated = true;
-                CCMessageBox("Cheat!!!", "Warnning");
-                m_lTimeLeft = 0;
+                // 时间增加
+                long lTimeItemFix = 0;
+                if (m_bUseItemExTimeAdd) lTimeItemFix = 2;
+                // 校验时间数据确保未被修改
+                if (!pDMU->SetSecurityData(SECURITY_TIME, &m_lTimeLeft, pBalloon->getBalloonScore() + lTimeItemFix))
+                {
+                    m_bCheated = true;
+                    CCMessageBox("Cheat!!!", "Warnning");
+                    m_lTimeLeft = 0;
+                }
+                updateTimeLeft();
             }
-            updateTimeLeft();
             break;
         case kBalloonTypePump:
             pBalloon->explosive();
@@ -365,7 +373,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             {
                 BalloonItemClick* pBalloonItem = BalloonItemClick::create(this, CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("item_pump.png"), pBalloon->getBalloonScore());
                 // 这里设置充气筒按下后的值，从1开始，如果有使用道具啥的就在此基础往上累加
-                pBalloonItem->setItemValue(1 + DataManagerUtil::sharedDataManagerUtil()->GetGlobalDataLong("pumpsClickExtendValue"));
+                pBalloonItem->setItemValue(1);
                 
                 pBalloonItem->setItemId(kBalloonItemId_Pumps);
                 
@@ -383,6 +391,25 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             m_BalloonManager.setAllBalloonSpeedY(1.5f);
             break;
 		case kBalloonTypeGiant:
+            if (m_bUseItemExGiant)
+            {
+                // 每按一下，就加1分到总分上
+                if (!pDMU->SetSecurityData(SECURITY_SCORE, &m_llTotalScore, 1))
+                {
+                    m_bCheated = true;
+                    CCMessageBox("Cheat!!!", "Warnning");
+                    m_llTotalScore = 0;
+                    return;
+                }
+                
+                if (m_llTotalScore < 0)
+                {
+                    m_llTotalScore = 0;
+                    pDMU->SetSecurityCode(SECURITY_SCORE, crypto::Crc32(&m_llTotalScore, sizeof(m_llTotalScore)));
+                }
+                updateScore();
+            }
+            
             if (pBalloon->getBalloonClickCnt() == pBalloon->getBalloonClickableCnt())
             {
                 pBalloon->explosive();
@@ -395,7 +422,6 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
                     return;
                 }
                 
-                // m_lTotalScore += pBalloon->getBalloonScore();
                 if (m_llTotalScore < 0)
                 {
                     m_llTotalScore = 0;
@@ -443,7 +469,7 @@ void BalloonScene::onBalloonItemEffectTrigger(BalloonItem* pItem)
     switch (pItem->getItemId())
     {
         case kBalloonItemId_Pumps:
-            // 按一下后给屏幕上随机增加1到5分到所有的积分气球
+            // 按一下后给屏幕上随机增加分数
             {
                 long lExScore = 0;
                 if (m_bUseItemExPump)
@@ -794,20 +820,30 @@ void BalloonScene::onResultDialogEndCall(CCNode* pNode)
 void BalloonScene::onBuyItemsDialogEndCall(CCNode* pNode)
 {
     // 根据全局数据设定当前的道具影响
-    m_bUseItemExPump = UserDataManager::sharedUserDataManager()->getItemExPumpCounts() > 0;
-    m_bUseItemExPreTime = UserDataManager::sharedUserDataManager()->getItemExPreTimeCounts() > 0;
+    m_bUseItemExPump = UserDataManager::sharedUserDataManager()->getItemExCountsByID(kCCItemExTypePump) > 0;
+    m_bUseItemExPreTime = UserDataManager::sharedUserDataManager()->getItemExCountsByID(kCCItemExTypePreTime) > 0;
+    m_bUseItemExTimeAdd = UserDataManager::sharedUserDataManager()->getItemExCountsByID(kCCItemExTypeTimeAdd) > 0;
+    m_bUseItemExGiant = UserDataManager::sharedUserDataManager()->getItemExCountsByID(kCCItemExTypeGiant) > 0;
     
     if (m_bUseItemExPump)
     {
         // 计算打气筒的消耗道具
-        UserDataManager::sharedUserDataManager()->addItemExPumpCount(-1);
+        UserDataManager::sharedUserDataManager()->addItemExCountsByID(kCCItemExTypePump, -1);
     }
     
-    m_lExTimeLeft = 0;
     if (m_bUseItemExPreTime)
     {
-        UserDataManager::sharedUserDataManager()->addItemExPreTimeCount(-1);
-        m_lExTimeLeft = 5;
+        UserDataManager::sharedUserDataManager()->addItemExCountsByID(kCCItemExTypePreTime, -1);
+    }
+    
+    if (m_bUseItemExTimeAdd)
+    {
+        UserDataManager::sharedUserDataManager()->addItemExCountsByID(kCCItemExTypeTimeAdd, -1);
+    }
+    
+    if (m_bUseItemExGiant)
+    {
+        UserDataManager::sharedUserDataManager()->addItemExCountsByID(kCCItemExTypeGiant, -1);
     }
     
     // 读秒开始

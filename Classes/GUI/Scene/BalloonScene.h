@@ -57,8 +57,6 @@ public:
         m_llTotalScore = 0;
         m_lTimeLeft = 0;
         
-        m_lExTimeLeft = 0;
-        
 	}
 	~BalloonScene();
 
@@ -161,8 +159,8 @@ private:
     // 额外道具是否启用标志
     bool m_bUseItemExPump;
     bool m_bUseItemExPreTime;
-    
-    long m_lExTimeLeft;
+    bool m_bUseItemExTimeAdd;
+    bool m_bUseItemExGiant;
     
 private:
     // 重置数据

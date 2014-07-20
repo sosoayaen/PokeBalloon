@@ -24,15 +24,19 @@
 
 enum ItemExType
 {
-    kCCItemExTypeNone = 0,
-    kCCItemExTypePump,
+//    kCCItemExTypeNone = 0,
+    kCCItemExTypePump = 0,
     kCCItemExTypePreTime,
+    kCCItemExTypeTimeAdd,   // 按下时间道具后添加时间
+    kCCItemExTypeGiant,     // 巨人气球分数乘以2
 };
 
 typedef struct tagItemExtend
 {
     long lPump;     // 加强版的打气筒
     long lPreTime;  // 预置时间
+    long lTimeAdd;
+    long lGiant;
 } ItemExtend;
 /**
  * 用户数据结构体
@@ -89,6 +93,7 @@ public:
     // 增加一盘游戏数据
     void addOneGameCount();
     
+    /*
     // 得到打气筒数目
     long getItemExPumpCounts();
     
@@ -102,9 +107,12 @@ public:
     void addItemExPreTimeCount(long lCnts);
     // 增加一个打气筒
     void addOneItemExPreTime();
+    //*/
     
     // 根据道具的类型得到道具的保有量
     long getItemExCountsByID(ItemExType type);
+    
+    long addItemExCountsByID(ItemExType eType, long lValue);
     
     long addItemExOneCountByID(ItemExType type);
     
@@ -120,7 +128,8 @@ private:
     
     // 设置游戏盘数验证码
     void setGameCountsCheckCode();
-	
+    
+    /*
     // 校验当前打气筒
     bool verifyItemExPump();
     
@@ -132,6 +141,20 @@ private:
     
     // 设置当前游戏总时间
     void setItemExPreTimeCheckCode();
+    
+    // 校验当前游戏总时间
+    bool verifyItemExTimeAdd();
+    
+    // 设置当前游戏总时间
+    void setItemExTimeAddCheckCode();
+    //*/
+    
+    // 校验对应额外应用道具的数值是否合法
+    bool verifyItemExByID(ItemExType eType);
+    
+    // 设置对应额外道具数值的最新校验值
+    void setItemExCheckCodeByID(ItemExType eType);
+    
 private:
 	// 用户数据
 	UserData m_UserData;

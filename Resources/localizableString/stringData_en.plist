@@ -60,11 +60,19 @@
 		<key>pumpTitle</key>
 		<string>Super Pump</string>
 		<key>pumpDesc</key>
-		<string>pump item will increase your pump effect add one</string>
+		<string>Pump item will increase your pump effect add one per press</string>
 		<key>timeTitle</key>
 		<string>More Time</string>
 		<key>timeDesc</key>
-		<string>time item will add 5 seconds to total time</string>
+		<string>Total time will added 5 seconds</string>
+		<key>timeAddTitle</key>
+		<string>Time Burst</string>
+		<key>timeAddDesc</key>
+		<string>Every time balloon will increase 2 more seconds when press</string>
+		<key>giantTitle</key>
+		<string>Giant Ex</string>
+		<key>giantDesc</key>
+		<string>Every press will add 1 score directly</string>
 	</dict>
 </dict>
 </plist>

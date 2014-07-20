@@ -18,19 +18,33 @@
 
 #include "UserData.h"
 #include "bailinUtil.h"
-#include "string"
+#include <string>
 
 USING_NS_BAILIN_UTIL;
 
 #define CHECK_GOLDEN_COINS "checkGoldenCoins"  // 金币校验key
 #define CHECK_GAME_COUNTS   "checkGameCounts"  // 游戏盘数校验key
-#define CHECK_ITEM_EX_PUMP   "checkItemExPump"  // 打气筒道具
-#define CHECK_ITEM_EX_PRE_TIME   "checkItemExPreTime"  // 开始时间增加道具
+
+// 用作校验的字符串
+static const char* g_pszItemExCheckCodeKeyArray[] =
+{
+    "checkItemExPump",
+    "checkItemExPreTime",
+    "checkItemExTimeAdd",
+    "checkItemExGiant",
+};
 
 #define KEY_CONFIG_GOLDEN_COINS "GoldenCoins" // 配置文件中的金币的key
 #define KEY_CONFIG_GAME_COUNTS "GameCounts"   // 配置文件中游戏盘数的key
-#define KEY_CONFIG_ITEM_EX_PUMP "ItemExPump"   // 打气筒扩展道具个数
-#define KEY_CONFIG_ITEM_EX_PRE_TIME "ItemExPreTime"   // 开始时间增加道具
+
+// 用作保存和读取配置的字符串的key
+static const char* g_pszItemExConfigKeyArray[] =
+{
+    "ItemExPump",
+    "ItemExPreTime",
+    "ItemExTimeAdd",
+    "ItemExGiant",
+};
 
 UserDataManager::UserDataManager()
 {
@@ -81,32 +95,6 @@ void UserDataManager::setGameCountsCheckCode()
     DataManagerUtil::sharedDataManagerUtil()->SetSecurityCode(CHECK_GAME_COUNTS, crypto::Crc32(&m_UserData.llGameCounts, sizeof(m_UserData.llGameCounts)));
 }
 
-bool UserDataManager::verifyItemExPump()
-{
-    bool bRet = DataManagerUtil::sharedDataManagerUtil()->CheckSecurityData(CHECK_ITEM_EX_PUMP, m_UserData.itemEx.lPump);
-    CCAssert(bRet, "Item pump counts verify failed ... cheating!!!");
-    return bRet;
-}
-
-void UserDataManager::setItemExPumpCheckCode()
-{
-    DataManagerUtil::sharedDataManagerUtil()->SetSecurityCode(CHECK_ITEM_EX_PUMP, crypto::Crc32(&m_UserData.itemEx.lPump, sizeof(m_UserData.itemEx.lPump)));
-}
-
-bool UserDataManager::verifyItemExPreTime()
-{
-    bool bRet = DataManagerUtil::sharedDataManagerUtil()->CheckSecurityData(CHECK_ITEM_EX_PRE_TIME, m_UserData.itemEx.lPreTime);
-    CCAssert(bRet, "Item PreTime counts verify failed ... cheating!!!");
-    return bRet;
-}
-
-void UserDataManager::setItemExPreTimeCheckCode()
-{
-    unsigned long code = crypto::Crc32(&m_UserData.itemEx.lPreTime, sizeof(m_UserData.itemEx.lPreTime));
-    DataManagerUtil::sharedDataManagerUtil()->SetSecurityCode(CHECK_ITEM_EX_PRE_TIME, code);
-    CCLOG("preTimeCheckCode:%lu, value:%ld", code, m_UserData.itemEx.lPreTime);
-}
-
 void UserDataManager::loadData()
 {
     // 得到统计数据
@@ -115,8 +103,12 @@ void UserDataManager::loadData()
     // 得到金币数据
     std::string strCoins = DataManagerUtil::sharedDataManagerUtil()->ReadDataWithChecksum(KEY_CONFIG_GOLDEN_COINS);
     // 转化到无符号长整形
-    // m_UserData.llGoldenCoins = strtoll(strCoins.c_str(), NULL, 0);
     m_UserData.llGoldenCoins = atoll(strCoins.c_str());
+    
+#if COCOS2D_DEBUG > 0
+    // 每次加1万
+    m_UserData.llGoldenCoins += 10000;
+#endif
     // 设置金币初始校验值
     setGoldenCoinsCheckCode();
     
@@ -125,18 +117,20 @@ void UserDataManager::loadData()
     m_UserData.llGameCounts = atoll(strGameCounts.c_str());
     // 设置游戏盘数的初始校验值
     setGameCountsCheckCode();
+   
+    // 道具的个数
+    unsigned int nItemCounts = sizeof(ItemExtend)/sizeof(long);
+    for (unsigned int i = 0; i < nItemCounts; ++i)
+    {
+        ItemExType eType = (ItemExType)i;
+        // 得到道具的数值
+        std::string strItemName = DataManagerUtil::sharedDataManagerUtil()->ReadDataWithChecksum(g_pszItemExConfigKeyArray[i]);
+        long* pItemData = (long*)&m_UserData.itemEx + i;
+        *pItemData = atoll(strItemName.c_str());
+        // 设置对应道具的初始校验值
+        setItemExCheckCodeByID(eType);
+    }
     
-    // 得到道具的数值
-    std::string strItemPumps = DataManagerUtil::sharedDataManagerUtil()->ReadDataWithChecksum(KEY_CONFIG_ITEM_EX_PUMP);
-    m_UserData.itemEx.lPump = atoll(strItemPumps.c_str());
-    // 设置对应道具的初始校验值
-    setItemExPumpCheckCode();
-    
-    // 得到道具的数值
-    std::string strItemPreTime = DataManagerUtil::sharedDataManagerUtil()->ReadDataWithChecksum(KEY_CONFIG_ITEM_EX_PRE_TIME);
-    m_UserData.itemEx.lPreTime = atoll(strItemPumps.c_str());
-    // 设置对应道具的初始校验值
-    setItemExPreTimeCheckCode();
 }
 
 void UserDataManager::saveData()
@@ -169,24 +163,21 @@ void UserDataManager::saveData()
     DataManagerUtil::sharedDataManagerUtil()->WriteDataWithChecksum(KEY_CONFIG_GAME_COUNTS, stream.str().c_str());
     
     // 保存道具数目
-    if (!verifyItemExPump())
+    // 道具的个数
+    unsigned int nItemCounts = sizeof(ItemExtend)/sizeof(long);
+    for (unsigned int i = 0; i < nItemCounts; ++i)
     {
-        m_UserData.itemEx.lPump = 0;
-        setItemExPumpCheckCode();
+        ItemExType eType = (ItemExType)i;
+        long* pItemData = (long*)&m_UserData.itemEx + i;
+        if (!verifyItemExByID(eType))
+        {
+            *pItemData = 0;
+            setItemExCheckCodeByID(eType);
+        }
+        stream.str("");
+        stream << *pItemData;
+        DataManagerUtil::sharedDataManagerUtil()->WriteDataWithChecksum(g_pszItemExConfigKeyArray[i], stream.str().c_str());
     }
-    stream.str("");
-    stream << m_UserData.itemEx.lPump;
-    DataManagerUtil::sharedDataManagerUtil()->WriteDataWithChecksum(KEY_CONFIG_ITEM_EX_PUMP, stream.str().c_str());
-    
-    if (!verifyItemExPreTime())
-    {
-        m_UserData.itemEx.lPreTime = 0;
-        setItemExPreTimeCheckCode();
-    }
-    stream.clear();
-    stream << m_UserData.itemEx.lPreTime;
-    DataManagerUtil::sharedDataManagerUtil()->WriteDataWithChecksum(KEY_CONFIG_ITEM_EX_PRE_TIME, stream.str().c_str());
-    
 }
 
 BalloonAnalysis* UserDataManager::getAnalysisDataRef()
@@ -281,99 +272,66 @@ void UserDataManager::addOneGameCount()
     }
 }
 
-long UserDataManager::getItemExPumpCounts()
-{
-    if (!verifyItemExPump())
-    {
-        m_UserData.itemEx.lPump = 0;
-        setItemExPumpCheckCode();
-    }
-    return m_UserData.itemEx.lPump;
-}
-
-long UserDataManager::getItemExPreTimeCounts()
-{
-    if (!verifyItemExPreTime())
-    {
-        m_UserData.itemEx.lPreTime = 0;
-        setItemExPreTimeCheckCode();
-    }
-    return m_UserData.itemEx.lPreTime;
-}
-
-void UserDataManager::addItemExPumpCount(long lCnts)
-{
-    // 这里先校验下游戏盘数数量和之前的游戏盘数数量是否匹配
-    if (!verifyItemExPump())
-    {
-        // 如果不匹配直接清零或者还原
-        m_UserData.itemEx.lPump = 0;
-        setItemExPumpCheckCode();
-    }
-    else
-    {
-        m_UserData.itemEx.lPump += lCnts;
-        setItemExPumpCheckCode();
-    }
-}
-
-void UserDataManager::addOneItemExPump()
-{
-    // 这里先校验下游戏盘数数量和之前的游戏盘数数量是否匹配
-    addItemExPumpCount(1);
-}
-
-void UserDataManager::addItemExPreTimeCount(long lCnts)
-{
-    // 这里先校验下游戏盘数数量和之前的游戏盘数数量是否匹配
-    if (!verifyItemExPreTime())
-    {
-        // 如果不匹配直接清零或者还原
-        m_UserData.itemEx.lPreTime = 0;
-        setItemExPreTimeCheckCode();
-    }
-    else
-    {
-        m_UserData.itemEx.lPreTime += lCnts;
-        setItemExPreTimeCheckCode();
-    }
-}
-
-void UserDataManager::addOneItemExPreTime()
-{
-    addItemExPreTimeCount(1);
-}
-
 long UserDataManager::getItemExCountsByID(ItemExType type)
 {
-    long lRet = 0;
-    switch (type) {
-        case kCCItemExTypePump:
-            lRet = getItemExPumpCounts();
-            break;
-        case kCCItemExTypePreTime:
-            lRet = getItemExPreTimeCounts();
-            break;
-        default:
-            break;
+    int nIdx = int(type);
+    // 定位到数据结构的初始位置
+    long* pItemData = (long*)&m_UserData.itemEx + nIdx;
+    // 校验数据
+    if (!verifyItemExByID(type))
+    {
+        // 设置对应值为0
+        *pItemData = 0;
+        setItemExCheckCodeByID(type);
     }
-    return lRet;
+    
+    return *pItemData;
+    
+}
+
+long UserDataManager::addItemExCountsByID(ItemExType eType, long lValue)
+{
+    int nIdx = int(eType);
+    long* plData = (long*)&m_UserData.itemEx + nIdx;
+    
+    if (!verifyItemExByID(eType))
+    {
+        // 设置值为0
+        *plData = 0;
+    }
+    else
+    {
+        // 加上对应值
+        *plData += lValue;
+    }
+    setItemExCheckCodeByID(eType);
+    
+    return *plData;
+    
 }
 
 long UserDataManager::addItemExOneCountByID(ItemExType type)
 {
-    long lRet = 0;
-    switch (type) {
-        case kCCItemExTypePump:
-            addOneItemExPump();
-            lRet = m_UserData.itemEx.lPump;
-            break;
-        case kCCItemExTypePreTime:
-            addOneItemExPreTime();
-            lRet = m_UserData.itemEx.lPreTime;
-            break;
-        default:
-            break;
-    }
-    return lRet;
+    return addItemExCountsByID(type, 1);
+}
+
+bool UserDataManager::verifyItemExByID(ItemExType eType)
+{
+    int nIdx = int(eType);
+    const long* plData = (const long*)&m_UserData.itemEx + nIdx;
+    long lValue = *plData;
+    
+    bool bRet = DataManagerUtil::sharedDataManagerUtil()->CheckSecurityData(g_pszItemExCheckCodeKeyArray[nIdx], lValue);
+    CCAssert(bRet, "Item counts verify failed ... cheating!!!");
+    return bRet;
+}
+
+void UserDataManager::setItemExCheckCodeByID(ItemExType eType)
+{
+    int nIdx = int(eType);
+    const long* plData = (const long*)&m_UserData.itemEx + nIdx;
+    long lValue = *plData;
+    unsigned long code = crypto::Crc32(&lValue, sizeof(lValue));
+    DataManagerUtil::sharedDataManagerUtil()->SetSecurityCode(g_pszItemExCheckCodeKeyArray[nIdx], code);
+    CCLOG("ItemEx:%lu, value:%ld", code, lValue);
 }

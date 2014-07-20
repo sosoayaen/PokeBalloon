@@ -49,7 +49,8 @@ bool BalloonItemSelectDialog::init()
 
 		pCCBReader->release();
         
-        SetVisibleBoard(m_pScale9SpriteBuyBoard);
+        // 界面需要点击按钮才能取消
+        // SetVisibleBoard(m_pScale9SpriteBuyBoard);
         
         //*
         m_pLabelBMFontCoins->retain();
@@ -62,8 +63,28 @@ bool BalloonItemSelectDialog::init()
         m_pSpriteCoin->release();
         //*/
         
-        updateCoins();
 		
+        // 预先定义好面板的大小
+        CCSize size = CCSizeMake(getContentSize().width*0.9f, getContentSize().height*0.8f);
+        // 先设定底部的按钮位置
+        CCNode* pNodeChild = (CCNode*)m_pMenu->getChildren()->objectAtIndex(0);
+        // 得到按钮的高度
+        float fHeight = pNodeChild->boundingBox().size.height;
+        
+        // 设定按钮位置
+        m_pMenu->setPosition(ccp(getContentSize().width*0.5f, (getContentSize().height - size.height)*0.5f + fHeight*0.5f));
+        ControlUtil::sharedControlUtil()->SetMenuItemSelectedImageWithNormalImage(m_pMenu);
+        pushMenu(m_pMenu);
+        
+        // 设定面板的大小
+        m_pScale9SpriteBuyBoard->setPreferredSize(CCSizeMake(size.width, size.height - fHeight*1.2f));
+        m_pScale9SpriteBuyBoard->setAnchorPoint(ccp(0.5f, 0));
+        m_pScale9SpriteBuyBoard->setPositionY(m_pMenu->getPositionY() + fHeight*0.5f);
+        
+        // 设置金币数量的位置
+        m_pLabelBMFontCoins->setPositionX(m_pScale9SpriteBuyBoard->getContentSize().width*0.98f);
+        updateCoins();
+                             
         // 设定头部的名称
         CCLabelBMFont* pBMFontTitle = CCLabelBMFont::create("Would you like buy Items?", "texture/fonts/font.fnt");
         pBMFontTitle->setPosition(ccp(m_pScale9SpriteBuyBoard->getContentSize().width*0.5f, m_pScale9SpriteBuyBoard->getContentSize().height - pBMFontTitle->getContentSize().height));
@@ -97,26 +118,10 @@ bool BalloonItemSelectDialog::init()
                 m_pArrayItems->addObject(pDict);
             }
         }
-        /*
-        CCDictionary* pDict = CCDictionary::create();
-        pDict->setObject(ccs("item_pump.png"), "iconSpriteName");
-        pDict->setObject(ccs(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("itemPreBuy_section", "pumpDesc")), "desc");
-        pDict->setObject(ccs(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("itemPreBuy_section", "pumpTitle")), "title");
-        pDict->setObject(ccs("10"), "cost");
-        pDict->setObject(ccs("1"), "type");
-        m_pArrayItems->addObject(pDict);
-        pDict = CCDictionary::create();
-        pDict->setObject(ccs("item_time.png"), "iconSpriteName");
-        pDict->setObject(ccs(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("itemPreBuy_section", "timeDesc")), "desc");
-        pDict->setObject(ccs(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("itemPreBuy_section", "timeTitle")), "title");
-        pDict->setObject(ccs("5"), "cost");
-        pDict->setObject(ccs("2"), "type");
-        m_pArrayItems->addObject(pDict);
-        //*/
         
         // 创建表格
         CCSize boardSize = m_pScale9SpriteBuyBoard->getContentSize();
-        CCSize viewSize = CCSizeMake(boardSize.width*0.9f, boardSize.height*0.9f);
+        CCSize viewSize = CCSizeMake(boardSize.width*0.9f, boardSize.height*0.8f);
         m_pTableView = CCTableView::create(this, viewSize);
         m_pTableView->setDelegate(this);
         m_pTableView->setDirection(kCCScrollViewDirectionVertical);
@@ -156,6 +161,9 @@ SEL_CallFuncN BalloonItemSelectDialog::onResolveCCBCCCallFuncSelector( CCObject 
 SEL_MenuHandler BalloonItemSelectDialog::onResolveCCBCCMenuItemSelector( CCObject * pTarget, const char* pSelectorName )
 {
 
+    CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onPressMenuStart", BalloonItemSelectDialog::onPressMenuStart);
+    CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onPressMenuReturnMain", BalloonItemSelectDialog::onPressMenuReturnMain);
+    
 	return NULL;
 }
 
@@ -164,6 +172,7 @@ bool BalloonItemSelectDialog::onAssignCCBMemberVariable( CCObject* pTarget, cons
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pScale9SpriteBuyBoard", CCScale9Sprite*, this->m_pScale9SpriteBuyBoard);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteCoin", CCSprite*, this->m_pSpriteCoin);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelBMFontCoins", CCLabelBMFont*, this->m_pLabelBMFontCoins);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenu", CCMenu*, this->m_pMenu);
 
 	return true;
 }
@@ -314,4 +323,18 @@ void BalloonItemSelectDialog::updateCoins()
     m_pLabelBMFontCoins->setString(CCString::createWithFormat("%lld", UserDataManager::sharedUserDataManager()->getGoldenCoins())->getCString());
     
     m_pSpriteCoin->setPositionX(m_pLabelBMFontCoins->getPositionX() - m_pLabelBMFontCoins->getContentSize().width*m_pLabelBMFontCoins->getScaleX());
+}
+
+void BalloonItemSelectDialog::onPressMenuReturnMain(cocos2d::CCObject *pSender)
+{
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
+    // 弹出到外层
+    CCDirector::sharedDirector()->popScene();
+}
+
+void BalloonItemSelectDialog::onPressMenuStart(cocos2d::CCObject *pSender)
+{
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
+    // 顺利结束对话框
+    endDialog();
 }

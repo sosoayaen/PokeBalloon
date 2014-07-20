@@ -131,6 +131,7 @@ void Balloon::updatePosition()
 void Balloon::explosive()
 {
 	// 播放气球爆炸音效
+    // TODO: 根据不同的道具类型，可以有不同的爆炸音效
 	BalloonSoundManager::sharedBalloonSoundManager()->playEffectExplosive();
 
 	// 气球死亡
@@ -141,8 +142,12 @@ void Balloon::explosive()
     
     if (getParent())
     {
+        // TODO: 这里可以根据气球的类型来区别下粒子效果
+        
         // 增加粒子特效
-        CCParticleSystemQuad* pParticleExplosive = CCParticleSystemQuad::create("particles/explosive.plist");
+        CCParticleSystemQuad* pParticleExplosive = NULL;
+        
+        pParticleExplosive = CCParticleSystemQuad::create("particles/explosive.plist");
         pParticleExplosive->setAutoRemoveOnFinish(true);
         pParticleExplosive->setPosition(getPosition());
         ccColor4F color = ccc4f(1.0f, 1.0f, 1.0f, 1.0f);
