@@ -73,6 +73,10 @@
 		<string>Giant Ex</string>
 		<key>giantDesc</key>
 		<string>Every press will add 1 score directly</string>
+		<key>safeTitle</key>
+		<string>Safe Guard</string>
+		<key>safeDesc</key>
+		<string>Boom will safe your score</string>
 	</dict>
 </dict>
 </plist>

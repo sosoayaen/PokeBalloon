@@ -72,7 +72,11 @@
 		<key>giantTitle</key>
 		<string>巨人收割</string>
 		<key>giantDesc</key>
-		<string>点击一次巨人气球，直接获得1分，无需气球倍点爆</string>
+		<string>点击一次巨人气球，直接获得1分，无需气球被点爆</string>
+		<key>safeTitle</key>
+		<string>保险</string>
+		<key>safeDesc</key>
+		<string>点击炸弹后，只扣除1/4的分数</string>
 	</dict>
 </dict>
 </plist>

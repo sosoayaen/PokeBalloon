@@ -106,8 +106,9 @@ void UserDataManager::loadData()
     m_UserData.llGoldenCoins = atoll(strCoins.c_str());
     
 #if COCOS2D_DEBUG > 0
-    // 每次加1万
-    m_UserData.llGoldenCoins += 10000;
+    // 不足1万，每次加1万
+    if (m_UserData.llGoldenCoins < 10000)
+        m_UserData.llGoldenCoins += 10000;
 #endif
     // 设置金币初始校验值
     setGoldenCoinsCheckCode();
@@ -333,5 +334,5 @@ void UserDataManager::setItemExCheckCodeByID(ItemExType eType)
     long lValue = *plData;
     unsigned long code = crypto::Crc32(&lValue, sizeof(lValue));
     DataManagerUtil::sharedDataManagerUtil()->SetSecurityCode(g_pszItemExCheckCodeKeyArray[nIdx], code);
-    CCLOG("ItemEx:%lu, value:%ld", code, lValue);
+    // CCLOG("ItemEx:%lu, value:%ld", code, lValue);
 }

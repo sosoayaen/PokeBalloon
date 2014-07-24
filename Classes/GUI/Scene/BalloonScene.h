@@ -14,8 +14,8 @@
 #include "CloudManager.h"
 #include "BalloonItemManager.h"
 #include "AutoTextureManagerLayer.h"
-
 #include "BalloonAnalysis.h"
+
 enum BalloonGameStatus
 {
     GAME_STATUS_READY = 0,  // 开始前的准备状态
@@ -161,6 +161,7 @@ private:
     bool m_bUseItemExPreTime;
     bool m_bUseItemExTimeAdd;
     bool m_bUseItemExGiant;
+    bool m_bUseItemExSafeGuard;
     
 private:
     // 重置数据

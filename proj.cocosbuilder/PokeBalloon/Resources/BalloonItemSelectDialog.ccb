@@ -358,7 +358,7 @@
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>1.0499999523162842</real>
+									<real>-0.05000000074505806</real>
 									<real>0.5</real>
 								</array>
 							</dict>
@@ -471,7 +471,7 @@
 								<string>Point</string>
 								<key>value</key>
 								<array>
-									<real>-0.05000000074505806</real>
+									<real>1.0499999523162842</real>
 									<real>0.5</real>
 								</array>
 							</dict>

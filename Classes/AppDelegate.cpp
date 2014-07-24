@@ -11,6 +11,7 @@
 #include "AppInfo.h"
 #include "NDKBridge.h"
 #include "UserData.h"
+#include "BalloonMission.h"
 
 #ifdef ENABLE_UMENG_DATA
 #   include "MobClickCpp.h"
@@ -212,4 +213,7 @@ void AppDelegate::setLocalConfigData()
     
     // 加载存在本地的用户数据
     UserDataManager::sharedUserDataManager()->loadData();
+    
+    // 加载任务数据
+    BalloonMission::sharedBalloonMission()->loadAllMissionData();
 }

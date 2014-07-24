@@ -93,8 +93,6 @@ private:
     void updateCoins();
 
 
-
-
 };
 
 #endif // __BALLOONITEMSELECTDIALOG__H__

@@ -7,6 +7,7 @@
 #include "BalloonResultDialog.h"
 #include "BalloonItemSelectDialog.h"
 #include "UserData.h"
+#include "BalloonMission.h"
 
 #include "bailinUtil.h"
 
@@ -333,23 +334,34 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             break;
         case kBalloonTypeBoom:
             pBalloon->explosive();
-            // 除分气球
-            if (!pDMU->CheckSecurityData(SECURITY_SCORE, m_llTotalScore))
             {
-                m_bCheated = true;
-                // 分数有问题
-                CCMessageBox("Cheat!!!", "Warnning");
-                m_llTotalScore = 0;
-                return;
-            }
+                // 除分气球
+                if (!pDMU->CheckSecurityData(SECURITY_SCORE, m_llTotalScore))
+                {
+                    m_bCheated = true;
+                    // 分数有问题
+                    CCMessageBox("Cheat!!!", "Warnning");
+                    m_llTotalScore = 0;
+                    return;
+                }
                 
-            m_llTotalScore /= pBalloon->getBalloonScore();
-            if (m_llTotalScore < 0)
-            {
-                m_llTotalScore = 0;
+                // 返还比例
+                if (m_bUseItemExSafeGuard)
+                {
+                    m_llTotalScore -= m_llTotalScore/pBalloon->getBalloonScore()/2;
+                }
+                else
+                {
+                    m_llTotalScore /= pBalloon->getBalloonScore();
+                }
+                                       
+                if (m_llTotalScore < 0)
+                {
+                    m_llTotalScore = 0;
+                }
+                pDMU->SetSecurityCode(SECURITY_SCORE, crypto::Crc32(&m_llTotalScore, sizeof(m_llTotalScore)));
+                updateScore();
             }
-            pDMU->SetSecurityCode(SECURITY_SCORE, crypto::Crc32(&m_llTotalScore, sizeof(m_llTotalScore)));
-            updateScore();
             break;
         case kBalloonTypeAddTime:
             pBalloon->explosive();
@@ -469,7 +481,7 @@ void BalloonScene::onBalloonItemEffectTrigger(BalloonItem* pItem)
     switch (pItem->getItemId())
     {
         case kBalloonItemId_Pumps:
-            // 按一下后给屏幕上随机增加分数
+            // 按一下后给屏幕上的普通气球增加分数
             {
                 long lExScore = 0;
                 if (m_bUseItemExPump)
@@ -598,6 +610,19 @@ void BalloonScene::update(float dt)
                 // 发送成绩到GameCenter
                 GameKitHelper2dx::uploadScore(m_llTotalScore);
 #endif
+                // 计算是否完成任务
+                const Mission* pMission = BalloonMission::sharedBalloonMission()->getRandomMission();
+                // 这里生成一个任务结构体，用于比对是否完成
+                MissionData md;
+                // 当前分数赋值
+                md.score = m_llTotalScore;
+                // 拷贝当前盘的数据
+                md.analysisData = m_BalloonAnalysis.getAnalysisData();
+                if (pMission && pMission->isMissionComplete(md))
+                {
+                    // 完成任务，显示奖励
+                    CCLOG("Mission Complete!!");
+                }
             }
             
             // 弹出结算框
@@ -824,6 +849,7 @@ void BalloonScene::onBuyItemsDialogEndCall(CCNode* pNode)
     m_bUseItemExPreTime = UserDataManager::sharedUserDataManager()->getItemExCountsByID(kCCItemExTypePreTime) > 0;
     m_bUseItemExTimeAdd = UserDataManager::sharedUserDataManager()->getItemExCountsByID(kCCItemExTypeTimeAdd) > 0;
     m_bUseItemExGiant = UserDataManager::sharedUserDataManager()->getItemExCountsByID(kCCItemExTypeGiant) > 0;
+    m_bUseItemExSafeGuard = UserDataManager::sharedUserDataManager()->getItemExCountsByID(kCCItemExTypeSafeGuard) > 0;
     
     if (m_bUseItemExPump)
     {
@@ -844,6 +870,11 @@ void BalloonScene::onBuyItemsDialogEndCall(CCNode* pNode)
     if (m_bUseItemExGiant)
     {
         UserDataManager::sharedUserDataManager()->addItemExCountsByID(kCCItemExTypeGiant, -1);
+    }
+    
+    if (m_bUseItemExSafeGuard)
+    {
+        UserDataManager::sharedUserDataManager()->addItemExCountsByID(kCCItemExTypeSafeGuard, -1);
     }
     
     // 读秒开始

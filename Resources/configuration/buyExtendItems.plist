@@ -18,11 +18,11 @@
 			<key>name</key>
 			<string>time</string>
 			<key>iconSpriteName</key>
-			<string>item_time.png</string>
+			<string>clock.png</string>
 			<key>type</key>
 			<string>1</string>
 			<key>cost</key>
-			<string>200</string>
+			<string>100</string>
 		</dict>
 		<dict>
 			<key>name</key>
@@ -32,17 +32,27 @@
 			<key>type</key>
 			<string>2</string>
 			<key>cost</key>
-			<string>300</string>
+			<string>200</string>
 		</dict>
 		<dict>
 			<key>name</key>
 			<string>giant</string>
 			<key>iconSpriteName</key>
-			<string>item_reverse_ex.png</string>
+			<string>item_giant.png</string>
 			<key>type</key>
 			<string>3</string>
 			<key>cost</key>
-			<string>400</string>
+			<string>10</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>safe</string>
+			<key>iconSpriteName</key>
+			<string>item_boom.png</string>
+			<key>type</key>
+			<string>4</string>
+			<key>cost</key>
+			<string>200</string>
 		</dict>
 	</array>
 </dict>

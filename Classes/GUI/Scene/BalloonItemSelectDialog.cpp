@@ -2,6 +2,7 @@
 #include "bailinUtil.h"
 #include "UserData.h"
 #include "BalloonSoundManager.h"
+#include "BalloonMission.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -143,13 +144,24 @@ bool BalloonItemSelectDialog::init()
 void BalloonItemSelectDialog::onEnter()
 {
 	DialogLayer::onEnter();
-	// TODO: 这里可以定义进入场景的初始化，比如控件的初始位置，初始状态等
+    
+    // 得到任务
+    const Mission* pMission = BalloonMission::sharedBalloonMission()->getRandomMission();
+    if (pMission)
+    {
+        CCString* pStrMission = CCString::createWithFormat("%d/%s/%s", pMission->nMissionID, pMission->strMissionName.c_str(), pMission->strMissionDesc.c_str());
+        CCLabelTTF* pLabelTTF = CCLabelTTF::create(pStrMission->getCString(), "", 28);
+        pLabelTTF->setAnchorPoint(CCPointZero);
+        pLabelTTF->setPosition(ccp(20, 20));
+        m_pScale9SpriteBuyBoard->addChild(pLabelTTF);
+    }
 }
 
 void BalloonItemSelectDialog::onExit()
 {
-	DialogLayer::onExit();
 	// TODO: 退出场景，取消CCNotificationCenter可以放在这里做，但是对应在onEnter的时候要重新注册
+    
+	DialogLayer::onExit();
 }
 
 SEL_CallFuncN BalloonItemSelectDialog::onResolveCCBCCCallFuncSelector( CCObject * pTarget, const char* pSelectorName )
@@ -262,7 +274,7 @@ CCTableViewCell* BalloonItemSelectDialog::tableCellAtIndex( CCTableView *table, 
         CCDictionary* pDict = (CCDictionary*)m_pArrayItems->objectAtIndex(idx);
         CCSize cellSize = cellSizeForTable(table);
         // 设置背景
-        CCSprite* pSprite = CCSprite::create("texture/items/item_background.png");
+        CCSprite* pSprite = CCSprite::createWithSpriteFrameName("item_background.png");
         pSprite->setPosition(ccp(cellSize.width * 0.1f, cellSize.height*0.5f));
         pSprite->setTag(TAG_ID_ITEM_ICON_BACKGROUND_SPRITE);
         
@@ -284,8 +296,8 @@ CCTableViewCell* BalloonItemSelectDialog::tableCellAtIndex( CCTableView *table, 
         
         // 设置描述文字
         CCLabelTTF* pLabelTTFTitle = CCLabelTTF::create(pDict->valueForKey("title")->getCString(), "", cellSize.height*0.25f);
-        pLabelTTFTitle->setAnchorPoint(ccp(0, 0));
-        pLabelTTFTitle->setPosition(ccp(pSprite->getPositionX() + pSprite->getContentSize().width*0.5f, cellSize.height*0.7f));
+        pLabelTTFTitle->setAnchorPoint(ccp(0.5f, 0));
+        pLabelTTFTitle->setPosition(ccp(pSprite->getPositionX() + pSprite->getContentSize().width*0.5f + cellSize.width*0.6f*0.5f, cellSize.height*0.7f));
         pCell->addChild(pLabelTTFTitle);
         
         CCLabelTTF* pLabelTTFDesc = CCLabelTTF::create(pDict->valueForKey("desc")->getCString(), "", cellSize.height*0.165f);
