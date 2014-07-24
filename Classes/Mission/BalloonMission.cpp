@@ -40,10 +40,6 @@ bool Mission::isMissionComplete(const MissionData& data) const
 		}
 	}
 
-	// 设置当前任务完成
-	if (bRet)
-		BalloonMission::sharedBalloonMission()->setNeedNewMission(true);
-
 	return bRet;
 }
 
@@ -104,12 +100,12 @@ bool BalloonMission::loadAllMissionData()
     if (!pDictData)
         return false;
     
+    // 取出数据对象
     CCArray* pArrayData = dynamic_cast<CCArray*>(pDictData->objectForKey("data"));
     
     if (!pArrayData)
         return false;
     
-    //*
     CCObject* pObj = NULL;
     CCARRAY_FOREACH(pArrayData, pObj)
     {
@@ -120,8 +116,14 @@ bool BalloonMission::loadAllMissionData()
         
         // 设置总数
         pMission->nMissionID = ((CCNumber*)pDict->objectForKey("ID"))->getIntValue();
+        // 设置任务简称
         pMission->strMissionName = pDict->valueForKey("name")->getCString();
+        // 设置任务描述
         pMission->strMissionDesc = pDict->valueForKey("description")->getCString();
+        // 设置奖励类型
+        pMission->cbRewardType = ((CCNumber*)pDict->objectForKey("reward_type"))->getIntValue();
+        // 设置任务奖励值
+        pMission->nReward = ((CCNumber*)pDict->objectForKey("reward"))->getIntValue();
         // 设置颜色气球完成度
         SetMissionColorData(black);
         SetMissionColorData(red);
@@ -147,8 +149,6 @@ bool BalloonMission::loadAllMissionData()
         // 把数据塞到列表中
         m_vMissionArray.push_back(pMission);
     }
-    
-    // */
 
 	return true;
 }

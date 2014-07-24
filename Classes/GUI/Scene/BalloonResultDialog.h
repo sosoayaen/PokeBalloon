@@ -11,6 +11,7 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 #include "DialogLayer.h"
+#include "BalloonAnalysis.h"
 
 class BalloonResultDialog:
 	public DialogLayer,
@@ -35,6 +36,9 @@ public:
         m_pSpriteCoin = NULL;
         m_pLabelBMFontCoins = NULL;
         
+        m_llTotalScore = 0;
+        m_llHighestScore = 0;
+        m_pAnalysisData = NULL;
 	}
 	~BalloonResultDialog();
 
@@ -70,6 +74,11 @@ private:
     // 分享按钮初始角度
     float m_fShareItemAngleOri;
     
+    // 当前总分和历史最高分
+    long long m_llTotalScore;
+    long long m_llHighestScore;
+    
+    const BalloonAnalysisData* m_pAnalysisData;
 private:
 	// Attributes for CCB
 	cocos2d::CCLabelBMFont* m_pLabelBMFontCurrentScore;
@@ -85,6 +94,7 @@ private:
     // 当次得到金币的数量
     cocos2d::CCLabelBMFont* m_pLabelBMFontCoins;
 
+    
 public:
 	// Virtual Functions
 	virtual bool init();
@@ -112,6 +122,9 @@ public:
     
     // 设置是否显示新的记录标志
     void setNewFlagVisible(bool bShow);
+    
+    // 设置分析数据的数据源
+    void setAnalysisData(const BalloonAnalysisData* pData);
 
 };
 

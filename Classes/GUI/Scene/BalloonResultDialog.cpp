@@ -1,6 +1,7 @@
 #include "BalloonResultDialog.h"
 #include "bailinUtil.h"
 #include "UserData.h"
+#include "BalloonMission.h"
 #include <string>
 
 USING_NS_CC;
@@ -93,6 +94,47 @@ void BalloonResultDialog::onEnter()
     m_pMenuItemShare->runAction(CCRepeatForever::create(CCSequence::create(CCMoveBy::create(2.7f, ccp(0, m_pMenuItemShare->getContentSize().height*0.3f)), CCMoveBy::create(2.5f, ccp(0, -m_pMenuItemShare->getContentSize().height*0.3f)), NULL)));
     
     initRotateStar();
+    
+    CCAssert(m_pAnalysisData, "Analysis Data is NULL!!!");
+    // 计算是否完成任务
+    const Mission* pMission = BalloonMission::sharedBalloonMission()->getRandomMission();
+    // 这里生成一个任务结构体，用于比对是否完成
+    MissionData md;
+    // 当前分数赋值
+    md.score = m_llTotalScore;
+    // 拷贝当前盘的数据
+    md.analysisData = *m_pAnalysisData; // m_BalloonAnalysis.getAnalysisData();
+    if (pMission && pMission->isMissionComplete(md))
+    {
+        // 完成任务，显示奖励
+        CCLOG("Mission Complete!!");
+        // 增加完成任务的奖励，目前应该只增加金币
+        if (pMission->cbRewardType == kCCMissionRewardTypeGoldenCoins)
+        {
+            // 把金币跳到屏幕上
+            CCSprite* pSpirteCoin = CCSprite::createWithSpriteFrame(m_pSpriteCoin->displayFrame());
+            CCLabelBMFont* pBonus = CCLabelBMFont::create(CCString::createWithFormat("%d", pMission->nReward)->getCString(), "texture/fonts/font.fnt");
+            pBonus->setAnchorPoint(ccp(0, 0.5f));
+            pBonus->setPosition(ccp(pSpirteCoin->getContentSize().width, 0));
+            CCNode* pNode = CCNode::create();
+            pNode->addChild(pSpirteCoin);
+            pNode->addChild(pBonus);
+            this->addChild(pNode);
+            
+            pNode->setPosition(ccp(0, getContentSize().height*0.5f));
+            pNode->runAction(CCSequence::create(CCMoveTo::create(5.0f, ccp(this->getContentSize().width*1.2f, pNode->getPositionY())), CCRemoveSelf::create(), NULL));
+            BalloonMission::sharedBalloonMission()->setNeedNewMission(true);
+        }
+    }
+    else
+    {
+        // 任务失败
+        CCLabelBMFont* pLabel = CCLabelBMFont::create("Mission Failed", "texture/fonts/font.fnt");
+        pLabel->setPosition(ccp(getContentSize().width*0.5f, getContentSize().height*0.5f));
+        pLabel->setOpacity(0);
+        this->addChild(pLabel);
+        pLabel->runAction(CCSequence::create(CCSpawn::create(CCFadeIn::create(0.5f), CCEaseBounceOut::create(CCScaleTo::create(1.0f, 3.0f)), NULL), CCFadeOut::create(1.0f), CCRemoveSelf::create(), NULL));
+    }
 }
 
 void BalloonResultDialog::onExit()
@@ -139,6 +181,7 @@ SEL_CCControlHandler BalloonResultDialog::onResolveCCBCCControlSelector( CCObjec
 
 void BalloonResultDialog::setScore(long long llScore)
 {
+    m_llTotalScore = llScore;
     m_pLabelBMFontCurrentScore->setCString(CCString::createWithFormat("%lld", llScore)->getCString());
     
     updateCoins(llScore/SCORE_COINS_RATE);
@@ -146,6 +189,7 @@ void BalloonResultDialog::setScore(long long llScore)
 
 void BalloonResultDialog::setHighScore(long long llScore)
 {
+    m_llHighestScore = llScore;
     m_pLabelBMFontHighestScore->setCString(CCString::createWithFormat("%lld", llScore)->getCString());
 }
 
@@ -222,4 +266,9 @@ void BalloonResultDialog::updateCoins(long long llCoins)
     
     // 更新位置
     m_pSpriteCoin->setPosition(ccp(m_pLabelBMFontCoins->getPositionX() - m_pLabelBMFontCoins->getContentSize().width*m_pLabelBMFontCoins->getScaleX(), m_pSpriteCoin->getPositionY()));
+}
+
+void BalloonResultDialog::setAnalysisData(const BalloonAnalysisData *pData)
+{
+    m_pAnalysisData = pData;
 }

@@ -610,19 +610,6 @@ void BalloonScene::update(float dt)
                 // 发送成绩到GameCenter
                 GameKitHelper2dx::uploadScore(m_llTotalScore);
 #endif
-                // 计算是否完成任务
-                const Mission* pMission = BalloonMission::sharedBalloonMission()->getRandomMission();
-                // 这里生成一个任务结构体，用于比对是否完成
-                MissionData md;
-                // 当前分数赋值
-                md.score = m_llTotalScore;
-                // 拷贝当前盘的数据
-                md.analysisData = m_BalloonAnalysis.getAnalysisData();
-                if (pMission && pMission->isMissionComplete(md))
-                {
-                    // 完成任务，显示奖励
-                    CCLOG("Mission Complete!!");
-                }
             }
             
             // 弹出结算框
@@ -641,8 +628,6 @@ void BalloonScene::showResultDialog()
     // 显示广告条
     GAdMob2DX::sharedGAdMob2DX()->setVisible(true);
     
-	// 这里可以定义进入场景的初始化，比如控件的初始位置，初始状态等
-    
     // 生成结算对话框
     BalloonResultDialog* pResultDialog = dynamic_cast<BalloonResultDialog*>(getChildByTag(TAG_ID_RESULT_DIALOG));
     if (!pResultDialog)
@@ -658,6 +643,9 @@ void BalloonScene::showResultDialog()
         pResultDialog->setTag(TAG_ID_RESULT_DIALOG);
     }
     
+    // 设定分析数据
+    const BalloonAnalysisData* pAnalysisData = &m_BalloonAnalysis.getAnalysisData();
+    pResultDialog->setAnalysisData(pAnalysisData);
     // 设定面板分数
     pResultDialog->setScore(m_llTotalScore);
     std::string strHighScore = DataManagerUtil::sharedDataManagerUtil()->ReadDataFromLocal("HighestScore");

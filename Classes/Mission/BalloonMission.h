@@ -30,6 +30,25 @@ typedef struct tagMissionData
     BalloonAnalysisData analysisData;
 } MissionData;
 
+// 任务奖励枚举类（目前最多255个）
+enum MissionRewardType
+{
+    /* 金币 */
+    kCCMissionRewardTypeGoldenCoins = 1,
+    /* 钻石 */
+    kCCMissionRewardTypeDiamond,
+    /* 一次性物品奖励，额外打气筒 */
+    kCCMissionRewardTypeExItemPump,
+    /* 一次性物品奖励，总额外时间 */
+    kCCMissionRewardTypeExItemPreTime,
+    /* 一次性物品奖励，增强时间 */
+    kCCMissionRewardTypeExItemExTime,
+    /* 一次性物品奖励，巨人收割 */
+    kCCMissionRewardTypeExItemGiant,
+    /* 一次性物品奖励，炸弹保险 */
+    kCCMissionRewardTypeExItemSafeGuard,
+};
+
 // 任务结构体
 class Mission
 {
@@ -39,10 +58,14 @@ public:
 		nMissionID = 0;
 		strMissionName = "";
 		strMissionDesc = "";
+        cbRewardType = kCCMissionRewardTypeGoldenCoins;
+        nReward = 0;
 		memset(&data, 0, sizeof(MissionData));
 	}
 
 	unsigned int nMissionID;	// 任务ID
+    unsigned char cbRewardType; // 奖励的类型
+    int nReward;                // 奖励个数
 	std::string strMissionName;	// 任务名称
 	std::string strMissionDesc;	// 任务描述
 	MissionData data;	// 气球分析数据
