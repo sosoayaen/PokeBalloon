@@ -64,6 +64,7 @@ public:
 	}
 
 	unsigned int nMissionID;	// 任务ID
+    unsigned char cbCompareType;// 任务比较类型，0 大于等于 1 小于
     unsigned char cbRewardType; // 奖励的类型
     int nReward;                // 奖励个数
 	std::string strMissionName;	// 任务名称

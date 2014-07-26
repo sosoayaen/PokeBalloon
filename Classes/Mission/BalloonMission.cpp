@@ -120,6 +120,8 @@ bool BalloonMission::loadAllMissionData()
         pMission->strMissionName = pDict->valueForKey("name")->getCString();
         // 设置任务描述
         pMission->strMissionDesc = pDict->valueForKey("description")->getCString();
+        // 设置比较类型
+        pMission->cbCompareType = ((CCNumber*)pDict->objectForKey("compare_type"))->getIntValue();
         // 设置奖励类型
         pMission->cbRewardType = ((CCNumber*)pDict->objectForKey("reward_type"))->getIntValue();
         // 设置任务奖励值
