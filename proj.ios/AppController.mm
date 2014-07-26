@@ -4,7 +4,7 @@
 #import "AppDelegate.h"
 #import "RootViewController.h"
 #import "GameKitHelper.h"
-#import "NDKManager.h"
+#import "NDKBridge.h"
 
 @implementation AppController
 
@@ -56,9 +56,15 @@ static AppDelegate s_sharedApplication;
     
     [window makeKeyAndVisible];
     
-    
     [[UIApplication sharedApplication] setStatusBarHidden:true];
     
+    // 启动IAP
+    cocos2d::CCArray* pArrayProducts = cocos2d::CCArray::create();
+    pArrayProducts->addObject(cocos2d::CCString::create("com.wardrums.pokeballoon.removead"));
+    pArrayProducts->addObject(cocos2d::CCString::create("com.wardrums.pokeballoon.buyCoinsOne"));
+    NDKBridge::sharedNDKBridge()->initIAP(pArrayProducts);
+    
+    // 启动cocos2dx引擎
     cocos2d::CCApplication::sharedApplication()->run();
 
     return YES;

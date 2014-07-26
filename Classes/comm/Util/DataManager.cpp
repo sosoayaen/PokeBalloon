@@ -456,6 +456,26 @@ void DataManagerUtil::SetGlobalDataString( const char* pszKey, const char* pszVa
 	}
 }
 
+void DataManagerUtil::SetGlobalDataObject(const char *pszKey, cocos2d::CCObject *pData)
+{
+    CCDictionary* pDict = getGlobalData();
+    if (pDict)
+    {
+        pDict->setObject(pData, pszKey);
+    }
+}
+
+CCObject* DataManagerUtil::GetGlobalDataObject(const char *pszKey)
+{
+    CCObject* pRet = NULL;
+    CCDictionary* pDict = getGlobalData();
+    if (pDict)
+    {
+        pRet = pDict->objectForKey(pszKey);
+    }
+    return pRet;
+}
+
 long DataManagerUtil::GetLongValueWithObject( cocos2d::CCObject* pObj )
 {
 	long nRet =0;

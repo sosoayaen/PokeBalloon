@@ -89,6 +89,17 @@ public:
 	*/
 	void SetGlobalDataString(const char* pszKey, const char* pszValue);
 
+    /**
+     * @brief 设置全局对象数据
+     * @param
+     */
+    void SetGlobalDataObject(const char* pszKey, cocos2d::CCObject* pData);
+    
+    /**
+     * @brief 得到全局的对象数据
+     */
+    cocos2d::CCObject* GetGlobalDataObject(const char* pszKey);
+    
 	/**
 	* @brief 得到异或后的字符串
     * @param str 输入字符串，仅能对字符串数据做加密

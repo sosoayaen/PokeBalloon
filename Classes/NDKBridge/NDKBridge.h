@@ -34,6 +34,9 @@ public:
     
     // 取消本地推送信息
     void cancelNotification(cocos2d::CCDictionary* pData);
+    
+    // 向服务器获取内购商品数据
+    void initIAP(cocos2d::CCArray* pArrayProductID);
 };
 
 #endif // __NDK_BRIDGE_H__
