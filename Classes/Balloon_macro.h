@@ -33,6 +33,20 @@
 
 #define SCORE_COINS_RATE    20          // 分数到金币的比例，被除数
 
+/**
+ * IAP相关定义
+ */
+enum IAP_PURCHASE_STATUS
+{
+    IAP_PURCHASE_NONE = 0,   // 没有任何状态，默认
+    IAP_PURCHASE_PURCHASING, // 正在购买中
+    IAP_PURCHASE_PURCHASED,     // 购买成功
+    IAP_PURCHASE_FAILED,  // 购买失败
+    IAP_PURCHASE_FAILED_RECEIPT,    // 苹果校验值失败，可能是作弊的
+};
+
+#define GLOBAL_KEY_IAP_PURCHASE_STATUS "IAP_PURCHASE_STATUS"
+
 // 全局保存的配置对应的key宏定义
 #define OPT_MUSIC_OFF           "opt_MusicOFF"			// 是否关闭背景音乐
 #define OPT_SOUND_EFFECT_OFF    "opt_SoundEffectOFF"	// 是否关闭音效

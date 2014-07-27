@@ -7,6 +7,7 @@
 #include "Balloon_macro.h"
 
 #include "BalloonOptionsDialog.h"
+#include "BalloonShopScene.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #   include "GameKitHelper2dx.h"
@@ -318,7 +319,8 @@ void BalloonFirstPage::onPressMenuHandbook(cocos2d::CCObject *pSender)
 {
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
     // 显示图鉴场景
-    CCScene* pScene = BalloonHandBookScene::scene();
+    // CCScene* pScene = BalloonHandBookScene::scene();
+    CCScene* pScene = BalloonShopScene::scene();
     CCDirector::sharedDirector()->pushScene(pScene);
 }
 

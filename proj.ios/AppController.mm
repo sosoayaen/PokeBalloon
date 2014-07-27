@@ -58,11 +58,6 @@ static AppDelegate s_sharedApplication;
     
     [[UIApplication sharedApplication] setStatusBarHidden:true];
     
-    // 启动IAP
-    cocos2d::CCArray* pArrayProducts = cocos2d::CCArray::create();
-    pArrayProducts->addObject(cocos2d::CCString::create("com.wardrums.pokeballoon.removead"));
-    pArrayProducts->addObject(cocos2d::CCString::create("com.wardrums.pokeballoon.buyCoinsOne"));
-    NDKBridge::sharedNDKBridge()->initIAP(pArrayProducts);
     
     // 启动cocos2dx引擎
     cocos2d::CCApplication::sharedApplication()->run();

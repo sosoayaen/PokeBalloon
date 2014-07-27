@@ -37,7 +37,19 @@ bool AppDelegate::applicationDidFinishLaunching()
     // initialize director
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCEGLView* pEGLView = CCEGLView::sharedOpenGLView();
+    
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    // 启动IAP
+    CCArray* pArrayProducts = CCArray::create();
+    pArrayProducts->addObject(CCString::create("com.wardrums.pokeballoon.removead"));
+    pArrayProducts->addObject(CCString::create("com.wardrums.pokeballoon.buyCoinsOne"));
+    pArrayProducts->addObject(CCString::create("com.wardrums.pokeballoon.buyCoinsTwo"));
+    NDKBridge::sharedNDKBridge()->initIAP(pArrayProducts, "76cf42e581eb48819b8456a8dcdc8129");
+    NDKBridge::sharedNDKBridge()->setADProductID("com.wardrums.pokeballoon.removead");
+#endif
 
+    bool bNoAd = NDKBridge::sharedNDKBridge()->isADOff();
 // 初始化友盟数据
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
 
@@ -51,7 +63,9 @@ bool AppDelegate::applicationDidFinishLaunching()
     UMSocial2DX::setAppKey("5352425256240b09f407dee2");
 
 	// 设置iOS广告ID
-    pGADInstance->init("ca-app-pub-4946557086550003/5403608979");
+    // 这里判断下是否有去处广告的配置，有就不进行初始化
+    if (!bNoAd)
+        pGADInstance->init("ca-app-pub-4946557086550003/5403608979");
 
 #	elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #       ifdef ENABLE_UMENG_DATA
@@ -60,7 +74,8 @@ bool AppDelegate::applicationDidFinishLaunching()
     UMSocial2DX::setAppKey("535242b756240b0a0506ca56", JNI_CLASS);
 	
 	// 设置Android广告ID以及Android对应的包名
-    pGADInstance->init("ca-app-pub-4946557086550003/8357075374", JNI_CLASS);
+    if (!bNoAd)
+        pGADInstance->init("ca-app-pub-4946557086550003/8357075374", JNI_CLASS);
 #	endif
 
 #   ifdef ENABLE_UMENG_DATA
@@ -162,7 +177,7 @@ void AppDelegate::applicationDidEnterBackground() {
     dict->setObject(ccs(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("notification_section", "localNotificationName")), "notificationName");
 #if COCOS2D_DEBUG > 0
     // 测试数据15秒发送
-    dict->setObject(ccs("15"), "timeinterval");
+    // dict->setObject(ccs("15"), "timeinterval");
 #endif
     NDKBridge::sharedNDKBridge()->setNotification(dict);
     dict->release();
