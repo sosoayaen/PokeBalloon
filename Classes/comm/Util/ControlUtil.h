@@ -67,6 +67,12 @@ public:
 	*        弹出框仅仅是cocos2dx默认的各个平台的消息框
 	*/
 	void ShowCocos2dxMessageBox(const char* pszContent, const char* pszTitle = NULL);
+    
+    /**
+     * @brief 返回是否按钮可按下的
+     * @param dTimeIntervalMillionSecound 按钮的按下间隔，毫秒级别，如果小于等于0则默认1.5秒
+     */
+    bool isButtonCanTouch(double dTimeIntervalMillionSecound = -1.0);
 
 	/**
 	* @brief 弹出一个加载等待的层

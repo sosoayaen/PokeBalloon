@@ -20,6 +20,7 @@
 #define __NDK_BRIDGE_H__
 
 #include "cocos2d.h"
+#include "GAdMob2DX.h"
 #include <string>
 
 class NDKBridge
@@ -36,6 +37,12 @@ public:
     // 取消本地推送信息
     void cancelNotification(cocos2d::CCDictionary* pData);
     
+    // 初始化广告对象
+    bool initAdMob(const char* pszUnitID, const char* pszClassName = NULL);
+    
+    // 设置广告对象是否可见
+    void setAdMobVisible(bool bVisible);
+    
     // 向服务器获取内购商品数据
     void initIAP(cocos2d::CCArray* pArrayProductID, const char* pszShareSecret = NULL);
     
@@ -50,6 +57,9 @@ public:
     
     // 恢复购买
     void restoreIAPProducts();
+    
+    // 清除本机上的IAP数据
+    void clearSavedPurchasedProducts();
     
 private:
     // IAP校验值

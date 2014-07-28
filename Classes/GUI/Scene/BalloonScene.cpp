@@ -1,13 +1,13 @@
 #include "BalloonScene.h"
 #include "BalloonSoundManager.h"
 #include "MobClickCpp.h"
-#include "GAdMob2DX.h"
 #include "UMSocial2DX.h"
 #include "BalloonPauseDialog.h"
 #include "BalloonResultDialog.h"
 #include "BalloonItemSelectDialog.h"
 #include "UserData.h"
 #include "BalloonMission.h"
+#include "NDKBridge.h"
 
 #include "bailinUtil.h"
 
@@ -626,7 +626,8 @@ void BalloonScene::update(float dt)
 void BalloonScene::showResultDialog()
 {
     // 显示广告条
-    GAdMob2DX::sharedGAdMob2DX()->setVisible(true);
+    // GAdMob2DX::sharedGAdMob2DX()->setVisible(true);
+    NDKBridge::sharedNDKBridge()->setAdMobVisible(true);
     
     // 生成结算对话框
     BalloonResultDialog* pResultDialog = dynamic_cast<BalloonResultDialog*>(getChildByTag(TAG_ID_RESULT_DIALOG));
@@ -822,7 +823,8 @@ void BalloonScene::onPressMenuResume(cocos2d::CCObject *pSender)
     scheduleUpdate();
     
     // 隐藏广告条
-    GAdMob2DX::sharedGAdMob2DX()->setVisible(false);
+    // GAdMob2DX::sharedGAdMob2DX()->setVisible(false);
+    NDKBridge::sharedNDKBridge()->setAdMobVisible(false);
 }
 
 void BalloonScene::onResultDialogEndCall(CCNode* pNode)
@@ -912,7 +914,8 @@ void BalloonScene::startGame()
     MobClickCpp::event("StartGameCount");
     
     // 开始游戏隐藏广告条
-    GAdMob2DX::sharedGAdMob2DX()->setVisible(false);
+    // GAdMob2DX::sharedGAdMob2DX()->setVisible(false);
+    NDKBridge::sharedNDKBridge()->setAdMobVisible(false);
     
     // resetData();
     
@@ -938,7 +941,8 @@ void BalloonScene::showPauseDialog()
     }
     
     addChild(pPauseDialog);
-    GAdMob2DX::sharedGAdMob2DX()->setVisible(true);
+    // GAdMob2DX::sharedGAdMob2DX()->setVisible(true);
+    NDKBridge::sharedNDKBridge()->setAdMobVisible(true);
 }
 
 bool BalloonScene::setResourceString()

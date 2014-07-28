@@ -35,7 +35,23 @@ NDKBridge::~NDKBridge()
     
 }
 
-//
+// 初始化广告对象
+bool NDKBridge::initAdMob(const char *pszUnitID, const char *pszClassName /* = NULL */)
+{
+    if (!isADOff())
+        return GAdMob2DX::sharedGAdMob2DX()->init(pszUnitID, pszClassName);
+    else
+        return false;
+}
+
+void NDKBridge::setAdMobVisible(bool bVisible)
+{
+    // 判断下是否不使用广告，这里主要针对在游戏中购买广告的情况
+    if (isADOff())
+        bVisible = false;
+    
+    GAdMob2DX::sharedGAdMob2DX()->setVisible(bVisible);
+}
 
 void NDKBridge::setNotification(cocos2d::CCDictionary *pData)
 {
@@ -165,6 +181,7 @@ void NDKBridge::buyIAPProduct(unsigned int productIdx)
                         if ([transcation.payment.productIdentifier isEqualToString:@"com.wardrums.pokeballoon.removead"])
                         {
                             // 去除广告
+                            setAdMobVisible(false);
                         }
                         else if ([transcation.payment.productIdentifier isEqualToString:@"com.wardrums.pokeballoon.buyCoinsOne"])
                         {
@@ -224,7 +241,14 @@ void NDKBridge::restoreIAPProducts()
                 
                 [alert show];
                 [alert release];
+                
+                setAdMobVisible(false);
             }
         }
     }];
+}
+
+void NDKBridge::clearSavedPurchasedProducts()
+{
+    [[IAPShare sharedHelper].iap clearSavedPurchasedProducts];
 }

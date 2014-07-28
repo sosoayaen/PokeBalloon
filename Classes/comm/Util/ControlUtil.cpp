@@ -8,10 +8,14 @@ USING_NS_CC_EXT;
 USING_NS_BAILIN_UTIL;
 
 NS_BAILIN_UTIL_BEGIN
+
+static struct cc_timeval g_sTimeVal;
+
 ControlUtil::ControlUtil()
 {
 	m_sizeScreen = CCDirector::sharedDirector()->getWinSize();
 //	m_fScaleFactor = CCDirector::sharedDirector()->getContentScaleFactor();
+    memset(&g_sTimeVal, 0, sizeof(g_sTimeVal));
 }
 
 ControlUtil::~ControlUtil()
@@ -198,6 +202,36 @@ bool ControlUtil::AddEventListenToSprit( cocos2d::CCSprite* sprit ,CCObject *tar
 	sprit->addChild(menuCombo);
     
 	return true;
+}
+
+bool ControlUtil::isButtonCanTouch(double dTimeIntervalMillionSecound)
+{
+    bool bRet = true;
+    
+    if (dTimeIntervalMillionSecound <= 0)
+        dTimeIntervalMillionSecound = 1000;
+    
+    struct cc_timeval now;
+    CCTime::gettimeofdayCocos2d(&now, NULL);
+    
+    if (g_sTimeVal.tv_sec == 0 && g_sTimeVal.tv_usec == 0)
+    {
+        g_sTimeVal = now;
+        return bRet;
+    }
+    
+    double dTimeStep = CCTime::timersubCocos2d(&g_sTimeVal, &now);
+    
+    CCLog("isButtonCanTouch dTimeStep:%.02f", dTimeStep);
+    
+    // 时间间隔大于设定的按钮按下的间隔
+    bRet = dTimeStep >= dTimeIntervalMillionSecound;
+    if (bRet)
+    {
+        g_sTimeVal = now;
+    }
+    
+    return bRet;
 }
 
 NS_BAILIN_UTIL_END

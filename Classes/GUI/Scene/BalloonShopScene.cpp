@@ -61,7 +61,8 @@ bool BalloonShopScene::init()
         
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/common/common.plist");
         // 创建列表View
-        m_pTableViewItems = CCTableView::create(this, getContentSize());
+        m_pTableViewItems = CCTableView::create(this, CCSizeMake(getContentSize().width, getContentSize().height*0.7f));
+        m_pTableViewItems->setPosition(ccp(0, getContentSize().height*0.15f));
         m_pTableViewItems->setDelegate(this);
         m_pTableViewItems->setDirection(kCCScrollViewDirectionHorizontal);
         m_pTableViewItems->setVerticalFillOrder(kCCTableViewFillTopDown);
@@ -111,7 +112,8 @@ void BalloonShopScene::checkPurchaseStatus(float dt)
 {
     long status = DataManagerUtil::sharedDataManagerUtil()->GetGlobalDataLong(GLOBAL_KEY_IAP_PURCHASE_STATUS);
     
-    switch (status) {
+    switch (status)
+    {
         case IAP_PURCHASE_PURCHASING:
             // 购买中就要不停扫描
             break;
@@ -149,6 +151,9 @@ void BalloonShopScene::tableCellTouched(cocos2d::extension::CCTableView *table, 
 {
     unsigned int idx = cell->getIdx();
     
+    // 避免重复按下
+    if (!ControlUtil::sharedControlUtil()->isButtonCanTouch(1000.0)) return;
+    
     CCDictionary* pDict = dynamic_cast<CCDictionary*>(m_pArrayItemData->objectAtIndex(idx));
     if (pDict)
     {
@@ -176,7 +181,7 @@ CCTableViewCell* BalloonShopScene::tableCellAtIndex(cocos2d::extension::CCTableV
         
         // 先创建一个背景
         CCScale9Sprite* pSpriteBG = CCScale9Sprite::create("texture/handBook/handbook_background.png");
-        pSpriteBG->setPreferredSize(CCSizeMake(getContentSize().width*0.9f, getContentSize().height*0.8f));
+        pSpriteBG->setPreferredSize(CCSizeMake(cellSize.width*0.9f, cellSize.height));
         pSpriteBG->setPosition(ccpMult(ccpFromSize(cellSize), 0.5f));
         pCell->addChild(pSpriteBG);
         
@@ -202,7 +207,7 @@ CCTableViewCell* BalloonShopScene::tableCellAtIndex(cocos2d::extension::CCTableV
 
 CCSize BalloonShopScene::cellSizeForTable(cocos2d::extension::CCTableView *table)
 {
-    return getContentSize();
+    return ccp(getContentSize().width, getContentSize().height*0.7f);
 }
 
 unsigned int BalloonShopScene::numberOfCellsInTableView(cocos2d::extension::CCTableView *table)

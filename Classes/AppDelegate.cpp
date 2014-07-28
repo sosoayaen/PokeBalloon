@@ -47,14 +47,15 @@ bool AppDelegate::applicationDidFinishLaunching()
     pArrayProducts->addObject(CCString::create("com.wardrums.pokeballoon.buyCoinsTwo"));
     NDKBridge::sharedNDKBridge()->initIAP(pArrayProducts, "76cf42e581eb48819b8456a8dcdc8129");
     NDKBridge::sharedNDKBridge()->setADProductID("com.wardrums.pokeballoon.removead");
+    
+#   if COCOS2D_DEBUG > 0
+    NDKBridge::sharedNDKBridge()->clearSavedPurchasedProducts();
+    NDKBridge::sharedNDKBridge()->restoreIAPProducts();
+#   endif
 #endif
 
-    bool bNoAd = NDKBridge::sharedNDKBridge()->isADOff();
 // 初始化友盟数据
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_WIN32)
-
-	// 创建广告控制实例
-    GAdMob2DX* pGADInstance = GAdMob2DX::sharedGAdMob2DX();
 
 #   if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #       ifdef ENABLE_UMENG_DATA
@@ -62,10 +63,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 #       endif
     UMSocial2DX::setAppKey("5352425256240b09f407dee2");
 
-	// 设置iOS广告ID
     // 这里判断下是否有去处广告的配置，有就不进行初始化
-    if (!bNoAd)
-        pGADInstance->init("ca-app-pub-4946557086550003/5403608979");
+    NDKBridge::sharedNDKBridge()->initAdMob("ca-app-pub-4946557086550003/5403608979");
 
 #	elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #       ifdef ENABLE_UMENG_DATA
@@ -73,9 +72,8 @@ bool AppDelegate::applicationDidFinishLaunching()
 #       endif
     UMSocial2DX::setAppKey("535242b756240b0a0506ca56", JNI_CLASS);
 	
-	// 设置Android广告ID以及Android对应的包名
-    if (!bNoAd)
-        pGADInstance->init("ca-app-pub-4946557086550003/8357075374", JNI_CLASS);
+    // 初始化广告控件
+    NDKBridge::sharedNDKBridge()->init("ca-app-pub-4946557086550003/8357075374", JNI_CLASS);
 #	endif
 
 #   ifdef ENABLE_UMENG_DATA
