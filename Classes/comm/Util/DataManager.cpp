@@ -776,11 +776,12 @@ void DataManagerUtil::WriteDataWithChecksum(const char *pszKey, const char* pszV
     // 校验Key
     std::string strCheckKey = pszKey;
     strCheckKey += "Checksum";
-    // 校验数据，加上一个私钥
-    std::string strCheckValue = pszValue;
-    strCheckValue += SECRECT_KEY;
+    std::stringstream ss;
+    // 顺便加上自己的key，使得每个校验值的值都是动态的，即相同的校验值对应的不是同一个值
+    ss << pszValue << SECRECT_KEY << pszKey;
+    std::string strCheckData = ss.str();
     // 计算数据的校验码
-    std::string strCheckSum = crypto::MD5(strCheckValue.c_str());
+    std::string strCheckSum = crypto::MD5(strCheckData.c_str());
     
     // 写入校验数据
     CCUserDefault::sharedUserDefault()->setStringForKey(strCheckKey.c_str(), strCheckSum);
@@ -790,7 +791,10 @@ bool DataManagerUtil::IsCheckKeyDataValidate(const char *pszKey)
 {
     bool bRet = false;
     std::string strValue = CCUserDefault::sharedUserDefault()->getStringForKey(pszKey, "");
-    std::string strCheckData = strValue + SECRECT_KEY;
+    std::stringstream ss;
+    // 顺便加上自己的key，使得每个校验值的值都是动态的，即相同的校验值对应的不是同一个值
+    ss << strValue.c_str() << SECRECT_KEY << pszKey;
+    std::string strCheckData = ss.str();
     // 得到校验码
     std::string strCheckSumData = crypto::MD5(strCheckData.c_str());
     
