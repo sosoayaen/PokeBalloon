@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>abilityArray</key>
+	<array>
+		<dict>
+			<key>nID</key>
+			<string>1</string>
+			<key>descArray</key>
+			<array>
+				<dict>
+					<key>nLvl</key>
+					<string>1</string>
+					<key>nCost</key>
+					<string>3000</string>
+					<key>strTitle</key>
+					<string>Time Slash!</string>
+					<key>strDescription</key>
+					<string>Add 6 seconds in 5% when you poke a time balloon</string>
+				</dict>
+				<dict>
+					<key>nLvl</key>
+					<string>2</string>
+					<key>nCost</key>
+					<string>4000</string>
+					<key>strTitle</key>
+					<string>Time Slash!</string>
+					<key>strDescription</key>
+					<string>Add 6 seconds in 10% when you poke a time balloon</string>
+				</dict>
+				<dict>
+					<key>nLvl</key>
+					<string>3</string>
+					<key>nCost</key>
+					<string>50000</string>
+					<key>strTitle</key>
+					<string>Time Slash!</string>
+					<key>strDescription</key>
+					<string>Add 6 seconds in 15% when you poke a time balloon</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>nID</key>
+			<string>2</string>
+			<key>descArray</key>
+			<array>
+				<dict>
+					<key>nLvl</key>
+					<string>1</string>
+					<key>nCost</key>
+					<string>1200</string>
+					<key>strTitle</key>
+					<string>Score Range</string>
+					<key>strDescription</key>
+					<string>Balloon score range from -3 to +4</string>
+				</dict>
+				<dict>
+					<key>nLvl</key>
+					<string>2</string>
+					<key>nCost</key>
+					<string>4800</string>
+					<key>strTitle</key>
+					<string>Score Range EX</string>
+					<key>strDescription</key>
+					<string>Balloon score range from -3 to +5</string>
+				</dict>
+				<dict>
+					<key>nLvl</key>
+					<string>3</string>
+					<key>nCost</key>
+					<string>14400</string>
+					<key>strTitle</key>
+					<string>Score Range GX</string>
+					<key>strDescription</key>
+					<string>Balloon score range from -3 to +6</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>nID</key>
+			<string>3</string>
+			<key>descArray</key>
+			<array>
+				<dict>
+					<key>nLvl</key>
+					<string>1</string>
+					<key>nCost</key>
+					<string>500</string>
+					<key>strTitle</key>
+					<string>Bomb beginner</string>
+					<key>strDescription</key>
+					<string>Protect score from Boom in 10%.</string>
+				</dict>
+				<dict>
+					<key>nLvl</key>
+					<string>2</string>
+					<key>nCost</key>
+					<string>2000</string>
+					<key>strTitle</key>
+					<string>Bomb senor</string>
+					<key>strDescription</key>
+					<string>Protect score from Boom in 20%.</string>
+				</dict>
+				<dict>
+					<key>nLvl</key>
+					<string>3</string>
+					<key>nCost</key>
+					<string>6000</string>
+					<key>strTitle</key>
+					<string>Bomb experts</string>
+					<key>strDescription</key>
+					<string>Protect score from Boom in 30%.</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>nID</key>
+			<string>4</string>
+			<key>descArray</key>
+			<array>
+				<dict>
+					<key>nLvl</key>
+					<string>1</string>
+					<key>nCost</key>
+					<string>800</string>
+					<key>strTitle</key>
+					<string>Pump Man</string>
+					<key>strDescription</key>
+					<string>Increase pump clicks 1</string>
+				</dict>
+				<dict>
+					<key>nLvl</key>
+					<string>2</string>
+					<key>nCost</key>
+					<string>3200</string>
+					<key>strTitle</key>
+					<string>Pump Father</string>
+					<key>strDescription</key>
+					<string>Increase pump clicks 3</string>
+				</dict>
+				<dict>
+					<key>nLvl</key>
+					<string>3</string>
+					<key>nCost</key>
+					<string>9600</string>
+					<key>strTitle</key>
+					<string>Shaking Man</string>
+					<key>strDescription</key>
+					<string>Increase pump clicks 5</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>nID</key>
+			<string>5</string>
+			<key>descArray</key>
+			<array>
+				<dict>
+					<key>nLvl</key>
+					<string>1</string>
+					<key>nCost</key>
+					<string>1500</string>
+					<key>strTitle</key>
+					<string>Triple Mind</string>
+					<key>strDescription</key>
+					<string>×2 will instead of ×3 in 10%</string>
+				</dict>
+				<dict>
+					<key>nLvl</key>
+					<string>2</string>
+					<key>nCost</key>
+					<string>6000</string>
+					<key>strTitle</key>
+					<string>Fourfold Mind</string>
+					<key>strDescription</key>
+					<string>×2 will instead of ×4 in 10%</string>
+				</dict>
+				<dict>
+					<key>nLvl</key>
+					<string>3</string>
+					<key>nCost</key>
+					<string>18000</string>
+					<key>strTitle</key>
+					<string>Fivefold Mind</string>
+					<key>strDescription</key>
+					<string>×2 will instead of ×5 in 10%</string>
+				</dict>
+			</array>
+		</dict>
+		<dict>
+			<key>nID</key>
+			<string>6</string>
+			<key>descArray</key>
+			<array>
+				<dict>
+					<key>nLvl</key>
+					<string>1</string>
+					<key>nCost</key>
+					<string>700</string>
+					<key>strTitle</key>
+					<string>Giant Package</string>
+					<key>strDescription</key>
+					<string>Get double scores at 50% chance when a Giant Balloon was explosiving</string>
+				</dict>
+				<dict>
+					<key>nLvl</key>
+					<string>2</string>
+					<key>nCost</key>
+					<string>2800</string>
+					<key>strTitle</key>
+					<string>Gaint Chest</string>
+					<key>strDescription</key>
+					<string>Get triple scores at 50% chance when a Giant Balloon was explosiving</string>
+				</dict>
+				<dict>
+					<key>nLvl</key>
+					<string>3</string>
+					<key>nCost</key>
+					<string>8400</string>
+					<key>strTitle</key>
+					<string>Giant Golden Mine</string>
+					<key>strDescription</key>
+					<string>Get fourfold scores at 50% chance when a Giant Balloon was explosiving</string>
+				</dict>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

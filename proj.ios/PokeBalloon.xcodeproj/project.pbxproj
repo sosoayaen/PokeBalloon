@@ -103,6 +103,7 @@
 		04BB312A1968163100718002 /* GameKitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB31271968163100718002 /* GameKitHelper.m */; };
 		04BB312B1968163100718002 /* GameKitHelper2dx.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB31291968163100718002 /* GameKitHelper2dx.m */; };
 		04BD16DB1984D6160099B047 /* PageSliderGuideView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04BD16D91984D6160099B047 /* PageSliderGuideView.cpp */; };
+		04BE0A57198AA70200F28550 /* Ability.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04BE0A56198AA70200F28550 /* Ability.cpp */; };
 		04C40037191A9F7F0087EC75 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C40036191A9F7F0087EC75 /* SystemConfiguration.framework */; };
 		04C40039191A9FAF0087EC75 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C40038191A9FAF0087EC75 /* MessageUI.framework */; };
 		04C4003B191A9FB90087EC75 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04C4003A191A9FB90087EC75 /* CoreTelephony.framework */; };
@@ -126,6 +127,7 @@
 		04CF194D1983850500E8C148 /* IAPShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CF19471983850500E8C148 /* IAPShare.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		04CF194E1983850500E8C148 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CF19491983850500E8C148 /* NSString+Base64.m */; };
 		04CF194F1983850500E8C148 /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CF194B1983850500E8C148 /* SFHFKeychainUtils.m */; };
+		04D9A66B19894F4B006B2B90 /* BalloonArchivement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D9A66719894F4B006B2B90 /* BalloonArchivement.cpp */; };
 		04DEFB111935CCDD0023F654 /* texture in Resources */ = {isa = PBXBuildFile; fileRef = 04DEFB101935CCDD0023F654 /* texture */; };
 		04E8AA5519710C79004D61EC /* UserData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04E8AA5119710C79004D61EC /* UserData.cpp */; };
 		04EF660019560172004BFDDF /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EF65FF19560172004BFDDF /* StoreKit.framework */; };
@@ -524,6 +526,8 @@
 		04BB31291968163100718002 /* GameKitHelper2dx.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = GameKitHelper2dx.m; sourceTree = "<group>"; };
 		04BD16D91984D6160099B047 /* PageSliderGuideView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = PageSliderGuideView.cpp; sourceTree = "<group>"; };
 		04BD16DA1984D6160099B047 /* PageSliderGuideView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PageSliderGuideView.h; sourceTree = "<group>"; };
+		04BE0A55198AA70200F28550 /* Ability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ability.h; sourceTree = "<group>"; };
+		04BE0A56198AA70200F28550 /* Ability.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ability.cpp; sourceTree = "<group>"; };
 		04C40036191A9F7F0087EC75 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		04C40038191A9FAF0087EC75 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		04C4003A191A9FB90087EC75 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -563,6 +567,8 @@
 		04CF19491983850500E8C148 /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
 		04CF194A1983850500E8C148 /* SFHFKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHFKeychainUtils.h; sourceTree = "<group>"; };
 		04CF194B1983850500E8C148 /* SFHFKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHFKeychainUtils.m; sourceTree = "<group>"; };
+		04D9A66719894F4B006B2B90 /* BalloonArchivement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BalloonArchivement.cpp; sourceTree = "<group>"; };
+		04D9A66819894F4B006B2B90 /* BalloonArchivement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalloonArchivement.h; sourceTree = "<group>"; };
 		04DEFB101935CCDD0023F654 /* texture */ = {isa = PBXFileReference; lastKnownFileType = folder; path = texture; sourceTree = "<group>"; };
 		04E8AA5119710C79004D61EC /* UserData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserData.cpp; sourceTree = "<group>"; };
 		04E8AA5219710C79004D61EC /* UserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserData.h; sourceTree = "<group>"; };
@@ -1589,9 +1595,21 @@
 			path = IAPHelper;
 			sourceTree = "<group>";
 		};
+		04D9A66419894F4B006B2B90 /* Achivement */ = {
+			isa = PBXGroup;
+			children = (
+				04D9A66719894F4B006B2B90 /* BalloonArchivement.cpp */,
+				04D9A66819894F4B006B2B90 /* BalloonArchivement.h */,
+			);
+			name = Achivement;
+			path = ../Classes/Achivement;
+			sourceTree = "<group>";
+		};
 		04E8AA4E19710C79004D61EC /* UserData */ = {
 			isa = PBXGroup;
 			children = (
+				04BE0A55198AA70200F28550 /* Ability.h */,
+				04BE0A56198AA70200F28550 /* Ability.cpp */,
 				04E8AA5119710C79004D61EC /* UserData.cpp */,
 				04E8AA5219710C79004D61EC /* UserData.h */,
 			);
@@ -2094,6 +2112,7 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				04D9A66419894F4B006B2B90 /* Achivement */,
 				04CF1931197FE69600E8C148 /* Mission */,
 				04E8AA4E19710C79004D61EC /* UserData */,
 				0452D82C196ECF3800F16E38 /* comm */,
@@ -2368,8 +2387,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				04CF19431983850500E8C148 /* IAPHelper */,
 				15A3D87E1682F7B3002FB0C5 /* cocos2dx.xcodeproj */,
+				04CF19431983850500E8C148 /* IAPHelper */,
 				044BAB6C1905045600D8CCB3 /* Resources */,
 				15A3D8871682F7D5002FB0C5 /* Box2D */,
 				15A3D93A1682F7F9002FB0C5 /* chipmunk */,
@@ -2582,6 +2601,7 @@
 				15A3D8FF1682F7D5002FB0C5 /* b2BroadPhase.cpp in Sources */,
 				15A3D9001682F7D5002FB0C5 /* b2CollideCircle.cpp in Sources */,
 				04CF194F1983850500E8C148 /* SFHFKeychainUtils.m in Sources */,
+				04D9A66B19894F4B006B2B90 /* BalloonArchivement.cpp in Sources */,
 				0452D87B196ECF3800F16E38 /* CloudManager.cpp in Sources */,
 				0452D8A9196ECF3800F16E38 /* StringUtil.cpp in Sources */,
 				15A3D9011682F7D5002FB0C5 /* b2CollideEdge.cpp in Sources */,
@@ -2816,6 +2836,7 @@
 				1A9CE8911765A12C000E3062 /* CCArmatureDataManager.cpp in Sources */,
 				1A9CE8921765A12C000E3062 /* CCDataReaderHelper.cpp in Sources */,
 				1A9CE8931765A12C000E3062 /* CCSpriteFrameCacheHelper.cpp in Sources */,
+				04BE0A57198AA70200F28550 /* Ability.cpp in Sources */,
 				1A9CE8941765A12C000E3062 /* CCTransformHelp.cpp in Sources */,
 				1A9CE8951765A12C000E3062 /* CCTweenFunction.cpp in Sources */,
 				1A9CE8961765A12C000E3062 /* CCUtilMath.cpp in Sources */,

@@ -50,7 +50,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     
 #   if COCOS2D_DEBUG > 0
     NDKBridge::sharedNDKBridge()->clearSavedPurchasedProducts();
-    NDKBridge::sharedNDKBridge()->restoreIAPProducts();
+    // NDKBridge::sharedNDKBridge()->restoreIAPProducts();
 #   endif
 #endif
 

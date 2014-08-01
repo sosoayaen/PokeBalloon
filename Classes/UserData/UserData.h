@@ -22,6 +22,32 @@
 // 气球统计数据
 #include "BalloonAnalysis.h"
 
+// 用户等级对应的技能类型
+enum UserAbilityLevelType
+{
+    kCCUserAbilityLvlNormalRange = 0,
+    kCCUserAbilityLvlBoomGuard,
+    kCCUserAbilityLvlTimeSlash,
+    kCCUserAbilityLvlPumpCount,
+    kCCUserAbilityLvlMultiCritical,
+    kCCUserAbilityLvlReverse,
+    kCCUserAbilityLvlGiantMulti,
+};
+
+// 用户可以升级的能力对应的等级
+typedef struct tagUserAbilityLevel
+{
+    long lNormalRange;    // 普通气球的分数随机上限等级
+    long lBoomGuard;      // 拆弹小队等级
+    long lTimeSlash;      // 时间老人恩赐，时间暴击概率
+    long lPumpCount;      // 气球可点击的次数上下限次数
+    long lMultiCritical;  // 乘分气球暴击概率
+    long lReverse;        // 点击逆转只影响负分转正分的概率
+    long lGiantMulti;     // 巨人气球点爆后50%概率得到多倍分数的等级
+} UserAbilityLevel;
+
+
+
 enum ItemExType
 {
 //    kCCItemExTypeNone = 0,
@@ -42,18 +68,6 @@ typedef struct tagItemExtend
     long lSafeGuard;
 } ItemExtend;
 
-// 用户可以升级的能力对应的等级
-typedef struct tagUserAbilityLevel
-{
-    unsigned char ucNormalRange;    // 普通气球的分数随机上限等级
-    unsigned char ucBoomGuard;      // 拆弹小队等级
-    unsigned char ucTimeSlash;      // 时间老人恩赐，时间暴击概率
-    unsigned char ucPumpCount;      // 气球可点击的次数上下限次数
-    unsigned char ucMultiCritical;  // 乘分气球暴击概率
-    unsigned char ucReverse;        // 点击逆转只影响负分转正分的概率
-    unsigned char ucGiantMulti;     // 巨人气球点爆后50%概率得到多倍分数的等级
-} UserAbilityLevel;
-
 /**
  * 用户数据结构体
  * */
@@ -63,8 +77,6 @@ typedef struct tagUserData
     long long llGameCounts;     // 游戏盘数
     ItemExtend itemEx;
     // long long llDiamond;        // 钻石数量
-    // 用户成就数据
-    // 用户任务数据
 } UserData;
 
 class UserDataManager
@@ -116,6 +128,13 @@ public:
     
     long addItemExOneCountByID(ItemExType type);
     
+    // 设置级别，只能在升级界面被调用
+    long getAbilityLvlByID(UserAbilityLevelType eType);
+    
+    long addAbilityLvlByID(UserAbilityLevelType eType, long lValue);
+    
+    long addAbilityLvlOneByID(UserAbilityLevelType eType);
+    
 private:
     // 校验当前金币值是否合法
     bool verifyGoldenCoins();
@@ -135,11 +154,20 @@ private:
     // 设置对应额外道具数值的最新校验值
     void setItemExCheckCodeByID(ItemExType eType);
     
+    // 校验技能数据
+    bool verifyAbilityByID(UserAbilityLevelType eType);
+    
+    // 设置技能数据校验值
+    void setAbilityCheckCodeByID(UserAbilityLevelType eType);
+    
 private:
 	// 用户数据
 	UserData m_UserData;
     
-    // 全局用户分析数据
+    // 用户的对应技能数据
+    UserAbilityLevel m_AbilityLevel;
+    
+    // 全局用户分析数据，成就数据也保存在这里
     BalloonGlobalAnalysis m_GlobalAnalysisData;
     
     // 当前用户游戏的分析数据

@@ -17,6 +17,7 @@
  */
 
 #include "UserData.h"
+#include "Ability.h"
 #include "bailinUtil.h"
 #include <string>
 
@@ -32,6 +33,18 @@ static const char* g_pszItemExCheckCodeKeyArray[] =
     "checkItemExPreTime",
     "checkItemExTimeAdd",
     "checkItemExGiant",
+    "checkItemExSafeGuard",
+};
+
+static const char* g_pszAbilityCheckCodeKeyArray[] =
+{
+    "checkAbilityNormalRange",    // 普通气球的分数随机上限等级
+    "checkAbilityBoomGuard",      // 拆弹小队等级
+    "checkAbilityTimeSlash",      // 时间老人恩赐，时间暴击概率
+    "checkAbilityPumpCount",      // 气球可点击的次数上下限次数
+    "checkAbilityMultiCritical",  // 乘分气球暴击概率
+    "checkAbilityReverse",        // 点击逆转只影响负分转正分的概率
+    "checkAbilityGiantMulti",     // 巨人气球点爆后50%概率得到多倍分数的等级
 };
 
 #define KEY_CONFIG_GOLDEN_COINS "GoldenCoins" // 配置文件中的金币的key
@@ -44,6 +57,18 @@ static const char* g_pszItemExConfigKeyArray[] =
     "ItemExPreTime",
     "ItemExTimeAdd",
     "ItemExGiant",
+    "ItemExSafeGuard",
+};
+
+static const char* g_pszAbilityConfigKeyArray[] =
+{
+    "AbilityNormalRange",    // 普通气球的分数随机上限等级
+    "AbilityBoomGuard",      // 拆弹小队等级
+    "AbilityTimeSlash",      // 时间老人恩赐，时间暴击概率
+    "AbilityPumpCount",      // 气球可点击的次数上下限次数
+    "AbilityMultiCritical",  // 乘分气球暴击概率
+    "AbilityReverse",        // 点击逆转只影响负分转正分的概率
+    "AbilityGiantMulti",     // 巨人气球点爆后50%概率得到多倍分数的等级
 };
 
 UserDataManager::UserDataManager()
@@ -52,6 +77,9 @@ UserDataManager::UserDataManager()
 	memset(&m_UserData, 0, sizeof(UserData));
     
     m_GlobalAnalysisData.loadData();
+    
+    // 这里顺便初始化下用户等级描述数据
+    AbilityManager::sharedAbilityManager();
 }
 
 UserDataManager::~UserDataManager()
@@ -127,9 +155,22 @@ void UserDataManager::loadData()
         // 得到道具的数值
         std::string strItemName = DataManagerUtil::sharedDataManagerUtil()->ReadDataWithChecksum(g_pszItemExConfigKeyArray[i]);
         long* pItemData = (long*)&m_UserData.itemEx + i;
-        *pItemData = atoll(strItemName.c_str());
+        *pItemData = atol(strItemName.c_str());
         // 设置对应道具的初始校验值
         setItemExCheckCodeByID(eType);
+    }
+    
+    // 用户技能级别
+    unsigned int nAbilityLvlCounts = sizeof(UserAbilityLevel)/sizeof(long);
+    for (unsigned int i = 0; i < nAbilityLvlCounts; ++i)
+    {
+        UserAbilityLevelType eType = (UserAbilityLevelType)i;
+        // 得到级别
+        std::string strAbilityLvlName = DataManagerUtil::sharedDataManagerUtil()->ReadDataWithChecksum(g_pszAbilityConfigKeyArray[i]);
+        long* pAbilityLvlData = (long*)&m_AbilityLevel + i;
+        *pAbilityLvlData = atol(strAbilityLvlName.c_str());
+        // 设定对应的初始校验值
+        setAbilityCheckCodeByID(eType);
     }
     
 }
@@ -178,6 +219,22 @@ void UserDataManager::saveData()
         stream.str("");
         stream << *pItemData;
         DataManagerUtil::sharedDataManagerUtil()->WriteDataWithChecksum(g_pszItemExConfigKeyArray[i], stream.str().c_str());
+    }
+    
+    // 保存技能级别
+    unsigned int nAbilityCounts = sizeof(UserAbilityLevel)/sizeof(long);
+    for (unsigned int i = 0; i < nAbilityCounts; ++i)
+    {
+        UserAbilityLevelType eType = (UserAbilityLevelType)i;
+        long* pAbilityLvlData = (long*)&m_AbilityLevel + i;
+        if (!verifyAbilityByID(eType))
+        {
+            *pAbilityLvlData = 0;
+            setAbilityCheckCodeByID(eType);
+        }
+        stream.str("");
+        stream << *pAbilityLvlData;
+        DataManagerUtil::sharedDataManagerUtil()->WriteDataWithChecksum(g_pszAbilityConfigKeyArray[i], stream.str().c_str());
     }
 }
 
@@ -290,6 +347,23 @@ long UserDataManager::getItemExCountsByID(ItemExType type)
     
 }
 
+long UserDataManager::getAbilityLvlByID(UserAbilityLevelType eType)
+{
+    
+    int nIdx = int(eType);
+    // 定位到数据结构的初始位置
+    long* pItemData = (long*)&m_AbilityLevel + nIdx;
+    // 校验数据
+    if (!verifyAbilityByID(eType))
+    {
+        // 设置对应值为0
+        *pItemData = 0;
+        setAbilityCheckCodeByID(eType);
+    }
+    
+    return *pItemData;
+}
+
 long UserDataManager::addItemExCountsByID(ItemExType eType, long lValue)
 {
     int nIdx = int(eType);
@@ -311,9 +385,34 @@ long UserDataManager::addItemExCountsByID(ItemExType eType, long lValue)
     
 }
 
+long UserDataManager::addAbilityLvlByID(UserAbilityLevelType eType, long lValue)
+{
+    int nIdx = int(eType);
+    long* plData = (long*)&m_AbilityLevel + nIdx;
+    
+    if (!verifyAbilityByID(eType))
+    {
+        // 设置值为0
+        *plData = 0;
+    }
+    else
+    {
+        // 加上对应值
+        *plData += lValue;
+    }
+    setAbilityCheckCodeByID(eType);
+    
+    return *plData;
+}
+
 long UserDataManager::addItemExOneCountByID(ItemExType type)
 {
     return addItemExCountsByID(type, 1);
+}
+
+long UserDataManager::addAbilityLvlOneByID(UserAbilityLevelType eType)
+{
+    return addAbilityLvlByID(eType, 1);
 }
 
 bool UserDataManager::verifyItemExByID(ItemExType eType)
@@ -335,4 +434,24 @@ void UserDataManager::setItemExCheckCodeByID(ItemExType eType)
     unsigned long code = crypto::Crc32(&lValue, sizeof(lValue));
     DataManagerUtil::sharedDataManagerUtil()->SetSecurityCode(g_pszItemExCheckCodeKeyArray[nIdx], code);
     // CCLOG("ItemEx:%lu, value:%ld", code, lValue);
+}
+
+bool UserDataManager::verifyAbilityByID(UserAbilityLevelType eType)
+{
+    int nIdx = int(eType);
+    const long* plData = (const long*)&m_AbilityLevel + nIdx;
+    long lValue = *plData;
+    
+    bool bRet = DataManagerUtil::sharedDataManagerUtil()->CheckSecurityData(g_pszAbilityCheckCodeKeyArray[nIdx], lValue);
+    CCAssert(bRet, "Ability verify failed ... cheating!!!");
+    return bRet;
+}
+
+void UserDataManager::setAbilityCheckCodeByID(UserAbilityLevelType eType)
+{
+    int nIdx = int(eType);
+    const long* plData = (const long*)&m_AbilityLevel + nIdx;
+    long lValue = *plData;
+    unsigned long code = crypto::Crc32(&lValue, sizeof(lValue));
+    DataManagerUtil::sharedDataManagerUtil()->SetSecurityCode(g_pszAbilityCheckCodeKeyArray[nIdx], code);
 }
