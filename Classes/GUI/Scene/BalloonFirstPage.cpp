@@ -319,8 +319,8 @@ void BalloonFirstPage::onPressMenuHandbook(cocos2d::CCObject *pSender)
 {
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
     // 显示图鉴场景
-    // CCScene* pScene = BalloonHandBookScene::scene();
-    CCScene* pScene = BalloonShopScene::scene();
+    CCScene* pScene = BalloonHandBookScene::scene();
+    // CCScene* pScene = BalloonShopScene::scene();
     CCDirector::sharedDirector()->pushScene(pScene);
 }
 

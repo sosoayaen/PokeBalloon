@@ -86,9 +86,16 @@ public:
 	virtual void tableCellTouched(cocos2d::extension::CCTableView* table, cocos2d::extension::CCTableViewCell* cell);
 
 	virtual cocos2d::CCSize cellSizeForTable(cocos2d::extension::CCTableView *table);
+    
+    virtual cocos2d::CCSize tableCellSizeForIndex(cocos2d::extension::CCTableView *table, unsigned int idx);
 
 	virtual cocos2d::extension::CCTableViewCell* tableCellAtIndex(cocos2d::extension::CCTableView *table, unsigned int idx);
 
+    virtual void tableCellUnhighlight(cocos2d::extension::CCTableView *table, cocos2d::extension::CCTableViewCell *cell);
+    
+    virtual void tableCellHighlight(cocos2d::extension::CCTableView *table, cocos2d::extension::CCTableViewCell *cell);
+    
+    
 	virtual unsigned int numberOfCellsInTableView(cocos2d::extension::CCTableView *table);
 
 private:

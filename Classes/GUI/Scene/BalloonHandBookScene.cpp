@@ -130,20 +130,96 @@ void BalloonHandBookScene::scrollViewDidZoom( CCScrollView* view )
 
 }
 
+void BalloonHandBookScene::tableCellHighlight(cocos2d::extension::CCTableView *table, cocos2d::extension::CCTableViewCell *cell)
+{
+    unsigned int idx = cell->getIdx();
+}
+
+void BalloonHandBookScene::tableCellUnhighlight(cocos2d::extension::CCTableView *table, cocos2d::extension::CCTableViewCell *cell)
+{
+    unsigned int idx = cell->getIdx();
+}
+
 void BalloonHandBookScene::tableCellTouched( CCTableView* table, CCTableViewCell* cell )
 {
-	CCLOG("cell touched at index: %i, table's children counts:%i", cell->getIdx()+1, numberOfCellsInTableView(NULL));
+    unsigned int idx = cell->getIdx();
+	CCLOG("cell touched at index: %i, table's children counts:%i", idx + 1, numberOfCellsInTableView(NULL));
 	
 	if (cell != NULL)
 	{
-		// TODO: Do something when TOUCH the item
+        CCArray* pArray = dynamic_cast<CCArray* >(m_pDictHandbookData->objectForKey("items"));
+        if (pArray)
+        {
+            CCObject* pObj = pArray->objectAtIndex(idx);
+            CCDictionary* pDict = dynamic_cast<CCDictionary*>(pObj);
+            
+            if (!pDict) return;
+            
+            bool bUnFold = pDict->valueForKey("unfold")->boolValue();
+            
+            // 记录当前的位置
+            CCPoint beforeOffset = table->getContentOffset();
+            CCSize beforeSize = tableCellSizeForIndex(table, idx);
+            
+            // 设置点击后的状态，更新表格数据显示
+            pDict->setObject(bUnFold ? ccs("0") : ccs("1"), "unfold");
+            table->reloadData();
+            
+            // 之前的偏移量
+            CCSize afterSize = tableCellSizeForIndex(table, idx);
+            
+            // y轴偏移量
+            float fOffsetY = afterSize.height - beforeSize.height;
+            float fOffsetX = afterSize.width - beforeSize.width;
+            
+            // 修正后的偏移量
+            CCPoint offset = beforeOffset;
+            offset.y -= fOffsetY;
+            offset.x -= fOffsetX;
+            
+            // 重新设置偏移位置
+            table->setContentOffset(offset);
+        }
 	} // end if (cell != NULL)
 }
 
+//*
 CCSize BalloonHandBookScene::cellSizeForTable( CCTableView *table )
 {
 	// Return a CCSize with the item size you want to show
 	return CCSizeMake(m_winSize.width*0.8f, m_winSize.width*0.3f);
+}
+//*/
+
+CCSize BalloonHandBookScene::tableCellSizeForIndex(cocos2d::extension::CCTableView *table, unsigned int idx)
+{
+    //*
+    // 根据内容的状态设置是否伸展
+    do
+    {
+        CC_BREAK_IF(!m_pDictHandbookData);
+        
+        CCArray* pArray = dynamic_cast<CCArray* >(m_pDictHandbookData->objectForKey("items"));
+        if (pArray)
+        {
+            CC_BREAK_IF(idx >= pArray->count());
+            
+            CCObject* pObj = pArray->objectAtIndex(idx);
+            CCDictionary* pDict = dynamic_cast<CCDictionary*>(pObj);
+            
+            CC_BREAK_IF(!pDict);
+            
+            // 判断打开收拢的状态
+            bool bUnFold = pDict->valueForKey("unfold")->boolValue();
+            if (bUnFold)
+            {
+                return CCSizeMake(m_winSize.width*0.8f, m_winSize.width*0.6f);
+            }
+        }
+    } while (0);
+    
+    return CCSizeMake(m_winSize.width*0.8f, m_winSize.width*0.3f);
+    //*/
 }
 
 CCTableViewCell* BalloonHandBookScene::tableCellAtIndex( CCTableView *table, unsigned int idx )
@@ -164,8 +240,8 @@ CCTableViewCell* BalloonHandBookScene::tableCellAtIndex( CCTableView *table, uns
 	{
         // 清空内部数据
         pCell->removeAllChildren();
-        
-        CCSize cellSize = cellSizeForTable(table);
+        // 单元大小
+        CCSize cellSize = tableCellSizeForIndex(table, idx);
         // 创建单元背景
         CCScale9Sprite* pSpriteCellBackground = CCScale9Sprite::create("texture/handBook/handbook_background.png");
         pSpriteCellBackground->setPreferredSize(cellSize);
@@ -225,6 +301,11 @@ CCTableViewCell* BalloonHandBookScene::tableCellAtIndex( CCTableView *table, uns
             pCell->addChild(pLabelTTFDesc);
             
             // 根据配置文件创建图片
+            
+            // 当前项目是否折叠标志
+            bool bFold = pDict->valueForKey("unfold")->boolValue();
+            // 如果是是展开的
+            
         }
 	}
 	return pCell;
@@ -289,7 +370,7 @@ void BalloonHandBookScene::reLayoutCoins()
 
 void BalloonHandBookScene::updateCoins()
 {
-    m_pLabelBMFontCoins->setString(CCString::createWithFormat("%lu", UserDataManager::sharedUserDataManager()->getGoldenCoins())->getCString());
+    m_pLabelBMFontCoins->setString(CCString::createWithFormat("%lld", UserDataManager::sharedUserDataManager()->getGoldenCoins())->getCString());
     // 设置完数据顺便重新定位下
     reLayoutCoins();
 }
