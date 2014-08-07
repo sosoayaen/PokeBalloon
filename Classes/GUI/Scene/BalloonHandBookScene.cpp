@@ -14,7 +14,6 @@ BalloonHandBookScene::~BalloonHandBookScene()
 
 bool BalloonHandBookScene::init()
 {
-	// TODO:
 	bool bRet = false;
 	do
 	{
@@ -133,11 +132,17 @@ void BalloonHandBookScene::scrollViewDidZoom( CCScrollView* view )
 void BalloonHandBookScene::tableCellHighlight(cocos2d::extension::CCTableView *table, cocos2d::extension::CCTableViewCell *cell)
 {
     unsigned int idx = cell->getIdx();
+    CCNode* pNode = cell->getChildByTag(100);
+    if (pNode)
+        pNode->runAction(CCScaleTo::create(0.2f, 1.1f));
 }
 
 void BalloonHandBookScene::tableCellUnhighlight(cocos2d::extension::CCTableView *table, cocos2d::extension::CCTableViewCell *cell)
 {
     unsigned int idx = cell->getIdx();
+    CCNode* pNode = cell->getChildByTag(100);
+    if (pNode)
+        pNode->runAction(CCScaleTo::create(0.2f, 1.0f));
 }
 
 void BalloonHandBookScene::tableCellTouched( CCTableView* table, CCTableViewCell* cell )
@@ -168,7 +173,7 @@ void BalloonHandBookScene::tableCellTouched( CCTableView* table, CCTableViewCell
             // 之前的偏移量
             CCSize afterSize = tableCellSizeForIndex(table, idx);
             
-            // y轴偏移量
+            // 偏移量
             float fOffsetY = afterSize.height - beforeSize.height;
             float fOffsetX = afterSize.width - beforeSize.width;
             
@@ -244,8 +249,9 @@ CCTableViewCell* BalloonHandBookScene::tableCellAtIndex( CCTableView *table, uns
         CCSize cellSize = tableCellSizeForIndex(table, idx);
         // 创建单元背景
         CCScale9Sprite* pSpriteCellBackground = CCScale9Sprite::create("texture/handBook/handbook_background.png");
+        pSpriteCellBackground->setTag(100);
         pSpriteCellBackground->setPreferredSize(cellSize);
-        pSpriteCellBackground->setAnchorPoint(CCPointZero);
+        pSpriteCellBackground->setPosition(ccp(cellSize.width*0.5f, cellSize.height*0.5f));
         pCell->addChild(pSpriteCellBackground);
         
         CCArray* pArray = dynamic_cast<CCArray* >(m_pDictHandbookData->objectForKey("items"));
@@ -281,14 +287,16 @@ CCTableViewCell* BalloonHandBookScene::tableCellAtIndex( CCTableView *table, uns
             
             pSpriteBalloon->setScale(cellSize.height*0.6f/pSpriteBalloon->getContentSize().height);
             pSpriteBalloon->setPosition(ccp(cellSize.width*0.155f, cellSize.height*0.5f));
-            pCell->addChild(pSpriteBalloon);
+            // pCell->addChild(pSpriteBalloon);
+            pSpriteCellBackground->addChild(pSpriteBalloon);
             
             // 创建名称
             const char* pszTitle = DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("handbook_section", pDict->valueForKey("name")->getCString());
             CCLabelTTF* pLabelTTFTitle = CCLabelTTF::create(pszTitle, "", 30);
             pLabelTTFTitle->setPosition(ccp(cellSize.width*0.3f, cellSize.height - 30 - pLabelTTFTitle->getContentSize().height));
             pLabelTTFTitle->setAnchorPoint(CCPointZero);
-            pCell->addChild(pLabelTTFTitle);
+            // pCell->addChild(pLabelTTFTitle);
+            pSpriteCellBackground->addChild(pLabelTTFTitle);
             
             // 描述内容
             const char* pszDesc = DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("handbook_section", pDict->valueForKey("description")->getCString());
@@ -298,7 +306,8 @@ CCTableViewCell* BalloonHandBookScene::tableCellAtIndex( CCTableView *table, uns
             pLabelTTFDesc->setDimensions(CCSizeMake(cellSize.width*0.65f, (cellSize.height-30*2-pLabelTTFTitle->getContentSize().height)));
             pLabelTTFDesc->setHorizontalAlignment(kCCTextAlignmentLeft);
             pLabelTTFDesc->setVerticalAlignment(kCCVerticalTextAlignmentTop);
-            pCell->addChild(pLabelTTFDesc);
+            // pCell->addChild(pLabelTTFDesc);
+            pSpriteCellBackground->addChild(pLabelTTFDesc);
             
             // 根据配置文件创建图片
             
