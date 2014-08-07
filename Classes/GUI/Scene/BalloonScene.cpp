@@ -198,6 +198,9 @@ void BalloonScene::onEnter()
     // startGame();
     // readReadySecond();
     showBuyItemsDialog();
+    
+    // 背景音乐降低
+    BalloonSoundManager::sharedBalloonSoundManager()->setBackgroundMusicVolume(0.2f);
 }
 
 void BalloonScene::notifyEnterBackground(CCObject* pData)
@@ -221,6 +224,8 @@ void BalloonScene::onExit()
     
     // 释放结算对话框
     // CC_SAFE_RELEASE_NULL(m_pResultDialog);
+    
+    BalloonSoundManager::sharedBalloonSoundManager()->setBackgroundMusicVolume(1.0f);
     
     // 停止场景回调
     unscheduleUpdate();

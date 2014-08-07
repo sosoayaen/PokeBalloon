@@ -105,3 +105,13 @@ void BalloonSoundManager::unloadAllEffect()
     SimpleAudioEngine::sharedEngine()->unloadEffect(SOUND_EFFECT_PUSH_BALLOON);
     SimpleAudioEngine::sharedEngine()->unloadEffect(SOUND_EFFECT_SPEND_COIN);
 }
+
+void BalloonSoundManager::setBackgroundMusicVolume(float volume)
+{
+    SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(volume);
+}
+
+void BalloonSoundManager::setEffectVolume(float volume)
+{
+    SimpleAudioEngine::sharedEngine()->setEffectsVolume(volume);
+}

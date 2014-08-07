@@ -35,14 +35,30 @@ public:
     void playEffectPushBalloon();
     
     void playEffectSpendCoin();
+    
     /**
      * @brief 播放背景音乐
      * @param soundId 对应背景音乐的ID
      */
     void playBackgroundMusic(int soundId);
     
+    /**
+     * @brief 判断背景音乐是否在播放
+     */
     bool isBackgroundMusicPlaying();
 
+    /**
+     * @brief 设置背景音乐的音量
+     * @param volume 0～1之间的浮点数
+     */
+    void setBackgroundMusicVolume(float volume);
+    
+    /**
+     * @brief 设置音效的音量
+     * @param volume 0～1之间的浮点数
+     */
+    void setEffectVolume(float volume);
+    
 private:
     
     void playEffectWithFileName(const char* pszEffectFile);
