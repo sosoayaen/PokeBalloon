@@ -214,6 +214,22 @@ void Balloon::updateDisplayDesc()
     // 数字的放大倍率，现在数字太小
     float fScaleRate = 2.0f;
     CCString* pStrDesc = NULL;
+    
+    // TODO: 这里处理其他的套图，默认是4个套图的，圆形、椭圆、长条、爱心
+    /*
+     switch(m_nBalloonSet)
+     {
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+            break;
+        case 5: // 动物
+            break;
+        case 6: // 水果
+            break;
+     }
+     */
     switch (m_eType)
     {
         case kBalloonTypeNormal:

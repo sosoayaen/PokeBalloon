@@ -28,6 +28,25 @@ enum BalloonType
     kBalloonTypeReverseEx,          // 正负号转换，分数和持续时间无效
 };
 
+// 气球套图类型
+enum BalloonSetType
+{
+    kBalloonSetTypeBaseSphere = 1,  // 球形
+    kBalloonSetTypeBaseEllipse,     // 椭圆
+    kBalloonSetTypeBaseStick,       // 长条棍状
+    kBalloonSetTypeBaseHeart,       // 心形
+    
+    kBalloonSetTypeAnimalLion,      // 狮子
+    kBalloonSetTypeAnimalRabbit,    // 兔子
+    kBalloonSetTypeAnimalFrog,      // 青蛙
+    kBalloonSetTypeAnimalGiraffe,   // 长颈鹿
+    
+    kBalloonSetTypeFruitStrawberry, // 草莓
+    kBalloonSetTypeFruitWatermelon, // 西瓜
+    kBalloonSetTypeFruitPineApple,  // 菠萝
+    kBalloonSetTypeFruitApple,      // 苹果
+};
+
 // 气球特殊效果枚举
 enum BalloonEffect
 {
