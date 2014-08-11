@@ -6,6 +6,7 @@
 #include "ControlUtil.h"
 #include "DataManager.h"
 #include "Base64.h"
+#include "HttpCenter.h"
 
 
 #endif // __BAILIN_UTIL_H__

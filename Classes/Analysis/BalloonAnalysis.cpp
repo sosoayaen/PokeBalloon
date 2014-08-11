@@ -398,8 +398,10 @@ bool BalloonGlobalAnalysis::saveData()
     
     if (!pDict) return false;
     
+    const char* pszJSON = CCJSONConverter::sharedConverter()->strFrom(pDict);
     // 转换成JSON数据
-    std::string strJSON = CCJSONConverter::sharedConverter()->strFrom(pDict);
+    std::string strJSON = pszJSON;
+    free((void*)pszJSON);
     
     // 加密JSON数据
     unsigned int nBuffLen = 0;

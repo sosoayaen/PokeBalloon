@@ -10,6 +10,8 @@
 #include "NDKBridge.h"
 
 #include "bailinUtil.h"
+#include "MemBufferObject.h"
+#include "CCJSONConverter.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #   include "GameKitHelper2dx.h"
@@ -193,6 +195,8 @@ void BalloonScene::onEnter()
     
     // 注册游戏暂停的消息
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(BalloonScene::notifyEnterBackground), NOTIFY_PAUSE, NULL);
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(BalloonScene::notifyHttpCallbackUpdateScore), "HTTP_UPDATE_SCORE", NULL);
+    
     
     // 自动开始
     // startGame();
@@ -221,6 +225,7 @@ void BalloonScene::onExit()
 	// CCLayer::onExit();
 	// 退出场景，取消CCNotificationCenter可以放在这里做，但是对应在onEnter的时候要重新注册
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, NOTIFY_PAUSE);
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, "HTTP_UPDATE_SCORE");
     
     // 释放结算对话框
     // CC_SAFE_RELEASE_NULL(m_pResultDialog);
@@ -275,7 +280,7 @@ bool BalloonScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEve
 {
     m_BalloonManager.touchTest(pTouch->getLocation());
 
-#if COCOS2D_DEBUG > 0
+#if COCOS2D_DEBUG > 1
     CCTextureCache::sharedTextureCache()->dumpCachedTextureInfo();
 #endif
     return true;
@@ -610,6 +615,8 @@ void BalloonScene::update(float dt)
                 // 记录得到的金币
                 long long llCoins = m_llTotalScore/SCORE_COINS_RATE;
                 UserDataManager::sharedUserDataManager()->addGoldenCoins(llCoins);
+                
+                commitScoreToServer();
                 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
                 // 发送成绩到GameCenter
@@ -961,4 +968,51 @@ bool BalloonScene::setResourceString()
     m_vTexturesString.push_back("texture/balloonScene/background.png");
     
     return true;
+}
+
+void BalloonScene::notifyHttpCallbackUpdateScore(cocos2d::CCObject *pData)
+{
+    MemBufferObject* pMemObj = (MemBufferObject*)pData;
+    if (!pMemObj)
+        return;
+    
+    // JSON字符串转化为CCDictionary对象
+    std::string strJSON(pMemObj->GetBuffer(), pMemObj->GetBufferLen());
+    if (!strJSON.empty())
+    {
+        CCDictionary* pDict = CCJSONConverter::sharedConverter()->dictionaryFrom(strJSON.c_str());
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+        CCLOG("HTTP response msg is: %s", pDict->valueForKey("msg")->getCString());
+#endif
+    }
+}
+
+void BalloonScene::commitScoreToServer()
+{
+    // 把得分上传到服务器
+    CCDictionary* pDict = CCDictionary::create();
+    // 获得当前用户的UDID
+    pDict->setObject(ccs("12345678901234567890123456789012"), "uid");
+    // 获得当前用户的用户名
+    pDict->setObject(ccs("JasonTou"), "uname");
+    CCArray* pArray = CCArray::create();
+    
+    // for many score type
+    {
+        CCDictionary* pDictArrayData = CCDictionary::create();
+        // 上传分数类型
+        pDictArrayData->setObject(ccs("1"), "type");
+        // 当前比赛得分
+        pDictArrayData->setObject(CCString::createWithFormat("%lld", m_llTotalScore), "score");
+        pArray->addObject(pDictArrayData);
+    }
+    
+    // 把数组插进去，作为一个数据项
+    pDict->setObject(pArray, "data");
+    
+    const char* pszJSON = CCJSONConverter::sharedConverter()->strFrom(pDict);
+    // 请求Http数据
+    HttpCenter::sharedHttpCenter()->request("http://121.40.76.13/score_update.php", "HTTP_UPDATE_SCORE", CCHttpRequest::kHttpPost, pszJSON);
+    free((void*)pszJSON);
+    
 }

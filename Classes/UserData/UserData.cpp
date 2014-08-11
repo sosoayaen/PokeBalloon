@@ -20,8 +20,12 @@
 #include "Ability.h"
 #include "bailinUtil.h"
 #include <string>
+#include "cocos2d.h"
 
+USING_NS_CC;
 USING_NS_BAILIN_UTIL;
+
+#define KEY_NICKNAME "Nickname" // 配置文件中用户保存昵称的key
 
 #define CHECK_GOLDEN_COINS "checkGoldenCoins"  // 金币校验key
 #define CHECK_GAME_COUNTS   "checkGameCounts"  // 游戏盘数校验key
@@ -125,6 +129,9 @@ void UserDataManager::setGameCountsCheckCode()
 
 void UserDataManager::loadData()
 {
+    // 从配置文件中获取用户名
+    setNickName(CCUserDefault::sharedUserDefault()->getStringForKey(KEY_NICKNAME, "Player"));
+    
     // 得到统计数据
     m_GlobalAnalysisData.loadData();
     
@@ -177,6 +184,9 @@ void UserDataManager::loadData()
 
 void UserDataManager::saveData()
 {
+    // 保存用户的昵称数据
+    CCUserDefault::sharedUserDefault()->setStringForKey(KEY_NICKNAME, getNickName());
+    
     // 保存数据
     m_GlobalAnalysisData.saveData();
     
@@ -454,4 +464,14 @@ void UserDataManager::setAbilityCheckCodeByID(UserAbilityLevelType eType)
     long lValue = *plData;
     unsigned long code = crypto::Crc32(&lValue, sizeof(lValue));
     DataManagerUtil::sharedDataManagerUtil()->SetSecurityCode(g_pszAbilityCheckCodeKeyArray[nIdx], code);
+}
+
+const std::string& UserDataManager::getNickName() const
+{
+    return m_strNickName;
+}
+
+void UserDataManager::setNickName(const std::string &strNickName)
+{
+    m_strNickName = strNickName;
 }

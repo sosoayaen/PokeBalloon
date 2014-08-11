@@ -16,6 +16,7 @@
 		0435602619265F0E0044D838 /* BalloonPauseDialog.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 0435602519265F0E0044D838 /* BalloonPauseDialog.ccbi */; };
 		043560311928A7070044D838 /* localizableString in Resources */ = {isa = PBXBuildFile; fileRef = 043560301928A7070044D838 /* localizableString */; };
 		0435603D19291DD60044D838 /* BalloonOptionsDialog.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 0435603C19291DD60044D838 /* BalloonOptionsDialog.ccbi */; };
+		043B233819951B4400C71E8C /* BalloonUserInfoDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 043B233619951B4400C71E8C /* BalloonUserInfoDialog.cpp */; };
 		044BAB831905045600D8CCB3 /* BalloonScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 044BAB761905045600D8CCB3 /* BalloonScene.ccbi */; };
 		0452D875196ECF3800F16E38 /* BalloonSoundManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0452D7F4196ECF3800F16E38 /* BalloonSoundManager.cpp */; };
 		0452D876196ECF3800F16E38 /* Balloon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0452D7F8196ECF3800F16E38 /* Balloon.cpp */; };
@@ -127,12 +128,14 @@
 		04CF194D1983850500E8C148 /* IAPShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CF19471983850500E8C148 /* IAPShare.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
 		04CF194E1983850500E8C148 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CF19491983850500E8C148 /* NSString+Base64.m */; };
 		04CF194F1983850500E8C148 /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CF194B1983850500E8C148 /* SFHFKeychainUtils.m */; };
+		04D07CC61995E7D2007DBC81 /* BalloonUserInfoDialog.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 04D07CC51995E7D2007DBC81 /* BalloonUserInfoDialog.ccbi */; };
 		04D9A66B19894F4B006B2B90 /* BalloonArchivement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D9A66719894F4B006B2B90 /* BalloonArchivement.cpp */; };
 		04DEFB111935CCDD0023F654 /* texture in Resources */ = {isa = PBXBuildFile; fileRef = 04DEFB101935CCDD0023F654 /* texture */; };
 		04E8AA5519710C79004D61EC /* UserData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04E8AA5119710C79004D61EC /* UserData.cpp */; };
 		04EF660019560172004BFDDF /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EF65FF19560172004BFDDF /* StoreKit.framework */; };
 		04EF66021956018A004BFDDF /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EF66011956018A004BFDDF /* GameKit.framework */; };
 		04F1BF8E1965C8560066950F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 04F1BF901965C8560066950F /* Localizable.strings */; };
+		04F57ED51996060300E8F67A /* HttpCenter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04F57ED01996060300E8F67A /* HttpCenter.cpp */; };
 		15A3D8FF1682F7D5002FB0C5 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D88B1682F7D5002FB0C5 /* b2BroadPhase.cpp */; };
 		15A3D9001682F7D5002FB0C5 /* b2CollideCircle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D88D1682F7D5002FB0C5 /* b2CollideCircle.cpp */; };
 		15A3D9011682F7D5002FB0C5 /* b2CollideEdge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 15A3D88E1682F7D5002FB0C5 /* b2CollideEdge.cpp */; };
@@ -364,6 +367,8 @@
 		0435602519265F0E0044D838 /* BalloonPauseDialog.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonPauseDialog.ccbi; sourceTree = "<group>"; };
 		043560301928A7070044D838 /* localizableString */ = {isa = PBXFileReference; lastKnownFileType = folder; path = localizableString; sourceTree = "<group>"; };
 		0435603C19291DD60044D838 /* BalloonOptionsDialog.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonOptionsDialog.ccbi; sourceTree = "<group>"; };
+		043B233619951B4400C71E8C /* BalloonUserInfoDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BalloonUserInfoDialog.cpp; sourceTree = "<group>"; };
+		043B233719951B4400C71E8C /* BalloonUserInfoDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalloonUserInfoDialog.h; sourceTree = "<group>"; };
 		044BAB761905045600D8CCB3 /* BalloonScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonScene.ccbi; sourceTree = "<group>"; };
 		0452D7F4196ECF3800F16E38 /* BalloonSoundManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BalloonSoundManager.cpp; sourceTree = "<group>"; };
 		0452D7F5196ECF3800F16E38 /* BalloonSoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalloonSoundManager.h; sourceTree = "<group>"; };
@@ -567,6 +572,7 @@
 		04CF19491983850500E8C148 /* NSString+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Base64.m"; sourceTree = "<group>"; };
 		04CF194A1983850500E8C148 /* SFHFKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHFKeychainUtils.h; sourceTree = "<group>"; };
 		04CF194B1983850500E8C148 /* SFHFKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHFKeychainUtils.m; sourceTree = "<group>"; };
+		04D07CC51995E7D2007DBC81 /* BalloonUserInfoDialog.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonUserInfoDialog.ccbi; sourceTree = "<group>"; };
 		04D9A66719894F4B006B2B90 /* BalloonArchivement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BalloonArchivement.cpp; sourceTree = "<group>"; };
 		04D9A66819894F4B006B2B90 /* BalloonArchivement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalloonArchivement.h; sourceTree = "<group>"; };
 		04DEFB101935CCDD0023F654 /* texture */ = {isa = PBXFileReference; lastKnownFileType = folder; path = texture; sourceTree = "<group>"; };
@@ -576,6 +582,8 @@
 		04EF66011956018A004BFDDF /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		04F1BF8F1965C8560066950F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		04F1BF911965C8590066950F /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		04F57ED01996060300E8F67A /* HttpCenter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HttpCenter.cpp; sourceTree = "<group>"; };
+		04F57ED11996060300E8F67A /* HttpCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HttpCenter.h; sourceTree = "<group>"; };
 		15A3D87E1682F7B3002FB0C5 /* cocos2dx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2dx.xcodeproj; path = ../../../cocos2dx/proj.ios/cocos2dx.xcodeproj; sourceTree = "<group>"; };
 		15A3D8891682F7D5002FB0C5 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		15A3D88B1682F7D5002FB0C5 /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
@@ -1044,6 +1052,7 @@
 		044BAB6C1905045600D8CCB3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				04D07CC51995E7D2007DBC81 /* BalloonUserInfoDialog.ccbi */,
 				04AA6F83194205BF006B37B6 /* configuration */,
 				04DEFB101935CCDD0023F654 /* texture */,
 				043560301928A7070044D838 /* localizableString */,
@@ -1120,6 +1129,8 @@
 		0452D805196ECF3800F16E38 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				043B233619951B4400C71E8C /* BalloonUserInfoDialog.cpp */,
+				043B233719951B4400C71E8C /* BalloonUserInfoDialog.h */,
 				042C47C51984C4E600580967 /* BalloonShopScene.cpp */,
 				042C47C61984C4E600580967 /* BalloonShopScene.h */,
 				041503A219741C5E0015B85F /* BalloonItemSelectDialog.h */,
@@ -1292,6 +1303,7 @@
 		0452D851196ECF3800F16E38 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				04F57ECB1996060300E8F67A /* http */,
 				04059AFF19705F6C005429E4 /* blowfish2 */,
 				0452D852196ECF3800F16E38 /* bailinMacro.h */,
 				0452D853196ECF3800F16E38 /* bailinUtil.h */,
@@ -1615,6 +1627,15 @@
 			);
 			name = UserData;
 			path = ../Classes/UserData;
+			sourceTree = "<group>";
+		};
+		04F57ECB1996060300E8F67A /* http */ = {
+			isa = PBXGroup;
+			children = (
+				04F57ED01996060300E8F67A /* HttpCenter.cpp */,
+				04F57ED11996060300E8F67A /* HttpCenter.h */,
+			);
+			path = http;
 			sourceTree = "<group>";
 		};
 		080E96DDFE201D6D7F000001 /* ios */ = {
@@ -2548,6 +2569,7 @@
 				04612350191F2F11001AE64F /* UMSocialLocalizable.strings in Resources */,
 				04612352191F2F11001AE64F /* UMSCommentDetailController.xib in Resources */,
 				15A3D9961682F7F9002FB0C5 /* CMakeLists.txt in Resources */,
+				04D07CC61995E7D2007DBC81 /* BalloonUserInfoDialog.ccbi in Resources */,
 				04AAEAC3191383F9006147E3 /* Default.png in Resources */,
 				1A9CE8881765A12C000E3062 /* json_internalarray.inl in Resources */,
 				04612358191F2F11001AE64F /* UMSnsAccountViewController.xib in Resources */,
@@ -2688,6 +2710,7 @@
 				15A3D9AB1682F7F9002FB0C5 /* cpSpace.c in Sources */,
 				15A3D9AC1682F7F9002FB0C5 /* cpSpaceComponent.c in Sources */,
 				0452D884196ECF3800F16E38 /* NDKBridge.mm in Sources */,
+				04F57ED51996060300E8F67A /* HttpCenter.cpp in Sources */,
 				0452D89E196ECF3800F16E38 /* Base64.cpp in Sources */,
 				15A3D9AD1682F7F9002FB0C5 /* cpSpaceHash.c in Sources */,
 				15A3D9AE1682F7F9002FB0C5 /* cpSpaceQuery.c in Sources */,
@@ -2706,6 +2729,7 @@
 				15A3DA381682F826002FB0C5 /* CCControlButtonLoader.cpp in Sources */,
 				15A3DA391682F826002FB0C5 /* CCControlLoader.cpp in Sources */,
 				15A3DA3A1682F826002FB0C5 /* CCData.cpp in Sources */,
+				043B233819951B4400C71E8C /* BalloonUserInfoDialog.cpp in Sources */,
 				15A3DA3B1682F826002FB0C5 /* CCLabelBMFontLoader.cpp in Sources */,
 				15A3DA3C1682F826002FB0C5 /* CCLabelTTFLoader.cpp in Sources */,
 				15A3DA3D1682F826002FB0C5 /* CCLayerColorLoader.cpp in Sources */,
@@ -2938,7 +2962,7 @@
 					"/Users/mac/Desktop/cocos2d-x-2.1.4/projects/AdMob/iOS",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CFLAGS = "-O2";
+				OTHER_CFLAGS = "-O0";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PokeBalloon;
 				PROVISIONING_PROFILE = "";
@@ -2959,7 +2983,7 @@
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (

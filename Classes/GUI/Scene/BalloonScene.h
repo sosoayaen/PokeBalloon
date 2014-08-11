@@ -197,6 +197,12 @@ private:
     // 游戏开始
     void startGame();
     
+    // 上传用户的得分到服务器
+    void commitScoreToServer();
+    
+    // 上传得分后的HTTP数据返回回调
+    void notifyHttpCallbackUpdateScore(cocos2d::CCObject* pData);
+    
     // 响应程序切换到后台
     void notifyEnterBackground(cocos2d::CCObject* pData);
     

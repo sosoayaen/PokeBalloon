@@ -93,6 +93,10 @@ public:
     // 从本地库中读取数据
     void loadData();
     
+    const std::string& getNickName() const;
+    
+    void setNickName(const std::string& strNickName);
+    
     /**
      * @brief 得到全局统计对象指针，可以外部修改
      */
@@ -161,6 +165,9 @@ private:
     void setAbilityCheckCodeByID(UserAbilityLevelType eType);
     
 private:
+    // 用户的昵称
+    std::string m_strNickName;
+    
 	// 用户数据
 	UserData m_UserData;
     
