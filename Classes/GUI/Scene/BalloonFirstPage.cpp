@@ -8,6 +8,8 @@
 
 #include "BalloonOptionsDialog.h"
 #include "BalloonShopScene.h"
+#include "BalloonUserInfoDialog.h"
+#include "CCJSONConverter.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #   include "GameKitHelper2dx.h"
@@ -319,14 +321,31 @@ void BalloonFirstPage::onPressMenuHandbook(cocos2d::CCObject *pSender)
 {
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
     // 显示图鉴场景
-    CCScene* pScene = BalloonHandBookScene::scene();
+    // CCScene* pScene = BalloonHandBookScene::scene();
     // CCScene* pScene = BalloonShopScene::scene();
-    CCDirector::sharedDirector()->pushScene(pScene);
+    // CCDirector::sharedDirector()->pushScene(pScene);
+    BalloonUserInfoDialog* pDialog = BalloonUserInfoDialog::create();
+    addChild(pDialog);
+    
+    /*
+    // 把得分上传到服务器
+    CCDictionary* pDict = CCDictionary::create();
+    pDict->setObject(ccs("12345678901234567890123456789012"), "uid");
+    pDict->setObject(ccs("JasonTou"), "uname");
+    
+    const char* pszJSON = CCJSONConverter::sharedConverter()->strFrom(pDict);
+    // 请求Http数据
+    HttpCenter::sharedHttpCenter()->request("http://121.40.76.13/score_rank.php", NULL, CCHttpRequest::kHttpPost, pszJSON);
+    
+    free((void*)pszJSON);
+    */
 }
 
 bool BalloonFirstPage::setResourceString()
 {
 //    m_vTexturesString.push_back("texture/menuItems/menuItems.plist");
+    m_vTexturesString.push_back("texture/balloon/balloon.plist");
+    m_vTexturesString.push_back("texture/items/items.plist");
 	m_vTexturesString.push_back("texture/mainboard/firstPageNoticeBackground.png");
 	m_vTexturesString.push_back("texture/mainboard/main_background.png");
 	m_vTexturesString.push_back("texture/mainboard/main_title_en.png");

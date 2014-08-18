@@ -90,6 +90,16 @@ void BalloonSoundManager::playBackgroundMusic(int soundId)
     SimpleAudioEngine::sharedEngine()->playBackgroundMusic(pszBackgroundSoundName, true);
 }
 
+void BalloonSoundManager::pauseBackgroundMusic()
+{
+    SimpleAudioEngine::sharedEngine()->pauseBackgroundMusic();
+}
+
+void BalloonSoundManager::resumeBackgroundMusic()
+{
+    SimpleAudioEngine::sharedEngine()->resumeBackgroundMusic();
+}
+
 void BalloonSoundManager::preloadAllEffect()
 {
     // preload all effects

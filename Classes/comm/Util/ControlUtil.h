@@ -73,6 +73,13 @@ public:
      * @param dTimeIntervalMillionSecound 按钮的按下间隔，毫秒级别，如果小于等于0则默认1.5秒
      */
     bool isButtonCanTouch(double dTimeIntervalMillionSecound = -1.0);
+    
+    /**
+     * @brief 得到节点的中心坐标位置，坐标系在该节点下
+     * @param pNode 对应取中点坐标的点
+     * @return CCPoint
+     */
+    cocos2d::CCPoint getCenterPointWithNode(cocos2d::CCNode* pNode);
 
 	/**
 	* @brief 弹出一个加载等待的层

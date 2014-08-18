@@ -90,6 +90,7 @@
 		0461235C191F2F11001AE64F /* libSocialTwitter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04612346191F2F11001AE64F /* libSocialTwitter.a */; };
 		0461235D191F2F11001AE64F /* libSocialWechat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04612349191F2F11001AE64F /* libSocialWechat.a */; };
 		0461235E191F2F11001AE64F /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0461234A191F2F11001AE64F /* libWeChatSDK.a */; };
+		0462A67E199F86EF00569671 /* BalloonArchivement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0462A67A199F86EF00569671 /* BalloonArchivement.cpp */; };
 		0469117F19175937009A0734 /* particles in Resources */ = {isa = PBXBuildFile; fileRef = 0469117E19175937009A0734 /* particles */; };
 		0473CB841917D7C9006C428E /* BalloonFirstPage.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 0473CB831917D7C9006C428E /* BalloonFirstPage.ccbi */; };
 		048C0E59191E95AE00D6801A /* libMobClickCpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 048C0E33191E95AE00D6801A /* libMobClickCpp.a */; };
@@ -129,7 +130,6 @@
 		04CF194E1983850500E8C148 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CF19491983850500E8C148 /* NSString+Base64.m */; };
 		04CF194F1983850500E8C148 /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 04CF194B1983850500E8C148 /* SFHFKeychainUtils.m */; };
 		04D07CC61995E7D2007DBC81 /* BalloonUserInfoDialog.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 04D07CC51995E7D2007DBC81 /* BalloonUserInfoDialog.ccbi */; };
-		04D9A66B19894F4B006B2B90 /* BalloonArchivement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D9A66719894F4B006B2B90 /* BalloonArchivement.cpp */; };
 		04DEFB111935CCDD0023F654 /* texture in Resources */ = {isa = PBXBuildFile; fileRef = 04DEFB101935CCDD0023F654 /* texture */; };
 		04E8AA5519710C79004D61EC /* UserData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04E8AA5119710C79004D61EC /* UserData.cpp */; };
 		04EF660019560172004BFDDF /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EF65FF19560172004BFDDF /* StoreKit.framework */; };
@@ -512,6 +512,8 @@
 		0461234B191F2F11001AE64F /* UMSocialWechatHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialWechatHandler.h; sourceTree = "<group>"; };
 		0461234C191F2F11001AE64F /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		0461234D191F2F11001AE64F /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		0462A67A199F86EF00569671 /* BalloonArchivement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BalloonArchivement.cpp; sourceTree = "<group>"; };
+		0462A67B199F86EF00569671 /* BalloonArchivement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalloonArchivement.h; sourceTree = "<group>"; };
 		0469117E19175937009A0734 /* particles */ = {isa = PBXFileReference; lastKnownFileType = folder; path = particles; sourceTree = "<group>"; };
 		0473CB831917D7C9006C428E /* BalloonFirstPage.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonFirstPage.ccbi; sourceTree = "<group>"; };
 		048C0E03191E95AE00D6801A /* MobClickCpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickCpp.h; sourceTree = "<group>"; };
@@ -573,8 +575,6 @@
 		04CF194A1983850500E8C148 /* SFHFKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHFKeychainUtils.h; sourceTree = "<group>"; };
 		04CF194B1983850500E8C148 /* SFHFKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHFKeychainUtils.m; sourceTree = "<group>"; };
 		04D07CC51995E7D2007DBC81 /* BalloonUserInfoDialog.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonUserInfoDialog.ccbi; sourceTree = "<group>"; };
-		04D9A66719894F4B006B2B90 /* BalloonArchivement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BalloonArchivement.cpp; sourceTree = "<group>"; };
-		04D9A66819894F4B006B2B90 /* BalloonArchivement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalloonArchivement.h; sourceTree = "<group>"; };
 		04DEFB101935CCDD0023F654 /* texture */ = {isa = PBXFileReference; lastKnownFileType = folder; path = texture; sourceTree = "<group>"; };
 		04E8AA5119710C79004D61EC /* UserData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = UserData.cpp; sourceTree = "<group>"; };
 		04E8AA5219710C79004D61EC /* UserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserData.h; sourceTree = "<group>"; };
@@ -1501,6 +1501,16 @@
 			path = Wechat;
 			sourceTree = "<group>";
 		};
+		0462A677199F86EF00569671 /* Archivement */ = {
+			isa = PBXGroup;
+			children = (
+				0462A67A199F86EF00569671 /* BalloonArchivement.cpp */,
+				0462A67B199F86EF00569671 /* BalloonArchivement.h */,
+			);
+			name = Archivement;
+			path = ../Classes/Archivement;
+			sourceTree = "<group>";
+		};
 		048C0E01191E95AE00D6801A /* UMCocos2dxAnalytics */ = {
 			isa = PBXGroup;
 			children = (
@@ -1605,16 +1615,6 @@
 				04CF194B1983850500E8C148 /* SFHFKeychainUtils.m */,
 			);
 			path = IAPHelper;
-			sourceTree = "<group>";
-		};
-		04D9A66419894F4B006B2B90 /* Achivement */ = {
-			isa = PBXGroup;
-			children = (
-				04D9A66719894F4B006B2B90 /* BalloonArchivement.cpp */,
-				04D9A66819894F4B006B2B90 /* BalloonArchivement.h */,
-			);
-			name = Achivement;
-			path = ../Classes/Achivement;
 			sourceTree = "<group>";
 		};
 		04E8AA4E19710C79004D61EC /* UserData */ = {
@@ -2133,7 +2133,7 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				04D9A66419894F4B006B2B90 /* Achivement */,
+				0462A677199F86EF00569671 /* Archivement */,
 				04CF1931197FE69600E8C148 /* Mission */,
 				04E8AA4E19710C79004D61EC /* UserData */,
 				0452D82C196ECF3800F16E38 /* comm */,
@@ -2623,7 +2623,6 @@
 				15A3D8FF1682F7D5002FB0C5 /* b2BroadPhase.cpp in Sources */,
 				15A3D9001682F7D5002FB0C5 /* b2CollideCircle.cpp in Sources */,
 				04CF194F1983850500E8C148 /* SFHFKeychainUtils.m in Sources */,
-				04D9A66B19894F4B006B2B90 /* BalloonArchivement.cpp in Sources */,
 				0452D87B196ECF3800F16E38 /* CloudManager.cpp in Sources */,
 				0452D8A9196ECF3800F16E38 /* StringUtil.cpp in Sources */,
 				15A3D9011682F7D5002FB0C5 /* b2CollideEdge.cpp in Sources */,
@@ -2865,6 +2864,7 @@
 				1A9CE8951765A12C000E3062 /* CCTweenFunction.cpp in Sources */,
 				1A9CE8961765A12C000E3062 /* CCUtilMath.cpp in Sources */,
 				1A9CE8971765A12C000E3062 /* CCComAttribute.cpp in Sources */,
+				0462A67E199F86EF00569671 /* BalloonArchivement.cpp in Sources */,
 				1A9CE8981765A12C000E3062 /* CCComAudio.cpp in Sources */,
 				1A9CE8991765A12C000E3062 /* CCComController.cpp in Sources */,
 				1A9CE89A1765A12C000E3062 /* CCInputDelegate.cpp in Sources */,

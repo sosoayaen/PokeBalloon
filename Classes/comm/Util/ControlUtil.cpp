@@ -234,4 +234,9 @@ bool ControlUtil::isButtonCanTouch(double dTimeIntervalMillionSecound)
     return bRet;
 }
 
+cocos2d::CCPoint ControlUtil::getCenterPointWithNode(cocos2d::CCNode *pNode)
+{
+    return ccpMult(ccpFromSize(pNode->getContentSize()), 0.5f);
+}
+
 NS_BAILIN_UTIL_END

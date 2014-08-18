@@ -614,6 +614,7 @@ void BalloonScene::update(float dt)
                 
                 // 记录得到的金币
                 long long llCoins = m_llTotalScore/SCORE_COINS_RATE;
+                // TODO: 这里还需要加上任务完成的奖励
                 UserDataManager::sharedUserDataManager()->addGoldenCoins(llCoins);
                 
                 commitScoreToServer();
@@ -661,8 +662,7 @@ void BalloonScene::showResultDialog()
     pResultDialog->setAnalysisData(pAnalysisData);
     // 设定面板分数
     pResultDialog->setScore(m_llTotalScore);
-    std::string strHighScore = DataManagerUtil::sharedDataManagerUtil()->ReadDataFromLocal("HighestScore");
-    long long llHighestScore = atoll(strHighScore.c_str());// pHighestScore->intValue();
+    long long llHighestScore = UserDataManager::sharedUserDataManager()->getHighestScore();
     
     bool bNewScore = llHighestScore < m_llTotalScore;
     
@@ -671,8 +671,7 @@ void BalloonScene::showResultDialog()
     if (bNewScore)
     {
         llHighestScore = m_llTotalScore;
-        const std::string strHighestScore = CCString::createWithFormat("%lld", llHighestScore)->m_sString;
-        DataManagerUtil::sharedDataManagerUtil()->WriteDataToLocal("HighestScore", strHighestScore);
+        UserDataManager::sharedUserDataManager()->setHighestScore(llHighestScore);
     }
         
     pResultDialog->setHighScore(llHighestScore);

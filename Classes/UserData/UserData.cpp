@@ -25,6 +25,8 @@
 USING_NS_CC;
 USING_NS_BAILIN_UTIL;
 
+#define KEY_HIGHEST_SCORE "HighestScore"    // 配置文件中用户的最高分key
+
 #define KEY_NICKNAME "Nickname" // 配置文件中用户保存昵称的key
 
 #define CHECK_GOLDEN_COINS "checkGoldenCoins"  // 金币校验key
@@ -137,7 +139,7 @@ void UserDataManager::loadData()
     
     // 得到金币数据
     std::string strCoins = DataManagerUtil::sharedDataManagerUtil()->ReadDataWithChecksum(KEY_CONFIG_GOLDEN_COINS);
-    // 转化到无符号长整形
+    // 转化到long long
     m_UserData.llGoldenCoins = atoll(strCoins.c_str());
     
 #if COCOS2D_DEBUG > 0
@@ -474,4 +476,22 @@ const std::string& UserDataManager::getNickName() const
 void UserDataManager::setNickName(const std::string &strNickName)
 {
     m_strNickName = strNickName;
+}
+
+long long UserDataManager::getHighestScore() const
+{
+    std::string strHighScore = DataManagerUtil::sharedDataManagerUtil()->ReadDataFromLocal(KEY_HIGHEST_SCORE);
+    return atoll(strHighScore.c_str());
+}
+
+void UserDataManager::setHighestScore(long long llHighestScore)
+{
+    const std::string strHighestScore = CCString::createWithFormat("%lld", llHighestScore)->m_sString;
+    DataManagerUtil::sharedDataManagerUtil()->WriteDataToLocal(KEY_HIGHEST_SCORE, strHighestScore);
+}
+
+long UserDataManager::getArchivmentValue() const
+{
+    // 计算所有成就值并返回
+    return 0;
 }

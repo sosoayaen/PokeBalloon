@@ -59,6 +59,9 @@ public:
      */
     void setEffectVolume(float volume);
     
+    void pauseBackgroundMusic();
+    
+    void resumeBackgroundMusic();
 private:
     
     void playEffectWithFileName(const char* pszEffectFile);

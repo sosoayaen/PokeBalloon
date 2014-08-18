@@ -93,9 +93,20 @@ public:
     // 从本地库中读取数据
     void loadData();
     
+    // 得到用户的昵称
     const std::string& getNickName() const;
     
+    // 设置用户的昵称
     void setNickName(const std::string& strNickName);
+    
+    // 得到历史最高分
+    long long getHighestScore() const;
+    
+    // 设置历史最高分
+    void setHighestScore(long long llHighestScore);
+    
+    // 得到总体成就值
+    long getArchivmentValue() const;
     
     /**
      * @brief 得到全局统计对象指针，可以外部修改
