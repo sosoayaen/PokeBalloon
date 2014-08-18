@@ -30,7 +30,8 @@ NDKBridge* NDKBridge::sharedNDKBridge()
 
 NDKBridge::NDKBridge()
 {
-    
+    m_strIAPShareSecret = "";
+	m_strIAPADProductID = "";
 }
 
 NDKBridge::~NDKBridge()
@@ -81,4 +82,49 @@ void NDKBridge::setNotification(CCDictionary* pData)
 void NDKBridge::cancelNotification(CCDictionary* pData)
 {
 
+}
+
+bool NDKBridge::initAdMob(const char* pszUnitID, const char* pszClassName /* = NULL */)
+{
+	if (!isADOff())
+		return GAdMob2DX::sharedGAdMob2DX()->init(pszUnitID, pszClassName);
+	else
+		return false;
+}
+
+void NDKBridge::setAdMobVisible(bool bVisible)
+{
+	if (isADOff())
+		bVisible = false;
+
+	GAdMob2DX::sharedGAdMob2DX()->setVisible(bVisible);
+}
+
+void NDKBridge::initIAP(CCArray* pArrayProductID, const char* pszShareSecret /* = NULL */)
+{
+	// TODO: 这里接入Android的内部支付初始化工作，还有对应的SDK版本的区分
+}
+
+void NDKBridge::setADProductID(const char* pszADProductID)
+{
+
+}
+
+void NDKBridge::buyIAPProduct(unsigned int productIdx)
+{
+	// TODO: 这里进行Android的支付
+}
+
+bool NDKBridge::isADOff()
+{
+	bool bRet = false;
+	return bRet;
+}
+
+void NDKBridge::restoreIAPProducts()
+{
+}
+
+void NDKBridge::clearSavedPurchasedProducts()
+{
 }

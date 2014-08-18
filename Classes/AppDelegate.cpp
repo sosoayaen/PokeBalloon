@@ -73,7 +73,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     UMSocial2DX::setAppKey("535242b756240b0a0506ca56", JNI_CLASS);
 	
     // 初始化广告控件
-    NDKBridge::sharedNDKBridge()->init("ca-app-pub-4946557086550003/8357075374", JNI_CLASS);
+    NDKBridge::sharedNDKBridge()->initAdMob("ca-app-pub-4946557086550003/8357075374", JNI_CLASS);
 #	endif
 
 #   ifdef ENABLE_UMENG_DATA
