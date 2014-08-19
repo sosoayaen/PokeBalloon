@@ -14,6 +14,7 @@
 
 class BalloonUserInfoDialog:
 	public DialogLayer,
+    public cocos2d::extension::CCEditBoxDelegate,
 	public cocos2d::extension::CCTableViewDataSource,
 	public cocos2d::extension::CCTableViewDelegate,
 	public cocos2d::extension::CCBSelectorResolver,
@@ -42,6 +43,7 @@ public:
 
         m_pMenuItemLabelNickName = NULL;
         m_pMenuNickname = NULL;
+        m_pEditBoxNickname = NULL;
         
         m_pTableViewDetail = NULL;
         
@@ -60,6 +62,8 @@ public:
 	virtual cocos2d::SEL_MenuHandler onResolveCCBCCMenuItemSelector( cocos2d::CCObject * pTarget, const char* pSelectorName );
 
 	virtual bool onAssignCCBMemberVariable( cocos2d::CCObject* pTarget, const char* pMemberVariableName, cocos2d::CCNode* pNode );
+    
+    virtual void editBoxReturn(cocos2d::extension::CCEditBox* editBox);
 
 private:
 	// Attributes for CCB
@@ -82,6 +86,7 @@ private:
     
     cocos2d::CCMenuItemLabel* m_pMenuItemLabelNickName;
     cocos2d::CCMenu* m_pMenuNickname;
+    cocos2d::extension::CCEditBox* m_pEditBoxNickname;
     
     cocos2d::extension::CCTableView* m_pTableViewDetail;
     
@@ -108,6 +113,8 @@ private:
     void setMenuMusicBtnStatusEnable(cocos2d::CCMenuItemImage* pItem, bool bEnable);
     // 初始化表格
     void initTableView();
+    // 初始化EditBox
+    void initEditBox();
     // 保存当前页面的所有数据到磁盘
     void saveUserinfoData();
     // update the user relative label data

@@ -58,6 +58,8 @@ bool BalloonUserInfoDialog::init()
         initMenuTabText();
         initPressMenuEffect();
         
+        initEditBox();
+        
 		bRet = true;
 		
 	} while(0);
@@ -446,6 +448,9 @@ void BalloonUserInfoDialog::initMenuTabText()
         i++;
     }
     
+    ((CCNode*)m_pMenuTab->getChildren()->lastObject())->setVisible(false);
+    
+    
 }
 
 void BalloonUserInfoDialog::addForbiddenSpriteToNode(cocos2d::CCNode *pNode)
@@ -519,7 +524,11 @@ bool BalloonUserInfoDialog::endDialog(cocos2d::CCActionInterval* pAction /* = NU
 
 void BalloonUserInfoDialog::onPressMenuNickname(cocos2d::CCObject *pSender)
 {
+    m_pMenuNickname->setVisible(false);
     // 弹出一个对话框提供名字修改，修改后更新下名字的显示
+    m_pEditBoxNickname->setText(UserDataManager::sharedUserDataManager()->getNickName().c_str());
+    m_pEditBoxNickname->setVisible(true);
+    m_pEditBoxNickname->sendActionsForControlEvents(CCControlEventTouchUpInside);
 }
 
 void BalloonUserInfoDialog::initTableView()
@@ -619,7 +628,8 @@ void BalloonUserInfoDialog::createTableCellLevelUp(CCTableView* table, CCTableVi
         // 摆放位置
         
         pSpriteBalloon->setScale(cellSize.width*0.23f/pSpriteBalloon->getContentSize().height);
-        pSpriteBalloon->setPosition(ccp(cellSize.width*0.155f, cellSize.height*0.5f + offsetBalloonY));
+        // pSpriteBalloon->setPosition(ccp(cellSize.width*0.155f, cellSize.height*0.5f + offsetBalloonY));
+        pSpriteBalloon->setPosition(ccp(pSpriteBalloon->boundingBox().size.width*0.8f, cellSize.height - pSpriteBalloon->boundingBox().size.height*0.75f + offsetBalloonY));
         // pCell->addChild(pSpriteBalloon);
         pSpriteCellBackground->addChild(pSpriteBalloon);
         
@@ -634,9 +644,9 @@ void BalloonUserInfoDialog::createTableCellLevelUp(CCTableView* table, CCTableVi
         // 描述内容
         const char* pszDesc = DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("handbook_section", pDict->valueForKey("description")->getCString());
         CCLabelTTF* pLabelTTFDesc = CCLabelTTF::create(pszDesc, "", 20);
-        pLabelTTFDesc->setPosition(ccp(cellSize.width*0.3f, 30));
-        pLabelTTFDesc->setAnchorPoint(CCPointZero);
-        pLabelTTFDesc->setDimensions(CCSizeMake(cellSize.width*0.65f, (cellSize.height-30*2-pLabelTTFTitle->getContentSize().height)));
+        // pLabelTTFDesc->setPosition(ccp(cellSize.width*0.3f, 30));
+        pLabelTTFDesc->setPosition(pLabelTTFTitle->getPosition());
+        pLabelTTFDesc->setAnchorPoint(ccp(0, 1.0f));
         pLabelTTFDesc->setHorizontalAlignment(kCCTextAlignmentLeft);
         pLabelTTFDesc->setVerticalAlignment(kCCVerticalTextAlignmentTop);
         // pCell->addChild(pLabelTTFDesc);
@@ -644,9 +654,52 @@ void BalloonUserInfoDialog::createTableCellLevelUp(CCTableView* table, CCTableVi
         
         // 根据配置文件创建图片
         
+        CCSprite* pSpriteBtnExtend = CCSprite::createWithSpriteFrameName("userinfo_btn_extend.png");
+        pSpriteBtnExtend->setPosition(ccp(cellSize.width - pSpriteBtnExtend->getContentSize().width*0.8f, cellSize.height - pSpriteBtnExtend->getContentSize().height));
+        pSpriteCellBackground->addChild(pSpriteBtnExtend);
         // 当前项目是否折叠标志
         bool bFold = pDict->valueForKey("unfold")->boolValue();
         // 如果是是展开的
+        if (bFold)
+        {
+            pLabelTTFDesc->setDimensions(CCSizeMake(cellSize.width*0.5f, 0));
+            pSpriteBtnExtend->setRotation(90);
+            
+            // 展开的就增加升级的按钮
+            CCSprite* pSpriteBtnLevelup = CCSprite::createWithSpriteFrameName("userinfo_btn_levelup.png");
+            pSpriteBtnLevelup->setAnchorPoint(ccp(1.0f, 0.5f));
+            pSpriteBtnLevelup->setPosition(ccp(pSpriteBtnExtend->getPositionX(), pLabelTTFDesc->getPositionY() - pLabelTTFDesc->getContentSize().height - pSpriteBtnLevelup->getContentSize().height));
+            pSpriteCellBackground->addChild(pSpriteBtnLevelup);
+        }
+        else
+        {
+            pLabelTTFDesc->setDimensions(CCSizeMake(cellSize.width*0.5f, (cellSize.height-30*2-pLabelTTFTitle->getContentSize().height)));
+            pSpriteBtnExtend->setRotation(0);
+        }
         
     }
+}
+
+void BalloonUserInfoDialog::editBoxReturn(cocos2d::extension::CCEditBox *editBox)
+{
+    m_pMenuNickname->setVisible(true);
+    UserDataManager::sharedUserDataManager()->setNickName(editBox->getText());
+    m_pMenuItemLabelNickName->setString(editBox->getText());
+    editBox->setVisible(false);
+}
+
+void BalloonUserInfoDialog::initEditBox()
+{
+    // 初始化名字输入的EditBox
+    CCScale9Sprite* pNormal9SpriteBg = CCScale9Sprite::createWithSpriteFrameName("userinfo_score_dise.png");
+    m_pEditBoxNickname = CCEditBox::create(CCSizeMake(m_pSpriteBoard->getContentSize().width*0.8f, m_pMenuItemLabelNickName->getContentSize().height), pNormal9SpriteBg);
+    m_pEditBoxNickname->setFontColor(ccBLACK);
+    m_pEditBoxNickname->setPosition(m_pMenuNickname->getPosition());
+    m_pEditBoxNickname->setInputFlag(kEditBoxInputFlagInitialCapsWord);
+    m_pEditBoxNickname->setInputMode(kEditBoxInputModeSingleLine);
+    m_pEditBoxNickname->setMaxLength(20);
+    m_pEditBoxNickname->setDelegate(this);
+    m_pSpriteBoard->addChild(m_pEditBoxNickname);
+    m_pEditBoxNickname->setVisible(false);
+    pushEditBox(m_pEditBoxNickname);
 }
