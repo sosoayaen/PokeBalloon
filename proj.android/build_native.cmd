@@ -27,4 +27,4 @@ rem NDK_MODULE_PATH
 set NDK_MODULE_PATH=%COCOS2DX_ROOT%;%COCOS2DX_ROOT%\cocos2dx\platform\third_party\android\prebuilt;
 
 rem ndk-build
-ndk-build -j2
+%NDK_ROOT%\ndk-build -j2

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="com.wardrums.pokeballoon"
-      android:versionCode="2"
-      android:versionName="1.00.01">
+      android:versionCode="4"
+      android:versionName="1.01.00">
 
     <uses-sdk android:minSdkVersion="9"/>
     <uses-feature android:glEsVersion="0x00020000" />
