@@ -60,6 +60,9 @@ bool BalloonUserInfoDialog::init()
         
         initEditBox();
         
+        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/balloon/balloon.plist");
+        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/items/items.plist");
+        
 		bRet = true;
 		
 	} while(0);
@@ -676,7 +679,6 @@ void BalloonUserInfoDialog::createTableCellLevelUp(CCTableView* table, CCTableVi
             pLabelTTFDesc->setDimensions(CCSizeMake(cellSize.width*0.5f, (cellSize.height-30*2-pLabelTTFTitle->getContentSize().height)));
             pSpriteBtnExtend->setRotation(0);
         }
-        
     }
 }
 
