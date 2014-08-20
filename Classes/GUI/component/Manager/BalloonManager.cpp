@@ -20,6 +20,40 @@
 
 USING_NS_CC;
 
+BalloonTypeRate::BalloonTypeRate()
+{
+    // 初始化每个气球的概率
+    m_vRateArray.push_back(BalloonTypeRateElement(kBalloonTypeMulti, 50)); // 5%
+    m_vRateArray.push_back(BalloonTypeRateElement(kBalloonTypePump, 50)); // 5%
+    m_vRateArray.push_back(BalloonTypeRateElement(kBalloonTypeAddTime, 50)); // 5%
+    m_vRateArray.push_back(BalloonTypeRateElement(kBalloonTypeFrozen, 20)); // 2%
+    m_vRateArray.push_back(BalloonTypeRateElement(kBalloonTypeGiant, 20));  // 2%
+    m_vRateArray.push_back(BalloonTypeRateElement(kBalloonTypeReverse, 30)); // 3%
+    m_vRateArray.push_back(BalloonTypeRateElement(kBalloonTypeBoom, 30)); // 3%
+}
+
+BalloonType BalloonTypeRate::getRandomBalloonTypeByRandom() const
+{
+    BalloonType eRet = kBalloonTypeNormal;
+    
+    int rate = rand()%1000;
+    
+    int nSum = 0;
+    std::vector<BalloonTypeRateElement>::const_iterator iter = m_vRateArray.begin();
+    for (; iter != m_vRateArray.end(); iter++)
+    {
+        const BalloonTypeRateElement& element = *iter;
+        nSum += element.nRate;
+        if (rate < nSum)
+        {
+            eRet = element.eType;
+            break;
+        }
+    }
+    
+    return eRet;
+}
+
 BalloonManager::BalloonManager():
 	m_bInited(false),
 	m_pLayerBalloonContainer(NULL),
@@ -149,6 +183,7 @@ void BalloonManager::addRandomBalloon()
         // CCString* pStrBalloonName = CCString::createWithFormat("texture/balloon/balloon_%d_%d.png", nBalloonStyle, nBalloonIndex);
         CCString* pStrBalloonName = CCString::createWithFormat("balloon_%d_%d.png", nBalloonStyle, nBalloonIndex);
         
+        /*
         int nRate = rand()%100;
         if (nRate > 95)
         {
@@ -195,6 +230,46 @@ void BalloonManager::addRandomBalloon()
         {
             // 10%概率出现负分
             nValue *= -1;
+        }
+        */
+        
+        nType = m_BalloonTypeRate.getRandomBalloonTypeByRandom();
+        switch (nType)
+        {
+            case kBalloonTypeMulti:
+                // 两倍
+                nValue = 2;
+                break;
+            case kBalloonTypePump:
+                // 可点击次数为1到5
+                nValue = rand()%5 + 1;
+                break;
+            case kBalloonTypeBoom:
+                // 炸弹的效果是除二
+                nValue = 2;
+                break;
+            case kBalloonTypeAddTime:
+                // 增加3秒钟时间
+                nValue = 3;
+                break;
+            case kBalloonTypeFrozen:
+                // 冰冻是一次性效果
+                nValue = 0;
+                break;
+            case kBalloonTypeReverse:
+                // 默认正负反向，数值为对应的倍数
+                nValue = -1;
+                break;
+            case kBalloonTypeGiant:
+                nClickableCnt = rand()%9 + 3; // 最多打12下
+                // 得分为按下的x倍
+                nValue = 1*nClickableCnt;
+                break;
+            default:
+                // 10%的概率出现负分
+                if (rand()%100 <= 12)
+                    nValue *= -1;
+                break;
         }
         
 		// 设定随机缩放，90%到120%

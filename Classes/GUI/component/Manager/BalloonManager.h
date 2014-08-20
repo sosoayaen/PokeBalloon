@@ -20,6 +20,33 @@
 
 #include "Balloon.h"
 
+typedef struct tagBalloonTypeRateElement
+{
+    BalloonType eType;  // 类型
+    int nRate;          // 概率
+    
+    tagBalloonTypeRateElement(BalloonType eType, int nRate)
+    {
+        this->eType = eType;
+        this->nRate = nRate;
+    }
+} BalloonTypeRateElement;
+
+// 气球类型比例操作类
+class BalloonTypeRate
+{
+public:
+    BalloonTypeRate();
+    
+    // 得到一个随机的气球类型
+    BalloonType getRandomBalloonTypeByRandom() const;
+    
+protected:
+    std::vector<BalloonTypeRateElement> m_vRateArray;
+    
+private:
+};
+
 // 定义气球数组
 typedef std::list<Balloon* > BalloonObjectList;
 
@@ -138,6 +165,7 @@ protected:
 	// 游戏屏幕大小
 	cocos2d::CCSize m_sizeScreen;
     
+    BalloonTypeRate m_BalloonTypeRate;
 };
 
 #endif // __BALLOON_MANAGER_H__

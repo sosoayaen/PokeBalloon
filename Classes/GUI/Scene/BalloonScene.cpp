@@ -308,9 +308,6 @@ void BalloonScene::balloonHitTestSuccess(Balloon* pBalloon, cocos2d::CCSprite* p
 
 void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite* pSprite)
 {
-    // 增加统计
-    m_BalloonAnalysis.countWithBalloonObject(pBalloon);
-    
     DataManagerUtil* pDMU = DataManagerUtil::sharedDataManagerUtil();
     
     if (!pDMU) return;
@@ -320,6 +317,9 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
     {
         case kBalloonTypeNormal:
             pBalloon->explosive();
+            // 增加统计
+            m_BalloonAnalysis.countWithBalloonObject(pBalloon);
+            
             // 根据对应的气球分数增加到总分上
             if (!pDMU->SetSecurityData(SECURITY_SCORE, &m_llTotalScore, (long long)pBalloon->getBalloonScore()))
             {
@@ -339,11 +339,17 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             break;
         case kBalloonTypeMulti:
             pBalloon->explosive();
+            // 增加统计
+            m_BalloonAnalysis.countWithBalloonObject(pBalloon);
+            
             // 乘分气球，当前场景下的所有普通气球分数乘以对应的分值
             m_BalloonManager.multipleBalloonScore(pBalloon->getBalloonScore());
             break;
         case kBalloonTypeBoom:
             pBalloon->explosive();
+            // 增加统计
+            m_BalloonAnalysis.countWithBalloonObject(pBalloon);
+            
             {
                 // 除分气球
                 if (!pDMU->CheckSecurityData(SECURITY_SCORE, m_llTotalScore))
@@ -375,6 +381,9 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             break;
         case kBalloonTypeAddTime:
             pBalloon->explosive();
+            // 增加统计
+            m_BalloonAnalysis.countWithBalloonObject(pBalloon);
+            
             {
                 // 时间增加
                 long lTimeItemFix = 0;
@@ -391,6 +400,9 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             break;
         case kBalloonTypePump:
             pBalloon->explosive();
+            // 增加统计
+            m_BalloonAnalysis.countWithBalloonObject(pBalloon);
+            
             // 屏幕出现打气筒按钮，并且设置按钮的小时时间
             {
                 BalloonItemClick* pBalloonItem = BalloonItemClick::create(this, CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("item_pump.png"), pBalloon->getBalloonScore());
@@ -407,6 +419,9 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             break;
         case kBalloonTypeFrozen:
             pBalloon->explosive();
+            // 增加统计
+            m_BalloonAnalysis.countWithBalloonObject(pBalloon);
+            
             // 冻结屏幕上的所有气球
             m_BalloonManager.setAllBalloonEffect(kBalloonEffectFrozen);
             // 设定统一的Y轴时间
@@ -435,6 +450,9 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             if (pBalloon->getBalloonClickCnt() == pBalloon->getBalloonClickableCnt())
             {
                 pBalloon->explosive();
+                // 增加统计
+                m_BalloonAnalysis.countWithBalloonObject(pBalloon);
+            
                 // 根据对应的气球分数增加到总分上
                 if (!pDMU->SetSecurityData(SECURITY_SCORE, &m_llTotalScore, (long long)pBalloon->getBalloonScore()))
                 {
@@ -463,6 +481,9 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
 		case kBalloonTypeReverse:
             {
                 pBalloon->explosive();
+                // 增加统计
+                m_BalloonAnalysis.countWithBalloonObject(pBalloon);
+            
                 // 把屏幕上的所有气球分数乘以对应的值
                 int nScore = pBalloon->getBalloonScore();
                 int nExtendValue = DataManagerUtil::sharedDataManagerUtil()->GetGlobalDataLong("reverseEffectExtendValue");
