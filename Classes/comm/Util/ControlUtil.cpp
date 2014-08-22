@@ -239,4 +239,35 @@ cocos2d::CCPoint ControlUtil::getCenterPointWithNode(cocos2d::CCNode *pNode)
     return ccpMult(ccpFromSize(pNode->getContentSize()), 0.5f);
 }
 
+cocos2d::CCPoint ControlUtil::getBottomLeftByNode(cocos2d::CCNode *pNode)
+{
+    CCPoint ap = pNode->getAnchorPoint();
+    CCPoint offset = ccp(-pNode->getContentSize().width*ap.x, -pNode->getContentSize().height*ap.y);
+    
+    return ccpAdd(pNode->getPosition(), offset);
+}
+
+cocos2d::CCPoint ControlUtil::getBottomRightByNode(cocos2d::CCNode *pNode)
+{
+    CCPoint ap = pNode->getAnchorPoint();
+    CCPoint offset = ccp(pNode->getContentSize().width*ap.x, -pNode->getContentSize().height*ap.y);
+    
+    return ccpAdd(pNode->getPosition(), offset);
+}
+
+cocos2d::CCPoint ControlUtil::getTopLeftByNode(cocos2d::CCNode *pNode)
+{
+    CCPoint ap = pNode->getAnchorPoint();
+    CCPoint offset = ccp(-pNode->getContentSize().width*ap.x, pNode->getContentSize().height*ap.y);
+    
+    return ccpAdd(pNode->getPosition(), offset);
+}
+
+cocos2d::CCPoint ControlUtil::getTopRightByNode(cocos2d::CCNode *pNode)
+{
+    CCPoint ap = pNode->getAnchorPoint();
+    CCPoint offset = ccp(pNode->getContentSize().width*ap.x, pNode->getContentSize().height*ap.y);
+    
+    return ccpAdd(pNode->getPosition(), offset);
+}
 NS_BAILIN_UTIL_END

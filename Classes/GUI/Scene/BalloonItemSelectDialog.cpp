@@ -51,45 +51,21 @@ bool BalloonItemSelectDialog::init()
 		pCCBReader->release();
         
         // 界面需要点击按钮才能取消
-        // SetVisibleBoard(m_pScale9SpriteBuyBoard);
+        // SetVisibleBoard(m_pSpriteBoard);
+        m_pLayerTableView->setVisible(false);
         
-        //*
-        m_pLabelBMFontCoins->retain();
-        m_pLabelBMFontCoins->removeFromParent();
-        m_pScale9SpriteBuyBoard->addChild(m_pLabelBMFontCoins);
-        m_pLabelBMFontCoins->release();
-        m_pSpriteCoin->retain();
-        m_pSpriteCoin->removeFromParent();
-        m_pScale9SpriteBuyBoard->addChild(m_pSpriteCoin);
-        m_pSpriteCoin->release();
-        //*/
-        
-		
-        // 预先定义好面板的大小
-        CCSize size = CCSizeMake(getContentSize().width*0.9f, getContentSize().height*0.8f);
-        // 先设定底部的按钮位置
-        CCNode* pNodeChild = (CCNode*)m_pMenu->getChildren()->objectAtIndex(0);
-        // 得到按钮的高度
-        float fHeight = pNodeChild->boundingBox().size.height;
-        
-        // 设定按钮位置
-        m_pMenu->setPosition(ccp(getContentSize().width*0.5f, (getContentSize().height - size.height)*0.5f + fHeight*0.5f));
         ControlUtil::sharedControlUtil()->SetMenuItemSelectedImageWithNormalImage(m_pMenu);
         pushMenu(m_pMenu);
         
-        // 设定面板的大小
-        m_pScale9SpriteBuyBoard->setPreferredSize(CCSizeMake(size.width, size.height - fHeight*1.2f));
-        m_pScale9SpriteBuyBoard->setAnchorPoint(ccp(0.5f, 0));
-        m_pScale9SpriteBuyBoard->setPositionY(m_pMenu->getPositionY() + fHeight*0.5f);
-        
         // 设置金币数量的位置
-        m_pLabelBMFontCoins->setPositionX(m_pScale9SpriteBuyBoard->getContentSize().width*0.98f);
         updateCoins();
                              
         // 设定头部的名称
+        /*
         CCLabelBMFont* pBMFontTitle = CCLabelBMFont::create("Would you like buy Items?", "texture/fonts/font.fnt");
-        pBMFontTitle->setPosition(ccp(m_pScale9SpriteBuyBoard->getContentSize().width*0.5f, m_pScale9SpriteBuyBoard->getContentSize().height - pBMFontTitle->getContentSize().height));
-        m_pScale9SpriteBuyBoard->addChild(pBMFontTitle);
+        pBMFontTitle->setPosition(ccp(m_pSpriteBoard->getContentSize().width*0.5f, m_pSpriteBoard->getContentSize().height - pBMFontTitle->getContentSize().height));
+        m_pSpriteBoard->addChild(pBMFontTitle);
+        */
         
         // 初始化道具内容
         CCDictionary* pDictExtItemConfig = CCDictionary::createWithContentsOfFile("configuration/buyExtendItems.plist");
@@ -121,15 +97,18 @@ bool BalloonItemSelectDialog::init()
         }
         
         // 创建表格
-        CCSize boardSize = m_pScale9SpriteBuyBoard->getContentSize();
-        CCSize viewSize = CCSizeMake(boardSize.width*0.9f, boardSize.height*0.8f);
+        CCSize viewSize = m_pLayerTableView->getContentSize();
         m_pTableView = CCTableView::create(this, viewSize);
         m_pTableView->setDelegate(this);
         m_pTableView->setDirection(kCCScrollViewDirectionVertical);
         m_pTableView->setVerticalFillOrder(kCCTableViewFillTopDown);
-        m_pTableView->setPosition(ccp((boardSize.width - viewSize.width)*0.5f, (boardSize.height - viewSize.height)*0.5f));
+        CCPoint pos = ControlUtil::sharedControlUtil()->getBottomLeftByNode(m_pLayerTableView);
+        pos = m_pLayerTableView->getParent()->convertToWorldSpace(pos);
+        m_pTableView->setPosition(pos);
+        // 放到框框的下面
+        m_pTableView->setZOrder(-1);
         
-        m_pScale9SpriteBuyBoard->addChild(m_pTableView);
+        m_pSpriteBoard->getParent()->addChild(m_pTableView);
         
         pushScrollView(m_pTableView);
         
@@ -153,7 +132,7 @@ void BalloonItemSelectDialog::onEnter()
         CCLabelTTF* pLabelTTF = CCLabelTTF::create(pStrMission->getCString(), "", 28);
         pLabelTTF->setAnchorPoint(CCPointZero);
         pLabelTTF->setPosition(ccp(20, 20));
-        m_pScale9SpriteBuyBoard->addChild(pLabelTTF);
+        m_pSpriteBoard->addChild(pLabelTTF);
     }
 }
 
@@ -181,10 +160,11 @@ SEL_MenuHandler BalloonItemSelectDialog::onResolveCCBCCMenuItemSelector( CCObjec
 
 bool BalloonItemSelectDialog::onAssignCCBMemberVariable( CCObject* pTarget, const char* pMemberVariableName, CCNode* pNode )
 {
-	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pScale9SpriteBuyBoard", CCScale9Sprite*, this->m_pScale9SpriteBuyBoard);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteBoard", CCSprite*, this->m_pSpriteBoard);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteCoin", CCSprite*, this->m_pSpriteCoin);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelBMFontCoins", CCLabelBMFont*, this->m_pLabelBMFontCoins);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenu", CCMenu*, this->m_pMenu);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLayerTableView", CCLayer*, this->m_pLayerTableView);
 
 	return true;
 }
@@ -285,13 +265,13 @@ CCTableViewCell* BalloonItemSelectDialog::tableCellAtIndex( CCTableView *table, 
         pSprite->addChild(pSpriteIcon);
         pCell->addChild(pSprite);
         
-        // 左上角的数字
+        // 右左上角的数字
         ItemExType type = (ItemExType) (pDict->valueForKey("type")->intValue());
         long lCnts = UserDataManager::sharedUserDataManager()->getItemExCountsByID(type);
         CCLabelBMFont* pLBFLeftCnt = CCLabelBMFont::create(CCString::createWithFormat("%ld", lCnts)->getCString(), "texture/fonts/font.fnt");
         pLBFLeftCnt->setColor(ccYELLOW);
         pLBFLeftCnt->setTag(TAG_ID_ITEM_CNT_LABEL);
-        pLBFLeftCnt->setPosition(ccp(0, pSprite->getContentSize().height));
+        pLBFLeftCnt->setPosition(ccpFromSize(pSprite->getContentSize()));
         pSprite->addChild(pLBFLeftCnt);
         
         // 设置描述文字
@@ -334,7 +314,10 @@ void BalloonItemSelectDialog::updateCoins()
 {
     m_pLabelBMFontCoins->setString(CCString::createWithFormat("%lld", UserDataManager::sharedUserDataManager()->getGoldenCoins())->getCString());
     
-    m_pSpriteCoin->setPositionX(m_pLabelBMFontCoins->getPositionX() - m_pLabelBMFontCoins->getContentSize().width*m_pLabelBMFontCoins->getScaleX());
+    if (m_pSpriteBoard->boundingBox().size.width*0.25f < m_pLabelBMFontCoins->boundingBox().size.width)
+        m_pLabelBMFontCoins->setScale(m_pSpriteBoard->boundingBox().size.width*0.25f/m_pLabelBMFontCoins->boundingBox().size.width);
+    else
+        m_pLabelBMFontCoins->setScale(2.0f);
 }
 
 void BalloonItemSelectDialog::onPressMenuReturnMain(cocos2d::CCObject *pSender)

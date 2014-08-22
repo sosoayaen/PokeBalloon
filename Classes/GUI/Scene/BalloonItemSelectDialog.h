@@ -23,10 +23,11 @@ public:
 	// Constructor
 	BalloonItemSelectDialog()
 	{
-		m_pScale9SpriteBuyBoard = NULL;
+		m_pSpriteBoard = NULL;
         m_pLabelBMFontCoins = NULL;
         m_pSpriteCoin = NULL;
         m_pMenu = NULL;
+        m_pLayerTableView = NULL;
         
         m_pArrayItems = NULL;
         
@@ -45,12 +46,14 @@ public:
 
 private:
 	// Attributes for CCB
-	cocos2d::extension::CCScale9Sprite* m_pScale9SpriteBuyBoard;
+	cocos2d::CCSprite* m_pSpriteBoard;
     cocos2d::CCLabelBMFont* m_pLabelBMFontCoins;
     cocos2d::CCSprite* m_pSpriteCoin;
     cocos2d::CCMenu* m_pMenu;
+    cocos2d::CCLayer* m_pLayerTableView;
     
     cocos2d::extension::CCTableView* m_pTableView;
+    
 
     cocos2d::CCArray* m_pArrayItems;
     

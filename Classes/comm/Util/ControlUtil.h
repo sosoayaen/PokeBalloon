@@ -80,6 +80,10 @@ public:
      * @return CCPoint
      */
     cocos2d::CCPoint getCenterPointWithNode(cocos2d::CCNode* pNode);
+    cocos2d::CCPoint getBottomLeftByNode(cocos2d::CCNode* pNode);
+    cocos2d::CCPoint getBottomRightByNode(cocos2d::CCNode* pNode);
+    cocos2d::CCPoint getTopLeftByNode(cocos2d::CCNode* pNode);
+    cocos2d::CCPoint getTopRightByNode(cocos2d::CCNode* pNode);
 
 	/**
 	* @brief 弹出一个加载等待的层

@@ -250,6 +250,7 @@ void BalloonManager::addRandomBalloon()
                 break;
             case kBalloonTypeAddTime:
                 // 增加3秒钟时间
+                // 根据用户的道具升级等级，5%、10%、15%几率获得直接6秒
                 nValue = 3;
                 break;
             case kBalloonTypeFrozen:
@@ -266,7 +267,7 @@ void BalloonManager::addRandomBalloon()
                 nValue = 1*nClickableCnt;
                 break;
             default:
-                // 10%的概率出现负分
+                // 12%的概率出现负分
                 if (rand()%100 <= 12)
                     nValue *= -1;
                 break;
