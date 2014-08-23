@@ -48,17 +48,39 @@ bool BalloonUserInfoDialog::init()
 		
 		setKeypadEnabled(true);
         
-        SetVisibleBoard(m_pSpriteBoard);
+        // SetVisibleBoard(m_pSpriteBoard);
         
         pushMenu(m_pMenuTab);
         pushMenu(m_pMenuMusic);
-        initTableView();
+        pushMenu(m_pMenuTop);
+        ControlUtil::sharedControlUtil()->SetMenuItemSelectedImageWithNormalImage(m_pMenuTop);
+        // 让按钮动起来
+        CCObject* pObj = NULL;
+        CCARRAY_FOREACH(m_pMenuTop->getChildren(), pObj)
+        {
+            CCMenuItem* pMenuItem = dynamic_cast<CCMenuItem*>(pObj);
+            if (pMenuItem)
+            {
+                CCRotateTo* pActionRotate1 = CCRotateTo::create(1.0f, 15);
+                CCRotateTo* pActionRotate2 = CCRotateTo::create(1.0f, 0);
+                CCRotateTo* pActionRotate3 = CCRotateTo::create(1.0f, -15);
+                CCRotateTo* pActionRotate4 = CCRotateTo::create(1.0f, 0);
+                float delayTime = rand()%30/10.0f + 1.5f;
+                pMenuItem->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(delayTime), pActionRotate1, CCDelayTime::create(delayTime), pActionRotate2, CCDelayTime::create(delayTime), pActionRotate3, CCDelayTime::create(delayTime), pActionRotate4, NULL)));
+            }
+        }
         
+        initTableView();
         initLabelTTF();
         initMenuTabText();
         initPressMenuEffect();
-        
         initEditBox();
+        
+        // 这是入场和出场的动画
+        m_pSpriteBoard->setScale(0.01f);
+        m_pMainBoard = m_pSpriteBoard;
+        setOnEnterAction(CCEaseBounceOut::create(CCScaleTo::create(0.5f, 1.0f)));
+        setOnExitAction(CCEaseExponentialIn::create(CCScaleTo::create(0.4f, 0.01f)));
         
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/balloon/balloon.plist");
         CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("texture/items/items.plist");
@@ -99,7 +121,7 @@ void BalloonUserInfoDialog::onEnter()
     // 初始化分数等
     updateLabelData();
     
-    // 默认选中第一个标签野
+    // 默认选中第一个标签
     onPressMenuTabDetail(m_pMenuTab->getChildren()->objectAtIndex(0));
 }
 
@@ -120,6 +142,8 @@ SEL_MenuHandler BalloonUserInfoDialog::onResolveCCBCCMenuItemSelector( CCObject 
 	CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onPressMenuMusic", BalloonUserInfoDialog::onPressMenuMusic);
 	CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onPressMenuSound", BalloonUserInfoDialog::onPressMenuSound);
 	CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onPressMenuTabDetail", BalloonUserInfoDialog::onPressMenuTabDetail);
+	CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onPressMenuShare", BalloonUserInfoDialog::onPressMenuShare);
+	CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onPressMenuClose", BalloonUserInfoDialog::onPressMenuClose);
 
 	return NULL;
 }
@@ -139,6 +163,7 @@ bool BalloonUserInfoDialog::onAssignCCBMemberVariable( CCObject* pTarget, const 
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuItem2", CCMenuItem*, this->m_pMenuItem2);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuItem3", CCMenuItem*, this->m_pMenuItem3);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuTab", CCMenu*, this->m_pMenuTab);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuTop", CCMenu*, this->m_pMenuTop);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteTableViewBackground", CCSprite*, this->m_pSpriteTableViewBackground);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelBMFontCoins", CCLabelBMFont*, this->m_pLabelBMFontCoins);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelTTFNickname", CCLabelTTF*, this->m_pLabelTTFNickname);
@@ -155,6 +180,7 @@ SEL_CCControlHandler BalloonUserInfoDialog::onResolveCCBCCControlSelector( CCObj
 
 void BalloonUserInfoDialog::onPressMenuMusic(CCObject* pSender)
 {
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
     // 根据当前状态设置开启或者终止音乐
     long lOffFlag = DataManagerUtil::sharedDataManagerUtil()->GetGlobalDataLong(OPT_MUSIC_OFF);
     lOffFlag = lOffFlag ? 0 : 1;
@@ -176,6 +202,7 @@ void BalloonUserInfoDialog::onPressMenuMusic(CCObject* pSender)
 
 void BalloonUserInfoDialog::onPressMenuSound(CCObject* pSender)
 {
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
 	// 根据当前状态设置开启或者终止音效
     long lOffFlag = DataManagerUtil::sharedDataManagerUtil()->GetGlobalDataLong(OPT_SOUND_EFFECT_OFF);
     lOffFlag = lOffFlag ? 0 : 1;
@@ -415,7 +442,7 @@ void BalloonUserInfoDialog::updateLabelData()
     // update coins
     m_pLabelBMFontCoins->setString(CCString::createWithFormat("%lld", pSharedUserData->getGoldenCoins())->getCString());
     if (m_pSpriteBoard->boundingBox().size.width*0.25f < m_pLabelBMFontCoins->boundingBox().size.width)
-        m_pLabelBMFontCoins->setScale(m_pSpriteBoard->boundingBox().size.width*0.25f/m_pLabelBMFontCoins->boundingBox().size.width);
+        m_pLabelBMFontCoins->setScale(m_pSpriteBoard->getContentSize().width*0.25f/m_pLabelBMFontCoins->boundingBox().size.width);
     else
         m_pLabelBMFontCoins->setScale(2.0f);
 }
@@ -532,6 +559,18 @@ void BalloonUserInfoDialog::onPressMenuNickname(cocos2d::CCObject *pSender)
     m_pEditBoxNickname->setText(UserDataManager::sharedUserDataManager()->getNickName().c_str());
     m_pEditBoxNickname->setVisible(true);
     m_pEditBoxNickname->sendActionsForControlEvents(CCControlEventTouchUpInside);
+}
+
+void BalloonUserInfoDialog::onPressMenuClose(cocos2d::CCObject *pSender)
+{
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
+    endDialog();
+}
+
+void BalloonUserInfoDialog::onPressMenuShare(cocos2d::CCObject *pSender)
+{
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
+    // TODO: 分享
 }
 
 void BalloonUserInfoDialog::initTableView()

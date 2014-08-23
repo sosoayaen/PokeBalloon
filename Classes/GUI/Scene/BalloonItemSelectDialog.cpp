@@ -54,12 +54,12 @@ bool BalloonItemSelectDialog::init()
         // SetVisibleBoard(m_pSpriteBoard);
         m_pLayerTableView->setVisible(false);
         
-        ControlUtil::sharedControlUtil()->SetMenuItemSelectedImageWithNormalImage(m_pMenu);
-        pushMenu(m_pMenu);
+        ControlUtil::sharedControlUtil()->SetMenuItemSelectedImageWithNormalImage(m_pMenuTop);
+        pushMenu(m_pMenuTop);
         
         // 设置金币数量的位置
         updateCoins();
-                             
+        
         // 设定头部的名称
         /*
         CCLabelBMFont* pBMFontTitle = CCLabelBMFont::create("Would you like buy Items?", "texture/fonts/font.fnt");
@@ -103,16 +103,36 @@ bool BalloonItemSelectDialog::init()
         m_pTableView->setDirection(kCCScrollViewDirectionVertical);
         m_pTableView->setVerticalFillOrder(kCCTableViewFillTopDown);
         CCPoint pos = ControlUtil::sharedControlUtil()->getBottomLeftByNode(m_pLayerTableView);
-        pos = m_pLayerTableView->getParent()->convertToWorldSpace(pos);
         m_pTableView->setPosition(pos);
         // 放到框框的下面
         m_pTableView->setZOrder(-1);
         
-        m_pSpriteBoard->getParent()->addChild(m_pTableView);
+        m_pSpriteBoard->addChild(m_pTableView);
         
         pushScrollView(m_pTableView);
         
-		
+        // 让按钮动起来
+        pObj = NULL;
+        CCARRAY_FOREACH(m_pMenuTop->getChildren(), pObj)
+        {
+            CCMenuItem* pMenuItem = dynamic_cast<CCMenuItem*>(pObj);
+            if (pMenuItem)
+            {
+                CCRotateTo* pActionRotate1 = CCRotateTo::create(1.0f, 15);
+                CCRotateTo* pActionRotate2 = CCRotateTo::create(1.0f, 0);
+                CCRotateTo* pActionRotate3 = CCRotateTo::create(1.0f, -15);
+                CCRotateTo* pActionRotate4 = CCRotateTo::create(1.0f, 0);
+                float delayTime = rand()%30/10.0f + 1.5f;
+                pMenuItem->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(delayTime), pActionRotate1, CCDelayTime::create(delayTime), pActionRotate2, CCDelayTime::create(delayTime), pActionRotate3, CCDelayTime::create(delayTime), pActionRotate4, NULL)));
+            }
+        }
+        
+        // 设置进场和出场的动画
+        m_pMainBoard = m_pSpriteBoard;
+        m_pSpriteBoard->setScale(0.01f);
+        setOnEnterAction(CCEaseBounceOut::create(CCScaleTo::create(0.5f, 1.0f)));
+        setOnExitAction(CCEaseExponentialIn::create(CCScaleTo::create(0.5f, 0.01f)));
+        
 		bRet = true;
 		
 	} while(0);
@@ -161,9 +181,10 @@ SEL_MenuHandler BalloonItemSelectDialog::onResolveCCBCCMenuItemSelector( CCObjec
 bool BalloonItemSelectDialog::onAssignCCBMemberVariable( CCObject* pTarget, const char* pMemberVariableName, CCNode* pNode )
 {
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteBoard", CCSprite*, this->m_pSpriteBoard);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteContainer", CCSprite*, this->m_pSpriteContainer);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteCoin", CCSprite*, this->m_pSpriteCoin);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelBMFontCoins", CCLabelBMFont*, this->m_pLabelBMFontCoins);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenu", CCMenu*, this->m_pMenu);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuTop", CCMenu*, this->m_pMenuTop);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLayerTableView", CCLayer*, this->m_pLayerTableView);
 
 	return true;
@@ -249,6 +270,7 @@ CCTableViewCell* BalloonItemSelectDialog::tableCellAtIndex( CCTableView *table, 
 	
 	if (pCell)
 	{
+        // 先删除监听的按钮
         pCell->removeAllChildren();
         
         CCDictionary* pDict = (CCDictionary*)m_pArrayItems->objectAtIndex(idx);
@@ -281,25 +303,30 @@ CCTableViewCell* BalloonItemSelectDialog::tableCellAtIndex( CCTableView *table, 
         pCell->addChild(pLabelTTFTitle);
         
         CCLabelTTF* pLabelTTFDesc = CCLabelTTF::create(pDict->valueForKey("desc")->getCString(), "", cellSize.height*0.165f);
-        pLabelTTFDesc->setDimensions(CCSizeMake(cellSize.width*0.60f, cellSize.height*0.6f));
+        pLabelTTFDesc->setDimensions(CCSizeMake(cellSize.width*0.55f, cellSize.height*0.6f));
         pLabelTTFDesc->setHorizontalAlignment(kCCTextAlignmentLeft);
         pLabelTTFDesc->setVerticalAlignment(kCCVerticalTextAlignmentTop);
         pLabelTTFDesc->setAnchorPoint(ccp(0, 1.0f));
         pLabelTTFDesc->setPosition(ccp(pSprite->getPositionX() + pSprite->getContentSize().width*0.5f, pLabelTTFTitle->getPositionY()));
         pCell->addChild(pLabelTTFDesc);
         
+        // 放置购买的按钮
+        CCSprite* pSpriteBtnBuy = CCSprite::createWithSpriteFrameName("prepare_btn_item_buy.png");
         // 放置金币标志和金币数值
         CCSprite* pSpriteCoin = CCSprite::createWithSpriteFrame(m_pSpriteCoin->displayFrame());
-        pSpriteCoin->setAnchorPoint(ccp(0, 0.5f));
-        pSpriteCoin->setPosition(ccp(pLabelTTFDesc->getContentSize().width + pLabelTTFDesc->getPositionX(), cellSize.height*0.5f));
-        pSpriteCoin->setScale(0.5f);
-        pCell->addChild(pSpriteCoin);
+        pSpriteCoin->setScale(pSpriteBtnBuy->getContentSize().height*0.6f/pSpriteCoin->getContentSize().height);
+        pSpriteCoin->setPosition(ccp(pSpriteCoin->boundingBox().size.width, pSpriteBtnBuy->getContentSize().height*0.55f));
+        pSpriteBtnBuy->addChild(pSpriteCoin);
         
         CCLabelBMFont* pBMFontValue = CCLabelBMFont::create(pDict->valueForKey("cost")->getCString(), "texture/fonts/font.fnt");
         pBMFontValue->setScale(1.5f);
         pBMFontValue->setAnchorPoint(ccp(0, 0.5f));
-        pBMFontValue->setPosition(ccp(pSpriteCoin->getPositionX() + pSpriteCoin->boundingBox().size.width*1.15f, cellSize.height*0.5f));
-        pCell->addChild(pBMFontValue);
+        pBMFontValue->setPosition(ccp(pSpriteCoin->getPositionX() + pSpriteCoin->boundingBox().size.width*0.6f, pSpriteBtnBuy->getContentSize().height*0.6f));
+        pSpriteBtnBuy->addChild(pBMFontValue);
+        
+        pSpriteBtnBuy->setPosition(ccp(cellSize.width - pSpriteBtnBuy->getContentSize().width*0.7f, cellSize.height*0.5f));
+        pCell->addChild(pSpriteBtnBuy);
+        
 	}
 	return pCell;
 }
@@ -332,4 +359,9 @@ void BalloonItemSelectDialog::onPressMenuStart(cocos2d::CCObject *pSender)
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
     // 顺利结束对话框
     endDialog();
+}
+
+void BalloonItemSelectDialog::onPressMenuBuyItem(cocos2d::CCObject *pSender)
+{
+    
 }

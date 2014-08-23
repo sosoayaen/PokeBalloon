@@ -50,7 +50,7 @@ void DialogLayer::onEnter()
     CCDirector::sharedDirector()->getTouchDispatcher()->addTargetedDelegate(this, kCCMenuHandlerPriority - 2, true);
 
 	// 播放进场动画
-	if (m_pMainBoard && m_pBoardOnExitAction)
+	if (m_pMainBoard && m_pBoardOnEnterAction)
 	{
 		m_pMainBoard->stopAllActions();
 		m_pMainBoard->runAction(m_pBoardOnEnterAction);

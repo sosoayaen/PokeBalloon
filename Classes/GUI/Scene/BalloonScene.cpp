@@ -906,6 +906,7 @@ void BalloonScene::onBuyItemsDialogEndCall(CCNode* pNode)
 void BalloonScene::showBuyItemsDialog()
 {
     BalloonItemSelectDialog* pDialog = BalloonItemSelectDialog::create();
+    // 由小到达进场
     pDialog->setEndCallbackFuncN(CCCallFuncN::create(this, callfuncN_selector(BalloonScene::onBuyItemsDialogEndCall)));
     addChild(pDialog);
 }

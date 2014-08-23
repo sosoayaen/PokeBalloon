@@ -40,6 +40,7 @@ public:
 		m_pLabelBMFontCoins = NULL;
 		m_pLabelTTFNickname = NULL;
 		m_pSpriteBoard = NULL;
+        m_pMenuTop = NULL;
 
         m_pMenuItemLabelNickName = NULL;
         m_pMenuNickname = NULL;
@@ -83,6 +84,7 @@ private:
 	cocos2d::CCLabelBMFont* m_pLabelBMFontCoins;
 	cocos2d::CCLabelTTF* m_pLabelTTFNickname;
 	cocos2d::CCSprite* m_pSpriteBoard;
+    cocos2d::CCMenu* m_pMenuTop;
     
     cocos2d::CCMenuItemLabel* m_pMenuItemLabelNickName;
     cocos2d::CCMenu* m_pMenuNickname;
@@ -151,13 +153,17 @@ public:
 	virtual unsigned int numberOfCellsInTableView(cocos2d::extension::CCTableView *table);
 
 	
-public:
+protected:
 	// Funcitons
 	void onPressMenuMusic(cocos2d::CCObject* pSender);
 	void onPressMenuSound(cocos2d::CCObject* pSender);
 	void onPressMenuTabDetail(cocos2d::CCObject* pSender);
     void onPressMenuNickname(cocos2d::CCObject* pSender);
+    void onPressMenuShare(cocos2d::CCObject* pSender);
+    void onPressMenuClose(cocos2d::CCObject* pSender);
 
+public:
+    
 };
 
 #endif // __BALLOONUSERINFODIALOG__H__

@@ -30,32 +30,6 @@
                 <key>sourceSize</key>
                 <string>{89,82}</string>
             </dict>
-            <key>userinfo_btn_close.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{226,835},{137,71}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{137,71}}</string>
-                <key>sourceSize</key>
-                <string>{137,71}</string>
-            </dict>
-            <key>userinfo_btn_share.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{87,835},{137,71}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{137,71}}</string>
-                <key>sourceSize</key>
-                <string>{137,71}</string>
-            </dict>
         </dict>
         <key>metadata</key>
         <dict>
@@ -66,7 +40,7 @@
             <key>size</key>
             <string>{563,919}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:1cf3ecff48d9958f1cf5e4a9cae10a4a:8e43109c24e60e2b10ae660804d44cf1:d9904c368c7e3e659a56e954c1a68e77$</string>
+            <string>$TexturePacker:SmartUpdate:6f8d649c51d01dfae5d4c691e8404e0c:cdac8999c2b949a29cf1066cf739f8db:d9904c368c7e3e659a56e954c1a68e77$</string>
             <key>textureFileName</key>
             <string>commonDialog.png</string>
         </dict>

@@ -26,8 +26,9 @@ public:
 		m_pSpriteBoard = NULL;
         m_pLabelBMFontCoins = NULL;
         m_pSpriteCoin = NULL;
-        m_pMenu = NULL;
+        m_pMenuTop = NULL;
         m_pLayerTableView = NULL;
+        m_pSpriteContainer = NULL;
         
         m_pArrayItems = NULL;
         
@@ -47,9 +48,10 @@ public:
 private:
 	// Attributes for CCB
 	cocos2d::CCSprite* m_pSpriteBoard;
+	cocos2d::CCSprite* m_pSpriteContainer;
     cocos2d::CCLabelBMFont* m_pLabelBMFontCoins;
     cocos2d::CCSprite* m_pSpriteCoin;
-    cocos2d::CCMenu* m_pMenu;
+    cocos2d::CCMenu* m_pMenuTop;
     cocos2d::CCLayer* m_pLayerTableView;
     
     cocos2d::extension::CCTableView* m_pTableView;
@@ -94,6 +96,9 @@ private:
     
     // 更新金币数目
     void updateCoins();
+    
+    // 按下购买的回调
+    void onPressMenuBuyItem(cocos2d::CCObject* pSender);
 
 
 };

@@ -67,7 +67,7 @@ bool BalloonResultDialog::init()
         
         addBoardChildWithAction(m_pSpriteResultBoard,
                                 CCEaseBounceOut::create(CCMoveTo::create(0.5f, m_posOri)),
-                                CCEaseExponentialIn::create(CCMoveTo::create(0.5f, posUp)));
+                                CCEaseExponentialIn::create(CCMoveTo::create(0.2f, posUp)));
         SetVisibleBoard(NULL);
         
         // 更新分享按钮数据
