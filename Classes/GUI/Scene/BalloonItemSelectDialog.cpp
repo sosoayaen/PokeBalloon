@@ -10,6 +10,7 @@ USING_NS_BAILIN_UTIL;
 
 #define TAG_ID_ITEM_ICON_BACKGROUND_SPRITE  1000
 #define TAG_ID_ITEM_CNT_LABEL 100
+#define MISSION_REFRESH_COST 1
 
 BalloonItemSelectDialog::~BalloonItemSelectDialog()
 {
@@ -54,18 +55,16 @@ bool BalloonItemSelectDialog::init()
         // SetVisibleBoard(m_pSpriteBoard);
         m_pLayerTableView->setVisible(false);
         
+        // 初始化字体
+        initLabelTTFFont();
+        
         ControlUtil::sharedControlUtil()->SetMenuItemSelectedImageWithNormalImage(m_pMenuTop);
         pushMenu(m_pMenuTop);
         
+        initMissionRefreshMenu();
+        
         // 设置金币数量的位置
         updateCoins();
-        
-        // 设定头部的名称
-        /*
-        CCLabelBMFont* pBMFontTitle = CCLabelBMFont::create("Would you like buy Items?", "texture/fonts/font.fnt");
-        pBMFontTitle->setPosition(ccp(m_pSpriteBoard->getContentSize().width*0.5f, m_pSpriteBoard->getContentSize().height - pBMFontTitle->getContentSize().height));
-        m_pSpriteBoard->addChild(pBMFontTitle);
-        */
         
         // 初始化道具内容
         CCDictionary* pDictExtItemConfig = CCDictionary::createWithContentsOfFile("configuration/buyExtendItems.plist");
@@ -104,8 +103,9 @@ bool BalloonItemSelectDialog::init()
         m_pTableView->setVerticalFillOrder(kCCTableViewFillTopDown);
         CCPoint pos = ControlUtil::sharedControlUtil()->getBottomLeftByNode(m_pLayerTableView);
         m_pTableView->setPosition(pos);
-        // 放到框框的下面
-        m_pTableView->setZOrder(-1);
+        // 表格放到框框的下面
+        m_pSpriteMiddleBar->setZOrder(1);
+        m_pSpriteContainer->setZOrder(2);
         
         m_pSpriteBoard->addChild(m_pTableView);
         
@@ -144,16 +144,8 @@ void BalloonItemSelectDialog::onEnter()
 {
 	DialogLayer::onEnter();
     
-    // 得到任务
-    const Mission* pMission = BalloonMission::sharedBalloonMission()->getRandomMission();
-    if (pMission)
-    {
-        CCString* pStrMission = CCString::createWithFormat("%d/%s/%s", pMission->nMissionID, pMission->strMissionName.c_str(), pMission->strMissionDesc.c_str());
-        CCLabelTTF* pLabelTTF = CCLabelTTF::create(pStrMission->getCString(), "", 28);
-        pLabelTTF->setAnchorPoint(CCPointZero);
-        pLabelTTF->setPosition(ccp(20, 20));
-        m_pSpriteBoard->addChild(pLabelTTF);
-    }
+    // 更新任务
+    updateMission();
 }
 
 void BalloonItemSelectDialog::onExit()
@@ -174,6 +166,7 @@ SEL_MenuHandler BalloonItemSelectDialog::onResolveCCBCCMenuItemSelector( CCObjec
 
     CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onPressMenuStart", BalloonItemSelectDialog::onPressMenuStart);
     CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onPressMenuReturnMain", BalloonItemSelectDialog::onPressMenuReturnMain);
+    CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onPressMenuRefreshMission", BalloonItemSelectDialog::onPressMenuRefreshMission);
     
 	return NULL;
 }
@@ -183,9 +176,16 @@ bool BalloonItemSelectDialog::onAssignCCBMemberVariable( CCObject* pTarget, cons
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteBoard", CCSprite*, this->m_pSpriteBoard);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteContainer", CCSprite*, this->m_pSpriteContainer);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteCoin", CCSprite*, this->m_pSpriteCoin);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteMiddleBar", CCSprite*, this->m_pSpriteMiddleBar);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelBMFontCoins", CCLabelBMFont*, this->m_pLabelBMFontCoins);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuTop", CCMenu*, this->m_pMenuTop);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuRefreshMission", CCMenu*, this->m_pMenuRefreshMission);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLayerTableView", CCLayer*, this->m_pLayerTableView);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelTTFMissionTitle", CCLabelTTF*, this->m_pLabelTTFMissionTitle);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelTTFMissionDesc", CCLabelTTF*, this->m_pLabelTTFMissionDesc);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelTTFMissionReward", CCLabelTTF*, this->m_pLabelTTFMissionReward);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelBMFontReward", CCLabelBMFont*, this->m_pLabelBMFontReward);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteRewardCoin", CCSprite*, this->m_pSpriteRewardCoin);
 
 	return true;
 }
@@ -361,7 +361,88 @@ void BalloonItemSelectDialog::onPressMenuStart(cocos2d::CCObject *pSender)
     endDialog();
 }
 
+void BalloonItemSelectDialog::onPressMenuRefreshMission(cocos2d::CCObject* pSender)
+{
+    // 校验是否买得起
+    if (UserDataManager::sharedUserDataManager()->getGoldenCoins() >= MISSION_REFRESH_COST)
+    {
+        UserDataManager::sharedUserDataManager()->addGoldenCoins(-MISSION_REFRESH_COST);
+        
+        BalloonSoundManager::sharedBalloonSoundManager()->playEffectSpendCoin();
+        
+        // 更新随机任务
+        updateMission(true);
+        updateCoins();
+    }
+    else
+    {
+        // TODO: 修改成自己的对话框，可以做跳转等动作
+        CCMessageBox("You need more golden coins!", "Tips");
+    }
+}
+
+/*
 void BalloonItemSelectDialog::onPressMenuBuyItem(cocos2d::CCObject *pSender)
 {
     
+}
+*/
+
+void BalloonItemSelectDialog::initMissionRefreshMenu()
+{
+    ControlUtil::sharedControlUtil()->SetMenuItemSelectedImageWithNormalImage(m_pMenuRefreshMission);
+    pushMenu(m_pMenuRefreshMission);
+    
+    // 添加个金币
+    CCString* pStringCost = CCString::createWithFormat("%d", MISSION_REFRESH_COST);
+    const char* pszMissionRefreshCost = pStringCost->getCString();
+    
+    CCMenuItemImage* pMenuItem = (CCMenuItemImage*)m_pMenuRefreshMission->getChildren()->lastObject();
+    CCSprite* pSpriteNormal = (CCSprite*)pMenuItem->getNormalImage();
+    CCSprite* pSpriteSelected = (CCSprite*)pMenuItem->getSelectedImage();
+    
+    // 增加到普通图标上
+    CCSprite* pSpriteCoin = CCSprite::createWithSpriteFrameName("balloon_coin.png");
+    pSpriteCoin->setScale(pSpriteNormal->getContentSize().height*0.7f/pSpriteCoin->getContentSize().height);
+    pSpriteCoin->setPosition(ccp(pSpriteCoin->boundingBox().size.width, pSpriteNormal->getContentSize().height*0.55f));
+    pSpriteNormal->addChild(pSpriteCoin);
+    CCLabelBMFont* pBMFont = CCLabelBMFont::create(pszMissionRefreshCost, "texture/fonts/font.fnt");
+    pBMFont->setPosition(ccp(pSpriteNormal->getContentSize().width*0.55f, pSpriteNormal->getContentSize().height*0.6f));
+    pBMFont->setScale(1.5f);
+    pSpriteNormal->addChild(pBMFont);
+    
+    // 添加到选中图标上
+    pSpriteCoin = CCSprite::createWithSpriteFrameName("balloon_coin.png");
+    pSpriteCoin->setScale(pSpriteSelected->getContentSize().height*0.7f/pSpriteCoin->getContentSize().height);
+    pSpriteCoin->setPosition(ccp(pSpriteCoin->boundingBox().size.width, pSpriteSelected->getContentSize().height*0.55f));
+    pSpriteSelected->addChild(pSpriteCoin);
+    pBMFont = CCLabelBMFont::create(pszMissionRefreshCost, "texture/fonts/font.fnt");
+    pBMFont->setPosition(ccp(pSpriteSelected->getContentSize().width*0.55f, pSpriteSelected->getContentSize().height*0.6f));
+    pBMFont->setScale(1.5f);
+    pSpriteSelected->addChild(pBMFont);
+}
+
+void BalloonItemSelectDialog::initLabelTTFFont()
+{
+    ControlUtil::sharedControlUtil()->FitLabelTTFFontSize(m_pLabelTTFMissionTitle);
+    ControlUtil::sharedControlUtil()->FitLabelTTFFontSize(m_pLabelTTFMissionDesc);
+    ControlUtil::sharedControlUtil()->FitLabelTTFFontSize(m_pLabelTTFMissionReward);
+    // TODO: 这里初始化的时候从配置文件中更新对应的【奖励】语言描述
+}
+
+void BalloonItemSelectDialog::updateMission(bool bNeedRefresh /* = false */ )
+{
+    if (bNeedRefresh)
+    {
+        // 设置生成一个新的随机任务
+        BalloonMission::sharedBalloonMission()->setNeedNewMission(true);
+    }
+    // 得到任务
+    const Mission* pMission = BalloonMission::sharedBalloonMission()->getRandomMission();
+    if (pMission)
+    {
+        m_pLabelTTFMissionTitle->setString(pMission->strMissionName.c_str());
+        m_pLabelTTFMissionDesc->setString(pMission->strMissionDesc.c_str());
+        m_pLabelBMFontReward->setString(CCString::createWithFormat("%d", pMission->nReward)->getCString());
+    }
 }

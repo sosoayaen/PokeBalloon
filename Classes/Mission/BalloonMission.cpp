@@ -170,8 +170,18 @@ const Mission* BalloonMission::getRandomMission()
 
 	if (nMissionSize > 0)
 	{
+        int idx = rand()%nMissionSize;
 		// 取随机一个任务
-		pMission = m_vMissionArray[rand()%nMissionSize];
+		pMission = m_vMissionArray[idx];
+        if (m_pLastMission)
+        {
+            // 保证得到的任务不会和上一次重复
+            while (m_pLastMission->nMissionID == pMission->nMissionID)
+            {
+                idx = rand()%nMissionSize;
+                pMission = m_vMissionArray[idx];
+            }
+        }
         // 生成一个任务后，完成前就把新任务标志关闭
         setNeedNewMission(false);
 	}

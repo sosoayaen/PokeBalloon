@@ -81,8 +81,8 @@ private:
 
     void onPressMenuStartGame(cocos2d::CCObject* pSender);
     void onPressMenuRankBoard(cocos2d::CCObject* pSender);
-    void onPressMenuOptions(cocos2d::CCObject* pSender);
-    void onPressMenuHandbook(cocos2d::CCObject* pSender);
+    void onPressMenuShop(cocos2d::CCObject* pSender);
+    void onPressMenuUserinfo(cocos2d::CCObject* pSender);
 
 };
 

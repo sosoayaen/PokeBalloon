@@ -261,20 +261,20 @@ void BalloonFirstPage::initMenu()
     pMenuItemStart->setNormalSpriteFrame(pSpriteFrameCache->spriteFrameByName("menu_item_start.png"));
     pMenuItemStart->setTarget(this, menu_selector(BalloonFirstPage::onPressMenuStartGame));
     
-    CCMenuItemImage* pMenuItemOptions = CCMenuItemImage::create();
-    pMenuItemOptions->setNormalSpriteFrame(pSpriteFrameCache->spriteFrameByName("menu_item_options.png"));
-    pMenuItemOptions->setTarget(this, menu_selector(BalloonFirstPage::onPressMenuOptions));
+    CCMenuItemImage* pMenuItemShop = CCMenuItemImage::create();
+    pMenuItemShop->setNormalSpriteFrame(pSpriteFrameCache->spriteFrameByName("menu_item_shop.png"));
+    pMenuItemShop->setTarget(this, menu_selector(BalloonFirstPage::onPressMenuShop));
     
-    CCMenuItemImage* pMenuItemHandbook = CCMenuItemImage::create();
-    pMenuItemHandbook->setNormalSpriteFrame(pSpriteFrameCache->spriteFrameByName("menu_item_handbook.png"));
-    pMenuItemHandbook->setTarget(this, menu_selector(BalloonFirstPage::onPressMenuHandbook));
+    CCMenuItemImage* pMenuItemUserinfo = CCMenuItemImage::create();
+    pMenuItemUserinfo->setNormalSpriteFrame(pSpriteFrameCache->spriteFrameByName("menu_item_userinfo.png"));
+    pMenuItemUserinfo->setTarget(this, menu_selector(BalloonFirstPage::onPressMenuUserinfo));
     
     pMenuItemStart->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, 10.0f), CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, -10.0f), NULL)));
-    pMenuItemOptions->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, 10.0f), CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, -10.0f), NULL)));
-    pMenuItemHandbook->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, 10.0f), CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, -10.0f), NULL)));
+    pMenuItemShop->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, 10.0f), CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, -10.0f), NULL)));
+    pMenuItemUserinfo->runAction(CCRepeatForever::create(CCSequence::create(CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, 10.0f), CCDelayTime::create(rand()%6+1), CCRotateTo::create(2.0f, -10.0f), NULL)));
     
     m_pMenuMain->addChild(pMenuItemStart);
-    m_pMenuMain->addChild(pMenuItemHandbook);
+    m_pMenuMain->addChild(pMenuItemUserinfo);
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     CCMenuItemImage* pMenuItemRankBoard = CCMenuItemImage::create();
@@ -284,11 +284,11 @@ void BalloonFirstPage::initMenu()
     m_pMenuMain->addChild(pMenuItemRankBoard);
 #endif
     
-    m_pMenuMain->addChild(pMenuItemOptions);
+    m_pMenuMain->addChild(pMenuItemShop);
     
     ControlUtil::sharedControlUtil()->SetMenuItemSelectedImageWithNormalImage(m_pMenuMain);
     
-    m_pMenuMain->alignItemsVerticallyWithPadding(pMenuItemOptions->getContentSize().height*0.5f);
+    m_pMenuMain->alignItemsVerticallyWithPadding(pMenuItemShop->getContentSize().height*0.5f);
     
     m_pMenuMain->setPosition(ccp(getContentSize().width*0.5f, getContentSize().height*1.5f));
     
@@ -311,19 +311,17 @@ void BalloonFirstPage::onPressMenuRankBoard(cocos2d::CCObject *pSender)
 #endif
 }
 
-void BalloonFirstPage::onPressMenuOptions(cocos2d::CCObject *pSender)
+void BalloonFirstPage::onPressMenuShop(cocos2d::CCObject *pSender)
 {
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
-    addChild(BalloonOptionsDialog::create());
+    // addChild(BalloonOptionsDialog::create());
 }
 
-void BalloonFirstPage::onPressMenuHandbook(cocos2d::CCObject *pSender)
+void BalloonFirstPage::onPressMenuUserinfo(cocos2d::CCObject *pSender)
 {
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
-    // 显示图鉴场景
-    // CCScene* pScene = BalloonHandBookScene::scene();
-    // CCScene* pScene = BalloonShopScene::scene();
-    // CCDirector::sharedDirector()->pushScene(pScene);
+    
+    // 用户个人信息对话框
     BalloonUserInfoDialog* pDialog = BalloonUserInfoDialog::create();
     addChild(pDialog);
     

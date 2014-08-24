@@ -554,8 +554,11 @@ bool BalloonUserInfoDialog::endDialog(cocos2d::CCActionInterval* pAction /* = NU
 
 void BalloonUserInfoDialog::onPressMenuNickname(cocos2d::CCObject *pSender)
 {
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
+    
     m_pMenuNickname->setVisible(false);
     // 弹出一个对话框提供名字修改，修改后更新下名字的显示
+    m_pEditBoxNickname->setPosition(m_pMenuNickname->getPosition());
     m_pEditBoxNickname->setText(UserDataManager::sharedUserDataManager()->getNickName().c_str());
     m_pEditBoxNickname->setVisible(true);
     m_pEditBoxNickname->sendActionsForControlEvents(CCControlEventTouchUpInside);
@@ -654,9 +657,9 @@ void BalloonUserInfoDialog::createTableCellLevelUp(CCTableView* table, CCTableVi
         {
             const char* pszStarName = NULL;
             if (i < 2)
-                pszStarName = "star_full.png";
+                pszStarName = "userinfo_star_full.png";
             else
-                pszStarName = "star_empty.png";
+                pszStarName = "userinfo_star_empty.png";
             
             CCSprite* star = CCSprite::createWithSpriteFrameName(pszStarName);
             CCSize starSize = star->getContentSize();

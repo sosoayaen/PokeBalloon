@@ -4,27 +4,53 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>background_dialog.png</key>
+            <key>backgound_dialog_frame.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{559,831}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{559,831}}</string>
                 <key>sourceSize</key>
                 <string>{559,831}</string>
             </dict>
+            <key>background_dialog_color.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{835,2},{521,741}}</string>
+                <key>offset</key>
+                <string>{0,-24}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{19,69},{521,741}}</string>
+                <key>sourceSize</key>
+                <string>{559,831}</string>
+            </dict>
+            <key>background_middle_bar.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{835,525},{529,31}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{15,0},{529,31}}</string>
+                <key>sourceSize</key>
+                <string>{559,31}</string>
+            </dict>
             <key>balloon_coin.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,835},{83,82}}</string>
+                <string>{{1578,2},{83,82}}</string>
                 <key>offset</key>
                 <string>{-1,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{2,0},{83,82}}</string>
                 <key>sourceSize</key>
@@ -38,9 +64,9 @@
             <key>realTextureFileName</key>
             <string>commonDialog.png</string>
             <key>size</key>
-            <string>{563,919}</string>
+            <string>{1662,563}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:6f8d649c51d01dfae5d4c691e8404e0c:cdac8999c2b949a29cf1066cf739f8db:d9904c368c7e3e659a56e954c1a68e77$</string>
+            <string>$TexturePacker:SmartUpdate:e69d4220d69e4409b5261448be674af7:4d0869f34bc8933b6d5c04e2845ba279:d9904c368c7e3e659a56e954c1a68e77$</string>
             <key>textureFileName</key>
             <string>commonDialog.png</string>
         </dict>
