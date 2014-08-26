@@ -183,7 +183,6 @@ bool BalloonItemSelectDialog::onAssignCCBMemberVariable( CCObject* pTarget, cons
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLayerTableView", CCLayer*, this->m_pLayerTableView);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelTTFMissionTitle", CCLabelTTF*, this->m_pLabelTTFMissionTitle);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelTTFMissionDesc", CCLabelTTF*, this->m_pLabelTTFMissionDesc);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelTTFMissionReward", CCLabelTTF*, this->m_pLabelTTFMissionReward);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelBMFontReward", CCLabelBMFont*, this->m_pLabelBMFontReward);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteRewardCoin", CCSprite*, this->m_pSpriteRewardCoin);
 
@@ -426,8 +425,6 @@ void BalloonItemSelectDialog::initLabelTTFFont()
 {
     ControlUtil::sharedControlUtil()->FitLabelTTFFontSize(m_pLabelTTFMissionTitle);
     ControlUtil::sharedControlUtil()->FitLabelTTFFontSize(m_pLabelTTFMissionDesc);
-    ControlUtil::sharedControlUtil()->FitLabelTTFFontSize(m_pLabelTTFMissionReward);
-    // TODO: 这里初始化的时候从配置文件中更新对应的【奖励】语言描述
 }
 
 void BalloonItemSelectDialog::updateMission(bool bNeedRefresh /* = false */ )

@@ -4,109 +4,44 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>cloud_1.png</key>
+            <key>cloud1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1140,2},{124,77}}</string>
+                <string>{{2,2},{177,74}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{2,0},{124,77}}</string>
+                <string>{{0,0},{177,74}}</string>
                 <key>sourceSize</key>
-                <string>{128,77}</string>
+                <string>{177,74}</string>
             </dict>
-            <key>cloud_2.png</key>
+            <key>cloud2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{572,2},{188,115}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{2,0},{188,115}}</string>
-                <key>sourceSize</key>
-                <string>{192,115}</string>
-            </dict>
-            <key>cloud_3.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{382,2},{188,115}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{2,0},{188,115}}</string>
-                <key>sourceSize</key>
-                <string>{192,115}</string>
-            </dict>
-            <key>cloud_4.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{192,2},{188,115}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{2,0},{188,115}}</string>
-                <key>sourceSize</key>
-                <string>{192,115}</string>
-            </dict>
-            <key>cloud_5.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{2,2},{188,115}}</string>
-                <key>offset</key>
-                <string>{-2,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{188,115}}</string>
-                <key>sourceSize</key>
-                <string>{192,115}</string>
-            </dict>
-            <key>cloud_6.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{1014,2},{124,77}}</string>
+                <string>{{181,2},{114,74}}</string>
                 <key>offset</key>
                 <string>{-1,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{1,0},{124,77}}</string>
+                <string>{{0,0},{114,74}}</string>
                 <key>sourceSize</key>
-                <string>{128,77}</string>
+                <string>{116,74}</string>
             </dict>
-            <key>cloud_7.png</key>
+            <key>cloud3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{888,2},{124,77}}</string>
+                <string>{{297,2},{45,40}}</string>
                 <key>offset</key>
-                <string>{2,0}</string>
+                <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{4,0},{124,77}}</string>
+                <string>{{0,0},{45,40}}</string>
                 <key>sourceSize</key>
-                <string>{128,77}</string>
-            </dict>
-            <key>cloud_8.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{762,2},{124,77}}</string>
-                <key>offset</key>
-                <string>{2,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{4,0},{124,77}}</string>
-                <key>sourceSize</key>
-                <string>{128,77}</string>
+                <string>{45,40}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -116,9 +51,9 @@
             <key>realTextureFileName</key>
             <string>cloud.png</string>
             <key>size</key>
-            <string>{1266,119}</string>
+            <string>{339,78}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:b355557faf2149b355bb1dabf2301e54$</string>
+            <string>$TexturePacker:SmartUpdate:45b754cf91016d5e39f608724a7718e0:c598116cdcc3a20f1c9d6bd4c4ef1a1b:3047d7f37c9f3f9d0775d24fd6dfbdfe$</string>
             <key>textureFileName</key>
             <string>cloud.png</string>
         </dict>

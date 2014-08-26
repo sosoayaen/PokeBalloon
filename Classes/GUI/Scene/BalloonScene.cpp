@@ -128,6 +128,16 @@ bool BalloonScene::init()
         
         m_pSpriteBalloonModel->setVisible(false);
         
+        // 设置能量动画，不停播放
+        CCArray* pArrayAnime = CCArray::createWithCapacity(6);
+        for (int idx = 1; idx <= 6; idx++)
+        {
+            pArrayAnime->addObject(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(CCString::createWithFormat("energy_fire%d.png", idx)->getCString()));
+        }
+        CCAnimation* pAnimation = CCAnimation::createWithSpriteFrames(pArrayAnime, 0.1f);
+        CCAnimate* pAnimate = CCAnimate::create(pAnimation);
+        m_pSpriteEnergyFire->runAction(CCRepeatForever::create(pAnimate));
+        
 		bRet = true;
 		
 	} while(0);
@@ -177,6 +187,8 @@ void BalloonScene::updateScore()
 {
     // m_pLabelTTFScore->setString(CCString::createWithFormat("Score: %ld", m_lTotalScore)->getCString());
     m_pLabelBMFontScore->setCString(CCString::createWithFormat("%lld", m_llTotalScore)->getCString());
+    // 更新能量球位置
+    m_pSpriteEnergyFire->setPosition(ccp(m_pLabelBMFontScore->getPositionX() - m_pLabelBMFontScore->boundingBox().size.width, m_pLabelBMFontScore->getPositionY()));
 }
 
 void BalloonScene::updateTimeLeft()
@@ -264,6 +276,7 @@ bool BalloonScene::onAssignCCBMemberVariable( CCObject* pTarget, const char* pMe
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLayerItems", CCLayer*, this->m_pLayerItems);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteBackground", CCSprite*, this->m_pSpriteBackground);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuPause", CCMenu*, this->m_pMenuPause);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteEnergyFire", CCSprite*, this->m_pSpriteEnergyFire);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteScoreBar", CCSprite*, this->m_pSpriteScoreBar);
 
 	return true;
@@ -983,6 +996,7 @@ bool BalloonScene::setResourceString()
     m_vTexturesString.push_back("texture/cloud/cloud.plist");
     m_vTexturesString.push_back("texture/balloon/balloon.plist");
     m_vTexturesString.push_back("texture/balloonScene/balloonScene.plist");
+    m_vTexturesString.push_back("texture/animation/animation.plist");
     m_vTexturesString.push_back("texture/items/items.plist");
 //    m_vTexturesString.push_back("texture/menuItems/menuItems.plist");
     m_vTexturesString.push_back("texture/balloonEffect/balloon_effect_frozen.plist");
@@ -1015,7 +1029,7 @@ void BalloonScene::commitScoreToServer()
     // 获得当前用户的UDID
     pDict->setObject(ccs("12345678901234567890123456789012"), "uid");
     // 获得当前用户的用户名
-    pDict->setObject(ccs("JasonTou"), "uname");
+    pDict->setObject(ccs(UserDataManager::sharedUserDataManager()->getNickName().c_str()), "uname");
     CCArray* pArray = CCArray::create();
     
     // for many score type

@@ -77,7 +77,7 @@ void CloudManager::addRandomCloud()
 
 	// 随机得到云朵的ID
 	// CCString* pStrCloudTextureName = CCString::createWithFormat("texture/cloud/cloud_%d.png", rand()%8+1);
-	CCString* pStrCloudSpriteFrameName = CCString::createWithFormat("cloud_%d.png", rand()%8+1);
+	CCString* pStrCloudSpriteFrameName = CCString::createWithFormat("cloud%d.png", rand()%2+1);
 
 	// 生成云朵对象
 	// Cloud* pCloud = Cloud::create(pStrCloudTextureName->getCString());

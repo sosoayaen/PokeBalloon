@@ -33,7 +33,6 @@ public:
         m_pMenuRefreshMission = NULL;
         m_pLabelTTFMissionTitle = NULL;
         m_pLabelTTFMissionDesc = NULL;
-        m_pLabelTTFMissionReward = NULL;
         m_pSpriteRewardCoin = NULL;
         m_pLabelBMFontReward = NULL;
         
@@ -64,7 +63,6 @@ private:
     cocos2d::CCMenu* m_pMenuRefreshMission;
     cocos2d::CCLabelTTF* m_pLabelTTFMissionTitle;
     cocos2d::CCLabelTTF* m_pLabelTTFMissionDesc;
-    cocos2d::CCLabelTTF* m_pLabelTTFMissionReward;
     cocos2d::CCSprite* m_pSpriteRewardCoin;
     cocos2d::CCLabelBMFont* m_pLabelBMFontReward;
     

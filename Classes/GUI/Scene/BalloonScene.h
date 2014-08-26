@@ -46,6 +46,7 @@ public:
         m_pSpriteBackground = NULL;
         m_pMenuPause = NULL;
         m_pSpriteScoreBar = NULL;
+        m_pSpriteEnergyFire = NULL;
         m_bCheated = false;
         
         m_nReadyTimeTime = 0.0;
@@ -121,6 +122,8 @@ private:
     cocos2d::CCMenu* m_pMenuPause;
     
     cocos2d::CCSprite* m_pSpriteScoreBar;
+    
+    cocos2d::CCSprite* m_pSpriteEnergyFire;
 
 private:
     // 当前局统计对象
