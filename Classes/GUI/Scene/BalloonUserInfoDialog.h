@@ -41,6 +41,7 @@ public:
 		m_pLabelTTFNickname = NULL;
 		m_pSpriteBoard = NULL;
         m_pMenuTop = NULL;
+        m_pLayerTableContainer = NULL;
 
         m_pMenuItemLabelNickName = NULL;
         m_pMenuNickname = NULL;
@@ -85,6 +86,7 @@ private:
 	cocos2d::CCLabelTTF* m_pLabelTTFNickname;
 	cocos2d::CCSprite* m_pSpriteBoard;
     cocos2d::CCMenu* m_pMenuTop;
+    cocos2d::CCLayer* m_pLayerTableContainer;
     
     cocos2d::CCMenuItemLabel* m_pMenuItemLabelNickName;
     cocos2d::CCMenu* m_pMenuNickname;

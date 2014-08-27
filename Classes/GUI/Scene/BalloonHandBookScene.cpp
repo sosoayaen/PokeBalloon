@@ -248,7 +248,7 @@ CCTableViewCell* BalloonHandBookScene::tableCellAtIndex( CCTableView *table, uns
         // 单元大小
         CCSize cellSize = tableCellSizeForIndex(table, idx);
         // 创建单元背景
-        CCScale9Sprite* pSpriteCellBackground = CCScale9Sprite::create("texture/handBook/handbook_background.png");
+        CCScale9Sprite* pSpriteCellBackground = CCScale9Sprite::create("texture/scale9frame.png");
         pSpriteCellBackground->setTag(100);
         pSpriteCellBackground->setPreferredSize(cellSize);
         pSpriteCellBackground->setPosition(ccp(cellSize.width*0.5f, cellSize.height*0.5f));

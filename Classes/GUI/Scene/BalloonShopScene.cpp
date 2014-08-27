@@ -180,7 +180,7 @@ CCTableViewCell* BalloonShopScene::tableCellAtIndex(cocos2d::extension::CCTableV
         CCSize cellSize = cellSizeForTable(table);
         
         // 先创建一个背景
-        CCScale9Sprite* pSpriteBG = CCScale9Sprite::create("texture/handBook/handbook_background.png");
+        CCScale9Sprite* pSpriteBG = CCScale9Sprite::create("texture/handBook/scale9frame.png");
         pSpriteBG->setPreferredSize(CCSizeMake(cellSize.width*0.9f, cellSize.height));
         pSpriteBG->setPosition(ccpMult(ccpFromSize(cellSize), 0.5f));
         pCell->addChild(pSpriteBG);

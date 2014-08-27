@@ -2,7 +2,7 @@
 // @@Author: Jason Tou
 // @@Date:2013/04/26
 // @@Description:
-//     Êı¾İ»º´æ
+//     æ•°æ®ç¼“å­˜
 //////////////////////////////////////////////////////////////////////////
 
 #ifndef __MEM_BUFFER_H__
@@ -30,11 +30,11 @@ namespace bailin
 		virtual char* GetBuffer();
 		virtual void Clear();
 
-		// ´Ó×ó±ßÒÆ³ıÊı¾İ
+		// ä»å·¦è¾¹ç§»é™¤æ•°æ®
 		virtual bool RemoveLeft(int nLen);
 		// virtual bool RemoveRight(int nLen);
 
-		// ´Ó×ó±ßµ¯³öÊı¾İ
+		// ä»å·¦è¾¹å¼¹å‡ºæ•°æ®
 		virtual bool PopLeft(MemBuffer* pBuffer, int nLen);
 
 		bool ReAllocBuffer(int nDeltaLen);

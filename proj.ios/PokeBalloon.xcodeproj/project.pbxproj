@@ -94,6 +94,8 @@
 		0469117F19175937009A0734 /* particles in Resources */ = {isa = PBXBuildFile; fileRef = 0469117E19175937009A0734 /* particles */; };
 		0473CB841917D7C9006C428E /* BalloonFirstPage.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 0473CB831917D7C9006C428E /* BalloonFirstPage.ccbi */; };
 		048C0E59191E95AE00D6801A /* libMobClickCpp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 048C0E33191E95AE00D6801A /* libMobClickCpp.a */; };
+		048F1F7519AE2C49007F59AC /* BalloonRankDialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 048F1F7319AE2C49007F59AC /* BalloonRankDialog.cpp */; };
+		048F1F7719AE352F007F59AC /* BalloonRankDialog.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 048F1F7619AE352F007F59AC /* BalloonRankDialog.ccbi */; };
 		049552671936409C00AAE2F5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 049552691936409C00AAE2F5 /* InfoPlist.strings */; };
 		04AA6F821940D4DD006B37B6 /* BalloonHandBookScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 04AA6F811940D4DD006B37B6 /* BalloonHandBookScene.ccbi */; };
 		04AA6F84194205BF006B37B6 /* configuration in Resources */ = {isa = PBXBuildFile; fileRef = 04AA6F83194205BF006B37B6 /* configuration */; };
@@ -452,8 +454,8 @@
 		0452D85B196ECF3800F16E38 /* crypto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypto.h; sourceTree = "<group>"; };
 		0452D85C196ECF3800F16E38 /* DataManager.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = DataManager.cpp; sourceTree = "<group>"; };
 		0452D85D196ECF3800F16E38 /* DataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataManager.h; sourceTree = "<group>"; };
-		0452D85F196ECF3800F16E38 /* MemBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MemBuffer.cpp; sourceTree = "<group>"; };
-		0452D860196ECF3800F16E38 /* MemBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemBuffer.h; sourceTree = "<group>"; };
+		0452D85F196ECF3800F16E38 /* MemBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = MemBuffer.cpp; sourceTree = "<group>"; };
+		0452D860196ECF3800F16E38 /* MemBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MemBuffer.h; sourceTree = "<group>"; };
 		0452D861196ECF3800F16E38 /* MemBufferObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MemBufferObject.cpp; sourceTree = "<group>"; };
 		0452D862196ECF3800F16E38 /* MemBufferObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemBufferObject.h; sourceTree = "<group>"; };
 		0452D863196ECF3800F16E38 /* Encrypt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Encrypt.cpp; sourceTree = "<group>"; };
@@ -518,6 +520,9 @@
 		0473CB831917D7C9006C428E /* BalloonFirstPage.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonFirstPage.ccbi; sourceTree = "<group>"; };
 		048C0E03191E95AE00D6801A /* MobClickCpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClickCpp.h; sourceTree = "<group>"; };
 		048C0E33191E95AE00D6801A /* libMobClickCpp.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libMobClickCpp.a; sourceTree = "<group>"; };
+		048F1F7319AE2C49007F59AC /* BalloonRankDialog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BalloonRankDialog.cpp; sourceTree = "<group>"; };
+		048F1F7419AE2C49007F59AC /* BalloonRankDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BalloonRankDialog.h; sourceTree = "<group>"; };
+		048F1F7619AE352F007F59AC /* BalloonRankDialog.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonRankDialog.ccbi; sourceTree = "<group>"; };
 		049552681936409C00AAE2F5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0495526A193640A200AAE2F5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		04AA6F811940D4DD006B37B6 /* BalloonHandBookScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = BalloonHandBookScene.ccbi; sourceTree = "<group>"; };
@@ -1052,7 +1057,6 @@
 		044BAB6C1905045600D8CCB3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				04D07CC51995E7D2007DBC81 /* BalloonUserInfoDialog.ccbi */,
 				04AA6F83194205BF006B37B6 /* configuration */,
 				04DEFB101935CCDD0023F654 /* texture */,
 				043560301928A7070044D838 /* localizableString */,
@@ -1068,6 +1072,8 @@
 				04AAEACC1913C9FE006147E3 /* music */,
 				0469117E19175937009A0734 /* particles */,
 				044BAB761905045600D8CCB3 /* BalloonScene.ccbi */,
+				048F1F7619AE352F007F59AC /* BalloonRankDialog.ccbi */,
+				04D07CC51995E7D2007DBC81 /* BalloonUserInfoDialog.ccbi */,
 				0473CB831917D7C9006C428E /* BalloonFirstPage.ccbi */,
 				0435602319264F5F0044D838 /* BalloonResultDialog.ccbi */,
 				0435602519265F0E0044D838 /* BalloonPauseDialog.ccbi */,
@@ -1129,6 +1135,8 @@
 		0452D805196ECF3800F16E38 /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				048F1F7319AE2C49007F59AC /* BalloonRankDialog.cpp */,
+				048F1F7419AE2C49007F59AC /* BalloonRankDialog.h */,
 				043B233619951B4400C71E8C /* BalloonUserInfoDialog.cpp */,
 				043B233719951B4400C71E8C /* BalloonUserInfoDialog.h */,
 				042C47C51984C4E600580967 /* BalloonShopScene.cpp */,
@@ -2581,6 +2589,7 @@
 				04612356191F2F11001AE64F /* UMShareEditViewControlleriPad.xib in Resources */,
 				04F1BF8E1965C8560066950F /* Localizable.strings in Resources */,
 				04AA6F821940D4DD006B37B6 /* BalloonHandBookScene.ccbi in Resources */,
+				048F1F7719AE352F007F59AC /* BalloonRankDialog.ccbi in Resources */,
 				04AAEACD1913C9FE006147E3 /* music in Resources */,
 				049552671936409C00AAE2F5 /* InfoPlist.strings in Resources */,
 				043560311928A7070044D838 /* localizableString in Resources */,
@@ -2727,6 +2736,7 @@
 				15A3DA371682F826002FB0C5 /* CCBValue.cpp in Sources */,
 				15A3DA381682F826002FB0C5 /* CCControlButtonLoader.cpp in Sources */,
 				15A3DA391682F826002FB0C5 /* CCControlLoader.cpp in Sources */,
+				048F1F7519AE2C49007F59AC /* BalloonRankDialog.cpp in Sources */,
 				15A3DA3A1682F826002FB0C5 /* CCData.cpp in Sources */,
 				043B233819951B4400C71E8C /* BalloonUserInfoDialog.cpp in Sources */,
 				15A3DA3B1682F826002FB0C5 /* CCLabelBMFontLoader.cpp in Sources */,

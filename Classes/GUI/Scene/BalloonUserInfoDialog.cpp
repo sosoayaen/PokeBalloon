@@ -168,6 +168,7 @@ bool BalloonUserInfoDialog::onAssignCCBMemberVariable( CCObject* pTarget, const 
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelBMFontCoins", CCLabelBMFont*, this->m_pLabelBMFontCoins);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelTTFNickname", CCLabelTTF*, this->m_pLabelTTFNickname);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteBoard", CCSprite*, this->m_pSpriteBoard);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLayerTableContainer", CCLayer*, this->m_pLayerTableContainer);
 
 	return true;
 }
@@ -363,9 +364,9 @@ CCSize BalloonUserInfoDialog::tableCellSizeForIndex(cocos2d::extension::CCTableV
                     // 判断打开收拢的状态
                     bool bUnFold = pDict->valueForKey("unfold")->boolValue();
                     if (bUnFold)
-                        size = CCSizeMake(m_pSpriteTableViewBackground->getContentSize().width*0.98f, m_pSpriteTableViewBackground->getContentSize().height*0.75f);
+                        size = CCSizeMake(m_pLayerTableContainer->getContentSize().width, m_pSpriteTableViewBackground->getContentSize().height*0.75f);
                     else
-                        size = CCSizeMake(m_pSpriteTableViewBackground->getContentSize().width*0.98f, m_pSpriteTableViewBackground->getContentSize().height*0.37f);
+                        size = CCSizeMake(m_pLayerTableContainer->getContentSize().width, m_pSpriteTableViewBackground->getContentSize().height*0.37f);
                     
                     return size;
                 }
@@ -586,20 +587,15 @@ void BalloonUserInfoDialog::initTableView()
 {
     if (!m_pTableViewDetail)
     {
-        CCSize size = CCSizeMake(m_pSpriteTableViewBackground->getContentSize().width*0.98f, m_pSpriteTableViewBackground->getContentSize().height*0.97f);
+        CCSize size = m_pLayerTableContainer->getContentSize();
         m_pTableViewDetail = CCTableView::create(this, size);
         m_pTableViewDetail->setDelegate(this);
         
         m_pTableViewDetail->setDirection(kCCScrollViewDirectionVertical);
         m_pTableViewDetail->setVerticalFillOrder(kCCTableViewFillTopDown);
         
-        CCPoint pos = ccpSub(m_pSpriteTableViewBackground->getPosition(), ControlUtil::sharedControlUtil()->getCenterPointWithNode(m_pSpriteTableViewBackground));
-        pos = ccpAdd(pos, ccp((m_pSpriteTableViewBackground->getContentSize().width-size.width)*0.5f, (m_pSpriteTableViewBackground->getContentSize().height-size.height)*0.5f));
-        m_pTableViewDetail->setPosition(pos);
         pushScrollView(m_pTableViewDetail);
-        // 把表格放到后面
-        m_pSpriteTableViewBackground->setZOrder(1);
-        m_pSpriteBoard->addChild(m_pTableViewDetail);
+        m_pLayerTableContainer->addChild(m_pTableViewDetail);
         
     }
     
@@ -619,9 +615,10 @@ void BalloonUserInfoDialog::createTableCellLevelUp(CCTableView* table, CCTableVi
     // 单元大小
     CCSize cellSize = tableCellSizeForIndex(table, idx);
     // 创建单元背景
-    CCScale9Sprite* pSpriteCellBackground = CCScale9Sprite::create("texture/handBook/handbook_background.png");
+    CCScale9Sprite* pSpriteCellBackground = CCScale9Sprite::create("texture/handBook/scale9frame.png");
     pSpriteCellBackground->setTag(100);
-    pSpriteCellBackground->setPreferredSize(cellSize);
+    // pSpriteCellBackground->setPreferredSize(CCSizeMake(cellSize.width*0.95f, cellSize.height*0.95f));
+    pSpriteCellBackground->setPreferredSize(CCSizeMake(cellSize.width, cellSize.height*0.96f));
     pSpriteCellBackground->setPosition(ccp(cellSize.width*0.5f, cellSize.height*0.5f));
     pCell->addChild(pSpriteCellBackground);
     

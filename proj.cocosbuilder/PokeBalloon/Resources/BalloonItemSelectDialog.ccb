@@ -29,13 +29,13 @@
 				<array>
 					<dict>
 						<key>baseClass</key>
-						<string>CCLayerColor</string>
+						<string>CCLayer</string>
 						<key>children</key>
 						<array/>
 						<key>customClass</key>
 						<string></string>
 						<key>displayName</key>
-						<string>CCLayerColor</string>
+						<string>CCLayer表格容器</string>
 						<key>memberVarAssignmentName</key>
 						<string>m_pLayerTableView</string>
 						<key>memberVarAssignmentType</key>
@@ -49,8 +49,8 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>50</real>
-									<real>28.640192031860352</real>
+									<real>2.2999999523162842</real>
+									<real>28.600000381469727</real>
 									<integer>4</integer>
 								</array>
 							</dict>
@@ -74,7 +74,7 @@
 								<key>value</key>
 								<array>
 									<real>0.5</real>
-									<real>0.0</real>
+									<real>0.5</real>
 								</array>
 							</dict>
 							<dict>
@@ -96,7 +96,7 @@
 								<key>type</key>
 								<string>Check</string>
 								<key>value</key>
-								<false/>
+								<true/>
 							</dict>
 							<dict>
 								<key>name</key>
@@ -117,37 +117,6 @@
 								<string>Check</string>
 								<key>value</key>
 								<true/>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>color</string>
-								<key>type</key>
-								<string>Color3</string>
-								<key>value</key>
-								<array>
-									<integer>255</integer>
-									<integer>0</integer>
-									<integer>0</integer>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>opacity</string>
-								<key>type</key>
-								<string>Byte</string>
-								<key>value</key>
-								<integer>128</integer>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>blendFunc</string>
-								<key>type</key>
-								<string>Blendmode</string>
-								<key>value</key>
-								<array>
-									<integer>770</integer>
-									<integer>771</integer>
-								</array>
 							</dict>
 						</array>
 					</dict>
@@ -736,9 +705,9 @@
 												<string>Position</string>
 												<key>value</key>
 												<array>
-													<real>130</real>
 													<real>0.0</real>
-													<integer>0</integer>
+													<real>0.0</real>
+													<integer>4</integer>
 												</array>
 											</dict>
 											<dict>
@@ -845,7 +814,7 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>50.089447021484375</real>
+											<real>67.978530883789062</real>
 											<real>8.4235858917236328</real>
 											<integer>4</integer>
 										</array>
@@ -903,6 +872,8 @@
 										<true/>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 							<dict>
 								<key>baseClass</key>

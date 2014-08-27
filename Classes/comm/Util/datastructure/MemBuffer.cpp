@@ -17,7 +17,6 @@ bailin::MemBuffer::MemBuffer(int nInitLen /* = 16 */)
 	m_nCurLen = 0;
 	m_nMaxLen = 0;
 	ReAllocBuffer(nInitLen);
-//	CCLOG("----------MemBuffer Constructor------------ DEFAULT 0x%x", this);
 }
 
 bailin::MemBuffer::MemBuffer( const char* pData, int nLen /*= 0*/ )
@@ -28,16 +27,13 @@ bailin::MemBuffer::MemBuffer( const char* pData, int nLen /*= 0*/ )
 
 	if (NULL != pData)
 	{
-//		CCLOG("bailin::MemBuffer::MemBuffer( char* pData, int nLen /*= 0*/ ) Append Begin");
 		Append(pData, nLen);
-//		CCLOG("bailin::MemBuffer::MemBuffer( char* pData, int nLen /*= 0*/ ) Append End");
 	}
 	else
 	{
 		ReAllocBuffer(32);
 	}
 
-//	CCLOG("----------MemBuffer Constructor------------With DATA 0x%x", this);
 }
 
 bailin::MemBuffer::MemBuffer( const MemBuffer& buff )
@@ -47,13 +43,10 @@ bailin::MemBuffer::MemBuffer( const MemBuffer& buff )
 	m_nMaxLen = 0;
 
 	Append(buff.m_pBuffer, buff.m_nCurLen);
-
-//	CCLOG("----------MemBuffer Constructor------------ COPY 0x%x", this);
 }
 
 bailin::MemBuffer::~MemBuffer()
 {
-//	CCLOG("----------MemBuffer Disconstructor------------ 0x%x", this);
 	if (m_pBuffer)
 	{
 		delete [] m_pBuffer;
@@ -104,10 +97,9 @@ bool bailin::MemBuffer::Append(const char* pData, int nLen /*= 0*/ )
 		}
 	}
 
-	// ²¹ÉÏ\0µÄÎ»ÖÃ
+	// è¡¥ä¸Š\0çš„ä½ç½®
 	if (m_nCurLen + nLen + 1 > m_nMaxLen)
 	{
-//		CCLOG("<<<<<<<<<<<< Append ReAllockBuffer");
 		if(!ReAllocBuffer(nLen + 1))
 		{
 			return false;
@@ -153,7 +145,7 @@ bool bailin::MemBuffer::RemoveLeft( int nLen )
 
 		memmove(m_pBuffer, m_pBuffer + nLen, m_nCurLen);
 
-		// ºóÒ»Î»Ìî0
+		// åŽä¸€ä½å¡«0
 		*(m_pBuffer + m_nCurLen) = 0;
 	}
 
@@ -167,7 +159,7 @@ bool bailin::MemBuffer::PopLeft( MemBuffer* pBuffer, int nLen )
 		return false;
 	}
 
-	// ¿½±´Êý¾Ý
+	// æ‹·è´æ•°æ®
 	pBuffer->Append(m_pBuffer, nLen);
 	RemoveLeft(nLen);
 

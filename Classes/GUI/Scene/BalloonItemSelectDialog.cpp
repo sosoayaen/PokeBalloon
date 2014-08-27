@@ -53,7 +53,6 @@ bool BalloonItemSelectDialog::init()
         
         // 界面需要点击按钮才能取消
         // SetVisibleBoard(m_pSpriteBoard);
-        m_pLayerTableView->setVisible(false);
         
         // 初始化字体
         initLabelTTFFont();
@@ -101,13 +100,7 @@ bool BalloonItemSelectDialog::init()
         m_pTableView->setDelegate(this);
         m_pTableView->setDirection(kCCScrollViewDirectionVertical);
         m_pTableView->setVerticalFillOrder(kCCTableViewFillTopDown);
-        CCPoint pos = ControlUtil::sharedControlUtil()->getBottomLeftByNode(m_pLayerTableView);
-        m_pTableView->setPosition(pos);
-        // 表格放到框框的下面
-        m_pSpriteMiddleBar->setZOrder(1);
-        m_pSpriteContainer->setZOrder(2);
-        
-        m_pSpriteBoard->addChild(m_pTableView);
+        m_pLayerTableView->addChild(m_pTableView);
         
         pushScrollView(m_pTableView);
         

@@ -7,6 +7,7 @@
 #include "Balloon_macro.h"
 
 #include "BalloonOptionsDialog.h"
+#include "BalloonRankDialog.h"
 #include "BalloonShopScene.h"
 #include "BalloonUserInfoDialog.h"
 #include "CCJSONConverter.h"
@@ -306,9 +307,11 @@ void BalloonFirstPage::onPressMenuRankBoard(cocos2d::CCObject *pSender)
 {
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if 0// (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     GameKitHelper2dx::showLeaderboard();
 #endif
+    
+    addChild(BalloonRankDialog::create());
 }
 
 void BalloonFirstPage::onPressMenuShop(cocos2d::CCObject *pSender)
