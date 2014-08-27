@@ -317,14 +317,20 @@ void BalloonUserInfoDialog::tableCellHighlight(cocos2d::extension::CCTableView *
 {
     CCNode* pNode = cell->getChildByTag(100);
     if (pNode)
+    {
+        pNode->stopAllActions();
         pNode->runAction(CCScaleTo::create(0.2f, 1.1f));
+    }
 }
 
 void BalloonUserInfoDialog::tableCellUnhighlight(cocos2d::extension::CCTableView *table, cocos2d::extension::CCTableViewCell *cell)
 {
     CCNode* pNode = cell->getChildByTag(100);
     if (pNode)
+    {
+        pNode->stopAllActions();
         pNode->runAction(CCScaleTo::create(0.2f, 1.0f));
+    }
 }
 
 CCSize BalloonUserInfoDialog::cellSizeForTable( CCTableView *table )

@@ -489,9 +489,9 @@
 										<string>Size</string>
 										<key>value</key>
 										<array>
-											<real>559</real>
+											<real>100</real>
 											<real>0.0</real>
-											<integer>0</integer>
+											<integer>1</integer>
 										</array>
 									</dict>
 									<dict>
@@ -999,9 +999,9 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>90</real>
-											<real>196</real>
-											<integer>0</integer>
+											<real>16.100179672241211</real>
+											<real>23.586040496826172</real>
+											<integer>4</integer>
 										</array>
 									</dict>
 									<dict>
@@ -1144,9 +1144,9 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>90</real>
-											<real>71</real>
-											<integer>0</integer>
+											<real>16.100179672241211</real>
+											<real>8.5439233779907227</real>
+											<integer>4</integer>
 										</array>
 									</dict>
 									<dict>
