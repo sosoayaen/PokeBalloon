@@ -4,88 +4,88 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>prepare_btn_item_buy.png</key>
+            <key>rank_board.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{714,75},{123,49}}</string>
+                <string>{{458,2},{167,68}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{123,49}}</string>
+                <string>{{0,0},{167,68}}</string>
                 <key>sourceSize</key>
-                <string>{123,49}</string>
+                <string>{167,68}</string>
             </dict>
-            <key>prepare_btn_refresh.png</key>
+            <key>rank_calendar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{557,75},{155,49}}</string>
+                <string>{{680,2},{38,34}}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>{0,-1}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{155,49}}</string>
+                <string>{{0,3},{38,34}}</string>
                 <key>sourceSize</key>
-                <string>{155,49}</string>
+                <string>{38,38}</string>
             </dict>
-            <key>prepare_item_bg.png</key>
+            <key>rank_frame.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{102,104}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{1,0},{102,104}}</string>
                 <key>sourceSize</key>
                 <string>{104,104}</string>
             </dict>
-            <key>prepare_item_bomb_guard.png</key>
+            <key>rank_highlight.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{490,2},{65,74}}</string>
+                <string>{{627,53},{50,50}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{6,0},{65,74}}</string>
+                <string>{{0,0},{50,50}}</string>
                 <key>sourceSize</key>
-                <string>{77,74}</string>
+                <string>{50,50}</string>
             </dict>
-            <key>prepare_item_giant_potion.png</key>
+            <key>rank_logo.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{196,2},{71,77}}</string>
+                <string>{{108,2},{127,84}}</string>
+                <key>offset</key>
+                <string>{-3,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{7,0},{127,84}}</string>
+                <key>sourceSize</key>
+                <string>{147,84}</string>
+            </dict>
+            <key>rank_medal.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{679,53},{36,36}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{3,2},{71,77}}</string>
+                <string>{{1,1},{36,36}}</string>
                 <key>sourceSize</key>
-                <string>{77,81}</string>
+                <string>{38,38}</string>
             </dict>
-            <key>prepare_item_pump_potion.png</key>
+            <key>ring_blood.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{269,2},{69,77}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{4,2},{69,77}}</string>
-                <key>sourceSize</key>
-                <string>{77,81}</string>
-            </dict>
-            <key>prepare_item_time_more.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{415,2},{76,73}}</string>
+                <string>{{312,2},{76,73}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -95,10 +95,10 @@
                 <key>sourceSize</key>
                 <string>{76,73}</string>
             </dict>
-            <key>prepare_item_time_premore.png</key>
+            <key>ring_blue.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{340,2},{76,73}}</string>
+                <string>{{237,2},{76,73}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -108,57 +108,31 @@
                 <key>sourceSize</key>
                 <string>{76,73}</string>
             </dict>
-            <key>prepare_mission.png</key>
+            <key>ring_ruby.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{106,2},{88,95}}</string>
+                <string>{{387,2},{74,69}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{88,95}}</string>
+                <string>{{1,2},{74,69}}</string>
                 <key>sourceSize</key>
-                <string>{88,95}</string>
+                <string>{76,73}</string>
             </dict>
-            <key>prepare_mission_reward.png</key>
+            <key>ring_yellow.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{835,2},{65,59}}</string>
-                <key>offset</key>
-                <string>{-2,1}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{1,0},{65,59}}</string>
-                <key>sourceSize</key>
-                <string>{71,61}</string>
-            </dict>
-            <key>supply_btn_home.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{696,2},{137,71}}</string>
+                <string>{{627,2},{49,51}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{137,71}}</string>
+                <string>{{3,2},{49,51}}</string>
                 <key>sourceSize</key>
-                <string>{137,71}</string>
-            </dict>
-            <key>supply_btn_replay.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{557,2},{137,71}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{137,71}}</string>
-                <key>sourceSize</key>
-                <string>{137,71}</string>
+                <string>{55,55}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -166,13 +140,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>prepare.png</string>
+            <string>rankDialog.png</string>
             <key>size</key>
-            <string>{902,126}</string>
+            <string>{717,106}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:127a65d7246a81714db8de426393ab74:efe428f548c7e2909ea6d018e691c3bc:bb77ecdcef59ef7acc4c9c295ca7c8c7$</string>
+            <string>$TexturePacker:SmartUpdate:f17dbd8713b2ffb86ceeb812be21005a:74693cef8e792b759df4f40d219b6e1c:4bc7479f3865722c94ce186469642539$</string>
             <key>textureFileName</key>
-            <string>prepare.png</string>
+            <string>rankDialog.png</string>
         </dict>
     </dict>
 </plist>

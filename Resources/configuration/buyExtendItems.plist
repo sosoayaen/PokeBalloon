@@ -8,7 +8,7 @@
 			<key>name</key>
 			<string>pump</string>
 			<key>iconSpriteName</key>
-			<string>item_pump.png</string>
+			<string>prepare_item_pump_potion.png</string>
 			<key>type</key>
 			<string>0</string>
 			<key>cost</key>
@@ -18,7 +18,7 @@
 			<key>name</key>
 			<string>time</string>
 			<key>iconSpriteName</key>
-			<string>clock.png</string>
+			<string>prepare_item_time_premore.png</string>
 			<key>type</key>
 			<string>1</string>
 			<key>cost</key>
@@ -28,7 +28,7 @@
 			<key>name</key>
 			<string>timeAdd</string>
 			<key>iconSpriteName</key>
-			<string>item_time.png</string>
+			<string>prepare_item_time_more.png</string>
 			<key>type</key>
 			<string>2</string>
 			<key>cost</key>
@@ -38,7 +38,7 @@
 			<key>name</key>
 			<string>giant</string>
 			<key>iconSpriteName</key>
-			<string>item_giant.png</string>
+			<string>prepare_item_giant_potion.png</string>
 			<key>type</key>
 			<string>3</string>
 			<key>cost</key>
@@ -48,7 +48,7 @@
 			<key>name</key>
 			<string>safe</string>
 			<key>iconSpriteName</key>
-			<string>item_boom.png</string>
+			<string>prepare_item_bomb_guard.png</string>
 			<key>type</key>
 			<string>4</string>
 			<key>cost</key>

@@ -27,6 +27,7 @@ public:
 		m_pMenuTop = NULL;
 		m_pSpriteContainer = NULL;
 		m_pSpriteBoard = NULL;
+        m_pSpriteScoreFire = NULL;
         
         m_pTableViewRank = NULL;
 
@@ -51,6 +52,7 @@ private:
 	cocos2d::CCMenu* m_pMenuTop;
 	cocos2d::CCSprite* m_pSpriteContainer;
 	cocos2d::CCSprite* m_pSpriteBoard;
+    cocos2d::CCSprite* m_pSpriteScoreFire;
     
     cocos2d::extension::CCTableView* m_pTableViewRank;
 

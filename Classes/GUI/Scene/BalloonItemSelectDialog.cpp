@@ -268,7 +268,7 @@ CCTableViewCell* BalloonItemSelectDialog::tableCellAtIndex( CCTableView *table, 
         CCDictionary* pDict = (CCDictionary*)m_pArrayItems->objectAtIndex(idx);
         CCSize cellSize = cellSizeForTable(table);
         // 设置背景
-        CCSprite* pSprite = CCSprite::createWithSpriteFrameName("item_background.png");
+        CCSprite* pSprite = CCSprite::createWithSpriteFrameName("prepare_item_bg.png");
         pSprite->setPosition(ccp(cellSize.width * 0.1f, cellSize.height*0.5f));
         pSprite->setTag(TAG_ID_ITEM_ICON_BACKGROUND_SPRITE);
         
@@ -316,7 +316,7 @@ CCTableViewCell* BalloonItemSelectDialog::tableCellAtIndex( CCTableView *table, 
         pBMFontValue->setPosition(ccp(pSpriteCoin->getPositionX() + pSpriteCoin->boundingBox().size.width*0.6f, pSpriteBtnBuy->getContentSize().height*0.6f));
         pSpriteBtnBuy->addChild(pBMFontValue);
         
-        pSpriteBtnBuy->setPosition(ccp(cellSize.width - pSpriteBtnBuy->getContentSize().width*0.7f, cellSize.height*0.5f));
+        pSpriteBtnBuy->setPosition(ccp(cellSize.width - pSpriteBtnBuy->getContentSize().width*0.5f, cellSize.height*0.5f));
         pCell->addChild(pSpriteBtnBuy);
         
 	}

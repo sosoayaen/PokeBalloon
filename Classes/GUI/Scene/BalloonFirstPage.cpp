@@ -277,7 +277,7 @@ void BalloonFirstPage::initMenu()
     m_pMenuMain->addChild(pMenuItemStart);
     m_pMenuMain->addChild(pMenuItemUserinfo);
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#if 1 // (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     CCMenuItemImage* pMenuItemRankBoard = CCMenuItemImage::create();
     pMenuItemRankBoard->setNormalSpriteFrame(pSpriteFrameCache->spriteFrameByName("menu_item_rank.png"));
     pMenuItemRankBoard->setTarget(this, menu_selector(BalloonFirstPage::onPressMenuRankBoard));

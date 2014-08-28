@@ -51,6 +51,15 @@ bool BalloonRankDialog::init()
         
         initMenu();
         
+        // start fire
+        CCArray* pArrayFire = CCArray::createWithCapacity(6);
+        for (int idx = 1; idx <= 6; ++idx)
+        {
+            pArrayFire->addObject(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(CCString::createWithFormat("energy_fire%d.png", idx)->getCString()));
+        }
+        CCAnimation* pAnimation = CCAnimation::createWithSpriteFrames(pArrayFire, 0.1f);
+        CCAnimate* pAnimateFire = CCAnimate::create(pAnimation);
+        m_pSpriteScoreFire->runAction(CCRepeatForever::create(pAnimateFire));
         
         // set animation onEnter and onExit
         m_pMainBoard = m_pSpriteBoard;
@@ -114,6 +123,7 @@ bool BalloonRankDialog::onAssignCCBMemberVariable( CCObject* pTarget, const char
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuTop", CCMenu*, this->m_pMenuTop);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteContainer", CCSprite*, this->m_pSpriteContainer);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteBoard", CCSprite*, this->m_pSpriteBoard);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteScoreFire", CCSprite*, this->m_pSpriteScoreFire);
 
 	return true;
 }
@@ -189,28 +199,78 @@ void BalloonRankDialog::createCellForScoreRank(cocos2d::extension::CCTableViewCe
         
         // Rank
         long lRank = DataManagerUtil::sharedDataManagerUtil()->GetLongValueWithObject(pDict->objectForKey("rank"));
-        CCLabelTTF* pLabelRank = CCLabelTTF::create(CCString::createWithFormat("%ld", lRank)->getCString(), "", cellSize.height*0.5f);
-        pLabelRank->setPosition(ccp(cellSize.width*0.05f, cellSize.height*0.5f));
-        cell->addChild(pLabelRank);
+        CCSprite* pSpriteRankFrame = CCSprite::create("texture/rank_frame.png");
+        pSpriteRankFrame->setPosition(ccp(pSpriteRankFrame->getContentSize().width*0.5f, cellSize.height*0.5f));
+        
+        if (lRank <= 3)
+        {
+            const char* pszRing = NULL; // "texture/ring_ruby.png";
+            if (lRank == 1)
+            {
+                pszRing = "texture/ring_ruby.png";
+            }
+            else if (lRank == 2)
+            {
+                pszRing = "texture/ring_blue.png";
+            }
+            else if (lRank == 3)
+            {
+                pszRing = "texture/ring_yellow.png";
+            }
+            
+            CCSprite* pSpriteRing = CCSprite::create(pszRing);
+            pSpriteRing->setPosition(ccpMult(ccpFromSize(pSpriteRankFrame->getContentSize()), 0.5f));
+            pSpriteRankFrame->addChild(pSpriteRing);
+        }
+        else
+        {
+            CCLabelBMFont* pBMFontRank = CCLabelBMFont::create(CCString::createWithFormat("%ld", lRank)->getCString(), "texture/fonts/font.fnt");
+            pBMFontRank->setPosition(ccpMult(ccpFromSize(pSpriteRankFrame->getContentSize()), 0.5f));
+            pBMFontRank->setScale(2.0f);
+            pBMFontRank->setColor(ccYELLOW);
+            pSpriteRankFrame->addChild(pBMFontRank);
+        }
+        pSpriteRankFrame->setScale(cellSize.height*0.9f/pSpriteRankFrame->getContentSize().height);
+        cell->addChild(pSpriteRankFrame);
         
         // NickName
         CCLabelTTF* pLabelNickName = CCLabelTTF::create(pDict->valueForKey("user_name")->getCString(), "", cellSize.height*0.5f);
         pLabelNickName->setAnchorPoint(ccp(0, 0.5f));
-        pLabelNickName->setPosition(ccp(cellSize.width*0.1f, cellSize.height*0.5f));
+        pLabelNickName->setPosition(ccp(cellSize.width*0.2f, cellSize.height*0.5f));
         cell->addChild(pLabelNickName);
         
         // Score
+        /*
         CCLabelTTF* pLabelScore = CCLabelTTF::create(pDict->valueForKey("score")->getCString(), "", cellSize.height*0.5f);
-        pLabelScore->setAnchorPoint(ccp(0, 0.5f));
-        pLabelScore->setPosition(ccp(pLabelNickName->getPositionX() + pLabelNickName->getContentSize().width + 10,
-                                     pLabelNickName->getPositionY()));
+        pLabelScore->setPosition(ccp(cellSize.width*0.6f, pLabelNickName->getPositionY()));
         cell->addChild(pLabelScore);
+        */
+        CCLabelBMFont* pBMFontScore = CCLabelBMFont::create(pDict->valueForKey("score")->getCString(), "texture/fonts/font.fnt");
+        pBMFontScore->setColor(ccYELLOW);
+        pBMFontScore->setScale(1.8f);
+        pBMFontScore->setPosition(ccp(cellSize.width*0.6f, pLabelNickName->getPositionY()));
+        cell->addChild(pBMFontScore);
+        
         
         // Date
-        CCLabelTTF* pLabelDate = CCLabelTTF::create(pDict->valueForKey("gmt_mtime")->getCString(), "", cellSize.height*0.2f);
+        CCLabelTTF* pLabelDate = CCLabelTTF::create(pDict->valueForKey("gmt_mtime")->getCString(), "", cellSize.height*0.4f);
         pLabelDate->setAnchorPoint(ccp(1.0f, 0.5f));
         pLabelDate->setPosition(ccp(cellSize.width*0.98f, cellSize.height*0.5f));
+        pLabelDate->setDimensions(CCSizeMake(cellSize.width*0.3f, cellSize.height*0.97f));
+        pLabelDate->setHorizontalAlignment(kCCTextAlignmentCenter);
+        pLabelDate->setVerticalAlignment(kCCVerticalTextAlignmentCenter);
         cell->addChild(pLabelDate);
+        
+        long lSelfIdx = DataManagerUtil::sharedDataManagerUtil()->GetLongValueWithObject(m_pDictRankData->objectForKey("self"));
+        
+        if (lSelfIdx == idx)
+        {
+            CCScale9Sprite* pOuter = CCScale9Sprite::createWithSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("rank_highlight.png"));
+            pOuter->setPreferredSize(cellSize);
+            pOuter->setPosition(ccpMult(ccpFromSize(cellSize), 0.5f));
+            pOuter->runAction(CCRepeatForever::create(CCSequence::create(CCFadeOut::create(0.8f), CCFadeIn::create(0.8f), NULL)));
+            cell->addChild(pOuter);
+        }
         
     } while (0);
 }
