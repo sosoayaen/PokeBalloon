@@ -199,7 +199,7 @@ void BalloonRankDialog::createCellForScoreRank(cocos2d::extension::CCTableViewCe
         
         // Rank
         long lRank = DataManagerUtil::sharedDataManagerUtil()->GetLongValueWithObject(pDict->objectForKey("rank"));
-        CCSprite* pSpriteRankFrame = CCSprite::create("texture/rank_frame.png");
+        CCSprite* pSpriteRankFrame = CCSprite::createWithSpriteFrameName("rank_frame.png");
         pSpriteRankFrame->setPosition(ccp(pSpriteRankFrame->getContentSize().width*0.5f, cellSize.height*0.5f));
         
         if (lRank <= 3)
@@ -207,18 +207,18 @@ void BalloonRankDialog::createCellForScoreRank(cocos2d::extension::CCTableViewCe
             const char* pszRing = NULL; // "texture/ring_ruby.png";
             if (lRank == 1)
             {
-                pszRing = "texture/ring_ruby.png";
+                pszRing = "ring_ruby.png";
             }
             else if (lRank == 2)
             {
-                pszRing = "texture/ring_blue.png";
+                pszRing = "ring_blue.png";
             }
             else if (lRank == 3)
             {
-                pszRing = "texture/ring_yellow.png";
+                pszRing = "ring_yellow.png";
             }
             
-            CCSprite* pSpriteRing = CCSprite::create(pszRing);
+            CCSprite* pSpriteRing = CCSprite::createWithSpriteFrameName(pszRing);
             pSpriteRing->setPosition(ccpMult(ccpFromSize(pSpriteRankFrame->getContentSize()), 0.5f));
             pSpriteRankFrame->addChild(pSpriteRing);
         }
@@ -243,7 +243,7 @@ void BalloonRankDialog::createCellForScoreRank(cocos2d::extension::CCTableViewCe
         /*
         CCLabelTTF* pLabelScore = CCLabelTTF::create(pDict->valueForKey("score")->getCString(), "", cellSize.height*0.5f);
         pLabelScore->setPosition(ccp(cellSize.width*0.6f, pLabelNickName->getPositionY()));
-        cell->addChild(pLabelScore);
+        cell->addChild(pLabelScore)CCS'p'ri'te;
         */
         CCLabelBMFont* pBMFontScore = CCLabelBMFont::create(pDict->valueForKey("score")->getCString(), "texture/fonts/font.fnt");
         pBMFontScore->setColor(ccYELLOW);
