@@ -150,6 +150,9 @@ public:
     
     long addAbilityLvlOneByID(UserAbilityLevelType eType);
     
+    // 得到设备的UDID缓存，并且是经过MD5的，因为OpenUDID在iOS和Android平台上生成的长度不同
+    const std::string& getDeviceUDID() const;
+    
 private:
     // 校验当前金币值是否合法
     bool verifyGoldenCoins();
@@ -184,6 +187,9 @@ private:
     
     // 用户的对应技能数据
     UserAbilityLevel m_AbilityLevel;
+    
+    // 用户的UDID
+    std::string m_strUDID;
     
     // 全局用户分析数据，成就数据也保存在这里
     BalloonGlobalAnalysis m_GlobalAnalysisData;

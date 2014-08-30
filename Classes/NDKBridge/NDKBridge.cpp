@@ -16,6 +16,9 @@ USING_NS_CC;
 
 #define JNI_CLASS "com/wardrums/lib/WDBaseActivity"
 
+static JniMethodInfo g_sMethodInfo;
+static jobject g_sActivityObj;
+
 NDKBridge* g_sNDKBridge = NULL;
 
 NDKBridge* NDKBridge::sharedNDKBridge()
@@ -24,6 +27,14 @@ NDKBridge* NDKBridge::sharedNDKBridge()
 	{
 		g_sNDKBridge = new NDKBridge();
 		CCAssert(g_sNDKBridge, "NDKBridge instance create failed...");
+		memset(&g_sMethodInfo, 0, sizeof(JniMethodInfo));
+		bool bInitJNI = JniHelper::getStaticMethodInfo(g_sMethodInfo,
+				JNI_CLASS,
+				"getContext",
+				"()Landroid/content/Context;");
+		CCAssert(bInitJNI, "JNI Object get error!");
+		g_sActivityObj = g_sMethodInfo.env->CallStaticObjectMethod(g_sMethodInfo.classID, g_sMethodInfo.methodID);
+
 	}
 	return g_sNDKBridge;
 }
@@ -39,7 +50,7 @@ NDKBridge::~NDKBridge()
     
 }
 
-static jstring stoJstring(JNIEnv* env, const char* pat)
+static jstring str2Jstring(JNIEnv* env, const char* pat)
 {
 	jclass strClass = env->FindClass("Ljava/lang/String;");
 	jmethodID ctorID = env->GetMethodID(strClass, "<init>", "([BLjava/lang/String;)V");
@@ -51,6 +62,7 @@ static jstring stoJstring(JNIEnv* env, const char* pat)
 
 void NDKBridge::setNotification(CCDictionary* pData)
 {
+	/*
 	JniMethodInfo methodInfo;
 
 	bool isHave = JniHelper::getStaticMethodInfo(methodInfo,
@@ -77,6 +89,19 @@ void NDKBridge::setNotification(CCDictionary* pData)
 		jlong jlTime = (jlong)lTimeinterval;
 		methodInfo.env->CallVoidMethod(activityObj, methodInfo.methodID, jstrContent, jlTime);
 	}	
+	*/
+	bool bIsHave = JniHelper::getMethodInfo(g_sMethodInfo, JNI_CLASS, "setNotification", "(Ljava/lang/String;J)V");
+	if (bIsHave)
+	{
+		long lTimeinterval = pData->valueForKey("timeinterval")->intValue();
+		// 结束游戏2天后弹出提示，之后一周一次
+		if (lTimeinterval == 0)
+			lTimeinterval = 86400*2;
+		const std::string& strContent = pData->valueForKey("notificationText")->m_sString;
+		jstring jstrContent = methodInfo.env->NewStringUTF(strContent.c_str());
+		jlong jlTime = (jlong)lTimeinterval;
+		g_sMethodInfo.env->CallVoidMethod(g_sActivityObj, g_sMethodInfo.methodID, jstrContent, jlTime);
+	}
 }
 
 void NDKBridge::cancelNotification(CCDictionary* pData)
@@ -127,4 +152,16 @@ void NDKBridge::restoreIAPProducts()
 
 void NDKBridge::clearSavedPurchasedProducts()
 {
+}
+
+std::string NDKBridge::getDeviceUDID()
+{
+	std::string retStr = "";
+	bool bIsHave = JniHelper::getMethodInfo(g_sMethodInfo, JNI_CLASS, "getDeviceUDID", "()Ljava/lang/String;");
+	if (bIsHave)
+	{
+		jstring udid = g_sMethodInfo.env->CallObjectMethod(g_sActivityObj, g_sMethodInfo.methodID);
+		retStr = JniHelper::jstring2string(udid);
+	}
+	return retStr;
 }

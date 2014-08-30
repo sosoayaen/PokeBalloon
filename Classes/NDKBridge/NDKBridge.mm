@@ -9,6 +9,8 @@
 #include "bailinUtil.h"
 #include "Balloon_macro.h"
 #include "UserData.h"
+#import "SFHFKeychainUtils.h"
+#import "OpenUDID.h"
 
 USING_NS_CC;
 USING_NS_BAILIN_UTIL;
@@ -251,4 +253,19 @@ void NDKBridge::restoreIAPProducts()
 void NDKBridge::clearSavedPurchasedProducts()
 {
     [[IAPShare sharedHelper].iap clearSavedPurchasedProducts];
+}
+
+std::string NDKBridge::getDeviceUDID()
+{
+    NSString* openUDID = [SFHFKeychainUtils getPasswordForUsername:@"OpenUDID" andServiceName:@"WardrumsStore" error:nil];
+    
+    if (openUDID == nil || [openUDID length] <= 0)
+    {
+        // 生成一个UDID
+        openUDID = [OpenUDID value];
+        // 存入 keychain
+        [SFHFKeychainUtils storeUsername:@"OpenUDID" andPassword:openUDID forServiceName:@"WardrumsStore" updateExisting:YES error:nil];
+    }
+    
+    return [openUDID UTF8String];
 }

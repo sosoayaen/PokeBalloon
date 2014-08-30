@@ -61,11 +61,14 @@ public:
     // 清除本机上的IAP数据
     void clearSavedPurchasedProducts();
     
+    // 获得机器的UDID
+    std::string getDeviceUDID();
+    
 private:
-    // IAP校验值
+    // IAP校验值（目前只有在iOS上有用）
     std::string m_strIAPShareSecret;
     
-    // IAP中广告产品的key
+    // IAP中广告产品的key（目前仅在iOS有效，直接送给AppStore）
     std::string m_strIAPADProductID;
 };
 

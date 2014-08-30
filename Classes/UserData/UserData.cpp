@@ -21,6 +21,7 @@
 #include "bailinUtil.h"
 #include <string>
 #include "cocos2d.h"
+#include "NDKBridge.h"
 
 USING_NS_CC;
 USING_NS_BAILIN_UTIL;
@@ -131,6 +132,9 @@ void UserDataManager::setGameCountsCheckCode()
 
 void UserDataManager::loadData()
 {
+    // 得到UDID，并且MD5一下，这样就可以统一UDID在不同平台下的长度
+    m_strUDID = crypto::MD5(NDKBridge::sharedNDKBridge()->getDeviceUDID().c_str());
+    
     // 从配置文件中获取用户名
     setNickName(CCUserDefault::sharedUserDefault()->getStringForKey(KEY_NICKNAME, "Player"));
     
@@ -494,4 +498,9 @@ long UserDataManager::getArchivmentValue() const
 {
     // 计算所有成就值并返回
     return 0;
+}
+
+const std::string& UserDataManager::getDeviceUDID() const
+{
+    return m_strUDID;
 }

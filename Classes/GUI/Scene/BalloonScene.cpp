@@ -28,6 +28,8 @@ USING_NS_BAILIN_UTIL;
 #define SECURITY_TIME "S_TIME"
 #define SECURITY_SCORE "S_SCORE"
 
+#define NOTIFY_HTTP_COMMIT_DATA_CALLBACK_NAME "HTTP_UPDATE_SCORE"
+
 // 结算对话框和暂停对话框中的再玩一次与回到主界面按钮的UserData数据
 #define TAG_ID_RESULT_DIALOG_PLAYAGAIN 1000
 #define TAG_ID_PAUSE_DIALOG_PLAYAGAIN 1001
@@ -207,7 +209,7 @@ void BalloonScene::onEnter()
     
     // 注册游戏暂停的消息
     CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(BalloonScene::notifyEnterBackground), NOTIFY_PAUSE, NULL);
-    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(BalloonScene::notifyHttpCallbackUpdateScore), "HTTP_UPDATE_SCORE", NULL);
+    CCNotificationCenter::sharedNotificationCenter()->addObserver(this, callfuncO_selector(BalloonScene::notifyHttpCallbackUpdateScore), NOTIFY_HTTP_COMMIT_DATA_CALLBACK_NAME, NULL);
     
     
     // 自动开始
@@ -237,7 +239,7 @@ void BalloonScene::onExit()
 	// CCLayer::onExit();
 	// 退出场景，取消CCNotificationCenter可以放在这里做，但是对应在onEnter的时候要重新注册
     CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, NOTIFY_PAUSE);
-    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, "HTTP_UPDATE_SCORE");
+    CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, NOTIFY_HTTP_COMMIT_DATA_CALLBACK_NAME);
     
     // 释放结算对话框
     // CC_SAFE_RELEASE_NULL(m_pResultDialog);
@@ -1027,7 +1029,7 @@ void BalloonScene::commitScoreToServer()
     // 把得分上传到服务器
     CCDictionary* pDict = CCDictionary::create();
     // 获得当前用户的UDID
-    pDict->setObject(ccs("12345678901234567890123456789012"), "uid");
+    pDict->setObject(ccs(UserDataManager::sharedUserDataManager()->getDeviceUDID().c_str()), "uid");
     // 获得当前用户的用户名
     pDict->setObject(ccs(UserDataManager::sharedUserDataManager()->getNickName().c_str()), "uname");
     CCArray* pArray = CCArray::create();
@@ -1047,7 +1049,7 @@ void BalloonScene::commitScoreToServer()
     
     const char* pszJSON = CCJSONConverter::sharedConverter()->strFrom(pDict);
     // 请求Http数据
-    HttpCenter::sharedHttpCenter()->request("http://121.40.76.13/score_update.php", "HTTP_UPDATE_SCORE", CCHttpRequest::kHttpPost, pszJSON);
+    HttpCenter::sharedHttpCenter()->request("http://121.40.76.13/score_update.php", NOTIFY_HTTP_COMMIT_DATA_CALLBACK_NAME, CCHttpRequest::kHttpPost, pszJSON);
     free((void*)pszJSON);
     
 }
