@@ -98,7 +98,7 @@ void NDKBridge::setNotification(CCDictionary* pData)
 		if (lTimeinterval == 0)
 			lTimeinterval = 86400*2;
 		const std::string& strContent = pData->valueForKey("notificationText")->m_sString;
-		jstring jstrContent = methodInfo.env->NewStringUTF(strContent.c_str());
+		jstring jstrContent = g_sMethodInfo.env->NewStringUTF(strContent.c_str());
 		jlong jlTime = (jlong)lTimeinterval;
 		g_sMethodInfo.env->CallVoidMethod(g_sActivityObj, g_sMethodInfo.methodID, jstrContent, jlTime);
 	}
