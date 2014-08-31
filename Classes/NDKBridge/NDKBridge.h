@@ -64,6 +64,9 @@ public:
     // 获得机器的UDID
     std::string getDeviceUDID();
     
+    // 获取手机的名称或者设备名称
+    std::string getDeviceName();
+    
 private:
     // IAP校验值（目前只有在iOS上有用）
     std::string m_strIAPShareSecret;

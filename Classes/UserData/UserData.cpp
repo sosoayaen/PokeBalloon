@@ -136,7 +136,15 @@ void UserDataManager::loadData()
     m_strUDID = crypto::MD5(NDKBridge::sharedNDKBridge()->getDeviceUDID().c_str());
     
     // 从配置文件中获取用户名
-    setNickName(CCUserDefault::sharedUserDefault()->getStringForKey(KEY_NICKNAME, "Player"));
+    setNickName(CCUserDefault::sharedUserDefault()->getStringForKey(KEY_NICKNAME, ""));
+    if (getNickName().empty())
+    {
+        setNickName(NDKBridge::sharedNDKBridge()->getDeviceName());
+        if (getNickName().empty())
+        {
+            setNickName(CCString::createWithFormat("Burst Man%03d", rand()%100)->m_sString);
+        }
+    }
     
     // 得到统计数据
     m_GlobalAnalysisData.loadData();

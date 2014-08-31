@@ -165,3 +165,16 @@ std::string NDKBridge::getDeviceUDID()
 	}
 	return retStr;
 }
+
+std::string NDKBridge::getDeviceName()
+{
+	std::string retStr = "";
+	bool bIsHave = JniHelper::getMethodInfo(g_sMethodInfo, JNI_CLASS, "getDeviceName", "()Ljava/lang/String;");
+	if (bIsHave)
+	{
+		jstring udid = g_sMethodInfo.env->CallObjectMethod(g_sActivityObj, g_sMethodInfo.methodID);
+		retStr = JniHelper::jstring2string(udid);
+	}
+	return retStr;
+
+}

@@ -269,3 +269,9 @@ std::string NDKBridge::getDeviceUDID()
     
     return [openUDID UTF8String];
 }
+
+std::string NDKBridge::getDeviceName()
+{
+    NSString* name = [[UIDevice currentDevice] name];
+    return [name UTF8String];
+}
