@@ -211,25 +211,27 @@ std::string BalloonAnalysis::dumpDebugInfo() const
     // 普通气球总数
     stream << "+ normal total: " << getNormalBalloonCounts() << "\n";
 	// 正分气球点破个数
-	stream << "- normal positive: " << m_AnalysisData.normalData.normal_positive << "\n";
+	stream << " - normal positive: " << m_AnalysisData.normalData.normal_positive << "\n";
 	// 负分气球点破个数
-	stream << "- normal negative: " << m_AnalysisData.normalData.normal_negative << "\n";
+	stream << " - normal negative: " << m_AnalysisData.normalData.normal_negative << "\n";
 	// 零分气球个数
-	stream << "- normal zero: " << m_AnalysisData.normalData.normal_zero << "\n";
+	stream << " - normal zero: " << m_AnalysisData.normalData.normal_zero << "\n";
     // 道具气球总数
     stream << "+ item total: " << getItemBalloonCounts() << "\n";
+    // 打气筒
+    stream << " - pump: " << m_AnalysisData.itemData.pump << "\n";
     // 乘2气球数目
-    stream << "- multi: " << m_AnalysisData.itemData.multi << "\n";
+    stream << " - multi: " << m_AnalysisData.itemData.multi << "\n";
     // 炸弹气球数目
-    stream << "- boom: " << m_AnalysisData.itemData.boom << "\n";
+    stream << " - boom: " << m_AnalysisData.itemData.boom << "\n";
     // 翻转气球数目
-    stream << "- reverse: " << m_AnalysisData.itemData.reverse << "\n";
+    stream << " - reverse: " << m_AnalysisData.itemData.reverse << "\n";
     // 巨人气球数目
-    stream << "- giant: " << m_AnalysisData.itemData.giant << "\n";
+    stream << " - giant: " << m_AnalysisData.itemData.giant << "\n";
     // 霜冻球数目
-    stream << "- frozen: " << m_AnalysisData.itemData.frozen << "\n";
+    stream << " - frozen: " << m_AnalysisData.itemData.frozen << "\n";
     // 增加时间气球数目
-    stream << "- time: " << m_AnalysisData.itemData.time << "\n";
+    stream << " - time: " << m_AnalysisData.itemData.time << "\n";
 
 	return stream.str();
 #else

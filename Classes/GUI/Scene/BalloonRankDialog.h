@@ -25,6 +25,7 @@ public:
 	{
 		m_pLayerTableViewContainer = NULL;
 		m_pMenuTop = NULL;
+        m_pMenuGameCenter = NULL;
 		m_pSpriteContainer = NULL;
 		m_pSpriteBoard = NULL;
         m_pSpriteScoreFire = NULL;
@@ -50,6 +51,7 @@ private:
 	// Attributes for CCB
 	cocos2d::CCLayer* m_pLayerTableViewContainer;
 	cocos2d::CCMenu* m_pMenuTop;
+    cocos2d::CCMenu* m_pMenuGameCenter;
 	cocos2d::CCSprite* m_pSpriteContainer;
 	cocos2d::CCSprite* m_pSpriteBoard;
     cocos2d::CCSprite* m_pSpriteScoreFire;
@@ -106,6 +108,7 @@ public:
 	// Funcitons
 	void onPressMenuShare(cocos2d::CCObject* pSender);
 	void onPressMenuClose(cocos2d::CCObject* pSender);
+    void onPressMenuGameCenter(cocos2d::CCObject* pSender);
 
 };
 

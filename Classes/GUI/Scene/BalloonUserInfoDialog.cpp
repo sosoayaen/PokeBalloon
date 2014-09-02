@@ -2,11 +2,13 @@
 #include "UserData.h"
 #include "bailinUtil.h"
 #include "BalloonSoundManager.h"
+#include "UMSocial2DX.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
 USING_NS_BAILIN_UTIL;
 
+#define SNS_SHARE_IMAGE_FILE_NAME "sns_share.png"
 #define TAG_ID_MENU_ITEM_MUSIC_FORBIDDEN_SPRITE 100 // 音乐开关上的禁止图片
 
 BalloonUserInfoDialog::~BalloonUserInfoDialog()
@@ -580,7 +582,37 @@ void BalloonUserInfoDialog::onPressMenuClose(cocos2d::CCObject *pSender)
 void BalloonUserInfoDialog::onPressMenuShare(cocos2d::CCObject *pSender)
 {
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
-    // TODO: 分享
+    // save the picture
+    CCSize size = m_pSpriteBoard->getContentSize();
+    
+    // 保存并设置需要裁剪的节点的图形的位置，和画板位置对齐
+    CCPoint pos = m_pSpriteBoard->getPosition();
+    CCPoint anchorPt = m_pSpriteBoard->getAnchorPoint();
+    m_pSpriteBoard->setPosition(CCPointZero);
+    m_pSpriteBoard->setAnchorPoint(CCPointZero);
+    
+    CCRenderTexture* pTexture = CCRenderTexture::create(size.width, size.height, kCCTexture2DPixelFormat_RGBA8888);
+    pTexture->clear(255, 255, 255, 255);
+    
+    pTexture->begin();
+    m_pSpriteBoard->visit();
+    pTexture->end();
+    
+    // 还原位置
+    m_pSpriteBoard->setPosition(pos);
+    m_pSpriteBoard->setAnchorPoint(anchorPt);
+    
+    // 保存截图并返回图片路径
+    if (pTexture->saveToFile(SNS_SHARE_IMAGE_FILE_NAME, kCCImageFormatPNG))
+    {
+        std::string strImagePath = CCFileUtils::sharedFileUtils()->getWritablePath() + SNS_SHARE_IMAGE_FILE_NAME;
+        
+        CCDictionary* pDictData = CCDictionary::create();
+        CCString* pStrShareText = ccs("Share the Rank!");
+        pDictData->setObject(pStrShareText, "shareText");
+        pDictData->setObject(ccs(strImagePath.c_str()), "shareImage");
+        UMSocial2DX::shareSNS(pDictData);
+    }
 }
 
 void BalloonUserInfoDialog::initTableView()

@@ -127,10 +127,10 @@ private:
 
 private:
     // 当前局统计对象
-    BalloonAnalysis m_BalloonAnalysis;
+    // BalloonAnalysis m_BalloonAnalysis;
     
     // 漏过的气球
-    BalloonAnalysis m_BalloonMissedAnalysis;
+    // BalloonAnalysis m_BalloonMissedAnalysis;
     
     // 开始前倒计时的变量
     int m_nReadyTimeTime;
@@ -181,7 +181,6 @@ private:
     // 按钮回调
     void onPressMenuRestartGame(cocos2d::CCObject* pSender);
     void onPressMenuReturnMainMenu(cocos2d::CCObject* pSender);
-    void onPressMenuShare(cocos2d::CCObject* pSender);
     void onPressMenuResume(cocos2d::CCObject* pSender);
     void onPressMenuPause(cocos2d::CCObject* pSender);
     // 对话框结束回调

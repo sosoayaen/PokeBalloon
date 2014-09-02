@@ -4,11 +4,17 @@
 #include "UserData.h"
 #include "MemBufferObject.h"
 #include "bailinUtil.h"
+#include "UMSocial2DX.h"
+
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+#   include "GameKitHelper2dx.h"
+#endif
 
 USING_NS_CC;
 USING_NS_CC_EXT;
 USING_NS_BAILIN_UTIL;
 
+#define SNS_SHARE_IMAGE_FILE_NAME "sns_share.png"
 #define NOTIFY_HTTP_RANK_DATA_CALLBACK "NotifyHttpRankDataCallback"
 
 BalloonRankDialog::~BalloonRankDialog()
@@ -113,6 +119,7 @@ SEL_MenuHandler BalloonRankDialog::onResolveCCBCCMenuItemSelector( CCObject * pT
 {
 	CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onPressMenuShare", BalloonRankDialog::onPressMenuShare);
 	CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onPressMenuClose", BalloonRankDialog::onPressMenuClose);
+	CCB_SELECTORRESOLVER_CCMENUITEM_GLUE(this, "onPressMenuGameCenter", BalloonRankDialog::onPressMenuGameCenter);
 
 	return NULL;
 }
@@ -121,6 +128,7 @@ bool BalloonRankDialog::onAssignCCBMemberVariable( CCObject* pTarget, const char
 {
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLayerTableViewContainer", CCLayer*, this->m_pLayerTableViewContainer);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuTop", CCMenu*, this->m_pMenuTop);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pMenuGameCenter", CCMenu*, this->m_pMenuGameCenter);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteContainer", CCSprite*, this->m_pSpriteContainer);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteBoard", CCSprite*, this->m_pSpriteBoard);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteScoreFire", CCSprite*, this->m_pSpriteScoreFire);
@@ -137,6 +145,42 @@ SEL_CCControlHandler BalloonRankDialog::onResolveCCBCCControlSelector( CCObject 
 void BalloonRankDialog::onPressMenuShare(CCObject* pSender)
 {
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
+    
+    // save the picture
+    CCSize size = m_pSpriteBoard->getContentSize();
+    
+    // 保存并设置需要裁剪的节点的图形的位置，和画板位置对齐
+    CCPoint pos = m_pSpriteBoard->getPosition();
+    CCPoint anchorPt = m_pSpriteBoard->getAnchorPoint();
+    m_pSpriteBoard->setPosition(CCPointZero);
+    m_pSpriteBoard->setAnchorPoint(CCPointZero);
+    
+    m_pMenuTop->setVisible(false);
+    
+    CCRenderTexture* pTexture = CCRenderTexture::create(size.width, size.height, kCCTexture2DPixelFormat_RGBA8888);
+    pTexture->clear(255, 255, 255, 255);
+    
+    pTexture->begin();
+    m_pSpriteBoard->visit();
+    pTexture->end();
+    
+    // 还原位置
+    m_pSpriteBoard->setPosition(pos);
+    m_pSpriteBoard->setAnchorPoint(anchorPt);
+    m_pMenuTop->setVisible(true);
+    
+    // 保存截图并返回图片路径
+    if (pTexture->saveToFile(SNS_SHARE_IMAGE_FILE_NAME, kCCImageFormatPNG))
+    {
+        std::string strImagePath = CCFileUtils::sharedFileUtils()->getWritablePath() + SNS_SHARE_IMAGE_FILE_NAME;
+        
+        CCDictionary* pDictData = CCDictionary::create();
+        CCString* pStrShareText = ccs("Share the Rank!");
+        pDictData->setObject(pStrShareText, "shareText");
+        pDictData->setObject(ccs(strImagePath.c_str()), "shareImage");
+        UMSocial2DX::shareSNS(pDictData);
+    }
+    
 }
 
 void BalloonRankDialog::onPressMenuClose(CCObject* pSender)
@@ -261,8 +305,12 @@ void BalloonRankDialog::createCellForScoreRank(cocos2d::extension::CCTableViewCe
         pLabelDate->setVerticalAlignment(kCCVerticalTextAlignmentCenter);
         cell->addChild(pLabelDate);
         
-        long lSelfIdx = DataManagerUtil::sharedDataManagerUtil()->GetLongValueWithObject(m_pDictRankData->objectForKey("self"));
-        
+        long lSelfIdx = -1;
+        CCDictionary* pDictData = dynamic_cast<CCDictionary*>(m_pDictRankData->objectForKey("data"));
+        if (pDictData)
+        {
+            lSelfIdx = DataManagerUtil::sharedDataManagerUtil()->GetLongValueWithObject(pDictData->objectForKey("self"));
+        }
         if (lSelfIdx == idx)
         {
             CCScale9Sprite* pOuter = CCScale9Sprite::createWithSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("rank_highlight.png"));
@@ -330,12 +378,12 @@ void BalloonRankDialog::initTableView()
 void BalloonRankDialog::requestRankData()
 {
     CCDictionary* pDict = CCDictionary::create();
-    pDict->setObject(ccs("12345678901234567890123456789012"), "uid");
+    pDict->setObject(ccs(UserDataManager::sharedUserDataManager()->getDeviceUDID().c_str()), "uid");
     pDict->setObject(ccs(UserDataManager::sharedUserDataManager()->getNickName().c_str()), "uname");
     
     const char* pszJSON = CCJSONConverter::sharedConverter()->strFrom(pDict);
     // request http data
-    HttpCenter::sharedHttpCenter()->request("http://121.40.76.13/score_rank.php", NOTIFY_HTTP_RANK_DATA_CALLBACK, CCHttpRequest::kHttpPost, pszJSON);
+    HttpCenter::sharedHttpCenter()->request("http://pokeballoon.renqiz.com/score_rank.php", NOTIFY_HTTP_RANK_DATA_CALLBACK, CCHttpRequest::kHttpPost, pszJSON);
     
     free((void*)pszJSON);
 }
@@ -380,7 +428,6 @@ CCArray* BalloonRankDialog::getRankDataArray()
 
 void BalloonRankDialog::initMenu()
 {
-    
     // init the top menu
     ControlUtil::sharedControlUtil()->SetMenuItemSelectedImageWithNormalImage(m_pMenuTop);
     
@@ -401,4 +448,31 @@ void BalloonRankDialog::initMenu()
     }
     
     pushMenu(m_pMenuTop);
+    
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    // init the GameCenter Menu
+    ControlUtil::sharedControlUtil()->SetMenuItemSelectedImageWithNormalImage(m_pMenuGameCenter);
+    
+    // Scale action forever
+    pObj = NULL;
+    CCARRAY_FOREACH(m_pMenuGameCenter->getChildren(), pObj)
+    {
+        CCMenuItem* pMenuItem = dynamic_cast<CCMenuItem*>(pObj);
+        if (pMenuItem)
+        {
+            pMenuItem->runAction(CCRepeatForever::create(CCSequence::create(CCEaseBounceOut::create(CCScaleTo::create(0.5f, 1.2f)), CCScaleTo::create(0.2f, 1.0f), CCDelayTime::create(1.0f), NULL)));
+        }
+    }
+    pushMenu(m_pMenuGameCenter);
+#else
+    m_pMenuGameCenter->setVisible(false);
+#endif
+}
+
+void BalloonRankDialog::onPressMenuGameCenter(cocos2d::CCObject *pSender)
+{
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    GameKitHelper2dx::showLeaderboard();
+#endif
 }

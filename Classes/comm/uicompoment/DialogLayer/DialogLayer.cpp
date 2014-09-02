@@ -214,7 +214,6 @@ void DialogLayer::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEven
 
 	if (m_pCurrentTouchScrollView)
 	{
-		CCLOG("m_pCurrentTouchScrollView->ccTouchEnded(pTouch, pEvent);");
 		m_pCurrentTouchScrollView->ccTouchEnded(pTouch, pEvent);
 	}
 

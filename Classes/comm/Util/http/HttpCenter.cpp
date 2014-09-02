@@ -107,7 +107,10 @@ void HttpCenter::request(const char* pszUrl, const char* pszNotifyName, CCHttpRe
     request->setUrl(pszUrl);
     request->setResponseCallback(this, httpresponse_selector(HttpCenter::onHttpRequestCompleted));
     if (reqData)
+    {
         request->setRequestData(reqData, strlen(reqData));
+        CCLOG("request:%s", reqData);
+    }
     if (pszNotifyName)
         request->setTag(pszNotifyName);
     

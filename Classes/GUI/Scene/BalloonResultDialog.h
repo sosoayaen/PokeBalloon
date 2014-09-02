@@ -23,22 +23,29 @@ public:
 	BalloonResultDialog()
 	{
 		m_pLabelBMFontCurrentScore = NULL;
-		m_pLabelBMFontHighestScore = NULL;
+		// m_pLabelBMFontHighestScore = NULL;
 		m_pMenuShare = NULL;
+        m_pMenuTop = NULL;
 		m_pMenuItemPlayAgain = NULL;
-		m_pMenuItemReturn = NULL;
-		m_pMenuItemGotoShop = NULL;
+		// m_pMenuItemReturn = NULL;
+		// m_pMenuItemGotoShop = NULL;
         m_pMenuItemShare = NULL;
-		m_pMenuResult = NULL;
+		// m_pMenuResult = NULL;
 		m_pSpriteNewFlag = NULL;
 		m_pSpriteResultBoard = NULL;
         m_pSpriteStar = NULL;
         m_pSpriteCoin = NULL;
+        m_pSpriteMissionStatus = NULL;
         m_pLabelBMFontCoins = NULL;
+        m_pLabelBMFontCoinQty = NULL;
+        m_pLabelBMFontMissionReward = NULL;
+        m_pLabelTTFDetail = NULL;
+        m_pLabelTTFMissionDesc = NULL;
         
         m_llTotalScore = 0;
         m_llHighestScore = 0;
-        m_pAnalysisData = NULL;
+        
+        m_llScoreStep = 0;
 	}
 	~BalloonResultDialog();
 
@@ -60,9 +67,6 @@ public:
 public:
     // 这里的菜单都public，供外部调用
 	cocos2d::CCMenuItem* m_pMenuItemPlayAgain;
-	cocos2d::CCMenuItem* m_pMenuItemReturn;
-	cocos2d::CCMenuItem* m_pMenuItemGotoShop;
-    cocos2d::CCMenuItem* m_pMenuItemShare;
     
 private:
     // 控件原始位置
@@ -78,22 +82,31 @@ private:
     long long m_llTotalScore;
     long long m_llHighestScore;
     
-    const BalloonAnalysisData* m_pAnalysisData;
 private:
 	// Attributes for CCB
 	cocos2d::CCLabelBMFont* m_pLabelBMFontCurrentScore;
-	cocos2d::CCLabelBMFont* m_pLabelBMFontHighestScore;
+	// cocos2d::CCLabelBMFont* m_pLabelBMFontHighestScore;
+    cocos2d::CCMenu* m_pMenuTop;
 	cocos2d::CCMenu* m_pMenuShare;
+    cocos2d::CCMenuItem* m_pMenuItemShare;
+    cocos2d::CCLabelTTF* m_pLabelTTFDetail;
+    cocos2d::CCLabelTTF* m_pLabelTTFMissionDesc;
+    /*
 	cocos2d::CCMenu* m_pMenuResult;
+    */
 	cocos2d::CCSprite* m_pSpriteNewFlag;
 	cocos2d::CCSprite* m_pSpriteResultBoard;
+    cocos2d::CCSprite* m_pSpriteMissionStatus;
     // 奖牌上的星星
     cocos2d::CCSprite* m_pSpriteStar;
     // 结算对话框上的金币
     cocos2d::CCSprite* m_pSpriteCoin;
     // 当次得到金币的数量
     cocos2d::CCLabelBMFont* m_pLabelBMFontCoins;
-
+    // 顶部金币数量
+    cocos2d::CCLabelBMFont* m_pLabelBMFontCoinQty;
+    // 奖励的金币数量
+    cocos2d::CCLabelBMFont* m_pLabelBMFontMissionReward;
     
 public:
 	// Virtual Functions
@@ -102,6 +115,9 @@ public:
 	virtual void onExit();
 
 private:
+    void initLabelTTF();
+    
+    void initMenuTop();
     // 初始化旋转的星星
     void initRotateStar();
     
@@ -110,6 +126,15 @@ private:
     
     // 更新
     void updateCoins(long long ulCoins);
+    
+    long long m_llScoreStep;
+    // 更新分数动画回调
+    void timerCallbackUpdateScore(float dt);
+    void startScoreUpdateAnimation();
+    
+    void onPressMenuShare(cocos2d::CCObject* pSender);
+    
+    void onPressMenuReturnMain(cocos2d::CCObject* pSender);
     
 public:
 	// Funcitons
@@ -122,10 +147,6 @@ public:
     
     // 设置是否显示新的记录标志
     void setNewFlagVisible(bool bShow);
-    
-    // 设置分析数据的数据源
-    void setAnalysisData(const BalloonAnalysisData* pData);
-
 };
 
 #endif // __BALLOON_RESULT_DIALOG_H__

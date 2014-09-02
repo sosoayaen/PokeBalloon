@@ -23,7 +23,7 @@ USING_NS_BAILIN_UTIL;
 
 #define BALLOON_SHOW_RATE    40     // 气球出现的概率，10表示1%，50就是5%
 #define CLOUD_SHOW_RATE      5
-#define DEFAULT_TIME         30
+#define DEFAULT_TIME         10
 
 #define SECURITY_TIME "S_TIME"
 #define SECURITY_SCORE "S_SCORE"
@@ -181,8 +181,7 @@ void BalloonScene::resetData()
     updateTimeLeft();
     
     // 初始化统计数据
-    m_BalloonAnalysis.initData();
-    m_BalloonMissedAnalysis.initData();
+    UserDataManager::sharedUserDataManager()->getAnalysisDataRef()->initData();
 }
 
 void BalloonScene::updateScore()
@@ -333,7 +332,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
         case kBalloonTypeNormal:
             pBalloon->explosive();
             // 增加统计
-            m_BalloonAnalysis.countWithBalloonObject(pBalloon);
+            UserDataManager::sharedUserDataManager()->getAnalysisDataRef()->countWithBalloonObject(pBalloon);
             
             // 根据对应的气球分数增加到总分上
             if (!pDMU->SetSecurityData(SECURITY_SCORE, &m_llTotalScore, (long long)pBalloon->getBalloonScore()))
@@ -355,7 +354,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
         case kBalloonTypeMulti:
             pBalloon->explosive();
             // 增加统计
-            m_BalloonAnalysis.countWithBalloonObject(pBalloon);
+            UserDataManager::sharedUserDataManager()->getAnalysisDataRef()->countWithBalloonObject(pBalloon);
             
             // 乘分气球，当前场景下的所有普通气球分数乘以对应的分值
             m_BalloonManager.multipleBalloonScore(pBalloon->getBalloonScore());
@@ -363,7 +362,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
         case kBalloonTypeBoom:
             pBalloon->explosive();
             // 增加统计
-            m_BalloonAnalysis.countWithBalloonObject(pBalloon);
+            UserDataManager::sharedUserDataManager()->getAnalysisDataRef()->countWithBalloonObject(pBalloon);
             
             {
                 // 除分气球
@@ -397,7 +396,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
         case kBalloonTypeAddTime:
             pBalloon->explosive();
             // 增加统计
-            m_BalloonAnalysis.countWithBalloonObject(pBalloon);
+            UserDataManager::sharedUserDataManager()->getAnalysisDataRef()->countWithBalloonObject(pBalloon);
             
             {
                 // 时间增加
@@ -416,7 +415,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
         case kBalloonTypePump:
             pBalloon->explosive();
             // 增加统计
-            m_BalloonAnalysis.countWithBalloonObject(pBalloon);
+            UserDataManager::sharedUserDataManager()->getAnalysisDataRef()->countWithBalloonObject(pBalloon);
             
             // 屏幕出现打气筒按钮，并且设置按钮的小时时间
             {
@@ -435,7 +434,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
         case kBalloonTypeFrozen:
             pBalloon->explosive();
             // 增加统计
-            m_BalloonAnalysis.countWithBalloonObject(pBalloon);
+            UserDataManager::sharedUserDataManager()->getAnalysisDataRef()->countWithBalloonObject(pBalloon);
             
             // 冻结屏幕上的所有气球
             m_BalloonManager.setAllBalloonEffect(kBalloonEffectFrozen);
@@ -466,7 +465,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             {
                 pBalloon->explosive();
                 // 增加统计
-                m_BalloonAnalysis.countWithBalloonObject(pBalloon);
+                UserDataManager::sharedUserDataManager()->getAnalysisDataRef()->countWithBalloonObject(pBalloon);
             
                 // 根据对应的气球分数增加到总分上
                 if (!pDMU->SetSecurityData(SECURITY_SCORE, &m_llTotalScore, (long long)pBalloon->getBalloonScore()))
@@ -497,7 +496,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
             {
                 pBalloon->explosive();
                 // 增加统计
-                m_BalloonAnalysis.countWithBalloonObject(pBalloon);
+                UserDataManager::sharedUserDataManager()->getAnalysisDataRef()->countWithBalloonObject(pBalloon);
             
                 // 把屏幕上的所有气球分数乘以对应的值
                 int nScore = pBalloon->getBalloonScore();
@@ -517,7 +516,7 @@ void BalloonScene::balloonTouchTestSuccess(Balloon* pBalloon, cocos2d::CCSprite*
 void BalloonScene::balloonMoveOutOfScreen(Balloon *pBalloon)
 {
     // 这里可以计算哪些气球被漏过了，根据气球的属性设置对应的结算数据
-    m_BalloonMissedAnalysis.countWithBalloonObject(pBalloon);
+    // m_BalloonMissedAnalysis.countWithBalloonObject(pBalloon);
 }
 
 void BalloonScene::onBalloonItemEffectTrigger(BalloonItem* pItem)
@@ -644,7 +643,7 @@ void BalloonScene::update(float dt)
                 // 游戏盘数增加一盘
                 UserDataManager::sharedUserDataManager()->addOneGameCount();
                 // 合并统计数据
-                UserDataManager::sharedUserDataManager()->getGlobalAnalysisDataRef()->merge(m_BalloonAnalysis);
+                UserDataManager::sharedUserDataManager()->getGlobalAnalysisDataRef()->merge(*UserDataManager::sharedUserDataManager()->getAnalysisDataRef());
                 // 存盘
                 // UserDataManager::sharedUserDataManager()->getGlobalAnalysisDataRef()->saveData();
                 
@@ -684,18 +683,12 @@ void BalloonScene::showResultDialog()
     {
         pResultDialog = BalloonResultDialog::create();
         // 设定按钮回调
-        pResultDialog->m_pMenuItemReturn->setTarget(this, menu_selector(BalloonScene::onPressMenuReturnMainMenu));
-        pResultDialog->m_pMenuItemReturn->setUserData((void*)TAG_ID_RESULT_DIALOG_RETURN);
         pResultDialog->m_pMenuItemPlayAgain->setTarget(this, menu_selector(BalloonScene::onPressMenuRestartGame));
         pResultDialog->m_pMenuItemPlayAgain->setUserData((void*)TAG_ID_RESULT_DIALOG_PLAYAGAIN);
-        pResultDialog->m_pMenuItemShare->setTarget(this, menu_selector(BalloonScene::onPressMenuShare));
         pResultDialog->setEndCallbackFuncN(CCCallFuncN::create(this, callfuncN_selector(BalloonScene::onResultDialogEndCall)));
         pResultDialog->setTag(TAG_ID_RESULT_DIALOG);
     }
     
-    // 设定分析数据
-    const BalloonAnalysisData* pAnalysisData = &m_BalloonAnalysis.getAnalysisData();
-    pResultDialog->setAnalysisData(pAnalysisData);
     // 设定面板分数
     pResultDialog->setScore(m_llTotalScore);
     long long llHighestScore = UserDataManager::sharedUserDataManager()->getHighestScore();
@@ -712,7 +705,7 @@ void BalloonScene::showResultDialog()
         
     pResultDialog->setHighScore(llHighestScore);
     
-#if COCOS2D_DEBUG > 0
+#if COCOS2D_DEBUG > 2
     CCLabelTTF* pLabelTTFAnalysis = dynamic_cast<CCLabelTTF*>(pResultDialog->getChildByTag(101));
     if (!pLabelTTFAnalysis)
     {
@@ -725,7 +718,7 @@ void BalloonScene::showResultDialog()
         pLabelTTFAnalysis->setPosition(CCPointZero);
         pResultDialog->addChild(pLabelTTFAnalysis);
     }
-    pLabelTTFAnalysis->setString(m_BalloonAnalysis.dumpDebugInfo().c_str());
+    pLabelTTFAnalysis->setString(UserDataManager::sharedUserDataManager()->getAnalysisDataRef()->dumpDebugInfo().c_str());
 #endif
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
@@ -804,37 +797,6 @@ void BalloonScene::onPressMenuReturnMainMenu(cocos2d::CCObject *pSender)
         pDialog->removeFromParent();
     
     CCDirector::sharedDirector()->popScene();
-}
-
-void BalloonScene::onPressMenuShare(cocos2d::CCObject *pSender)
-{
-    BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
-    CCDictionary* pDictData = CCDictionary::create();
-    
-    BalloonResultDialog* pDialog = dynamic_cast<BalloonResultDialog*>(getChildByTag(TAG_ID_RESULT_DIALOG));
-    if (!pDialog) return;
-    
-    // 截取得分图片
-    std::string strPath = pDialog->getSharedPictureFilePath();
-    
-    // pDictData->setObject(ccs("一起来【气球大作战】吧～伸出你的指头，释放你的压力"), "shareText");
-    const char* pszKey = "high_score_shares";
-    if (m_llTotalScore <= 1)
-    {
-        // 采用单数模式的字符串
-        pszKey = "high_score_share";
-    }
-    
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-#elif (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-#endif
-    
-    // 尾部挂上应用程序的链接地址
-    CCString* pStrShareText = CCString::createWithFormat("%s %s", CCString::createWithFormat(DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("share_section", pszKey), m_llTotalScore)->getCString(), "http://itunes.apple.com/app/id882836376");
-    
-    pDictData->setObject(pStrShareText, "shareText");
-    pDictData->setObject(ccs(strPath.c_str()), "shareImage");
-    UMSocial2DX::shareSNS(pDictData);
 }
 
 void BalloonScene::onPressMenuPause(cocos2d::CCObject *pSender)
@@ -1049,7 +1011,7 @@ void BalloonScene::commitScoreToServer()
     
     const char* pszJSON = CCJSONConverter::sharedConverter()->strFrom(pDict);
     // 请求Http数据
-    HttpCenter::sharedHttpCenter()->request("http://121.40.76.13/score_update.php", NOTIFY_HTTP_COMMIT_DATA_CALLBACK_NAME, CCHttpRequest::kHttpPost, pszJSON);
+    HttpCenter::sharedHttpCenter()->request("http://pokeballoon.renqiz.com/score_update.php", NOTIFY_HTTP_COMMIT_DATA_CALLBACK_NAME, CCHttpRequest::kHttpPost, pszJSON);
     free((void*)pszJSON);
     
 }

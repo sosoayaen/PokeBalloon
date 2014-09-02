@@ -307,10 +307,6 @@ void BalloonFirstPage::onPressMenuRankBoard(cocos2d::CCObject *pSender)
 {
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
 
-#if 0// (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    GameKitHelper2dx::showLeaderboard();
-#endif
-    
     addChild(BalloonRankDialog::create());
 }
 
