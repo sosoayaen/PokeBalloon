@@ -36,6 +36,10 @@ public:
     
     void playEffectSpendCoin();
     
+    void playEffectFireworksTakeOff();
+    
+    void playEffectFireworksExplisive();
+    
     /**
      * @brief 播放背景音乐
      * @param soundId 对应背景音乐的ID

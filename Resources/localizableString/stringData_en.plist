@@ -78,5 +78,44 @@
 		<key>safeDesc</key>
 		<string>Boom will safe your score</string>
 	</dict>
+	<key>scoreDetailOptions_section</key>
+	<dict>
+		<key>colorRed</key>
+		<string>Red</string>
+		<key>colorOrange</key>
+		<string>Orange</string>
+		<key>colorBlack</key>
+		<string>Black</string>
+		<key>colorPink</key>
+		<string>Pink</string>
+		<key>colorBrown</key>
+		<string>Brown</string>
+		<key>colorYellow</key>
+		<string>Yellow</string>
+		<key>colorBlue</key>
+		<string>Blue</string>
+		<key>colorGreen</key>
+		<string>Green</string>
+		<key>normalPositive</key>
+		<string>Positive</string>
+		<key>normalNegative</key>
+		<string>Negative</string>
+		<key>normalZero</key>
+		<string>Zero</string>
+		<key>itemPump</key>
+		<string>Pump</string>
+		<key>itemBomb</key>
+		<string>Bomb</string>
+		<key>itemGiant</key>
+		<string>Giant</string>
+		<key>itemFrozen</key>
+		<string>Frozen</string>
+		<key>itemMulti</key>
+		<string>Multiple</string>
+		<key>itemTime</key>
+		<string>Time</string>
+		<key>itemReverse</key>
+		<string>Reverse</string>
+	</dict>
 </dict>
 </plist>

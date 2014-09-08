@@ -35,17 +35,25 @@ public:
 		m_pSpriteResultBoard = NULL;
         m_pSpriteStar = NULL;
         m_pSpriteCoin = NULL;
+        m_pSpriteCoinTop = NULL;
+        m_pSpriteCoinReward = NULL;
         m_pSpriteMissionStatus = NULL;
         m_pLabelBMFontCoins = NULL;
         m_pLabelBMFontCoinQty = NULL;
         m_pLabelBMFontMissionReward = NULL;
-        m_pLabelTTFDetail = NULL;
         m_pLabelTTFMissionDesc = NULL;
+        m_pSpriteSeperate = NULL;
         
         m_llTotalScore = 0;
         m_llHighestScore = 0;
+        m_llUserCoins = 0;
+        m_nCoinsReward = 0;
+        m_bMissionCompleted = false;
+        m_nCoinsAdd = 0;
         
         m_llScoreStep = 0;
+        m_lCoinsWithScores = 0;
+        m_lCoinsWithScoresCnt = 0;
 	}
 	~BalloonResultDialog();
 
@@ -81,6 +89,14 @@ private:
     // 当前总分和历史最高分
     long long m_llTotalScore;
     long long m_llHighestScore;
+    // 奖励的金币数量
+    int m_nCoinsReward;
+    // 当局游戏可获得的金币数量
+    int m_nCoinsAdd;
+    // 用于显示的用户金币数量
+    long long m_llUserCoins;
+    
+    bool m_bMissionCompleted;
     
 private:
 	// Attributes for CCB
@@ -89,7 +105,8 @@ private:
     cocos2d::CCMenu* m_pMenuTop;
 	cocos2d::CCMenu* m_pMenuShare;
     cocos2d::CCMenuItem* m_pMenuItemShare;
-    cocos2d::CCLabelTTF* m_pLabelTTFDetail;
+    // 分割对话框的档子
+    cocos2d::CCSprite* m_pSpriteSeperate;
     cocos2d::CCLabelTTF* m_pLabelTTFMissionDesc;
     /*
 	cocos2d::CCMenu* m_pMenuResult;
@@ -101,6 +118,9 @@ private:
     cocos2d::CCSprite* m_pSpriteStar;
     // 结算对话框上的金币
     cocos2d::CCSprite* m_pSpriteCoin;
+    // 顶部的金币
+    cocos2d::CCSprite* m_pSpriteCoinTop;
+    cocos2d::CCSprite* m_pSpriteCoinReward;
     // 当次得到金币的数量
     cocos2d::CCLabelBMFont* m_pLabelBMFontCoins;
     // 顶部金币数量
@@ -123,14 +143,36 @@ private:
     
     // 星星切换位置
     void changeStarPosition(cocos2d::CCNode* pNode);
+    // 当前金币换算得到的金币数量
+    long m_lCoinsWithScores;
+    // 用在动画的时候计数用的
+    long m_lCoinsWithScoresCnt;
     
-    // 更新
-    void updateCoins(long long ulCoins);
-    
+    // 更新得分获得的金币
+    void updateGameCoins(long long llCoins);
     long long m_llScoreStep;
     // 更新分数动画回调
-    void timerCallbackUpdateScore(float dt);
-    void startScoreUpdateAnimation();
+    void timerCallbackUpdateScoreAndCoin(float dt);
+    void startScoreAndCoinUpdateAnimation();
+    
+    // 更新金币数量动画
+    void startCoinUpdateAnimation();
+    
+    // 更新顶部的金币数量
+    void updateUserinfoCoins(long long llCoins);
+    
+    // 屏幕投放烟花
+    // nFireworks 烟花个数，默认0表示随机得到3到10个烟花
+    void addFireworks(int nFireworks = 0);
+    void actionCallbackFireworksExplosive(cocos2d::CCNode* pNode);
+    
+    // 播放烟花发射音效
+    void actionCallbackPlayFireworksTakeOffSound();
+    
+    // 添加金币的回调函数
+    void actionCallbackAddCoins(cocos2d::CCNode* pNode, void* pData);
+    
+    void updateRewardCoins(int nCoins);
     
     void onPressMenuShare(cocos2d::CCObject* pSender);
     

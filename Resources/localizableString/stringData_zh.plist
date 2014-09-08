@@ -78,5 +78,44 @@
 		<key>safeDesc</key>
 		<string>点击炸弹后，只扣除1/4的分数</string>
 	</dict>
+	<key>scoreDetailOptions_section</key>
+	<dict>
+		<key>colorRed</key>
+		<string>红色</string>
+		<key>colorOrange</key>
+		<string>橙色</string>
+		<key>colorBlack</key>
+		<string>黑色</string>
+		<key>colorPink</key>
+		<string>粉红</string>
+		<key>colorBrown</key>
+		<string>棕色</string>
+		<key>colorYellow</key>
+		<string>黄色</string>
+		<key>colorBlue</key>
+		<string>蓝色</string>
+		<key>colorGreen</key>
+		<string>绿色</string>
+		<key>normalPositive</key>
+		<string>正数</string>
+		<key>normalNegative</key>
+		<string>负数</string>
+		<key>normalZero</key>
+		<string>零分</string>
+		<key>itemPump</key>
+		<string>打气筒</string>
+		<key>itemBomb</key>
+		<string>炸弹</string>
+		<key>itemGiant</key>
+		<string>巨人</string>
+		<key>itemFrozen</key>
+		<string>霜冻</string>
+		<key>itemMulti</key>
+		<string>倍数</string>
+		<key>itemTime</key>
+		<string>时间</string>
+		<key>itemReverse</key>
+		<string>翻转</string>
+	</dict>
 </dict>
 </plist>

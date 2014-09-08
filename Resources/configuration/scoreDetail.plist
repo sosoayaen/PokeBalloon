@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>normal</key>
+	<array>
+		<string>normalPositive</string>
+		<string>normalNegative</string>
+		<string>normalZero</string>
+	</array>
+	<key>item</key>
+	<array>
+		<string>itemBomb</string>
+		<string>itemTime</string>
+		<string>itemPump</string>
+		<string>itemMulti</string>
+		<string>itemReverse</string>
+		<string>itemGiant</string>
+		<string>itemFrozen</string>
+	</array>
+	<key>color</key>
+	<array>
+		<string>colorGreen</string>
+		<string>colorBlack</string>
+		<string>colorOrange</string>
+		<string>colorRed</string>
+		<string>colorBlue</string>
+		<string>colorYellow</string>
+		<string>colorBrown</string>
+		<string>colorPink</string>
+	</array>
+</dict>
+</plist>

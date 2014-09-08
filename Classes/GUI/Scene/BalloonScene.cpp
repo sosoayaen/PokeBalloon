@@ -23,7 +23,7 @@ USING_NS_BAILIN_UTIL;
 
 #define BALLOON_SHOW_RATE    40     // 气球出现的概率，10表示1%，50就是5%
 #define CLOUD_SHOW_RATE      5
-#define DEFAULT_TIME         10
+#define DEFAULT_TIME         30
 
 #define SECURITY_TIME "S_TIME"
 #define SECURITY_SCORE "S_SCORE"

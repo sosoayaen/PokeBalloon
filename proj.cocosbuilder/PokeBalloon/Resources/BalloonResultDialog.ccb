@@ -362,7 +362,7 @@
 								<key>displayName</key>
 								<string>CCSprite顶部的金币</string>
 								<key>memberVarAssignmentName</key>
-								<string>m_pSpriteCoin</string>
+								<string>m_pSpriteCoinTop</string>
 								<key>memberVarAssignmentType</key>
 								<integer>2</integer>
 								<key>properties</key>
@@ -374,7 +374,7 @@
 										<string>Position</string>
 										<key>value</key>
 										<array>
-											<real>40.787120819091797</real>
+											<real>36.851520538330078</real>
 											<real>95.427192687988281</real>
 											<integer>4</integer>
 										</array>
@@ -386,7 +386,7 @@
 										<string>Point</string>
 										<key>value</key>
 										<array>
-											<real>1</real>
+											<real>0.5</real>
 											<real>0.5</real>
 										</array>
 									</dict>
@@ -681,7 +681,7 @@
 								<key>value</key>
 								<array>
 									<real>50.089447021484375</real>
-									<real>74.608901977539062</real>
+									<real>79.181709289550781</real>
 									<integer>4</integer>
 								</array>
 							</dict>
@@ -743,7 +743,7 @@
 								<key>type</key>
 								<string>Text</string>
 								<key>value</key>
-								<string>12</string>
+								<string>0</string>
 							</dict>
 						</array>
 					</dict>
@@ -1126,7 +1126,7 @@
 								<key>value</key>
 								<array>
 									<real>49.552772521972656</real>
-									<real>62.334537506103516</real>
+									<real>71.961494445800781</real>
 									<integer>4</integer>
 								</array>
 							</dict>
@@ -1198,7 +1198,7 @@
 								<key>value</key>
 								<array>
 									<real>52.236137390136719</real>
-									<real>62.334537506103516</real>
+									<real>71.961494445800781</real>
 									<integer>4</integer>
 								</array>
 							</dict>
@@ -1260,123 +1260,7 @@
 								<key>type</key>
 								<string>Text</string>
 								<key>value</key>
-								<string>12</string>
-							</dict>
-						</array>
-					</dict>
-					<dict>
-						<key>baseClass</key>
-						<string>CCLabelTTF</string>
-						<key>children</key>
-						<array/>
-						<key>customClass</key>
-						<string></string>
-						<key>displayName</key>
-						<string>CCLabelTTF完成的数据</string>
-						<key>memberVarAssignmentName</key>
-						<string>m_pLabelTTFDetail</string>
-						<key>memberVarAssignmentType</key>
-						<integer>2</integer>
-						<key>properties</key>
-						<array>
-							<dict>
-								<key>name</key>
-								<string>position</string>
-								<key>type</key>
-								<string>Position</string>
-								<key>value</key>
-								<array>
-									<real>50.268337249755859</real>
-									<real>37.184116363525391</real>
-									<integer>4</integer>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>anchorPoint</string>
-								<key>type</key>
-								<string>Point</string>
-								<key>value</key>
-								<array>
-									<real>0.5</real>
-									<real>0.5</real>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>scale</string>
-								<key>type</key>
-								<string>ScaleLock</string>
-								<key>value</key>
-								<array>
-									<real>1</real>
-									<real>1</real>
-									<false/>
-									<integer>0</integer>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>ignoreAnchorPointForPosition</string>
-								<key>type</key>
-								<string>Check</string>
-								<key>value</key>
-								<false/>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>fontName</string>
-								<key>type</key>
-								<string>FontTTF</string>
-								<key>value</key>
-								<string>Helvetica</string>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>fontSize</string>
-								<key>type</key>
-								<string>FloatScale</string>
-								<key>value</key>
-								<array>
-									<real>14</real>
-									<integer>0</integer>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>dimensions</string>
-								<key>type</key>
-								<string>Size</string>
-								<key>value</key>
-								<array>
-									<real>91</real>
-									<real>35</real>
-									<integer>1</integer>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>horizontalAlignment</string>
-								<key>type</key>
-								<string>IntegerLabeled</string>
-								<key>value</key>
-								<integer>0</integer>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>verticalAlignment</string>
-								<key>type</key>
-								<string>IntegerLabeled</string>
-								<key>value</key>
-								<integer>0</integer>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>string</string>
-								<key>type</key>
-								<string>Text</string>
-								<key>value</key>
-								<string>Sample Text</string>
+								<string>0</string>
 							</dict>
 						</array>
 					</dict>
@@ -1578,9 +1462,9 @@
 						<key>displayName</key>
 						<string>CCSprite本次获得的金币</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>m_pSpriteCoinReward</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>2</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -1650,9 +1534,9 @@
 						<key>displayName</key>
 						<string>CCSprite分割线</string>
 						<key>memberVarAssignmentName</key>
-						<string></string>
+						<string>m_pSpriteSeperate</string>
 						<key>memberVarAssignmentType</key>
-						<integer>0</integer>
+						<integer>2</integer>
 						<key>properties</key>
 						<array>
 							<dict>
@@ -1711,6 +1595,8 @@
 								</array>
 							</dict>
 						</array>
+						<key>selected</key>
+						<true/>
 					</dict>
 					<dict>
 						<key>baseClass</key>

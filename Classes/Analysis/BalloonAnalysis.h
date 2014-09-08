@@ -49,9 +49,9 @@ struct tagBalloonItemAnalysisData
 	long long pump;          // 打气筒
 	long long multi;         // 乘倍
 	long long reverse;       // 正负逆转
-	long long reverse_ex;    // 负数逆转
 	long long giant;         // 巨人气球
 	long long frozen;        // 冰冻气球
+	// long long reverse_ex;    // 负数逆转
 };
 
 // 结果数据存储结构体

@@ -145,7 +145,6 @@ bool BalloonMission::loadAllMissionData()
         SetMissionItemData(pump);
         SetMissionItemData(multi);
         SetMissionItemData(reverse);
-        SetMissionItemData(reverse_ex);
         SetMissionItemData(giant);
         SetMissionItemData(frozen);
         // 把数据塞到列表中

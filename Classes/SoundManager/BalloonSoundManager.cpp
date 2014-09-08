@@ -20,6 +20,8 @@ using namespace CocosDenshion;
 #define SOUND_EFFECT_EXPLOSIVE	"music/effect/Explosive" SOUND_FILE_SUFFIX
 #define SOUND_EFFECT_PUSH_BALLOON   "music/effect/push_balloon" SOUND_FILE_SUFFIX
 #define SOUND_EFFECT_SPEND_COIN     "music/effect/spend_coin" SOUND_FILE_SUFFIX
+#define SOUND_EFFECT_FIREWORKS_TAKE_OFF     "music/effect/fireworks_takeoff" SOUND_FILE_SUFFIX
+#define SOUND_EFFECT_FIREWORKS_EXPLOSIVE     "music/effect/fireworks_explosive" SOUND_FILE_SUFFIX
 
 static BalloonSoundManager* g_s_soundManager = NULL;
 
@@ -75,6 +77,16 @@ void BalloonSoundManager::playEffectSpendCoin()
     playEffectWithFileName(SOUND_EFFECT_SPEND_COIN);
 }
 
+void BalloonSoundManager::playEffectFireworksTakeOff()
+{
+    playEffectWithFileName(SOUND_EFFECT_FIREWORKS_TAKE_OFF);
+}
+
+void BalloonSoundManager::playEffectFireworksExplisive()
+{
+    playEffectWithFileName(SOUND_EFFECT_FIREWORKS_EXPLOSIVE);
+}
+
 void BalloonSoundManager::playBackgroundMusic(int soundId)
 {
     const char* pszBackgroundSoundName = NULL;
@@ -106,6 +118,8 @@ void BalloonSoundManager::preloadAllEffect()
     SimpleAudioEngine::sharedEngine()->preloadEffect(SOUND_EFFECT_EXPLOSIVE);
     SimpleAudioEngine::sharedEngine()->preloadEffect(SOUND_EFFECT_PUSH_BALLOON);
     SimpleAudioEngine::sharedEngine()->preloadEffect(SOUND_EFFECT_SPEND_COIN);
+    SimpleAudioEngine::sharedEngine()->preloadEffect(SOUND_EFFECT_FIREWORKS_TAKE_OFF);
+    SimpleAudioEngine::sharedEngine()->preloadEffect(SOUND_EFFECT_FIREWORKS_EXPLOSIVE);
 }
 
 void BalloonSoundManager::unloadAllEffect()
@@ -114,6 +128,8 @@ void BalloonSoundManager::unloadAllEffect()
     SimpleAudioEngine::sharedEngine()->unloadEffect(SOUND_EFFECT_EXPLOSIVE);
     SimpleAudioEngine::sharedEngine()->unloadEffect(SOUND_EFFECT_PUSH_BALLOON);
     SimpleAudioEngine::sharedEngine()->unloadEffect(SOUND_EFFECT_SPEND_COIN);
+    SimpleAudioEngine::sharedEngine()->unloadEffect(SOUND_EFFECT_FIREWORKS_TAKE_OFF);
+    SimpleAudioEngine::sharedEngine()->unloadEffect(SOUND_EFFECT_FIREWORKS_EXPLOSIVE);
 }
 
 void BalloonSoundManager::setBackgroundMusicVolume(float volume)

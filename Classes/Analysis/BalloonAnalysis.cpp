@@ -313,7 +313,6 @@ void BalloonGlobalAnalysis::setDataWithDictionary(cocos2d::CCDictionary *pDict)
         getItemData(frozen);
         getItemData(giant);
         getItemData(multi);
-        getItemData(reverse_ex);
         getItemData(reverse);
         getItemData(pump);
         getItemData(time);
@@ -385,7 +384,6 @@ CCDictionary* BalloonGlobalAnalysis::dictionayFromData()
     setItemData(giant);
     setItemData(multi);
     setItemData(reverse);
-    setItemData(reverse_ex);
     setItemData(frozen);
     setItemData(time);
     pDict->setObject(pDictItem, KEY_ITEM_DATA);

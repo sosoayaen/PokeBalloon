@@ -69,8 +69,9 @@ bool BalloonResultDialog::init()
                                 CCEaseExponentialIn::create(CCMoveTo::create(0.2f, posUp)));
         SetVisibleBoard(NULL);
         */
+        m_pSpriteResultBoard->setScale(0.1f);
         setOnEnterAction(CCEaseBounceOut::create(CCScaleTo::create(0.5f, 1.0f)));
-        setOnExitAction(CCEaseExponentialIn::create(CCScaleTo::create(0.5f, 0.1f)));
+        setOnExitAction(CCEaseExponentialOut::create(CCScaleTo::create(0.3f, 0.1f)));
         m_pMainBoard = m_pSpriteResultBoard;
         
         // 更新分享按钮数据
@@ -91,12 +92,13 @@ bool BalloonResultDialog::init()
 void BalloonResultDialog::initLabelTTF()
 {
     ControlUtil::sharedControlUtil()->FitLabelTTFFontSize(m_pLabelTTFMissionDesc);
-    ControlUtil::sharedControlUtil()->FitLabelTTFFontSize(m_pLabelTTFDetail);
 }
 
 void BalloonResultDialog::onEnter()
 {
 	DialogLayer::onEnter();
+    addFireworks(rand()%3+3);
+    
     m_pMenuItemShare->stopAllActions();
     m_pMenuItemShare->setPosition(m_posShareItemOri);
     m_pMenuItemShare->setRotation(m_fShareItemAngleOri);
@@ -105,6 +107,14 @@ void BalloonResultDialog::onEnter()
     m_pMenuItemShare->runAction(CCRepeatForever::create(CCSequence::create(CCMoveBy::create(2.7f, ccp(0, m_pMenuItemShare->getContentSize().height*0.3f)), CCMoveBy::create(2.5f, ccp(0, -m_pMenuItemShare->getContentSize().height*0.3f)), NULL)));
     
     initRotateStar();
+    
+    // 当前用户拥有金币数量
+    m_llUserCoins = UserDataManager::sharedUserDataManager()->getGoldenCoins();
+    // 得到当前局分数转换得到的金币数量
+    m_lCoinsWithScores = m_llTotalScore/SCORE_COINS_RATE;
+    m_lCoinsWithScoresCnt = m_lCoinsWithScores;
+    // 显示的时候先减去奖励的金币
+    m_llUserCoins -= m_lCoinsWithScores;
     
     // 计算是否完成任务
     const Mission* pMission = BalloonMission::sharedBalloonMission()->getRandomMission();
@@ -120,7 +130,6 @@ void BalloonResultDialog::onEnter()
     // 拷贝当前盘的数据
     md.analysisData = UserDataManager::sharedUserDataManager()->getAnalysisDataRef()->getAnalysisData();
     
-    const char* pszMissionStatusFrameName = NULL;
     if (pMission && pMission->isMissionComplete(md))
     {
         // 完成任务，显示奖励
@@ -143,7 +152,10 @@ void BalloonResultDialog::onEnter()
             pNode->runAction(CCSequence::create(CCMoveTo::create(5.0f, ccp(this->getContentSize().width*1.2f, pNode->getPositionY())), CCRemoveSelf::create(), NULL));
             */
             BalloonMission::sharedBalloonMission()->setNeedNewMission(true);
-            pszMissionStatusFrameName = "result_mission_ok.png";
+            m_bMissionCompleted = true;
+            m_nCoinsReward = pMission->nReward;
+            // 增加任务获取的金币数量
+            UserDataManager::sharedUserDataManager()->addGoldenCoins(pMission->nReward);
         }
     }
     else
@@ -156,22 +168,30 @@ void BalloonResultDialog::onEnter()
         this->addChild(pLabel);
         pLabel->runAction(CCSequence::create(CCSpawn::create(CCFadeIn::create(0.5f), CCEaseBounceOut::create(CCScaleTo::create(1.0f, 3.0f)), NULL), CCFadeOut::create(1.0f), CCRemoveSelf::create(), NULL));
         */
-        pszMissionStatusFrameName = "result_mission_failed.png";
     }
+    // 计算得到当前局可获取的总金币数量
+    m_nCoinsAdd = m_nCoinsReward + m_lCoinsWithScores;
+    // 显示任务信息
+    // m_pLabelTTFDetail->setString(UserDataManager::sharedUserDataManager()->getAnalysisDataRef()->dumpDebugInfo().c_str());
     
-    m_pSpriteMissionStatus->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszMissionStatusFrameName));
+    // 初始化金币步进的值
+    m_llScoreStep = 0;
+    
     // 设置任务状态的大小很小
     m_pSpriteMissionStatus->setScale(0.01f);
-    m_pSpriteMissionStatus->runAction(CCEaseBounceOut::create(CCScaleTo::create(1.0f, 1.0f)));
+    m_pSpriteMissionStatus->setVisible(false);
     
-    // 显示任务信息
-    m_pLabelTTFDetail->setString(UserDataManager::sharedUserDataManager()->getAnalysisDataRef()->dumpDebugInfo().c_str());
+    // 开始清算当前分数和金币数量
+    startScoreAndCoinUpdateAnimation();
     
-    startScoreUpdateAnimation();
+    // 显示下用户金币数量
+    updateUserinfoCoins(m_llUserCoins);
 }
 
 void BalloonResultDialog::onExit()
 {
+    unschedule(schedule_selector(BalloonResultDialog::timerCallbackUpdateScoreAndCoin));
+    
 	DialogLayer::onExit();
 }
 
@@ -204,11 +224,13 @@ bool BalloonResultDialog::onAssignCCBMemberVariable( CCObject* pTarget, const ch
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteResultBoard", CCSprite*, this->m_pSpriteResultBoard);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteStar", CCSprite*, this->m_pSpriteStar);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteCoin", CCSprite*, this->m_pSpriteCoin);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteSeperate", CCSprite*, this->m_pSpriteSeperate);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteCoinTop", CCSprite*, this->m_pSpriteCoinTop);
+	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteCoinReward", CCSprite*, this->m_pSpriteCoinReward);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pSpriteMissionStatus", CCSprite*, this->m_pSpriteMissionStatus);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelBMFontCoins", CCLabelBMFont*, this->m_pLabelBMFontCoins);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelBMFontCoinQty", CCLabelBMFont*, this->m_pLabelBMFontCoinQty);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelBMFontMissionReward", CCLabelBMFont*, this->m_pLabelBMFontMissionReward);
-	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelTTFDetail", CCLabelTTF*, this->m_pLabelTTFDetail);
 	CCB_MEMBERVARIABLEASSIGNER_GLUE_WEAK(this, "m_pLabelTTFMissionDesc", CCLabelTTF*, this->m_pLabelTTFMissionDesc);
 
 	return true;
@@ -224,8 +246,6 @@ void BalloonResultDialog::setScore(long long llScore)
 {
     m_llTotalScore = llScore;
     m_pLabelBMFontCurrentScore->setCString(CCString::createWithFormat("%lld", llScore)->getCString());
-    
-    updateCoins(llScore/SCORE_COINS_RATE);
 }
 
 void BalloonResultDialog::setHighScore(long long llScore)
@@ -244,6 +264,7 @@ std::string BalloonResultDialog::getSharedPictureFilePath()
     // 隐藏按钮
     // m_pMenuResult->setVisible(false);
     m_pMenuShare->setVisible(false);
+    m_pMenuTop->setVisible(false);
     
     CCSize size = m_pSpriteResultBoard->getContentSize();
     
@@ -266,6 +287,7 @@ std::string BalloonResultDialog::getSharedPictureFilePath()
     
     // m_pMenuResult->setVisible(true);
     m_pMenuShare->setVisible(true);
+    m_pMenuTop->setVisible(true);
     
     // 保存截图并返回图片路径
     if (pTexture->saveToFile(SNS_SHARE_IMAGE_FILE_NAME, kCCImageFormatPNG))
@@ -299,14 +321,34 @@ void BalloonResultDialog::changeStarPosition(cocos2d::CCNode *pNode)
     }
 }
 
-void BalloonResultDialog::updateCoins(long long llCoins)
+void BalloonResultDialog::updateGameCoins(long long llCoins)
 {
     std::stringstream stream;
     stream << llCoins;
     m_pLabelBMFontCoins->setString(stream.str().c_str());
     
     // 更新位置
-    m_pSpriteCoin->setPosition(ccp(m_pLabelBMFontCoins->getPositionX() - m_pLabelBMFontCoins->getContentSize().width*m_pLabelBMFontCoins->getScaleX(), m_pSpriteCoin->getPositionY()));
+    // m_pSpriteCoin->setPosition(ccp(m_pLabelBMFontCoins->getPositionX() - m_pLabelBMFontCoins->getContentSize().width*m_pLabelBMFontCoins->getScaleX(), m_pSpriteCoin->getPositionY()));
+}
+
+void BalloonResultDialog::updateUserinfoCoins(long long llCoins)
+{
+    std::stringstream stream;
+    stream << llCoins;
+    m_pLabelBMFontCoinQty->setString(stream.str().c_str());
+    m_pLabelBMFontCoinQty->setScale(2.0f);
+    
+    if (m_pSpriteResultBoard->boundingBox().size.width*0.25f < m_pLabelBMFontCoinQty->boundingBox().size.width)
+        m_pLabelBMFontCoinQty->setScale(m_pSpriteResultBoard->getContentSize().width*0.25f/m_pLabelBMFontCoinQty->boundingBox().size.width);
+    else
+        m_pLabelBMFontCoinQty->setScale(2.0f);
+}
+
+void BalloonResultDialog::updateRewardCoins(int nCoins)
+{
+    std::stringstream stream;
+    stream << nCoins;
+    m_pLabelBMFontMissionReward->setString(stream.str().c_str());
 }
 
 void BalloonResultDialog::onPressMenuShare(CCObject* pSender)
@@ -369,25 +411,168 @@ void BalloonResultDialog::initMenuTop()
     pushMenu(m_pMenuTop);
 }
 
-void BalloonResultDialog::startScoreUpdateAnimation()
+void BalloonResultDialog::startScoreAndCoinUpdateAnimation()
 {
-    schedule(schedule_selector(BalloonResultDialog::timerCallbackUpdateScore), 0.1f);
+    schedule(schedule_selector(BalloonResultDialog::timerCallbackUpdateScoreAndCoin), 0.05f);
+    
+    // 这里顺便把用户的当前游戏的详细记录罗列下
+    do
+    {
+        CCDictionary* pDictConfiguration = CCDictionary::createWithContentsOfFile("configuration/scoreDetail.plist");
+        CC_BREAK_IF(!pDictConfiguration);
+        const BalloonAnalysis* pAnalysisData = UserDataManager::sharedUserDataManager()->getAnalysisDataRef();
+        // 得到颜色配置的选项，颜色的文字配置key
+        CCArray* pArrayConfigurationColor = dynamic_cast<CCArray*>(pDictConfiguration->objectForKey("color"));
+        CC_BREAK_IF(!pArrayConfigurationColor);
+        const tagBalloonColorAnalysisData& colorData = pAnalysisData->getAnalysisData().colorData;
+        unsigned int size = sizeof(tagBalloonColorAnalysisData)/sizeof(long long);
+        long long* pData = (long long*)&colorData;
+        for (unsigned int idx = 0; idx < size; ++idx)
+        {
+            CCScale9Sprite* pDataBackground = CCScale9Sprite::createWithSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("balloon_detail_bg.png"));
+            CCString* pStrOptionsKey = dynamic_cast<CCString*>(pArrayConfigurationColor->objectAtIndex(idx));
+            CC_BREAK_IF(!pStrOptionsKey);
+            const char* pszOptionsName = DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("scoreDetailOptions_section", pStrOptionsKey->getCString());
+            CCLabelTTF* pScore = CCLabelTTF::create(CCString::createWithFormat("%s:%lld", pszOptionsName, *pData)->getCString(), "", pDataBackground->getContentSize().height*0.5f);
+            // 设置背景的长和宽，根据文字的长度调节
+            pDataBackground->setPreferredSize(CCSizeMake(pScore->getContentSize().width+pDataBackground->getContentSize().width*0.2f, pDataBackground->getContentSize().height));
+            pDataBackground->setOpacity(128);
+            // 设置文字居中对齐
+            pScore->setPosition(ccpMult(ccpFromSize(pDataBackground->getContentSize()), 0.5f));
+            pDataBackground->addChild(pScore);
+            // 设置分数背景面板的位置
+            float width = m_pSpriteResultBoard->getContentSize().width;
+            float x, y = 0;
+            x = width/4*(idx%3 + 1);
+            y = m_pSpriteCoin->getPositionY() - m_pSpriteCoin->getContentSize().height - floor(idx/3.0f)*pDataBackground->getContentSize().height*1.05f;
+            pDataBackground->setPosition(ccp(x, y));
+            pDataBackground->setScale(0.01f);
+            pDataBackground->setVisible(false);
+            m_pSpriteResultBoard->addChild(pDataBackground);
+            // 所有数据一起弹出来
+            pDataBackground->runAction(CCSequence::create(CCDelayTime::create(0.5f + 0.2f*idx), CCShow::create(), CCEaseBounceOut::create(CCScaleTo::create(0.5f, 1.0f)), NULL));
+            // 颜色数据往后移动一个
+            pData++;
+        }
+    } while(0);
+    
 }
 
-void BalloonResultDialog::timerCallbackUpdateScore(float dt)
+void BalloonResultDialog::timerCallbackUpdateScoreAndCoin(float dt)
 {
     // 这里默认设置更新的次数
     int nStep = m_llTotalScore / 50;
     // 小于50分的花2.5秒时间搞定
-    if (m_llTotalScore <= 50)
-        nStep = 2;
+    if (m_llTotalScore < 50)
+        nStep = 1;
     m_llScoreStep += nStep;
     if (m_llScoreStep <= m_llTotalScore)
+    {
         m_pLabelBMFontCurrentScore->setString(CCString::createWithFormat("%lld", m_llScoreStep)->getCString());
+        // 更新金币数量
+        updateGameCoins(m_llScoreStep/SCORE_COINS_RATE);
+    }
     else
     {
         m_pLabelBMFontCurrentScore->setString(CCString::createWithFormat("%lld", m_llTotalScore)->getCString());
-        unschedule(schedule_selector(BalloonResultDialog::timerCallbackUpdateScore));
-        // TODO: 这里可以计算当次金币数量
+        unschedule(schedule_selector(BalloonResultDialog::timerCallbackUpdateScoreAndCoin));
+        // 这里计算当次金币数量
+        startCoinUpdateAnimation();
     }
+}
+
+void BalloonResultDialog::actionCallbackAddCoins(CCNode* pNode, void* pData)
+{
+    long * pAddCoins = (long*)pData;
+    // 更新用户金币
+    m_llUserCoins += *pAddCoins;
+    updateUserinfoCoins(m_llUserCoins);
+    
+    // 这里销毁掉
+    delete pAddCoins;
+    
+    // 赚钱音效
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectSpendCoin();
+    
+    // TODO: 增加Node上的效果，比如搞个粒子之类的
+}
+
+void BalloonResultDialog::startCoinUpdateAnimation()
+{
+    // 把金币添加到用户金币上
+    if (m_lCoinsWithScoresCnt > 0)
+    {
+        CCSprite* pSpriteCoin = CCSprite::createWithSpriteFrame(m_pSpriteCoin->displayFrame());
+        pSpriteCoin->setPosition(m_pSpriteCoin->getPosition());
+        pSpriteCoin->setScale(m_pSpriteCoin->getScale());
+        m_pSpriteResultBoard->addChild(pSpriteCoin);
+        // 填充一个数据结构
+        long * pParam = new long;
+        *pParam = m_lCoinsWithScores;
+        
+        pSpriteCoin->runAction(CCSequence::create(CCJumpTo::create(0.5f, m_pSpriteCoinTop->getPosition(), m_pSpriteCoinTop->getPositionY() - pSpriteCoin->getPositionY() + 100, 1), CCRemoveSelf::create(), CCCallFuncND::create(this, callfuncND_selector(BalloonResultDialog::actionCallbackAddCoins), pParam), NULL));
+    }
+    
+    // 设置任务是否完成
+    const char* pszMissionStatusFrameName = NULL;
+    if (m_bMissionCompleted)
+    {
+        pszMissionStatusFrameName = "result_mission_ok.png";
+        // 金币跳跃到总分上
+        CCSprite* pSpriteCoin = CCSprite::createWithSpriteFrame(m_pSpriteCoinReward->displayFrame());
+        pSpriteCoin->setScale(m_pSpriteCoinReward->getScale());
+        pSpriteCoin->setPosition(m_pSpriteCoin->getPosition());
+        m_pSpriteResultBoard->addChild(pSpriteCoin);
+        // 填充一个数据结构
+        long * pParam = new long;
+        *pParam = m_nCoinsReward;
+        
+        pSpriteCoin->runAction(CCSequence::create(CCJumpTo::create(1.5f, m_pSpriteCoinTop->getPosition(), m_pSpriteCoinTop->getPositionY() - pSpriteCoin->getPositionY() + 100, 1), CCRemoveSelf::create(), CCCallFuncND::create(this, callfuncND_selector(BalloonResultDialog::actionCallbackAddCoins), pParam), NULL));
+        
+        // 添加一个烟花效果
+        addFireworks();
+    }
+    else
+    {
+        pszMissionStatusFrameName = "result_mission_failed.png";
+        m_pLabelBMFontMissionReward->setString("0");
+    }
+    
+    // 任务完成状态动画效果
+    m_pSpriteMissionStatus->setVisible(true);
+    m_pSpriteMissionStatus->setDisplayFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(pszMissionStatusFrameName));
+    m_pSpriteMissionStatus->runAction(CCEaseBounceOut::create(CCScaleTo::create(1.0f, 1.0f)));
+}
+
+void BalloonResultDialog::addFireworks(int nFireworks /* = 0 */)
+{
+    if (nFireworks <= 0)
+        nFireworks = 3;
+    
+    for (int idx = 0; idx < nFireworks; idx++)
+    {
+        // 从底部升起，到点爆炸
+        CCParticleSystemQuad* pFirewoksTakeoff = CCParticleSystemQuad::create("particles/fireworksTakeoff.plist");
+        pFirewoksTakeoff->setAutoRemoveOnFinish(true);
+        float posX = rand()%(int(getContentSize().width*0.5f)) + getContentSize().width*0.2f;
+        pFirewoksTakeoff->setPosition(ccp(posX, 0));
+        pFirewoksTakeoff->runAction(CCSequence::create(CCDelayTime::create((rand()%30)*0.1f), CCCallFunc::create(this, callfunc_selector(BalloonResultDialog::actionCallbackPlayFireworksTakeOffSound)), CCEaseExponentialOut::create(CCMoveTo::create(2.0f, ccp(pFirewoksTakeoff->getPositionX(), getContentSize().height*((rand()%30+40))*0.01f))), CCCallFuncN::create(this, callfuncN_selector(BalloonResultDialog::actionCallbackFireworksExplosive)), CCRemoveSelf::create(), NULL));
+        addChild(pFirewoksTakeoff);
+    }
+}
+
+void BalloonResultDialog::actionCallbackFireworksExplosive(cocos2d::CCNode *pNode)
+{
+    CCParticleSystemQuad* pFireworksExplosive = CCParticleSystemQuad::create("particles/fireworksExplosive.plist");
+    pFireworksExplosive->setPosition(pNode->getPosition());
+    pFireworksExplosive->setAutoRemoveOnFinish(true);
+    addChild(pFireworksExplosive);
+    // 爆炸音效
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectFireworksExplisive();
+}
+
+void BalloonResultDialog::actionCallbackPlayFireworksTakeOffSound()
+{
+    // 烟花发射的音效
+    BalloonSoundManager::sharedBalloonSoundManager()->playEffectFireworksTakeOff();
 }
