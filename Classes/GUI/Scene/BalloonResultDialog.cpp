@@ -421,12 +421,51 @@ void BalloonResultDialog::startScoreAndCoinUpdateAnimation()
         CCDictionary* pDictConfiguration = CCDictionary::createWithContentsOfFile("configuration/scoreDetail.plist");
         CC_BREAK_IF(!pDictConfiguration);
         const BalloonAnalysis* pAnalysisData = UserDataManager::sharedUserDataManager()->getAnalysisDataRef();
+        // 当前是第几个详细数据选项
+        unsigned int nDetailItem = 0;
+        float width = m_pSpriteResultBoard->getContentSize().width;
+        // 得到气球分数类型配置的选项，颜色的文字配置key
+        CCArray* pArrayConfigurationNormal = dynamic_cast<CCArray*>(pDictConfiguration->objectForKey("normal"));
+        CC_BREAK_IF(!pArrayConfigurationNormal);
+        const tagBalloonNormalAnalysisData& normalData = pAnalysisData->getAnalysisData().normalData;
+        long long size = sizeof(tagBalloonNormalAnalysisData)/sizeof(long long);
+        long long* pData = (long long*)&normalData;
+        for (unsigned int idx = 0; idx < size; ++idx)
+        {
+            CCScale9Sprite* pDataBackground = CCScale9Sprite::createWithSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("balloon_detail_bg.png"));
+            CCString* pStrOptionsKey = dynamic_cast<CCString*>(pArrayConfigurationNormal->objectAtIndex(idx));
+            CC_BREAK_IF(!pStrOptionsKey);
+            const char* pszOptionsName = DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("scoreDetailOptions_section", pStrOptionsKey->getCString());
+            CCLabelTTF* pScore = CCLabelTTF::create(CCString::createWithFormat("%s:%lld", pszOptionsName, *pData)->getCString(), "", pDataBackground->getContentSize().height*0.5f);
+            // 设置背景的长和宽，根据文字的长度调节
+            pDataBackground->setPreferredSize(CCSizeMake(pScore->getContentSize().width+pDataBackground->getContentSize().width*0.2f, pDataBackground->getContentSize().height));
+            pDataBackground->setOpacity(128);
+            // 设置文字居中对齐
+            pScore->setPosition(ccpMult(ccpFromSize(pDataBackground->getContentSize()), 0.5f));
+            pDataBackground->addChild(pScore);
+            // 设置分数背景面板的位置
+            float x, y = 0;
+            x = width/4*(nDetailItem%3 + 1);
+            y = m_pSpriteCoin->getPositionY() - m_pSpriteCoin->boundingBox().size.height - pDataBackground->getContentSize().height*0.6f - floor(nDetailItem/3.0f)*pDataBackground->getContentSize().height*1.05f;
+            pDataBackground->setPosition(ccp(x, y));
+            // 为由小变大做好前期准备
+            pDataBackground->setScale(0.01f);
+            // 默认不可见
+            pDataBackground->setVisible(false);
+            m_pSpriteResultBoard->addChild(pDataBackground);
+            // 所有数据一起弹出来
+            pDataBackground->runAction(CCSequence::create(CCDelayTime::create(0.5f + 0.2f*nDetailItem), CCShow::create(), CCEaseBounceOut::create(CCScaleTo::create(0.5f, 1.0f)), NULL));
+            // 颜色数据往后移动一个
+            pData++;
+            nDetailItem++;
+        }
+        
         // 得到颜色配置的选项，颜色的文字配置key
         CCArray* pArrayConfigurationColor = dynamic_cast<CCArray*>(pDictConfiguration->objectForKey("color"));
         CC_BREAK_IF(!pArrayConfigurationColor);
         const tagBalloonColorAnalysisData& colorData = pAnalysisData->getAnalysisData().colorData;
-        unsigned int size = sizeof(tagBalloonColorAnalysisData)/sizeof(long long);
-        long long* pData = (long long*)&colorData;
+        size = sizeof(tagBalloonColorAnalysisData)/sizeof(long long);
+        pData = (long long*)&colorData;
         for (unsigned int idx = 0; idx < size; ++idx)
         {
             CCScale9Sprite* pDataBackground = CCScale9Sprite::createWithSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("balloon_detail_bg.png"));
@@ -441,18 +480,56 @@ void BalloonResultDialog::startScoreAndCoinUpdateAnimation()
             pScore->setPosition(ccpMult(ccpFromSize(pDataBackground->getContentSize()), 0.5f));
             pDataBackground->addChild(pScore);
             // 设置分数背景面板的位置
-            float width = m_pSpriteResultBoard->getContentSize().width;
             float x, y = 0;
-            x = width/4*(idx%3 + 1);
-            y = m_pSpriteCoin->getPositionY() - m_pSpriteCoin->getContentSize().height - floor(idx/3.0f)*pDataBackground->getContentSize().height*1.05f;
+            x = width/4*(nDetailItem%3 + 1);
+            y = m_pSpriteCoin->getPositionY() - m_pSpriteCoin->boundingBox().size.height - pDataBackground->getContentSize().height*0.6f - floor(nDetailItem/3.0f)*pDataBackground->getContentSize().height*1.05f;
             pDataBackground->setPosition(ccp(x, y));
+            // 为由小变大做好前期准备
             pDataBackground->setScale(0.01f);
+            // 默认不可见
             pDataBackground->setVisible(false);
             m_pSpriteResultBoard->addChild(pDataBackground);
             // 所有数据一起弹出来
-            pDataBackground->runAction(CCSequence::create(CCDelayTime::create(0.5f + 0.2f*idx), CCShow::create(), CCEaseBounceOut::create(CCScaleTo::create(0.5f, 1.0f)), NULL));
+            pDataBackground->runAction(CCSequence::create(CCDelayTime::create(0.5f + 0.2f*nDetailItem), CCShow::create(), CCEaseBounceOut::create(CCScaleTo::create(0.5f, 1.0f)), NULL));
             // 颜色数据往后移动一个
             pData++;
+            nDetailItem++;
+        }
+        
+        // 得到气球分数类型配置的选项，颜色的文字配置key
+        CCArray* pArrayConfigurationItem = dynamic_cast<CCArray*>(pDictConfiguration->objectForKey("item"));
+        CC_BREAK_IF(!pArrayConfigurationItem);
+        const tagBalloonItemAnalysisData& itemData = pAnalysisData->getAnalysisData().itemData;
+        size = sizeof(tagBalloonItemAnalysisData)/sizeof(long long);
+        pData = (long long*)&itemData;
+        for (unsigned int idx = 0; idx < size; ++idx)
+        {
+            CCScale9Sprite* pDataBackground = CCScale9Sprite::createWithSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("balloon_detail_bg.png"));
+            CCString* pStrOptionsKey = dynamic_cast<CCString*>(pArrayConfigurationItem->objectAtIndex(idx));
+            CC_BREAK_IF(!pStrOptionsKey);
+            const char* pszOptionsName = DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("scoreDetailOptions_section", pStrOptionsKey->getCString());
+            CCLabelTTF* pScore = CCLabelTTF::create(CCString::createWithFormat("%s:%lld", pszOptionsName, *pData)->getCString(), "", pDataBackground->getContentSize().height*0.5f);
+            // 设置背景的长和宽，根据文字的长度调节
+            pDataBackground->setPreferredSize(CCSizeMake(pScore->getContentSize().width+pDataBackground->getContentSize().width*0.2f, pDataBackground->getContentSize().height));
+            pDataBackground->setOpacity(128);
+            // 设置文字居中对齐
+            pScore->setPosition(ccpMult(ccpFromSize(pDataBackground->getContentSize()), 0.5f));
+            pDataBackground->addChild(pScore);
+            // 设置分数背景面板的位置
+            float x, y = 0;
+            x = width/4*(nDetailItem%3 + 1);
+            y = m_pSpriteCoin->getPositionY() - m_pSpriteCoin->boundingBox().size.height - pDataBackground->getContentSize().height*0.6f - floor(nDetailItem/3.0f)*pDataBackground->getContentSize().height*1.05f;
+            pDataBackground->setPosition(ccp(x, y));
+            // 为由小变大做好前期准备
+            pDataBackground->setScale(0.01f);
+            // 默认不可见
+            pDataBackground->setVisible(false);
+            m_pSpriteResultBoard->addChild(pDataBackground);
+            // 所有数据一起弹出来
+            pDataBackground->runAction(CCSequence::create(CCDelayTime::create(0.5f + 0.2f*nDetailItem), CCShow::create(), CCEaseBounceOut::create(CCScaleTo::create(0.5f, 1.0f)), NULL));
+            // 颜色数据往后移动一个
+            pData++;
+            nDetailItem++;
         }
     } while(0);
     

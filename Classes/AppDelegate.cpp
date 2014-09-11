@@ -45,6 +45,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     pArrayProducts->addObject(CCString::create("com.wardrums.pokeballoon.removead"));
     pArrayProducts->addObject(CCString::create("com.wardrums.pokeballoon.buyCoinsOne"));
     pArrayProducts->addObject(CCString::create("com.wardrums.pokeballoon.buyCoinsTwo"));
+    pArrayProducts->addObject(CCString::create("com.wardrums.pokeballoon.buyCoinsThree"));
     NDKBridge::sharedNDKBridge()->initIAP(pArrayProducts, "76cf42e581eb48819b8456a8dcdc8129");
     NDKBridge::sharedNDKBridge()->setADProductID("com.wardrums.pokeballoon.removead");
     

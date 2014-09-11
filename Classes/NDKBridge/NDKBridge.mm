@@ -195,6 +195,11 @@ void NDKBridge::buyIAPProduct(unsigned int productIdx)
                             // 增加3000块钱
                             UserDataManager::sharedUserDataManager()->addGoldenCoins(3000);
                         }
+                        else if ([transcation.payment.productIdentifier isEqualToString:@"com.wardrums.pokeballoon.buyCoinsThree"])
+                        {
+                            // 增加6000块钱
+                            UserDataManager::sharedUserDataManager()->addGoldenCoins(5000);
+                        }
                         NSLog(@"Purchase Successed!!! %@", transcation.payment.productIdentifier);
                     }
                     else

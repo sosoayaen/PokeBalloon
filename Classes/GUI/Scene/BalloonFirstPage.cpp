@@ -11,6 +11,7 @@
 #include "BalloonShopScene.h"
 #include "BalloonUserInfoDialog.h"
 #include "CCJSONConverter.h"
+#include "BalloonShopDialog.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #   include "GameKitHelper2dx.h"
@@ -313,7 +314,12 @@ void BalloonFirstPage::onPressMenuRankBoard(cocos2d::CCObject *pSender)
 void BalloonFirstPage::onPressMenuShop(cocos2d::CCObject *pSender)
 {
     BalloonSoundManager::sharedBalloonSoundManager()->playEffectPushBalloon();
-    // addChild(BalloonOptionsDialog::create());
+    
+    /*
+    CCScene* pScene = BalloonShopScene::scene();
+    CCDirector::sharedDirector()->pushScene(CCTransitionCrossFade::create(0.5f, pScene));
+    */
+    addChild(BalloonShopDialog::create());
 }
 
 void BalloonFirstPage::onPressMenuUserinfo(cocos2d::CCObject *pSender)
