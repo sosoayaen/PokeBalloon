@@ -418,22 +418,24 @@ void BalloonResultDialog::startScoreAndCoinUpdateAnimation()
     // 这里顺便把用户的当前游戏的详细记录罗列下
     do
     {
-        CCDictionary* pDictConfiguration = CCDictionary::createWithContentsOfFile("configuration/scoreDetail.plist");
+        CCDictionary* pDictConfiguration = dynamic_cast<CCDictionary*>(DataManagerUtil::sharedDataManagerUtil()->GetGlobalDataObject("configuration"));
         CC_BREAK_IF(!pDictConfiguration);
+        CCDictionary* pDictConfiResultDetail = dynamic_cast<CCDictionary*>(pDictConfiguration->objectForKey("resultDetailData"));
+        CC_BREAK_IF(!pDictConfiResultDetail);
         const BalloonAnalysis* pAnalysisData = UserDataManager::sharedUserDataManager()->getAnalysisDataRef();
         // 当前是第几个详细数据选项
         unsigned int nDetailItem = 0;
         float width = m_pSpriteResultBoard->getContentSize().width;
         // 得到气球分数类型配置的选项，颜色的文字配置key
-        CCArray* pArrayConfigurationNormal = dynamic_cast<CCArray*>(pDictConfiguration->objectForKey("normal"));
-        CC_BREAK_IF(!pArrayConfigurationNormal);
+        CCArray* pArrayConfigNormal = dynamic_cast<CCArray*>(pDictConfiResultDetail->objectForKey("normal"));
+        CC_BREAK_IF(!pArrayConfigNormal);
         const tagBalloonNormalAnalysisData& normalData = pAnalysisData->getAnalysisData().normalData;
         long long size = sizeof(tagBalloonNormalAnalysisData)/sizeof(long long);
         long long* pData = (long long*)&normalData;
         for (unsigned int idx = 0; idx < size; ++idx)
         {
             CCScale9Sprite* pDataBackground = CCScale9Sprite::createWithSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("balloon_detail_bg.png"));
-            CCString* pStrOptionsKey = dynamic_cast<CCString*>(pArrayConfigurationNormal->objectAtIndex(idx));
+            CCString* pStrOptionsKey = dynamic_cast<CCString*>(pArrayConfigNormal->objectAtIndex(idx));
             CC_BREAK_IF(!pStrOptionsKey);
             const char* pszOptionsName = DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("scoreDetailOptions_section", pStrOptionsKey->getCString());
             CCLabelTTF* pScore = CCLabelTTF::create(CCString::createWithFormat("%s:%lld", pszOptionsName, *pData)->getCString(), "", pDataBackground->getContentSize().height*0.5f);
@@ -461,15 +463,15 @@ void BalloonResultDialog::startScoreAndCoinUpdateAnimation()
         }
         
         // 得到颜色配置的选项，颜色的文字配置key
-        CCArray* pArrayConfigurationColor = dynamic_cast<CCArray*>(pDictConfiguration->objectForKey("color"));
-        CC_BREAK_IF(!pArrayConfigurationColor);
+        CCArray* pArrayConfigColor = dynamic_cast<CCArray*>(pDictConfiResultDetail->objectForKey("color"));
+        CC_BREAK_IF(!pArrayConfigColor);
         const tagBalloonColorAnalysisData& colorData = pAnalysisData->getAnalysisData().colorData;
         size = sizeof(tagBalloonColorAnalysisData)/sizeof(long long);
         pData = (long long*)&colorData;
         for (unsigned int idx = 0; idx < size; ++idx)
         {
             CCScale9Sprite* pDataBackground = CCScale9Sprite::createWithSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("balloon_detail_bg.png"));
-            CCString* pStrOptionsKey = dynamic_cast<CCString*>(pArrayConfigurationColor->objectAtIndex(idx));
+            CCString* pStrOptionsKey = dynamic_cast<CCString*>(pArrayConfigColor->objectAtIndex(idx));
             CC_BREAK_IF(!pStrOptionsKey);
             const char* pszOptionsName = DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("scoreDetailOptions_section", pStrOptionsKey->getCString());
             CCLabelTTF* pScore = CCLabelTTF::create(CCString::createWithFormat("%s:%lld", pszOptionsName, *pData)->getCString(), "", pDataBackground->getContentSize().height*0.5f);
@@ -497,15 +499,15 @@ void BalloonResultDialog::startScoreAndCoinUpdateAnimation()
         }
         
         // 得到气球分数类型配置的选项，颜色的文字配置key
-        CCArray* pArrayConfigurationItem = dynamic_cast<CCArray*>(pDictConfiguration->objectForKey("item"));
-        CC_BREAK_IF(!pArrayConfigurationItem);
+        CCArray* pArrayConfigItem = dynamic_cast<CCArray*>(pDictConfiResultDetail->objectForKey("item"));
+        CC_BREAK_IF(!pArrayConfigItem);
         const tagBalloonItemAnalysisData& itemData = pAnalysisData->getAnalysisData().itemData;
         size = sizeof(tagBalloonItemAnalysisData)/sizeof(long long);
         pData = (long long*)&itemData;
         for (unsigned int idx = 0; idx < size; ++idx)
         {
             CCScale9Sprite* pDataBackground = CCScale9Sprite::createWithSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName("balloon_detail_bg.png"));
-            CCString* pStrOptionsKey = dynamic_cast<CCString*>(pArrayConfigurationItem->objectAtIndex(idx));
+            CCString* pStrOptionsKey = dynamic_cast<CCString*>(pArrayConfigItem->objectAtIndex(idx));
             CC_BREAK_IF(!pStrOptionsKey);
             const char* pszOptionsName = DataManagerUtil::sharedDataManagerUtil()->GetUTF8StringInDictionary("scoreDetailOptions_section", pStrOptionsKey->getCString());
             CCLabelTTF* pScore = CCLabelTTF::create(CCString::createWithFormat("%s:%lld", pszOptionsName, *pData)->getCString(), "", pDataBackground->getContentSize().height*0.5f);

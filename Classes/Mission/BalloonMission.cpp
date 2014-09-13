@@ -82,13 +82,18 @@ bool BalloonMission::loadAllMissionData()
 	
 	const char* pszJSONData = NULL;
     unsigned long len = 0;
+/*
 #if COCOS2D_DEBUG > 0
 	// Debug直接从文件中读取
     pszJSONData = (const char*)CCFileUtils::sharedFileUtils()->getFileData("configuration/Mission.json", "r", &len);
 #else
+*/
 	// Release版本从压缩包中读取数据
-    pszJSONData = (const char*)CCFileUtils::sharedFileUtils()->getFileDataFromZip("config", "Mission.json", &len);
+    std::string zipFile = CCFileUtils::sharedFileUtils()->fullPathForFilename("config");
+    pszJSONData = (const char*)CCFileUtils::sharedFileUtils()->getFileDataFromZip(zipFile.c_str(), "configuration/Mission.json", &len);
+/*
 #endif
+*/
 	
 	if (!pszJSONData) return false;
 

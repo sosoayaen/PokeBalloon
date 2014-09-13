@@ -13,7 +13,7 @@ USING_NS_BAILIN_UTIL;
 
 BalloonUserInfoDialog::~BalloonUserInfoDialog()
 {
-    CC_SAFE_RELEASE(m_pDictHandbookData);
+    
 }
 
 bool BalloonUserInfoDialog::init()
@@ -269,41 +269,45 @@ void BalloonUserInfoDialog::tableCellTouched( CCTableView* table, CCTableViewCel
         {
             case 0: // 升级道具标签
             {
-                CCArray* pArray = dynamic_cast<CCArray* >(m_pDictHandbookData->objectForKey("items"));
-                if (pArray)
+                do
                 {
-                    CCObject* pObj = pArray->objectAtIndex(idx);
-                    CCDictionary* pDict = dynamic_cast<CCDictionary*>(pObj);
-                    
-                    if (!pDict) return;
-                    
-                    bool bUnFold = pDict->valueForKey("unfold")->boolValue();
-                    
-                    // 记录当前的位置
-                    CCPoint beforeOffset = table->getContentOffset();
-                    CCSize beforeSize = tableCellSizeForIndex(table, idx);
-                    
-                    // 设置点击后的状态，更新表格数据显示
-                    pDict->setObject(bUnFold ? ccs("0") : ccs("1"), "unfold");
-                    table->reloadData();
-                    
-                    // 之前的偏移量
-                    CCSize afterSize = tableCellSizeForIndex(table, idx);
-                    
-                    // 偏移量
-                    float fOffsetY = afterSize.height - beforeSize.height;
-                    float fOffsetX = afterSize.width - beforeSize.width;
-                    
-                    // 修正后的偏移量
-                    CCPoint offset = beforeOffset;
-                    offset.y -= fOffsetY;
-                    offset.x -= fOffsetX;
-                    
-                    // 重新设置偏移位置
-                    table->setContentOffset(offset);
-                }
-            }
+                    CC_BREAK_IF(!m_pArrayDescData);
+                    CCArray* pArray = m_pArrayDescData;
+                    if (pArray)
+                    {
+                        CCObject* pObj = pArray->objectAtIndex(idx);
+                        CCDictionary* pDict = dynamic_cast<CCDictionary*>(pObj);
+                        
+                        if (!pDict) return;
+                        
+                        bool bUnFold = pDict->valueForKey("unfold")->boolValue();
+                        
+                        // 记录当前的位置
+                        CCPoint beforeOffset = table->getContentOffset();
+                        CCSize beforeSize = tableCellSizeForIndex(table, idx);
+                        
+                        // 设置点击后的状态，更新表格数据显示
+                        pDict->setObject(bUnFold ? ccs("0") : ccs("1"), "unfold");
+                        table->reloadData();
+                        
+                        // 之前的偏移量
+                        CCSize afterSize = tableCellSizeForIndex(table, idx);
+                        
+                        // 偏移量
+                        float fOffsetY = afterSize.height - beforeSize.height;
+                        float fOffsetX = afterSize.width - beforeSize.width;
+                        
+                        // 修正后的偏移量
+                        CCPoint offset = beforeOffset;
+                        offset.y -= fOffsetY;
+                        offset.x -= fOffsetX;
+                        
+                        // 重新设置偏移位置
+                        table->setContentOffset(offset);
+                    }
+                } while (0);
                 break;
+            }
                 
             case 1: // 成就一览
                 break;
@@ -350,9 +354,9 @@ CCSize BalloonUserInfoDialog::tableCellSizeForIndex(cocos2d::extension::CCTableV
             // 根据内容的状态设置是否伸展
             do
             {
-                CC_BREAK_IF(!m_pDictHandbookData);
+                CC_BREAK_IF(!m_pArrayDescData);
                 
-                CCArray* pArray = dynamic_cast<CCArray* >(m_pDictHandbookData->objectForKey("items"));
+                CCArray* pArray = m_pArrayDescData;
                 if (pArray)
                 {
                     CC_BREAK_IF(idx >= pArray->count());
@@ -422,13 +426,9 @@ unsigned int BalloonUserInfoDialog::numberOfCellsInTableView( CCTableView *table
     int nRet = 0;
     switch (m_nTabIndex) {
         case 0:
-            if (m_pDictHandbookData)
+            if (m_pArrayDescData)
             {
-                CCArray* pArrayData = dynamic_cast<CCArray*>(m_pDictHandbookData->objectForKey("items"));
-                if (pArrayData)
-                {
-                    return pArrayData->count();
-                }
+                return m_pArrayDescData->count();
             }
             break;
             
@@ -631,12 +631,13 @@ void BalloonUserInfoDialog::initTableView()
         
     }
     
-    // 初始化升级数据，暂时用
-    if (!m_pDictHandbookData)
+    // 获得气球类型介绍
+    if (!m_pArrayDescData)
     {
-        m_pDictHandbookData = CCDictionary::createWithContentsOfFile("configuration/handBookItems.plist");
-        CCAssert(m_pDictHandbookData, "configruation/handBookItems.plist is incorrect!!");
-        CC_SAFE_RETAIN(m_pDictHandbookData);
+        CCDictionary* pDictConfiguration = dynamic_cast<CCDictionary*>(DataManagerUtil::sharedDataManagerUtil()->GetGlobalDataObject("configuration"));
+        CCAssert(pDictConfiguration, "configuration data is not loaded!");
+        m_pArrayDescData = dynamic_cast<CCArray*>(pDictConfiguration->objectForKey("introItems"));
+        CCAssert(m_pArrayDescData, "Balloon description data is not loaded!");
     }
 }
 
@@ -654,7 +655,7 @@ void BalloonUserInfoDialog::createTableCellLevelUp(CCTableView* table, CCTableVi
     pSpriteCellBackground->setPosition(ccp(cellSize.width*0.5f, cellSize.height*0.5f));
     pCell->addChild(pSpriteCellBackground);
     
-    CCArray* pArray = dynamic_cast<CCArray* >(m_pDictHandbookData->objectForKey("items"));
+    CCArray* pArray = m_pArrayDescData;
     CCObject* pObj = pArray->objectAtIndex(idx);
     CCDictionary* pDict = dynamic_cast<CCDictionary*>(pObj);
     if (pDict)

@@ -66,11 +66,16 @@ bool BalloonItemSelectDialog::init()
         updateCoins();
         
         // 初始化道具内容
+        /*
         CCDictionary* pDictExtItemConfig = CCDictionary::createWithContentsOfFile("configuration/buyExtendItems.plist");
         CCAssert(pDictExtItemConfig, "configruation/buyExtendItems.plist is incorrect!!");
-        
         // 得到配置数据
         CCArray* pArrayConfig = dynamic_cast<CCArray*>(pDictExtItemConfig->objectForKey("items"));
+        */
+        CCDictionary* pDictConfiguration = dynamic_cast<CCDictionary*>(DataManagerUtil::sharedDataManagerUtil()->GetGlobalDataObject("configuration"));
+        CCAssert(pDictConfiguration, "configuration is not loaded!");
+        CCArray* pArrayConfig = dynamic_cast<CCArray*>(pDictConfiguration->objectForKey("extendItems"));
+        CCAssert(pArrayConfig, "extendItems is not loaded!");
         
         unsigned int nCnts = pArrayConfig->count();
         

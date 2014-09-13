@@ -18,8 +18,10 @@
 
 #include "Ability.h"
 #include "cocos2d.h"
+#include "bailinUtil.h"
 
 USING_NS_CC;
+USING_NS_BAILIN_UTIL;
 
 AbilityManager::AbilityManager()
 {
@@ -65,10 +67,11 @@ bool AbilityManager::loadData()
 	bool bRet = false;
 
 	// 从配置文件中读取所有的技能数据，并且生成的内存数据
-    CCDictionary* pData = CCDictionary::createWithContentsOfFile("configuration/ability.plist");
-    if (pData)
+    do
     {
-        CCArray* pArrayAbilities = dynamic_cast<CCArray*>(pData->objectForKey("abilityArray"));
+        CCDictionary* pDictConfiguration = dynamic_cast<CCDictionary*>(DataManagerUtil::sharedDataManagerUtil()->GetGlobalDataObject("configuration"));
+        CC_BREAK_IF(!pDictConfiguration);
+        CCArray* pArrayAbilities = dynamic_cast<CCArray*>(pDictConfiguration->objectForKey("abilityArray"));
         if (pArrayAbilities)
         {
             CCObject* pObjDictAbility = NULL;
@@ -103,7 +106,8 @@ bool AbilityManager::loadData()
                 m_mapAbilityDesc[nID] = vAbilities;
             }
         }
-    }
+        bRet = true;
+    } while (0);
 
 	return bRet;
 }

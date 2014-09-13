@@ -228,6 +228,38 @@ void AppDelegate::setLocalConfigData()
     // 加载存在本地的用户数据
     UserDataManager::sharedUserDataManager()->loadData();
     
+    // 配置的压缩文件包
+    std::string strConfigZipFileName = "config";
+    std::string strConfigurationFileName = "configuration.plist";
+    // 可写目录中的配置文件
+    std::string strConfiguration = CCFileUtils::sharedFileUtils()->getWritablePath() + strConfigurationFileName;
+    
+    // 加载本地配置数据，从对应的plist读取，比如游戏前购买道具的配置，图鉴的配置，还有技能的配置等
+    do
+    {
+        // 判断配置文件压缩包是否存在（每次都释放覆盖）
+        CC_BREAK_IF(!CCFileUtils::sharedFileUtils()->isFileExist(strConfigZipFileName.c_str()));
+        std::string strZipFilePath = CCFileUtils::sharedFileUtils()->fullPathForFilename(strConfigZipFileName.c_str());
+        // 把配置文件释放出来
+        unsigned long len = 0;
+        unsigned char* pszConfiguration = CCFileUtils::sharedFileUtils()->getFileDataFromZip(strZipFilePath.c_str(), "configuration/configuration.plist", &len);
+        CC_BREAK_IF(len <= 0);
+        FILE* file = fopen(strConfiguration.c_str(), "wb");
+        CC_BREAK_IF(!file);
+        if (file)
+        {
+            fwrite(pszConfiguration, 1, len, file);
+            fclose(file);
+        }
+        delete pszConfiguration;
+    } while (0);
+    
+    CCAssert(CCFileUtils::sharedFileUtils()->isFileExist(strConfiguration.c_str()), "configuration file not exist!");
+    CCDictionary* pDictConfiguration = CCDictionary::createWithContentsOfFileThreadSafe(strConfiguration.c_str());
+    // 放到全局数据中
+    if (pDictConfiguration)
+        DataManagerUtil::sharedDataManagerUtil()->SetGlobalDataObject("configuration", pDictConfiguration);
+    
     // 加载任务数据
     BalloonMission::sharedBalloonMission()->loadAllMissionData();
 }

@@ -49,7 +49,7 @@ public:
         
         m_pTableViewDetail = NULL;
         
-        m_pDictHandbookData = NULL;
+        m_pArrayDescData = NULL;
         
         m_nTabIndex = 0;
 	}
@@ -95,7 +95,7 @@ private:
     cocos2d::extension::CCTableView* m_pTableViewDetail;
     
     // 图鉴配置文件
-    cocos2d::CCDictionary* m_pDictHandbookData;
+    cocos2d::CCArray* m_pArrayDescData;
     
     // 当前选择的标签
     unsigned int m_nTabIndex;
