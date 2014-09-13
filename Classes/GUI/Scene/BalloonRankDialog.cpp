@@ -246,20 +246,24 @@ void BalloonRankDialog::createCellForScoreRank(cocos2d::extension::CCTableViewCe
         CCSprite* pSpriteRankFrame = CCSprite::createWithSpriteFrameName("rank_frame.png");
         pSpriteRankFrame->setPosition(ccp(pSpriteRankFrame->getContentSize().width*0.5f, cellSize.height*0.5f));
         
+        ccColor3B colorName = ccWHITE;
         if (lRank <= 3)
         {
             const char* pszRing = NULL; // "texture/ring_ruby.png";
             if (lRank == 1)
             {
                 pszRing = "ring_ruby.png";
+                colorName = ccRED;
             }
             else if (lRank == 2)
             {
                 pszRing = "ring_blue.png";
+                colorName = ccBLUE;
             }
             else if (lRank == 3)
             {
                 pszRing = "ring_yellow.png";
+                colorName = ccYELLOW;
             }
             
             CCSprite* pSpriteRing = CCSprite::createWithSpriteFrameName(pszRing);
@@ -277,12 +281,6 @@ void BalloonRankDialog::createCellForScoreRank(cocos2d::extension::CCTableViewCe
         pSpriteRankFrame->setScale(cellSize.height*0.9f/pSpriteRankFrame->getContentSize().height);
         cell->addChild(pSpriteRankFrame);
         
-        // NickName
-        CCLabelTTF* pLabelNickName = CCLabelTTF::create(pDict->valueForKey("user_name")->getCString(), "", cellSize.height*0.5f);
-        pLabelNickName->setAnchorPoint(ccp(0, 0.5f));
-        pLabelNickName->setPosition(ccp(cellSize.width*0.2f, cellSize.height*0.5f));
-        cell->addChild(pLabelNickName);
-        
         // Score
         /*
         CCLabelTTF* pLabelScore = CCLabelTTF::create(pDict->valueForKey("score")->getCString(), "", cellSize.height*0.5f);
@@ -292,11 +290,25 @@ void BalloonRankDialog::createCellForScoreRank(cocos2d::extension::CCTableViewCe
         CCLabelBMFont* pBMFontScore = CCLabelBMFont::create(pDict->valueForKey("score")->getCString(), "texture/fonts/font.fnt");
         pBMFontScore->setColor(ccYELLOW);
         pBMFontScore->setScale(1.8f);
-        pBMFontScore->setPosition(ccp(cellSize.width*0.6f, pLabelNickName->getPositionY()));
+        pBMFontScore->setAnchorPoint(ccp(1.0f, 0.5f));
+        pBMFontScore->setPosition(ccp(cellSize.width*0.98f, cellSize.height*0.5f));
         cell->addChild(pBMFontScore);
         
+        // NickName
+        CCLabelTTF* pLabelNickName = CCLabelTTF::create(pDict->valueForKey("user_name")->getCString(), "", cellSize.height*0.5f);
+        pLabelNickName->setAnchorPoint(ccp(0, 0.5f));
+        // set total width
+        float fNicknameMaxWidth = pBMFontScore->getPositionX() - pBMFontScore->boundingBox().size.width - pSpriteRankFrame->getContentSize().width*0.3f - cellSize.width*0.2f;
+        if (pLabelNickName->getContentSize().width > fNicknameMaxWidth)
+        {
+            pLabelNickName->setScale(fNicknameMaxWidth/pLabelNickName->getContentSize().width);
+        }
+        pLabelNickName->setPosition(ccp(cellSize.width*0.2f, pBMFontScore->getPositionY()));
+        // pLabelNickName->setColor(colorName);
+        cell->addChild(pLabelNickName);
         
-        // Date
+        
+        /*/ Date
         CCLabelTTF* pLabelDate = CCLabelTTF::create(pDict->valueForKey("gmt_mtime")->getCString(), "", cellSize.height*0.4f);
         pLabelDate->setAnchorPoint(ccp(1.0f, 0.5f));
         pLabelDate->setPosition(ccp(cellSize.width*0.98f, cellSize.height*0.5f));
@@ -304,6 +316,7 @@ void BalloonRankDialog::createCellForScoreRank(cocos2d::extension::CCTableViewCe
         pLabelDate->setHorizontalAlignment(kCCTextAlignmentCenter);
         pLabelDate->setVerticalAlignment(kCCVerticalTextAlignmentCenter);
         cell->addChild(pLabelDate);
+        */
         
         long lSelfIdx = -1;
         CCDictionary* pDictData = dynamic_cast<CCDictionary*>(m_pDictRankData->objectForKey("data"));
