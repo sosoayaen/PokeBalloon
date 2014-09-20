@@ -228,6 +228,11 @@ void NDKBridge::setADProductID(const char *pszADProductID)
 
 bool NDKBridge::isADOff()
 {
+    // 截图用的临时版本不显示广告
+#ifdef FOR_APPSTORE_CAPTURE
+    return true;
+#endif
+    
     if (m_strIAPADProductID.empty()) return false;
     return [[IAPShare sharedHelper].iap isPurchasedProductsIdentifier:[[NSString alloc] initWithUTF8String:m_strIAPADProductID.c_str()]] == YES;
 }

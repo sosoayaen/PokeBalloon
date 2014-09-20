@@ -674,7 +674,6 @@ void BalloonScene::update(float dt)
 void BalloonScene::showResultDialog()
 {
     // 显示广告条
-    // GAdMob2DX::sharedGAdMob2DX()->setVisible(true);
     NDKBridge::sharedNDKBridge()->setAdMobVisible(true);
     
     // 生成结算对话框
@@ -951,7 +950,6 @@ void BalloonScene::showPauseDialog()
     }
     
     addChild(pPauseDialog);
-    // GAdMob2DX::sharedGAdMob2DX()->setVisible(true);
     NDKBridge::sharedNDKBridge()->setAdMobVisible(true);
 }
 

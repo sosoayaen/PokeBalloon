@@ -128,7 +128,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     srand(time(NULL));
     
 
-#if COCOS2D_DEBUG > 0
+#if COCOS2D_DEBUG > 0 && !defined(FOR_APPSTORE_CAPTURE)
     // turn on display FPS
     pDirector->setDisplayStats(true);
 #endif
