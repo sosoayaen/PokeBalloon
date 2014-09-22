@@ -50,6 +50,7 @@ public:
         m_pTableViewDetail = NULL;
         
         m_pArrayDescData = NULL;
+        m_pArrayArchivementData = NULL;
         
         m_nTabIndex = 0;
 	}
@@ -97,6 +98,9 @@ private:
     // 图鉴配置文件
     cocos2d::CCArray* m_pArrayDescData;
     
+    // 成就配置
+    cocos2d::CCArray* m_pArrayArchivementData;
+    
     // 当前选择的标签
     unsigned int m_nTabIndex;
 
@@ -125,6 +129,7 @@ private:
     void updateLabelData();
     // 创建道具升级的标签页单元内容，主要是修改第二个参数pCell
     void createTableCellLevelUp(cocos2d::extension::CCTableView* table, cocos2d::extension::CCTableViewCell* pCell, unsigned int idx);
+    void createTableCellArchivement(cocos2d::extension::CCTableView* table, cocos2d::extension::CCTableViewCell* pCell, unsigned int idx);
 
 public:
 	// Virtual Functions

@@ -21,6 +21,7 @@
 #include "bailinUtil.h"
 #include <string>
 #include "cocos2d.h"
+#include "BalloonArchivement.h"
 #include "NDKBridge.h"
 
 USING_NS_CC;
@@ -85,13 +86,15 @@ UserDataManager::UserDataManager()
     
     m_GlobalAnalysisData.loadData();
     
+    m_pArrayArchivementData = NULL;
+    
     // 这里顺便初始化下用户等级描述数据
     AbilityManager::sharedAbilityManager();
 }
 
 UserDataManager::~UserDataManager()
 {
-
+    CC_SAFE_RELEASE(m_pArrayArchivementData);
 }
 
 static UserDataManager* g_sUserDataManager = NULL;
@@ -502,13 +505,134 @@ void UserDataManager::setHighestScore(long long llHighestScore)
     DataManagerUtil::sharedDataManagerUtil()->WriteDataToLocal(KEY_HIGHEST_SCORE, strHighestScore);
 }
 
-long UserDataManager::getArchivmentValue() const
+long UserDataManager::getArchivmentValue()
 {
     // 计算所有成就值并返回
-    return 0;
+    CCArray* pArrayArchivement = getArchivementData(true);
+    
+    long lValue = 0;
+    
+    CCObject* pObj = NULL;
+    CCARRAY_FOREACH(pArrayArchivement, pObj)
+    {
+        CCDictionary* pDict = dynamic_cast<CCDictionary*>(pObj);
+        // 先看是否unlock了
+        if (pDict->valueForKey("unlocked")->boolValue())
+        {
+            // 每档成就增加100分
+            lValue += pDict->valueForKey("level")->intValue()*100;
+        }
+    }
+    return lValue;
 }
 
 const std::string& UserDataManager::getDeviceUDID() const
 {
     return m_strUDID;
+}
+
+CCArray* UserDataManager::getArchivementData(bool bUseCache)
+{
+    // 如果没有数据，则先计算生成一下
+    if (!m_pArrayArchivementData || !bUseCache)
+    {
+        updateArchivementData();
+    }
+    return m_pArrayArchivementData;
+}
+
+void UserDataManager::updateArchivementData()
+{
+    // 保存老的数据以供比对
+    CCArray* pOldArray = m_pArrayArchivementData;
+    // 给一个新的数据
+    m_pArrayArchivementData = CCArray::create();
+    CC_SAFE_RETAIN(m_pArrayArchivementData);
+
+    // 根据初始化的数据，计算用户是否已经完成相应的成就
+    const ArchDataByIDMap& archDataMap = BalloonArchivement::sharedBalloonArchivement()->getArchDataMap();
+    ArchDataByIDMap::const_iterator iter = archDataMap.begin();
+    for (int idx = 0; iter != archDataMap.end(); ++iter, ++idx)
+    {
+        CCDictionary* pDict = CCDictionary::create();
+        // 默认锁住
+        bool bUnlock = false;
+        // 用于比较的值
+        long long llData = 0;
+        // 根据分类来处理不同的分支数据，得到一个比较值即可
+        const ArchData* pArchData = iter->second;
+        switch (pArchData->indexType)
+        {
+            case 0: // 自己处理
+                switch (pArchData->indexId)
+                {
+                    case 0: // 气球总数
+                        llData = m_GlobalAnalysisData.getTotalBalloonCounts();
+                        break;
+                    case 1: // 道具气球个数
+                        llData = m_GlobalAnalysisData.getItemBalloonCounts();
+                        break;
+                    case 2: // 普通气球个数
+                        llData = m_GlobalAnalysisData.getNormalBalloonCounts();
+                        break;
+                }
+                break;
+            case 1: // 颜色气球
+                llData = *((long long*)&m_GlobalAnalysisData.getAnalysisData().colorData + pArchData->indexId);
+                break;
+            case 2: // 普通气球
+                llData = *((long long*)&m_GlobalAnalysisData.getAnalysisData().normalData + pArchData->indexId);
+                break;
+            case 3: // 道具气球
+                llData = *((long long*)&m_GlobalAnalysisData.getAnalysisData().itemData + pArchData->indexId);
+                break;
+            case 4: // 道具使用
+                break;
+            default:
+                break;
+        }
+        
+        // 处理数据，得到进度百分比，
+        long long llLastAim = 0;
+        float fProgress = 0;
+        unsigned int i = 0;
+        for (; i < pArchData->milestoteArray.size(); ++i)
+        {
+            long long llAim = pArchData->milestoteArray[i];
+            if (llAim > llData)
+            {
+                // 就在这档以下，得到进度
+                fProgress = (llData - llLastAim)*1.0f/llAim;
+                // 计算结束
+                break;
+            }
+            llLastAim = llAim;
+        }
+        
+        // 是否解锁标志
+        bUnlock = i > 0;
+        // 设置加解锁标志
+        pDict->setObject(ccs(bUnlock ? "true" : "false"), "unlocked");
+        // 目标当前进度
+        pDict->setObject(CCString::createWithFormat("%.04f", fProgress), "progress");
+        // 目标成就标题
+        pDict->setObject(CCString::createWithFormat("%s", pArchData->titleArray[bUnlock ? i-1 : i].c_str()), "title");
+        // 当前目标成就描述
+        pDict->setObject(CCString::createWithFormat("%s", pArchData->descArray[bUnlock ? i-1 : i].c_str()), "desc");
+        // 目标里程碑的值
+        pDict->setObject(CCString::createWithFormat("%lld", pArchData->milestoteArray[i]), "milestone");
+        // 当前积累的值
+        pDict->setObject(CCString::createWithFormat("%lld", llData), "curr");
+        // 当前成就级别
+        pDict->setObject(CCString::createWithFormat("%d", i), "level");
+        // 最高等级
+        pDict->setObject(CCString::createWithFormat("%lu", pArchData->milestoteArray.size()), "maxLevel");
+        
+        // 数据进入数组
+        m_pArrayArchivementData->addObject(pDict);
+        
+        // TODO: 这里还可以比对新老数据，把更新的数据放入一个队列中，然后通知外部哪些数据更新了
+    }
+    // 释放老的数据
+    CC_SAFE_RELEASE(pOldArray);
 }

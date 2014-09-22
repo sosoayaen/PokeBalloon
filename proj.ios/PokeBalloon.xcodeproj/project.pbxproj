@@ -2629,7 +2629,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# 得到打包的目录\nappDir=\"$TARGET_BUILD_DIR/$PRODUCT_NAME.app\"\n# 音频目录\nSoundEffect=\"$appDir/music/effect\"\n\n# 把配置文件打包到zip中\nzip -rm9 \"$appDir\"/config \"$appDir\"/configuration\n\n# 文件存在就更名\nif [ -d \"$appDir/config.zip\"]; then\n    mv \"$appDir\"/config.zip \"$appDir\"/config\nfi\n\n# 删除资源文件中音效中的mp3格式和ogg格式，只留下m4a\nMusicCleanDir=\"$SoundEffect\"\nfor mDir in $MusicCleanDir\ndo\n    echo \"clean non-m4a file in $mDir\"\n    rm -f \"$mDir\"/*.mp3\n    rm -f \"$mDir\"/*.ogg\n    rm -f \"$mDir\"/*.wav\ndone";
+			shellScript = "# 得到打包的目录\nappDir=\"$TARGET_BUILD_DIR/$PRODUCT_NAME.app\"\n# 音频目录\nSoundEffect=\"$appDir/music/effect\"\n\n# 把配置文件打包到zip中\ncd $appDir\nzip -rm9 config configuration\n\n# 文件存在就更名\n# if [ -d \"$appDir/config.zip\" ]; then\n    mv \"$appDir\"/config.zip \"$appDir\"/config\n# fi\n\n# 删除资源文件中音效中的mp3格式和ogg格式，只留下m4a\nMusicCleanDir=\"$SoundEffect\"\nfor mDir in $MusicCleanDir\ndo\n    echo \"clean non-m4a file in $mDir\"\n    rm -f \"$mDir\"/*.mp3\n    rm -f \"$mDir\"/*.ogg\n    rm -f \"$mDir\"/*.wav\ndone";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -3,6 +3,7 @@
 #include "bailinUtil.h"
 #include "BalloonSoundManager.h"
 #include "UMSocial2DX.h"
+#include "BalloonArchivement.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -13,7 +14,6 @@ USING_NS_BAILIN_UTIL;
 
 BalloonUserInfoDialog::~BalloonUserInfoDialog()
 {
-    
 }
 
 bool BalloonUserInfoDialog::init()
@@ -380,6 +380,31 @@ CCSize BalloonUserInfoDialog::tableCellSizeForIndex(cocos2d::extension::CCTableV
             break;
             
         case 1:
+            do
+            {
+                CC_BREAK_IF(!m_pArrayArchivementData);
+                
+                CCArray* pArray = m_pArrayArchivementData;
+                if (pArray)
+                {
+                    CC_BREAK_IF(idx >= pArray->count());
+                    
+                    CCObject* pObj = pArray->objectAtIndex(idx);
+                    CCDictionary* pDict = dynamic_cast<CCDictionary*>(pObj);
+                    
+                    CC_BREAK_IF(!pDict);
+                    
+                    CCSize size = CCSizeZero;
+                    // 判断打开收拢的状态
+                    bool bUnFold = pDict->valueForKey("unfold")->boolValue();
+                    if (bUnFold)
+                        size = CCSizeMake(m_pLayerTableContainer->getContentSize().width, m_pSpriteTableViewBackground->getContentSize().height*0.75f);
+                    else
+                        size = CCSizeMake(m_pLayerTableContainer->getContentSize().width, m_pSpriteTableViewBackground->getContentSize().height*0.37f);
+                    
+                    return size;
+                }
+            } while (0);
             break;
             
         case 2:
@@ -413,6 +438,9 @@ CCTableViewCell* BalloonUserInfoDialog::tableCellAtIndex( CCTableView *table, un
             case 0: // 第一个标签页
                 createTableCellLevelUp(table, pCell, idx);
                 break;
+            case 1:
+                createTableCellArchivement(table, pCell, idx);
+                break;
                 
             default:
                 break;
@@ -429,6 +457,12 @@ unsigned int BalloonUserInfoDialog::numberOfCellsInTableView( CCTableView *table
             if (m_pArrayDescData)
             {
                 return m_pArrayDescData->count();
+            }
+            break;
+        case 1:
+            if (m_pArrayArchivementData)
+            {
+                return m_pArrayArchivementData->count();
             }
             break;
             
@@ -639,6 +673,12 @@ void BalloonUserInfoDialog::initTableView()
         m_pArrayDescData = dynamic_cast<CCArray*>(pDictConfiguration->objectForKey("introItems"));
         CCAssert(m_pArrayDescData, "Balloon description data is not loaded!");
     }
+    
+    // 计算对应
+    if (!m_pArrayArchivementData)
+    {
+        m_pArrayArchivementData = UserDataManager::sharedUserDataManager()->getArchivementData(false);
+    }
 }
 
 void BalloonUserInfoDialog::createTableCellLevelUp(CCTableView* table, CCTableViewCell* pCell, unsigned int idx)
@@ -756,6 +796,68 @@ void BalloonUserInfoDialog::createTableCellLevelUp(CCTableView* table, CCTableVi
         {
             pLabelTTFDesc->setDimensions(CCSizeMake(cellSize.width*0.5f, (cellSize.height-30*2-pLabelTTFTitle->getContentSize().height)));
             pSpriteBtnExtend->setRotation(0);
+        }
+    }
+}
+
+void BalloonUserInfoDialog::createTableCellArchivement(cocos2d::extension::CCTableView *table, cocos2d::extension::CCTableViewCell *pCell, unsigned int idx)
+{
+    // 清空内部数据
+    pCell->removeAllChildren();
+    // 单元大小
+    CCSize cellSize = tableCellSizeForIndex(table, idx);
+    // 创建单元背景
+    CCScale9Sprite* pSpriteCellBackground = CCScale9Sprite::create("texture/handBook/scale9frame.png");
+    pSpriteCellBackground->setTag(100);
+    pSpriteCellBackground->setPreferredSize(CCSizeMake(cellSize.width, cellSize.height*0.96f));
+    pSpriteCellBackground->setPosition(ccp(cellSize.width*0.5f, cellSize.height*0.5f));
+    pCell->addChild(pSpriteCellBackground);
+ 
+    CCDictionary* pDict = dynamic_cast<CCDictionary*>(m_pArrayArchivementData->objectAtIndex(idx));
+    
+    if (pDict)
+    {
+        // 得到当前成就是否开启的标志
+        bool bUnlock = pDict->valueForKey("unlocked")->boolValue();
+        // 进度
+        float fProgress = pDict->valueForKey("progress")->floatValue();
+        // 标题
+        const char* pszTitle = pDict->valueForKey("title")->getCString();
+        // 描述
+        const char* pszDesc = pDict->valueForKey("desc")->getCString();
+        // 当前的完成度
+        long long llCurr = atoll(pDict->valueForKey("curr")->getCString());
+        // 里程碑
+        long long llMilestone = atoll(pDict->valueForKey("milestone")->getCString());
+        // 当前等级
+        int nLvl = pDict->valueForKey("level")->intValue();
+        // 总共等级
+        int nMaxLvl = pDict->valueForKey("maxLevel")->intValue();
+        
+        if (bUnlock)
+        {
+            CCLabelTTF* pLabel = CCLabelTTF::create(CCString::createWithFormat("Progress:%.02f%%, Title:%s, Desc:%s, Milestone:%lld, level:%d, max level:%d", fProgress*100, pszTitle, pszDesc, llMilestone, nLvl, nMaxLvl)->getCString(), "", cellSize.height*0.2f);
+            pLabel->setDimensions(cellSize);
+            pLabel->setPosition(ccp(cellSize.width*0.5f, cellSize.height*0.5f));
+            pSpriteCellBackground->addChild(pLabel);
+        }
+        else
+        {
+            // 放上一把锁，写上未开启的文字
+            /*
+            CCSprite* pSpriteLock = CCSprite::createWithSpriteFrameName("archivement_lock.png");
+            pSpriteLock->setPosition(ccp(cellSize.width*0.5f, cellSize.height*0.5f));
+            pSpriteCellBackground->addChild(pSpriteLock);
+            */
+            CCLabelTTF* pLabelLock = CCLabelTTF::create("Locked", "", cellSize.width*0.2f);
+            pLabelLock->setPosition(ccp(cellSize.width*0.5f, cellSize.height*0.7f));
+            pSpriteCellBackground->addChild(pLabelLock);
+            
+            CCLabelTTF* pLabel = CCLabelTTF::create(CCString::createWithFormat("Progress:%.02f%%, Title:%s, Desc:%s, Milestone:%lld", fProgress*100, pszTitle, pszDesc, llMilestone)->getCString(), "", cellSize.height*0.15f);
+            pLabel->setDimensions(CCSizeMake(cellSize.width, cellSize.height*0.5f));
+            pLabel->setAnchorPoint(ccp(0.5f, -0.02f));
+            pLabel->setPosition(ccp(cellSize.width*0.5f, 0));
+            pSpriteCellBackground->addChild(pLabel);
         }
     }
 }

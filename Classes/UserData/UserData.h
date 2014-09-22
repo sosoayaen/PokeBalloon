@@ -106,7 +106,7 @@ public:
     void setHighestScore(long long llHighestScore);
     
     // 得到总体成就值
-    long getArchivmentValue() const;
+    long getArchivmentValue();
     
     /**
      * @brief 得到全局统计对象指针，可以外部修改
@@ -153,7 +153,14 @@ public:
     // 得到设备的UDID缓存，并且是经过MD5的，因为OpenUDID在iOS和Android平台上生成的长度不同
     const std::string& getDeviceUDID() const;
     
+    // 获得当前用户的成就数据（实时计算）
+    // bUseCache 是否使用缓存，如果不使用，则重新计算一次，否则直接返回
+    cocos2d::CCArray* getArchivementData(bool bUseCache);
+    
 private:
+    // 更新计算下当前用户的成就数据
+    void updateArchivementData();
+    
     // 校验当前金币值是否合法
     bool verifyGoldenCoins();
     
@@ -196,6 +203,9 @@ private:
     
     // 当前用户游戏的分析数据
     BalloonAnalysis m_AnalysisData;
+    
+    // 用户的成就数据
+    cocos2d::CCArray* m_pArrayArchivementData;
 };
 
 #endif // __BALLOON_USER_DATA_H__

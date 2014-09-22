@@ -117,5 +117,10 @@
 		<key>itemReverse</key>
 		<string>翻转</string>
 	</dict>
+	<key>archivement_section</key>
+	<dict>
+		<key>lock</key>
+		<string>未开启</string>
+	</dict>
 </dict>
 </plist>
